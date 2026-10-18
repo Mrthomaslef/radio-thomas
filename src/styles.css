@@ -358,6 +358,10 @@ a.card { display: block; color: inherit; }
 .admin-badge-pass { background: rgba(52, 211, 153, 0.15); color: var(--good); }
 .admin-badge-fail { background: rgba(251, 113, 133, 0.15); color: var(--bad); }
 
+/* footer link to the (password-protected) admin page */
+.admin-link { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+.admin-link:hover { color: var(--cyan); }
+
 /* responsive */
 @media (max-width: 980px) {
   .hero { grid-template-columns: 1fr; padding-top: 110px; text-align: center; gap: 56px; }

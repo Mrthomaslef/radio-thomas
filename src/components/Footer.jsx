@@ -27,6 +27,7 @@ export default function Footer() {
         <span className={`status status-${status}`}>
           <span className="dot" /> Serveur {labels[status]}
         </span>
+        <a href="#/admin" className="admin-link">Espace formateur</a>
         <span className="muted">© {new Date().getFullYear()} Radio Thomas. À but pédagogique uniquement, ne remplace pas un avis médical.</span>
       </footer>
     </>

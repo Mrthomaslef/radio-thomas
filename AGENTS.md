@@ -70,7 +70,7 @@ Rules:
 ## Quiz results and admin page
 
 - Each quiz asks the participant's name, then stores `name, score, total, passed, date` at the end via `POST /api/attempts` (table `quiz_attempts`, RLS: the public can only insert, never read).
-- Hidden admin page: `#/admin` on the site (not linked anywhere). It asks for a password, checked in the database (`admin_list_attempts`). **Never write the admin password in the repo or in chat.**
+- Admin page: `#/admin` on the site (linked as "Espace formateur" in the footer, hidden from search engines). It asks for a password, checked in the database (`admin_list_attempts`). **Never write the admin password in the repo or in chat.**
 - Names are personal data (GDPR): keep the privacy notice in the quiz name step, collect nothing more, and delete a person's rows if asked.
 
 ## Figures and copyright
