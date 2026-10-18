@@ -193,7 +193,7 @@ git config --global user.email "the-email-on-your-github-account@example.com"
 
 Use an email that is **attached to your GitHub account** (GitHub → Settings → Emails).
 
-> **Why this matters for deployment:** Vercel checks **who authored the commit**. See [5.2](#52-the-important-catch-hobby-plan-and-commit-authors) — this is the #1 cause of "my change is not live".
+> Use your own name and email: commits show who made each change. (You do **not** need the owner's email: publishing is handled by an automatic GitHub Action, see [section 5](#5-putting-the-site-live-deploying).)
 
 ### 4.2 The normal loop (use a branch + pull request — recommended)
 
@@ -227,7 +227,7 @@ gh pr create --fill
 
 Before every new piece of work: `git checkout master && git pull` so you start from the latest version.
 
-### 4.3 Direct to master (only if the owner agrees)
+### 4.3 Push straight to master (publishes the site)
 
 ```bash
 git add -A
@@ -235,7 +235,7 @@ git commit -m "Short description"
 git push
 ```
 
-On this project **every push to `master` triggers a production deployment**, so only do this for small, tested changes (`npm run build` passes).
+On this project **every push to `master` publishes the site automatically** (see [section 5](#5-putting-the-site-live-deploying)), so only do this for small changes you have tested (`npm run build` passes). For bigger or riskier work, use a branch + pull request (4.2) and merge it when you are happy.
 
 ### 4.4 Never do these
 
@@ -247,69 +247,48 @@ On this project **every push to `master` triggers a production deployment**, so 
 
 ## 5. Putting the site live (deploying)
 
-### 5.1 How it works
+### 5.1 How it works (nothing to do for you)
 
-The Vercel project **`radio-thomas`** (team `charlesandres-projects`) is connected to the GitHub repo. When a new commit lands on `master`, Vercel builds the site (`npm run build` → `dist/`) and publishes it at:
+**Every push to `master` publishes the site automatically.** A GitHub Action (`.github/workflows/deploy.yml`) builds the site and sends it to Vercel, using a Vercel access token that Charles stored safely in the repo's GitHub secrets (`VERCEL_TOKEN`). You never see or need that token.
 
-https://radio-thomas-charlesandres-projects.vercel.app
+```
+you push to master  →  GitHub Action runs (≈1–2 min)  →  site is live
+```
 
-Environment variables set on Vercel (Production):
+Live site: https://radio-thomas-charlesandres-projects.vercel.app
+
+Why an Action and not Vercel's own GitHub link? The Vercel account is on the free **Hobby** plan, which refuses to deploy commits written by anyone other than the account owner. The Action deploys *as the owner*, so your commits go live too. (Vercel's own Git deployments are switched off in `vercel.json` so they don't create blocked duplicates.)
+
+> **Please keep this honest:** Hobby plans are meant for personal, non-commercial projects, and Vercel can restrict accounts that use workarounds for team or commercial use. If the site becomes a business, upgrade to Vercel Pro (about $20/month per seat, check current pricing) and add team members properly.
+
+### 5.2 Watching a deploy
+
+1. Push your change.
+2. On GitHub: repo `charlesandre/radio-thomas` → **Actions** tab → the top run named **Deploy to Vercel**. Green check = live. Red cross = click it to read the error.
+3. Or in the terminal: `gh run list --limit 3` and `gh run watch`.
+4. Open the live URL and hard-refresh (`Cmd/Ctrl + Shift + R`).
+5. Backend test: open https://radio-thomas-charlesandres-projects.vercel.app/api/hello. You should see JSON with a `message`.
+
+**If the run fails:** most often `npm run build` fails. Run it on your computer, read the error, fix, push again. Ask the AI: *"The Deploy to Vercel GitHub Action failed, here is the log, please fix it."*
+
+**Re-run without a new commit:** Actions tab → **Deploy to Vercel** → **Run workflow**.
+
+### 5.3 Environment variables (database address and key)
+
+Set on Vercel (Production). You normally never need to touch them.
 
 | Name | What it is | Where to find the value |
 |---|---|---|
-| `SUPABASE_URL` | Address of the database API | Supabase dashboard → project `thomas-radio` → **Project Settings → API** (also shown as "Project URL") |
+| `SUPABASE_URL` | Address of the database API | Supabase dashboard → project `thomas-radio` → **Project Settings → API** ("Project URL") |
 | `SUPABASE_PUBLISHABLE_KEY` | Public (browser-safe) key, protected by row-level security | Supabase dashboard → **Project Settings → API keys** → "Publishable key" |
 
-You normally never need to touch them. If you do, Vercel dashboard → project → **Settings → Environment Variables**. Don't paste key values into chat, docs, or Git.
+Changing one needs the Vercel dashboard (owner). Don't paste key values into chat, docs, or Git.
 
-### 5.2 The important catch: Hobby plan and commit authors
+### 5.4 Owner-only notes (Charles)
 
-The Vercel account is on the **free "Hobby" plan**. Hobby has **no collaboration**: Vercel only deploys a commit if its **author is the account owner**. Otherwise the deployment shows as **BLOCKED**, with messages like:
-
-> "The Deployment was blocked because the commit author does not have contributing access to the project on Vercel. Hobby teams do not support collaboration."
-
-(We hit this ourselves: commits authored with the wrong email were blocked even when deployed from the command line.) Source: https://vercel.com/docs/deployments/troubleshoot-project-collaboration
-
-**What it means for you:** if *your* commit is the latest on `master`, Vercel will block that deployment, even though the push to GitHub works fine. Nothing breaks — the old site stays online — your change just doesn't go live.
-
-**Your options (honest trade-offs):**
-
-| Option | Cost | Effort | Notes |
-|---|---|---|---|
-| **A. Friend pushes a branch / pull request, owner publishes** | Free | Small, needs the owner for each release | You do all the work; Charles merges and publishes. No account sharing. |
-| **B. Upgrade Vercel to Pro and add you as a team member** | About $20/month per paid seat (check current pricing) | One-time setup, then you deploy yourself | Cleanest long-term. |
-| C. Make the GitHub repo public | Free | Easy, but **anyone can read the code** | Vercel community answers say collaboration is allowed for public repos on Hobby; we have not verified it for this project. Not recommended unless the code is meant to be public. |
-| D. Share the owner's Vercel login | Free | Easy | **Don't.** Never share passwords. |
-
-**Recommendation:** start with **A** (free, safe). If waiting for the owner becomes annoying, switch to **B**.
-
-**How option A works in practice** (for the owner, Charles):
-
-```bash
-git checkout master
-git pull
-git merge friend-branch-name      # review the changes first!
-git commit --allow-empty -m "Release"   # an owner-authored commit on top, so Vercel accepts it
-git push
-```
-
-The empty "Release" commit is authored by the owner, so Vercel's check passes and the site publishes. (Merging a PR with the GitHub button keeps *your* name as author and would be blocked on Hobby — hence the manual merge.)
-
-### 5.3 Deploying from the command line (owner only)
-
-```bash
-npm install -g vercel
-vercel login
-vercel deploy --prod --scope charlesandres-projects
-```
-
-**You should see** a line ending with `Production: https://radio-thomas-….vercel.app`. The latest commit's author must still be the owner (same rule as above).
-
-### 5.4 Check a deployment worked
-
-- Open the live URL and refresh (`Cmd/Ctrl + Shift + R`).
-- Vercel dashboard → project `radio-thomas` → **Deployments**: the top one should say **Ready**. **Blocked** = commit author problem (see 5.2). **Error** = build failed → run `npm run build` locally and read the error.
-- Quick backend test: open https://radio-thomas-charlesandres-projects.vercel.app/api/hello — you should see JSON with a `message`.
+- The GitHub secret is `VERCEL_TOKEN` (repo → Settings → Secrets and variables → Actions). To replace it: create a new token at Vercel → avatar → Settings → Tokens, then `gh secret set VERCEL_TOKEN --repo charlesandre/radio-thomas`. Revoke the old token on the same Vercel page.
+- If the token expires or is revoked, every deploy fails with an authentication error until it is replaced.
+- Manual deploy from a computer (backup): `npm install -g vercel && vercel login && vercel deploy --prod --scope charlesandres-projects`. This only works if the latest commit's author is the owner (Hobby rule).
 
 ---
 
@@ -374,7 +353,7 @@ By default Antigravity will **ask your permission** before using an MCP tool the
 |---|---|---|
 | **GitHub** | Repo → **Settings → Collaborators → Add people** → your username | You accept the email invite. |
 | **Supabase** | Dashboard → organization → **Team** (members) → invite your email, access to project `thomas-radio` | You log in with *your own* Supabase account at https://supabase.com, then the MCP login in 6.3 uses it. |
-| **Vercel** | **Hobby plan limits this:** Hobby accounts can't have extra members. So your own Vercel account will **not** see the `radio-thomas` project. | To change that: option B in [5.2](#52-the-important-catch-hobby-plan-and-commit-authors) (Pro + add you as member). Until then, you work through GitHub and the owner deploys; the Vercel MCP is not useful for you. |
+| **Vercel** | **Hobby plan limits this:** Hobby accounts can't have extra members. So your own Vercel account will **not** see the `radio-thomas` project. | To change that, the owner must upgrade to Vercel Pro and add you as a member. Until then you don't need it: pushing to `master` deploys automatically through GitHub (section 5), and the Vercel MCP is not useful for you. |
 
 ---
 
@@ -432,8 +411,8 @@ Tips: if the AI wants to run a command you don't understand, ask *"explain what 
 | `npm run dev`: **port 5173 already in use** | Another copy is running — close it (`Ctrl + C`) or use the new port Vite suggests. |
 | Page is blank / red error in the browser | Read the terminal running `npm run dev` and the browser console (`F12`). Paste the error to your AI and ask it to fix it. |
 | The backend message never appears locally | The `/api` proxy needs internet. Check https://radio-thomas-charlesandres-projects.vercel.app/api/hello opens in your browser. |
-| I pushed, but the live site didn't change | Vercel → Deployments. **Blocked** → commit author problem (section 5.2). **Error** → run `npm run build` locally. **Nothing new** → you pushed a branch, not `master`; merge it first. |
-| Deployment says **BLOCKED** | Hobby plan + commit author isn't the owner. See 5.2 options. Also double check `git config user.email`. |
+| I pushed, but the live site didn't change | GitHub → **Actions** tab (section 5.2). **Red cross** → open the run and read the error; usually run `npm run build` locally. **No run at all** → you pushed a branch, not `master`; merge it first. |
+| The Action fails at the Vercel step with an auth/token error | The `VERCEL_TOKEN` secret expired or was revoked. Tell Charles (section 5.4). |
 | Wrong email on my commits | `git config --global user.email "right@email.com"`. Only affects *new* commits. |
 | `git push` rejected ("fetch first" / "non-fast-forward") | Someone pushed before you. Run `git pull`, then `git push` again. If it reports conflicts, ask your AI: *"Help me resolve these git merge conflicts"*. |
 | MCP server shows "needs authentication" | Do the steps in 6.3. In the CLI use `/mcp` to check status and logs. |
