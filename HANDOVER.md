@@ -11,7 +11,7 @@ Welcome! This guide takes you from "I have nothing installed" to "I changed the 
 3. [Get the code and run it on your computer](#3-get-the-code-and-run-it-on-your-computer)
 4. [Day-to-day: saving your work with Git](#4-day-to-day-saving-your-work-with-git)
 5. [Putting the site live (deploying)](#5-putting-the-site-live-deploying)
-6. [Connecting Vercel and Supabase to your AI (MCP)](#6-connecting-vercel-and-supabase-to-your-ai-mcp)
+6. [Connecting Supabase to your AI (MCP)](#6-connecting-supabase-to-your-ai-mcp)
 7. [How to ask the AI (copy-paste prompts)](#7-how-to-ask-the-ai-copy-paste-prompts)
 8. [Security rules](#8-security-rules)
 9. [Troubleshooting](#9-troubleshooting)
@@ -28,7 +28,7 @@ A website for **medical radiography courses**, with a landing page, course conte
 | **Frontend** | The pages people see. Built with *Vite + React*. | `src/`, `index.html` |
 | **Backend (API)** | Small server functions the pages call. | `api/` (e.g. `api/hello.js`) |
 | **Database** | Stores data (e.g. quiz content). Run by *Supabase*. Project name: `thomas-radio`. | Supabase cloud |
-| **Hosting** | Puts the site on the internet. Run by *Vercel*. Project: `radio-thomas`. | Vercel cloud |
+| **Hosting** | Puts the site on the internet. **Fully automatic — you never touch it and need no account.** | Handled for you |
 | **Code storage** | Keeps all versions of the code. *GitHub* repo `charlesandre/radio-thomas`. | GitHub cloud |
 
 Simple picture:
@@ -38,7 +38,7 @@ Simple picture:
           |
           v
   +----------------+        +------------------+        +------------------+
-  |    Vercel      | -----> |  /api functions  | -----> |  Supabase (DB)   |
+  |    Hosting     | -----> |  /api functions  | -----> |  Supabase (DB)   |
   | (hosts the     |        |  (api/*.js)      |        |  project         |
   |  React site)   |        |                  |        |  thomas-radio    |
   +----------------+        +------------------+        +------------------+
@@ -158,17 +158,16 @@ then start Antigravity CLI. Now you can ask it to change the site (see [section 
 
 ### 3.5 About the "/api" and the database locally
 
-The site calls `/api/...` for data (the API reads Supabase). On your computer the API functions are **not** running, so `vite.config.js` automatically **forwards `/api` to the live backend** on Vercel. Result: everything works locally with no extra setup, and you read the real database.
+The site calls `/api/...` for data (the API reads Supabase). On your computer the API functions are **not** running, so `vite.config.js` automatically **forwards `/api` to the live backend**. Result: everything works locally with no extra setup, and you read the real database.
 
 Want to point at a different backend? Create a file called `.env.local` in the project root with:
 
 ```
-VITE_API_PROXY=https://your-other-backend.vercel.app
+VITE_API_PROXY=https://your-other-backend.example.com
 ```
 
 (see `.env.example`). Never commit `.env.local` (it is already ignored by Git).
 
-*Advanced, optional:* `vercel dev` can run the API functions locally too, but it requires being logged in to the Vercel account that owns the project and having the Supabase variables set — skip it unless the owner gives you access. The proxy is enough for 99% of work.
 
 ### 3.6 Check a production build (optional)
 
@@ -176,7 +175,7 @@ VITE_API_PROXY=https://your-other-backend.vercel.app
 npm run build
 ```
 
-**You should see** `✓ built in …` and a `dist/` folder. This is what Vercel runs when deploying. If it fails, the site would fail to deploy too — fix it before pushing.
+**You should see** `✓ built in …` and a `dist/` folder. This is what the automatic deploy runs. If it fails, the site would fail to deploy too — fix it before pushing.
 
 ---
 
@@ -247,56 +246,45 @@ On this project **every push to `master` publishes the site automatically** (see
 
 ## 5. Putting the site live (deploying)
 
-### 5.1 How it works (nothing to do for you)
-
-**Every push to `master` publishes the site automatically.** A GitHub Action (`.github/workflows/deploy.yml`) builds the site and sends it to Vercel, using a Vercel access token that Charles stored safely in the repo's GitHub secrets (`VERCEL_TOKEN`). You never see or need that token.
+**You don't need to do anything special, and you don't need any hosting account.** Every push to `master` publishes the site automatically:
 
 ```
-you push to master  →  GitHub Action runs (≈1–2 min)  →  site is live
+you push to master  →  automatic build & publish (≈1–2 min)  →  site is live
 ```
 
 Live site: https://radio-thomas-charlesandres-projects.vercel.app
 
-Why an Action and not Vercel's own GitHub link? The Vercel account is on the free **Hobby** plan, which refuses to deploy commits written by anyone other than the account owner. The Action deploys *as the owner*, so your commits go live too. (Vercel's own Git deployments are switched off in `vercel.json` so they don't create blocked duplicates.)
-
-> **Please keep this honest:** Hobby plans are meant for personal, non-commercial projects, and Vercel can restrict accounts that use workarounds for team or commercial use. If the site becomes a business, upgrade to Vercel Pro (about $20/month per seat, check current pricing) and add team members properly.
-
-### 5.2 Watching a deploy
+### 5.1 Watching a deploy
 
 1. Push your change.
-2. On GitHub: repo `charlesandre/radio-thomas` → **Actions** tab → the top run named **Deploy to Vercel**. Green check = live. Red cross = click it to read the error.
+2. On GitHub: repo `charlesandre/radio-thomas` → **Actions** tab → the top run named **Deploy site**. Green check = live. Red cross = click it to read the error.
 3. Or in the terminal: `gh run list --limit 3` and `gh run watch`.
 4. Open the live URL and hard-refresh (`Cmd/Ctrl + Shift + R`).
 5. Backend test: open https://radio-thomas-charlesandres-projects.vercel.app/api/hello. You should see JSON with a `message`.
 
-**If the run fails:** most often `npm run build` fails. Run it on your computer, read the error, fix, push again. Ask the AI: *"The Deploy to Vercel GitHub Action failed, here is the log, please fix it."*
+**If the run fails:** most often `npm run build` fails. Run it on your computer, read the error, fix, push again. Ask the AI: *"The Deploy site GitHub Action failed, here is the log, please fix it."*
 
-**Re-run without a new commit:** Actions tab → **Deploy to Vercel** → **Run workflow**.
+**Re-run without a new commit:** Actions tab → **Deploy site** → **Run workflow**.
 
-### 5.3 Environment variables (database address and key)
+### 5.2 Database address and key
 
-Set on Vercel (Production). You normally never need to touch them.
+The live site already has them configured (`SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`). Nothing to do. If a new secret is ever needed, ask Charles to add it. Don't paste key values into chat, docs, or Git.
 
-| Name | What it is | Where to find the value |
-|---|---|---|
-| `SUPABASE_URL` | Address of the database API | Supabase dashboard → project `thomas-radio` → **Project Settings → API** ("Project URL") |
-| `SUPABASE_PUBLISHABLE_KEY` | Public (browser-safe) key, protected by row-level security | Supabase dashboard → **Project Settings → API keys** → "Publishable key" |
+<details>
+<summary>Owner only (Charles)</summary>
 
-Changing one needs the Vercel dashboard (owner). Don't paste key values into chat, docs, or Git.
+- The deploy uses the GitHub secret `VERCEL_TOKEN` (repo → Settings → Secrets and variables → Actions). If it expires or is revoked, deploys fail at the last step until replaced: create a new token in the Vercel account settings, then `gh secret set VERCEL_TOKEN --repo charlesandre/radio-thomas`.
+- The hosting account is on a free personal plan. If the site becomes a business, move to a paid plan.
 
-### 5.4 Owner-only notes (Charles)
-
-- The GitHub secret is `VERCEL_TOKEN` (repo → Settings → Secrets and variables → Actions). To replace it: create a new token at Vercel → avatar → Settings → Tokens, then `gh secret set VERCEL_TOKEN --repo charlesandre/radio-thomas`. Revoke the old token on the same Vercel page.
-- If the token expires or is revoked, every deploy fails with an authentication error until it is replaced.
-- Manual deploy from a computer (backup): `npm install -g vercel && vercel login && vercel deploy --prod --scope charlesandres-projects`. This only works if the latest commit's author is the owner (Hobby rule).
+</details>
 
 ---
 
-## 6. Connecting Vercel and Supabase to your AI (MCP)
+## 6. Connecting Supabase to your AI (MCP)
 
-**MCP** lets your AI assistant talk directly to Vercel (see deployments, logs) and Supabase (look at tables, run queries) instead of you copying things around. Optional but very handy.
+**MCP** lets your AI assistant talk directly to Supabase (look at tables, run queries, create tables) instead of you copying things around. Optional but very handy for anything database-related.
 
-> **Honest heads-up:** Vercel only approves a list of AI tools to connect to its MCP server (https://vercel.com/docs/mcp/vercel-mcp). Antigravity is not on that list at the time of writing, so the Vercel connection may be refused. If so, use the Vercel command line instead (`vercel logs`, `vercel ls`) or the Vercel dashboard. Supabase's MCP server has no such restriction.
+> You do **not** need a Vercel account or a Vercel connection for anything in this guide. Publishing is automatic (section 5).
 
 ### 6.1 Where Antigravity stores MCP settings
 
@@ -307,7 +295,7 @@ Source: https://antigravity.google/docs/mcp/
 
 The file is JSON. Remote servers use the key **`serverUrl`** (not `url`). In the Antigravity app you can also open: agent side panel → **…** → **MCP Servers** → **Manage MCP Servers** → **View raw config**.
 
-### 6.2 Add Supabase and Vercel
+### 6.2 Add Supabase
 
 Open (or create) `~/.gemini/config/mcp_config.json` and put:
 
@@ -316,15 +304,12 @@ Open (or create) `~/.gemini/config/mcp_config.json` and put:
   "mcpServers": {
     "supabase": {
       "serverUrl": "https://mcp.supabase.com/mcp?project_ref=bfpyeoeggxhaiyvvltbm"
-    },
-    "vercel": {
-      "serverUrl": "https://mcp.vercel.com"
     }
   }
 }
 ```
 
-If the file already has other servers, just add these two entries inside the existing `mcpServers` block (mind the commas).
+If the file already has other servers, just add the `supabase` entry inside the existing `mcpServers` block (mind the commas).
 
 Notes on the Supabase URL (source: https://supabase.com/docs/guides/getting-started/mcp):
 
@@ -353,7 +338,6 @@ By default Antigravity will **ask your permission** before using an MCP tool the
 |---|---|---|
 | **GitHub** | Repo → **Settings → Collaborators → Add people** → your username | You accept the email invite. |
 | **Supabase** | Dashboard → organization → **Team** (members) → invite your email, access to project `thomas-radio` | You log in with *your own* Supabase account at https://supabase.com, then the MCP login in 6.3 uses it. |
-| **Vercel** | **Hobby plan limits this:** Hobby accounts can't have extra members. So your own Vercel account will **not** see the `radio-thomas` project. | To change that, the owner must upgrade to Vercel Pro and add you as a member. Until then you don't need it: pushing to `master` deploys automatically through GitHub (section 5), and the Vercel MCP is not useful for you. |
 
 ---
 
@@ -394,7 +378,7 @@ Tips: if the AI wants to run a command you don't understand, ask *"explain what 
 - **Never commit secrets.** Files named `.env` or `.env.*` are ignored by Git on purpose (except `.env.example`, which holds no real values). Don't remove that protection.
 - **Never share the Supabase `service_role` key** (or "secret" key). It bypasses all database protection. Only the *publishable* key is allowed in this project's configuration, and even that you shouldn't paste into chats.
 - **Row Level Security (RLS) is ON** for our tables. It means the public key can only do what the table's policies allow (e.g. the `hello` table is read-only to the public). When the AI creates a new table, always ask it to **enable RLS and add policies** — a table without RLS is readable and writable by anyone.
-- **Never share passwords or login codes** (GitHub, Vercel, Supabase), not even with the owner. Use invites instead.
+- **Never share passwords or login codes** (GitHub, Supabase), not even with the owner. Use invites instead.
 - Keep **tool-approval prompts on** in Antigravity, especially for MCP tools and terminal commands.
 - If you ever paste a secret by accident: tell the owner immediately so it can be rotated.
 
@@ -412,11 +396,10 @@ Tips: if the AI wants to run a command you don't understand, ask *"explain what 
 | Page is blank / red error in the browser | Read the terminal running `npm run dev` and the browser console (`F12`). Paste the error to your AI and ask it to fix it. |
 | The backend message never appears locally | The `/api` proxy needs internet. Check https://radio-thomas-charlesandres-projects.vercel.app/api/hello opens in your browser. |
 | I pushed, but the live site didn't change | GitHub → **Actions** tab (section 5.2). **Red cross** → open the run and read the error; usually run `npm run build` locally. **No run at all** → you pushed a branch, not `master`; merge it first. |
-| The Action fails at the Vercel step with an auth/token error | The `VERCEL_TOKEN` secret expired or was revoked. Tell Charles (section 5.4). |
+| The Action fails at the last step with an authentication error | The deploy credential expired. Tell Charles. |
 | Wrong email on my commits | `git config --global user.email "right@email.com"`. Only affects *new* commits. |
 | `git push` rejected ("fetch first" / "non-fast-forward") | Someone pushed before you. Run `git pull`, then `git push` again. If it reports conflicts, ask your AI: *"Help me resolve these git merge conflicts"*. |
 | MCP server shows "needs authentication" | Do the steps in 6.3. In the CLI use `/mcp` to check status and logs. |
-| Vercel MCP refuses to connect | Expected for some clients (see the note at the top of section 6). Use the Vercel dashboard or `vercel` CLI instead. |
 | Supabase MCP can't see tables | Check you accepted the Supabase invite, and that the URL has the right `project_ref` (`bfpyeoeggxhaiyvvltbm`). |
 | Something is really stuck | Save nothing, copy the full error text, and ask Charles. Don't delete the project folder in a panic — Git keeps everything safe on GitHub. |
 
@@ -434,5 +417,5 @@ Tips: if the AI wants to run a command you don't understand, ask *"explain what 
 - **Frontend / backend** — what visitors see / the server code behind it.
 - **API** — a URL the frontend calls to get data (here `/api/...`).
 - **Environment variable** — a setting (like a database address) kept outside the code.
-- **MCP** — a plug that lets your AI assistant use outside tools (Vercel, Supabase).
+- **MCP** — a plug that lets your AI assistant use outside tools (Supabase).
 - **RLS (Row Level Security)** — database rules that decide who can read or write which rows.

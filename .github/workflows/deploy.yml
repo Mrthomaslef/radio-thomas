@@ -1,4 +1,4 @@
-name: Deploy to Vercel
+name: Deploy site
 
 # Every push to master deploys to production. The deploy runs as the project
 # owner (via VERCEL_TOKEN), so it works for any collaborator's commits.
