@@ -1,12 +1,12 @@
 # Radio Thomas: instructions for AI agents
 
-Website for **medical radiography courses with quizzes**. Vite + React frontend, serverless API in `api/`, Supabase (Postgres) database, hosted automatically from GitHub.
+"QUIZ Cotten": a website of **medical radiography quizzes** (currently the shoulder theme, 4 chapters, 40 questions with corrections and figures). Vite + React frontend, serverless API in `api/`, Supabase (Postgres) database, deployed automatically from GitHub.
 
 The person you are helping is **not very technical**. Explain in plain words, one step at a time, and say what you changed and how to see it.
 
 ## Language
 
-- **Site copy (everything visitors read) is in French.** Keep it French and keep the tone clear and friendly. Use proper accents and typographic apostrophes (’).
+- **Site copy (everything visitors read) is in French.** Keep it French, clear and friendly, with proper accents and typographic apostrophes (’).
 - Code, identifiers, comments and commit messages: English.
 - Talk to the user in the language they use.
 
@@ -18,35 +18,118 @@ npm run dev          # http://localhost:5173
 npm run build        # production build, must pass before every push
 ```
 
-- `npm run dev` forwards `/api/*` to the live backend (see `vite.config.js`), so no extra setup is needed. Open http://localhost:5173 in the browser.
+- `npm run dev` forwards `/api/*` to the live backend (`vite.config.js`, override with `VITE_API_PROXY` in `.env.local`), so no extra setup is needed. Local quiz results and admin edits therefore hit the **live database**.
 - To stop the dev server: `Ctrl + C`.
+
+## Architecture in one picture
+
+```
+Browser (React SPA, hash routes)
+   │  fetch('/api/...')
+   ▼
+api/*.js  (Vercel serverless functions, ES modules)
+   │  Supabase REST with the PUBLISHABLE key (SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY env vars)
+   ▼
+Supabase Postgres (project thomas-radio): RLS everywhere, admin writes only via password-checked SQL functions
+```
+
+There is **no router library and no state library**: routes are `window.location.hash`, state is React `useState`, animations use `framer-motion`.
+
+## Routes (hash router in `src/App.jsx`)
+
+| Hash | Shows |
+|---|---|
+| `#/` (anything else) | `Home`: asks a pseudo, then lists themes/chapters |
+| `#/epaule` | `Home` with the theme "L’épaule" opened (so "back" from a chapter lands there) |
+| `#/quiz/<ch1..ch4>` | `ChapterQuiz` for that chapter |
+| `#/admin` | `AdminPage` (password-protected; footer link "Espace formateur") |
+
+To add a theme: add it to `src/data/themes.js`. To add a chapter: add `src/data/quiz/chN.json`, register it in `src/data/useQuestions.js` (`CHAPTERS`) and `src/App.jsx` (`chapters`), and put its figures in `public/figures/chN/`.
 
 ## Project map
 
 | Path | What |
 |---|---|
-| `src/components/` | Page sections (Hero, Courses, Quiz, ...) |
-| `src/data/courses.js`, `src/data/quiz.js` | Course list and quiz questions (edit content here) |
-| `src/styles.css` | All styling (mobile rules at the bottom) |
-| `api/*.js` | Serverless functions, ES modules (`export default async function handler(req, res)`) |
-| `.github/workflows/deploy.yml` | Automatic deploy, do not change without asking the owner |
+| `src/main.jsx`, `src/App.jsx` | Entry point and hash router |
+| `src/components/Home.jsx` | Pseudo step + theme/chapter picker (counts come from live questions) |
+| `src/components/ChapterQuiz.jsx` | The quiz player: sub-theme filter chips, QCU/QRM, correction with figures and book reference, result screen, saves the result |
+| `src/components/AdminPage.jsx` | Login + tab "Résultats" (who/when/score, filters) and tab "Questions" |
+| `src/components/QuestionsAdmin.jsx` | Question editor: list, create, edit, soft-delete, restore, import, preview |
+| `src/components/Navbar.jsx`, `Footer.jsx`, `Icons.jsx` | Layout pieces and inline SVG icons |
+| `src/data/themes.js` | Themes and their chapters (home page structure) |
+| `src/data/useQuestions.js` | Hook that loads live questions from `/api/questions`; falls back to the bundled JSON; module-level cache; `resetQuestionsCache()` after admin edits |
+| `src/data/quiz/ch1–ch4.json` | Bundled questions + chapter metadata (title, authors, book) = fallback and source of the one-time import |
+| `src/data/player.js` | Pseudo kept in `localStorage` (`radio-thomas:name`) |
+| `src/styles.css` | All styling in one file (CSS variables on `:root`, mobile rules at the bottom) |
+| `api/*.js` | Serverless endpoints (see below); `_validate.js` is shared and not an endpoint (leading `_`) |
+| `supabase/migrations/` | SQL schema, timestamped; applied by hand (Supabase MCP or SQL editor) |
+| `public/figures/<chN>/` | Figures used in corrections (static PNG files) |
+| `.github/workflows/deploy.yml`, `vercel.json` | Automatic deploy; do not change without asking the owner |
+
+**Legacy, no longer used by the app:** `src/components/CoursePage.jsx`, `Quiz.jsx` and `Reveal.jsx` (the earlier single-course page and landing quiz). Do not build on them; delete them only if the owner agrees.
+
+## Quiz data model (one question)
+
+```jsonc
+{
+  "id": "c1-q01",                 // unique, /^[a-z0-9-]{1,40}$/
+  "type": "QCU",                  // QCU = one right answer, QRM = several
+  "theme": "Anatomie : insertions humérales",   // sub-theme, drives the filter chips
+  "enonce": "…", "enonce_image": null,
+  "items": [{ "id": "A", "texte": "…", "correct": true }, …],   // ids A–F
+  "explication": "…",
+  "correction_figures": [{ "file": "….png", "caption": "…" }],  // files in public/figures/<chapter>/
+  "source": { "page": 7, "element": "Texte", "refs": "[129, 150]" }
+}
+```
+
+- Scoring: a question counts only if the selected set equals the set of correct items (QRM is all-or-nothing). A quiz is "passed" at 60 %.
+- Item order is shuffled with a seed from the question id: stable across reloads.
+- Progress is kept in `localStorage` (`quiz-cotten:v1:<chapter>`); the pseudo in `radio-thomas:name`. Both fail silently in private mode.
+
+## API endpoints (`api/`)
+
+| Endpoint | Method | What |
+|---|---|---|
+| `/api/questions` | GET | Live (non-deleted) questions, short cache. Empty list → site uses the bundled JSON |
+| `/api/attempts` | POST | Stores one result `{name, course, quiz, score, total, passed, startedAt?}`; validated server-side. Public insert only |
+| `/api/admin` | POST | `{password}` → list of all attempts (RPC `admin_list_attempts`) |
+| `/api/admin-questions` | POST | `{password, action: list/save/delete/import, …}`; content validated by `_validate.js` |
+| `/api/hello` | GET | Smoke test that reads the `hello` table |
+
+Error messages returned by the API are in French. Functions use the **publishable** key only; they never have a secret key.
+
+## Database (Supabase, project `thomas-radio`, region eu-west-1)
+
+| Table | Access |
+|---|---|
+| `public.quiz_attempts` | RLS: anon/authenticated can only INSERT. No public read |
+| `public.quiz_questions` (`id`, `chapter`, `position`, `data` jsonb, `deleted_at`) | Public SELECT of rows where `deleted_at is null`. Writes only through admin functions |
+| `public.hello` | Public read, smoke test |
+| `private.admin_secret`, `private.admin_login_failures`, `private.quiz_question_versions` | No grants: unreachable from the API; used by the functions |
+
+Admin functions (`admin_list_attempts`, `admin_list_questions`, `admin_save_question`, `admin_delete_question`, `admin_import_questions`) are `SECURITY DEFINER`, check the password in Postgres (bcrypt) and lock everyone out for 10 min after 5 failed tries. Deleting a question is soft (`deleted_at`) and every change keeps the previous version in `private.quiz_question_versions`. The admin password is **never written in the repo or in chat**; it is rotated with SQL in the Supabase editor.
+
+Rules:
+- Use the Supabase MCP when available. The live database is **production**: there is no staging copy.
+- Every new table needs **row-level security and a tested policy**. After schema changes, run the Supabase advisors and fix any warning.
+- Save schema changes as SQL files in `supabase/migrations/` and **apply them** (a file in the repo is not applied automatically; check with the MCP `list_migrations`). Never `DELETE` without a `WHERE` (PostgREST refuses it).
+- The browser and the API may only use the **publishable** key. Never put a `service_role`/secret key in frontend code, Git or chat.
+- Names are personal data (GDPR, French/EU site): keep the privacy notice, collect nothing more than needed, delete a person's rows if asked.
+
+## Editing questions
+
+Normal path: the admin page, tab « Questions » (no deploy needed). The JSON files only matter as fallback, chapter metadata and the first import; the import never overwrites a question already edited on the site, so editing a JSON file does **not** change the live site. Figures cannot be uploaded from the admin yet: add the PNG to `public/figures/<chN>/` and push.
 
 ## Publishing: push to `master`
 
-**To publish a change, push it to `master`. That is the normal workflow.** Every push to `master` builds and deploys the site automatically in about 1–2 minutes. No hosting account, login or extra tool is needed.
-
-Do this when the user asks to publish or save their work:
+**To publish a change, push it to `master`. That is the normal workflow.** Every push to `master` builds and deploys the site automatically in about 1–2 minutes (GitHub Action "Deploy site"). No hosting account or extra tool is needed.
 
 ```bash
 npm run build                      # must succeed first
 git add -A
 git commit -m "Short description of the change"
 git push                           # pushes to master
-```
-
-Then check the result:
-
-```bash
 gh run list --limit 1              # "Deploy site" should end in success
 ```
 
@@ -54,35 +137,14 @@ Live site: https://radio-thomas-charlesandres-projects.vercel.app
 
 Rules:
 - Run `npm run build` before pushing. If it fails, fix it first. Never push a broken build.
-- Pull before starting work: `git pull`.
+- `git pull` before starting work (the owner and a friend both push to `master`).
 - Never `git push --force`.
-- Commit author email must be the user's own, set once with `git config user.email "..."` and `git config user.name "..."`.
-- If the "Deploy site" run fails, read the log with `gh run view --log-failed`, fix the cause, push again.
-
-## Database (Supabase, project `thomas-radio`)
-
-- Use the Supabase MCP when available. The live database is production: there is no staging copy.
-- Every new table needs **row-level security enabled and a tested policy**. After schema changes, run the Supabase advisors and fix any warning.
-- Save schema changes as SQL files in `supabase/migrations/` (timestamped) and commit them.
-- The browser may only use the **publishable** key. Never put a `service_role`/secret key in frontend code, Git or chat.
-- Anything storing personal data (e.g. who passed a quiz) needs a privacy notice, only the data really needed, and a way to delete it (the site is French/EU, GDPR applies).
-
-## Quiz results and admin page
-
-- Each quiz asks the participant's name, then stores `name, score, total, passed, date` at the end via `POST /api/attempts` (table `quiz_attempts`, RLS: the public can only insert, never read).
-- Admin page: `#/admin` on the site (linked as "Espace formateur" in the footer, hidden from search engines). It asks for a password, checked in the database (`admin_list_attempts`). **Never write the admin password in the repo or in chat.**
-- Names are personal data (GDPR): keep the privacy notice in the quiz name step, collect nothing more, and delete a person's rows if asked.
-
-## Editable quiz questions
-
-- The 40 shoulder questions (4 chapters, `ch1`–`ch4`) live in the database table `quiz_questions` (migration `supabase/migrations/20261018150000_quiz_questions.sql`, to be run once in the Supabase SQL editor). The public reads them through `GET /api/questions` (30 s cache); the JSON files in `src/data/quiz/` are the **fallback** (API down or table empty), the **chapter metadata** (title/authors for the reference line) and the **source of the one-time import**.
-- Editing happens on `#/admin`, tab « Questions » (`src/components/QuestionsAdmin.jsx`). All writes go through `POST /api/admin-questions`, which validates the content (`api/_validate.js`) and calls SQL functions that check the admin password. Deleting is soft (`deleted_at`) and every change keeps the previous version in `private.quiz_question_versions`.
-- Import never overwrites: edits made on the site are never replaced by the JSON files. If you change a JSON file and want it live, edit the question in the admin instead.
-- Figures stay static files in `public/figures/<chX>/`; adding new images from the admin is not built yet.
+- Commit author must be the user's own name and email (`git config user.email`, `git config user.name`).
+- If the "Deploy site" run fails: `gh run view --log-failed`, fix the cause, push again.
 
 ## Figures and copyright
 
-Quiz text is our own wording. The owner confirmed (Oct 2026) that they have the right to publish the figures extracted from the source book (chapters 1–4 of « Imagerie musculosquelettique », Elsevier Masson), so `public/figures/<chX>/` is committed and shown in the corrections. Do not add figures from other sources without the owner confirming the rights.
+Quiz text is our own wording. The owner confirmed (Oct 2026) the right to publish the figures extracted from the source book (« Imagerie musculosquelettique », Elsevier Masson), so `public/figures/<chN>/` is committed and shown in corrections with their captions and the book reference. Do not add figures from other sources without the owner confirming the rights.
 
 ## Never
 
