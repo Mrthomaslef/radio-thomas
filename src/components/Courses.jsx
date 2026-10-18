@@ -13,26 +13,31 @@ export default function Courses() {
       </Reveal>
 
       <div className="grid">
-        {courses.map((c, i) => (
-          <Reveal key={c.id} delay={(i % 3) * 0.1}>
-            <motion.article
-              className="card"
-              style={{ '--accent': c.accent }}
-              whileHover={{ y: -8 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            >
-              <div className="card-icon"><Icon name={c.icon} size={26} /></div>
-              <span className="badge">{c.level}</span>
-              <h3>{c.title}</h3>
-              <p>{c.blurb}</p>
-              <div className="card-meta">
-                <span>{c.lessons} leçons</span>
-                <span>{c.hours} h</span>
-                <span className="card-go">Commencer <Icon name="arrow" size={16} /></span>
-              </div>
-            </motion.article>
-          </Reveal>
-        ))}
+        {courses.map((c, i) => {
+          const Card = c.available ? motion.a : motion.article;
+          return (
+            <Reveal key={c.id} delay={(i % 3) * 0.1}>
+              <Card
+                className={`card ${c.available ? '' : 'card-soon'}`}
+                style={{ '--accent': c.accent }}
+                {...(c.available ? { href: c.href } : {})}
+                whileHover={{ y: -8 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              >
+                <div className="card-icon"><Icon name={c.icon} size={26} /></div>
+                <span className={`badge ${c.available ? 'badge-live' : ''}`}>{c.available ? 'Disponible' : 'Bientôt'}</span>
+                <h3>{c.title}</h3>
+                <p>{c.blurb}</p>
+                <div className="card-meta">
+                  <span>{c.level}</span>
+                  <span>{c.lessons} leçons</span>
+                  {c.quiz ? <span>{c.quiz} questions</span> : <span>{c.hours} h</span>}
+                  {c.available && <span className="card-go">Ouvrir <Icon name="arrow" size={16} /></span>}
+                </div>
+              </Card>
+            </Reveal>
+          );
+        })}
       </div>
     </section>
   );

@@ -1,5 +1,20 @@
 // Catalogue de cours (contenu provisoire) — la section Cours s'affiche à partir de cette liste.
+import { coursCoiffe } from './coursCoiffe.js';
+
 export const courses = [
+  {
+    id: 'coiffe',
+    title: 'Pathologies de la coiffe des rotateurs',
+    level: 'Intermédiaire',
+    lessons: 6,
+    hours: 2,
+    quiz: coursCoiffe.quiz.length,
+    accent: '#38e1ff',
+    blurb: 'De l’anatomie de l’épaule aux radiographies : ruptures, tendinopathies, examen clinique et imagerie, avec un quiz pour valider vos connaissances.',
+    icon: 'bone',
+    href: '#/cours/pathologie-coiffe',
+    available: true,
+  },
   {
     id: 'anatomy',
     title: 'Anatomie & positionnement',

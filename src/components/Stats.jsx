@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'framer-motion';
 import Reveal from './Reveal.jsx';
+import { coursCoiffe } from '../data/coursCoiffe.js';
 
-// Chiffres provisoires — à remplacer par les vrais quand le contenu existera.
+// Mettre à jour ces chiffres quand de nouveaux cours sont publiés.
 const stats = [
-  { value: 6, suffix: '', label: 'Cours complets' },
-  { value: 120, suffix: '+', label: 'Leçons courtes' },
-  { value: 1500, suffix: '+', label: 'Questions de quiz' },
+  { value: 1, suffix: '', label: 'Cours disponible' },
+  { value: 6, suffix: '', label: 'Leçons détaillées' },
+  { value: coursCoiffe.quiz.length, suffix: '', label: 'Questions de quiz' },
   { value: 100, suffix: '%', label: 'À votre rythme' },
 ];
 

@@ -5,3 +5,5 @@ dist
 .env.*
 !.env.example
 .DS_Store
+# figures from the source book: do not publish without confirmed rights
+public/figures/

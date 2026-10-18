@@ -67,6 +67,16 @@ Rules:
 - The browser may only use the **publishable** key. Never put a `service_role`/secret key in frontend code, Git or chat.
 - Anything storing personal data (e.g. who passed a quiz) needs a privacy notice, only the data really needed, and a way to delete it (the site is French/EU, GDPR applies).
 
+## Quiz results and admin page
+
+- Each quiz asks the participant's name, then stores `name, score, total, passed, date` at the end via `POST /api/attempts` (table `quiz_attempts`, RLS: the public can only insert, never read).
+- Hidden admin page: `#/admin` on the site (not linked anywhere). It asks for a password, checked in the database (`admin_list_attempts`). **Never write the admin password in the repo or in chat.**
+- Names are personal data (GDPR): keep the privacy notice in the quiz name step, collect nothing more, and delete a person's rows if asked.
+
+## Figures and copyright
+
+Course text is our own wording. Do **not** commit figures copied from books or other copyrighted sources. `public/figures/` is git-ignored; image-based quiz questions stay off (`SHOW_FIGURES` in `src/data/coursCoiffe.js`) until the owner confirms the right to publish them or replaces them with openly licensed images.
+
 ## Never
 
 - Commit `.env` files, passwords, tokens or keys.
