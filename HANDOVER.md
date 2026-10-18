@@ -194,47 +194,47 @@ Use an email that is **attached to your GitHub account** (GitHub → Settings �
 
 > Use your own name and email: commits show who made each change. (You do **not** need the owner's email: publishing is handled by an automatic GitHub Action, see [section 5](#5-putting-the-site-live-deploying).)
 
-### 4.2 The normal loop (use a branch + pull request — recommended)
+### 4.2 The normal loop: push to `master` (this publishes the site)
 
-A **branch** is a safe copy to experiment on. The live site only changes when the branch is merged into `master`.
+This is how you work every day. Pushing to `master` is the normal way to publish: the site updates by itself about 1–2 minutes later (section 5).
 
 ```bash
-git checkout master
-git pull
-git checkout -b my-change-name
+git pull                          # get the latest version first
 ```
 
-Make your changes (with the AI). Look at what changed:
+Make your changes (with the AI). Check that the site still builds, and look at what changed:
 
 ```bash
+npm run build
 git status
 ```
 
-Save and upload:
+Save and publish:
 
 ```bash
 git add -A
 git commit -m "Short description of what I changed"
-git push -u origin my-change-name
-```
-
-**You should see** a line with a link like `Create a pull request for 'my-change-name' on GitHub`. Open it → **Create pull request** → ask Charles to review and merge. Or do it from the terminal:
-
-```bash
-gh pr create --fill
-```
-
-Before every new piece of work: `git checkout master && git pull` so you start from the latest version.
-
-### 4.3 Push straight to master (publishes the site)
-
-```bash
-git add -A
-git commit -m "Short description"
 git push
 ```
 
-On this project **every push to `master` publishes the site automatically** (see [section 5](#5-putting-the-site-live-deploying)), so only do this for small changes you have tested (`npm run build` passes). For bigger or riskier work, use a branch + pull request (4.2) and merge it when you are happy.
+**You should see** `master -> master` in the output. Then watch the **Actions** tab on GitHub (section 5.1): a green check means the change is live.
+
+Tip: you can simply tell your AI *"publish my changes to master"*. The project instruction file `AGENTS.md` tells it how.
+
+### 4.3 Optional: use a branch for risky work
+
+For a big or risky change, work on a **branch** (a safe copy). The live site only changes when it is merged into `master`.
+
+```bash
+git checkout -b my-change-name
+# ...work, then:
+git add -A
+git commit -m "Short description"
+git push -u origin my-change-name
+gh pr create --fill               # opens a pull request; merge it on GitHub when happy
+```
+
+After merging: `git checkout master && git pull`.
 
 ### 4.4 Never do these
 
@@ -343,7 +343,7 @@ By default Antigravity will **ask your permission** before using an MCP tool the
 
 ## 7. How to ask the AI (copy-paste prompts)
 
-Start Antigravity inside the project folder. Be specific, one task at a time, and always finish with "and make sure `npm run build` passes".
+Start Antigravity inside the project folder. It automatically reads `AGENTS.md` (the project's instruction file): it knows to keep the site in French, to run `npm run build` first, and to publish by pushing to `master`. Be specific, one task at a time, and always finish with "and make sure `npm run build` passes".
 
 **Look around first**
 > Explain the structure of this project in simple words. What file controls the landing page? What file controls the quizzes?
