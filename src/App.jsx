@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar.jsx';
-import Hero from './components/Hero.jsx';
-import Stats from './components/Stats.jsx';
-import Courses from './components/Courses.jsx';
-import HowItWorks from './components/HowItWorks.jsx';
-import Quiz from './components/Quiz.jsx';
+import Home from './components/Home.jsx';
 import Footer from './components/Footer.jsx';
 import CoursePage from './components/CoursePage.jsx';
 import AdminPage from './components/AdminPage.jsx';
@@ -14,6 +10,8 @@ import { coursCoiffe } from './data/coursCoiffe.js';
 const coursesBySlug = { [coursCoiffe.slug]: coursCoiffe };
 
 const isAdminRoute = () => window.location.hash === '#/admin';
+// "#/epaule" opens that theme's chapter list on the home page.
+const parseTheme = () => (window.location.hash.match(/^#\/([\w-]+)$/) || [])[1] || null;
 
 function parseRoute() {
   const m = window.location.hash.match(/^#\/cours\/([\w-]+)/);
@@ -23,11 +21,13 @@ function parseRoute() {
 export default function App() {
   const [course, setCourse] = useState(parseRoute);
   const [admin, setAdmin] = useState(isAdminRoute);
+  const [theme, setTheme] = useState(parseTheme);
 
   useEffect(() => {
     const onHash = () => {
       setCourse(parseRoute());
       setAdmin(isAdminRoute());
+      setTheme(parseTheme());
     };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
@@ -51,13 +51,7 @@ export default function App() {
         ) : course ? (
           <CoursePage course={course} />
         ) : (
-          <>
-            <Hero />
-            <Stats />
-            <Courses />
-            <HowItWorks />
-            <Quiz />
-          </>
+          <Home openTheme={theme} />
         )}
       </main>
       <Footer />

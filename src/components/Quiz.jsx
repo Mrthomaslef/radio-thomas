@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { quiz as defaultQuiz } from '../data/quiz.js';
 import Icon from './Icons.jsx';
 import Reveal from './Reveal.jsx';
+import { readName, saveName } from '../data/player.js';
 
 // Shuffle answer options (keeps track of the right one) so the answer is not always "A".
 function shuffleQuestions(questions) {
@@ -16,13 +17,6 @@ function shuffleQuestions(questions) {
   });
 }
 
-const NAME_KEY = 'radio-thomas:name';
-const readName = () => {
-  try { return localStorage.getItem(NAME_KEY) || ''; } catch { return ''; }
-};
-const saveName = (n) => {
-  try { localStorage.setItem(NAME_KEY, n); } catch { /* private mode: ignore */ }
-};
 
 export default function Quiz({
   questions = defaultQuiz,
@@ -128,21 +122,21 @@ export default function Quiz({
           {!started ? (
             <motion.form key="name" className="quiz-body name-step" onSubmit={start} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <h3>Avant de commencer</h3>
-              <label htmlFor={`${id}-name`}>Votre prénom et nom</label>
+              <label htmlFor={`${id}-name`}>Ton pseudo</label>
               <input
                 id={`${id}-name`}
                 className="name-input"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Ex. Camille Martin"
+                placeholder="Ton pseudo"
                 maxLength={80}
-                autoComplete="name"
+                autoComplete="nickname"
                 required
               />
               <p className="privacy">
-                Votre nom, votre score et la date du quiz sont enregistrés pour permettre à votre formateur de suivre
-                les résultats. Aucune autre donnée n’est collectée. Pour faire supprimer vos données, contactez-le.
+                Ton pseudo, ton score et la date du quiz sont enregistrés pour le suivi des résultats.
+                Aucune autre donnée n’est collectée. Pour faire supprimer tes données, contacte le formateur.
               </p>
               <button className="btn" type="submit" disabled={!name.trim()}>
                 Commencer le quiz <Icon name="arrow" size={18} />
@@ -174,7 +168,7 @@ export default function Quiz({
               </p>
               <div className="hero-actions center">
                 <button className="btn" onClick={restart}>Réessayer</button>
-                <a className="btn btn-ghost" href="#courses">Voir les cours</a>
+                <a className="btn btn-ghost" href="#/epaule">Autres chapitres</a>
               </div>
             </motion.div>
           ) : (

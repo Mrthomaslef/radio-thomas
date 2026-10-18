@@ -26,9 +26,9 @@ export default function CoursePage({ course }) {
   return (
     <div className="course">
       <header className="course-hero">
-        <a href="#courses" className="back">← Tous les cours</a>
+        <a href="#/epaule" className="back">← Chapitres de l’épaule</a>
         <motion.span className="eyebrow" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          Cours 1 · {course.level}
+          L’épaule · chapitre 1
         </motion.span>
         <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
           {course.title}
@@ -84,7 +84,7 @@ export default function CoursePage({ course }) {
         id="quiz-cours"
         course={course.slug}
         quizId="quiz-final"
-        eyebrow="Quiz du cours 1"
+        eyebrow="Quiz du chapitre"
         title="Validez vos connaissances"
         intro={`${course.quiz.length} questions tirées du cours. Les réponses sont mélangées à chaque essai. Il faut 60 % de bonnes réponses pour valider.`}
       />
