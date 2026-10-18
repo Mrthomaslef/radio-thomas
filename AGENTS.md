@@ -119,7 +119,7 @@ Rules:
 
 ## Editing questions
 
-Normal path: the admin page, tab « Questions » (no deploy needed). The JSON files only matter as fallback, chapter metadata and the first import; the import never overwrites a question already edited on the site, so editing a JSON file does **not** change the live site. Figures cannot be uploaded from the admin yet: add the PNG to `public/figures/<chN>/` and push.
+Normal path: the admin page, tab « Questions » (no deploy needed). The JSON files only matter as fallback, chapter metadata and the first import; the import never overwrites a question already edited on the site, so editing a JSON file does **not** change the live site. Images can be uploaded from the admin (a picture before the statement for iconography questions, and extra correction figures; **not** inside answers): the browser shrinks them (max 1400 px, JPEG), `POST /api/admin-questions {action:'upload'}` checks the real file signature, and they are stored in `public.quiz_images` (migration `20261018170000_quiz_images.sql`, to be applied by hand) and served by `GET /api/image?id=<32 hex>`. In a question they appear as `{upload:"<id>", alt|caption}` (bundled figures stay `{file, …}`). Use `imageSrc()` from `src/data/useQuestions.js` to build any image URL.
 
 ## Publishing: push to `master`
 

@@ -12,6 +12,22 @@ const clean = (s) => s.replace(/\r\n/g, '\n').trim();
 const validFile = (f) =>
   typeof f === 'string' && /^[^/\\<>:"?#%]{1,120}\.png$/i.test(f) && !f.includes('..') && !f.startsWith('.');
 
+// Images uploaded from the admin are referenced by a random 32-hex id (see api/image.js).
+const UPLOAD = /^[a-f0-9]{32}$/;
+const validUpload = (u) => typeof u === 'string' && UPLOAD.test(u);
+
+// An image is either a bundled file ({file}) or an upload ({upload}), plus a text field
+// (`alt` for statement/answer images, `caption` for correction figures).
+// Returns the cleaned image, or null when it is invalid.
+function cleanImage(img, textKey, textMax, textRequired) {
+  if (!img || typeof img !== 'object') return null;
+  const text = img[textKey] ?? '';
+  if (!isStr(text, textRequired ? 1 : 0, textMax)) return null;
+  if (validUpload(img.upload)) return { upload: img.upload, [textKey]: clean(text) };
+  if (validFile(img.file)) return { file: img.file, [textKey]: clean(text) };
+  return null;
+}
+
 export function validateId(id) {
   return typeof id === 'string' && ID.test(id);
 }
@@ -50,10 +66,8 @@ export function validateQuestion(q) {
 
   let enonce_image = null;
   if (q.enonce_image) {
-    if (!validFile(q.enonce_image.file) || !isStr(q.enonce_image.alt ?? '', 0, 300)) {
-      return { error: 'Image de l’énoncé invalide' };
-    }
-    enonce_image = { file: q.enonce_image.file, alt: clean(q.enonce_image.alt ?? '') };
+    enonce_image = cleanImage(q.enonce_image, 'alt', 300, false);
+    if (!enonce_image) return { error: 'Image de l’énoncé invalide' };
   }
 
   if (!Array.isArray(q.correction_figures) || q.correction_figures.length > 6) {
@@ -61,10 +75,9 @@ export function validateQuestion(q) {
   }
   const correction_figures = [];
   for (const f of q.correction_figures) {
-    if (!f || !validFile(f.file) || !isStr(f.caption, 1, 1200)) {
-      return { error: 'Figure invalide : fichier .png et légende (1 200 caractères max) obligatoires' };
-    }
-    correction_figures.push({ file: f.file, caption: clean(f.caption) });
+    const fig = cleanImage(f, 'caption', 1200, true);
+    if (!fig) return { error: 'Figure invalide : image et légende (1 200 caractères max) obligatoires' };
+    correction_figures.push(fig);
   }
 
   const s = q.source;

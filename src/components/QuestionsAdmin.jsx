@@ -1,6 +1,68 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { QuizPlayer } from './ChapterQuiz.jsx';
-import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, resetQuestionsCache } from '../data/useQuestions.js';
+import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, resetQuestionsCache, imageSrc } from '../data/useQuestions.js';
+
+const MAX_SIDE = 1400; // images are shrunk before sending: lighter pages, and well under the size limit
+
+// Reads a picture, shrinks it, and returns { mime, data (base64) } ready to upload.
+function prepareImage(file) {
+  return new Promise((resolve, reject) => {
+    if (!/^image\/(png|jpeg|webp)$/.test(file.type)) {
+      reject(new Error('Format non pris en charge : utilisez une image PNG, JPEG ou WebP.'));
+      return;
+    }
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const scale = Math.min(1, MAX_SIDE / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(img.width * scale));
+      canvas.height = Math.max(1, Math.round(img.height * scale));
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff'; // transparent areas become white (JPEG has no transparency)
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      resolve({ mime: 'image/jpeg', data: dataUrl.slice(dataUrl.indexOf(',') + 1) });
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('Impossible de lire cette image.'));
+    };
+    img.src = url;
+  });
+}
+
+// Picks a file, uploads it, and hands back { upload } (plus a text field handled by the caller).
+function ImagePicker({ password, label, onPicked, disabled }) {
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState('');
+  const onChange = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // allows picking the same file again
+    if (!file) return;
+    setBusy(true); setErr('');
+    try {
+      const { mime, data } = await prepareImage(file);
+      const out = await call(password, { action: 'upload', mime, data });
+      onPicked(out.id);
+    } catch (ex) {
+      setErr(ex.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <span className="qa-pick">
+      <label className={`btn btn-ghost btn-small${busy || disabled ? ' is-disabled' : ''}`}>
+        {busy ? 'Envoi…' : label}
+        <input type="file" accept="image/png,image/jpeg,image/webp" onChange={onChange} disabled={busy || disabled} hidden />
+      </label>
+      {err && <span className="admin-error" role="alert">{err}</span>}
+    </span>
+  );
+}
 
 const CHAPTER_LABELS = {
   ch1: 'Coiffe des rotateurs',
@@ -132,6 +194,7 @@ export default function QuestionsAdmin({ password }) {
         onDelete={editing.isNew ? null : () => remove(editing)}
         preview={preview}
         setPreview={setPreview}
+        password={password}
       />
     );
   }
@@ -192,7 +255,7 @@ export default function QuestionsAdmin({ password }) {
   );
 }
 
-function Editor({ editing, setEditing, busy, error, onSave, onCancel, onDelete, preview, setPreview }) {
+function Editor({ editing, setEditing, busy, error, onSave, onCancel, onDelete, preview, setPreview, password }) {
   const q = editing.q;
   const set = (patch) => setEditing((e) => ({ ...e, q: { ...e.q, ...patch } }));
   const setItem = (i, patch) => set({ items: q.items.map((it, k) => (k === i ? { ...it, ...patch } : it)) });
@@ -263,6 +326,29 @@ function Editor({ editing, setEditing, busy, error, onSave, onCancel, onDelete, 
         </label>
       </div>
 
+      <fieldset className="qa-items">
+        <legend>Image avant la question (question d’iconographie)</legend>
+        {q.enonce_image ? (
+          <div className="qa-fig">
+            <img src={imageSrc(editing.chapter, q.enonce_image)} alt="" />
+            <div className="qa-fig-body">
+              <label>Description de l’image (lue par les lecteurs d’écran, ne donnez pas la réponse)
+                <input className="admin-input" value={q.enonce_image.alt || ''} maxLength={300}
+                  onChange={(e) => set({ enonce_image: { ...q.enonce_image, alt: e.target.value } })} />
+              </label>
+              <div className="qa-fig-actions">
+                <ImagePicker password={password} label="Remplacer l’image" disabled={busy}
+                  onPicked={(id) => set({ enonce_image: { upload: id, alt: q.enonce_image.alt || '' } })} />
+                <button className="link-btn" onClick={() => set({ enonce_image: null })}>Retirer l’image</button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <ImagePicker password={password} label="+ Ajouter une image avant la question" disabled={busy}
+            onPicked={(id) => set({ enonce_image: { upload: id, alt: '' } })} />
+        )}
+      </fieldset>
+
       <label className="qa-field">Énoncé
         <textarea className="admin-input" rows={3} value={q.enonce} maxLength={1500} onChange={(e) => set({ enonce: e.target.value })} />
       </label>
@@ -294,10 +380,10 @@ function Editor({ editing, setEditing, busy, error, onSave, onCancel, onDelete, 
         <legend>Figures de la correction</legend>
         {q.correction_figures.length === 0 && <p className="admin-empty">Aucune figure.</p>}
         {q.correction_figures.map((f, i) => (
-          <div key={f.file + i} className="qa-fig">
-            <img src={encodeURI(`/figures/${editing.chapter}/${f.file}`)} alt="" loading="lazy" />
+          <div key={(f.upload || f.file) + i} className="qa-fig">
+            <img src={imageSrc(editing.chapter, f)} alt="" loading="lazy" />
             <div className="qa-fig-body">
-              <small>{f.file}</small>
+              <small>{f.upload ? 'Image envoyée depuis l’admin' : f.file}</small>
               <textarea className="admin-input" rows={3} value={f.caption} maxLength={1200} onChange={(e) => setFigure(i, { caption: e.target.value })} />
               <div className="qa-fig-actions">
                 <button className="link-btn" onClick={() => moveFigure(i, -1)} disabled={i === 0}>↑ Monter</button>
@@ -307,7 +393,9 @@ function Editor({ editing, setEditing, busy, error, onSave, onCancel, onDelete, 
             </div>
           </div>
         ))}
-        <p className="privacy">Ajouter une nouvelle image n’est pas encore possible depuis cette page.</p>
+        <ImagePicker password={password} label="+ Ajouter une image à la correction" disabled={busy || q.correction_figures.length >= 6}
+          onPicked={(id) => set({ correction_figures: [...q.correction_figures, { upload: id, caption: '' }] })} />
+        <p className="privacy">Les images sont réduites automatiquement (1 400 px maximum) avant l’envoi. N’envoyez que des images que vous avez le droit de publier.</p>
       </fieldset>
 
       <fieldset className="qa-items">

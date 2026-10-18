@@ -17,6 +17,10 @@ export const bundledQuestions = CHAPTER_KEYS.flatMap((key) =>
 
 const toQuestion = (row) => ({ id: row.id, ...row.data });
 
+// Address of an image: an upload from the admin ({upload}) or a bundled figure ({file}).
+export const imageSrc = (chapter, img) =>
+  img.upload ? `/api/image?id=${img.upload}` : encodeURI(`/figures/${chapter}/${img.file}`);
+
 // Group database rows by chapter; keeps only known chapters.
 function groupByChapter(rows) {
   const out = {};

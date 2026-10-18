@@ -1,5 +1,6 @@
 // POST /api/admin-questions {password, action, ...} — list / save / delete / import quiz questions.
 // The password is checked inside Postgres (private.check_admin), which also throttles wrong guesses.
+import { randomUUID } from 'node:crypto';
 import { validateChapter, validateId, validateQuestion } from './_validate.js';
 
 function readBody(req) {
@@ -85,6 +86,25 @@ export default async function handler(req, res) {
       }
       fn = 'admin_import_questions';
       args = { p_password: password, p_items: rows };
+      break;
+    }
+    case 'upload': {
+      // The browser resizes first; here we only accept small, real PNG/JPEG/WebP files.
+      const MIME = { 'image/png': 'png', 'image/jpeg': 'jpeg', 'image/webp': 'webp' };
+      const mime = body.mime;
+      const b64 = typeof body.data === 'string' ? body.data : '';
+      if (!MIME[mime] || b64.length < 100 || b64.length > 2000000 || !/^[A-Za-z0-9+/]+={0,2}$/.test(b64)) {
+        return res.status(400).json({ error: 'Image invalide (PNG, JPEG ou WebP, 1,5 Mo maximum)' });
+      }
+      const bytes = Buffer.from(b64, 'base64');
+      const head = bytes.subarray(0, 12);
+      const isPng = head.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+      const isJpeg = head[0] === 0xff && head[1] === 0xd8 && head[2] === 0xff;
+      const isWebp = head.subarray(0, 4).toString('latin1') === 'RIFF' && head.subarray(8, 12).toString('latin1') === 'WEBP';
+      const real = { png: isPng, jpeg: isJpeg, webp: isWebp }[MIME[mime]];
+      if (!real) return res.status(400).json({ error: 'Le fichier n’est pas une vraie image' });
+      fn = 'admin_upload_image';
+      args = { p_password: password, p_id: randomUUID().replace(/-/g, ''), p_mime: mime, p_b64: b64 };
       break;
     }
     default:

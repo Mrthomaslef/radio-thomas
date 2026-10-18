@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Icon from './Icons.jsx';
 import { readName } from '../data/player.js';
-import { useQuestions } from '../data/useQuestions.js';
+import { useQuestions, imageSrc } from '../data/useQuestions.js';
 
 // ---------- helpers ----------
 const hash = (s) => {
@@ -29,7 +29,7 @@ const isPerfect = (q, picked) => {
   const good = q.items.filter((i) => i.correct).map((i) => i.id).sort().join();
   return good === [...picked].sort().join();
 };
-const figUrl = (key, file) => encodeURI(`/figures/${key}/${file}`);
+// (figure URLs: see imageSrc in data/useQuestions.js)
 
 const store = (key) => ({
   read: () => { try { return JSON.parse(localStorage.getItem(key)) || {}; } catch { return {}; } },
@@ -202,12 +202,12 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
             <span>Question {idx + 1} / {list.length}</span>
             <span className={`cq-type cq-${q.type}`}>{q.type === 'QCU' ? 'Une seule réponse' : 'Plusieurs réponses possibles'}</span>
           </div>
-          <h2 className="cq-q">{q.enonce}</h2>
           {q.enonce_image && (
-            <figure className="cq-fig" onClick={() => setZoom({ src: figUrl(key, q.enonce_image.file), caption: q.enonce_image.alt })}>
-              <img src={figUrl(key, q.enonce_image.file)} alt={q.enonce_image.alt || ''} />
+            <figure className="cq-fig cq-fig-top" onClick={() => setZoom({ src: imageSrc(key, q.enonce_image), caption: q.enonce_image.alt })}>
+              <img src={imageSrc(key, q.enonce_image)} alt={q.enonce_image.alt || ''} />
             </figure>
           )}
+          <h2 className="cq-q">{q.enonce}</h2>
 
           <div className="cq-items">
             {q.shown.map((it, i) => {
@@ -232,8 +232,8 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
               <p className="cq-verdict">{isPerfect(q, validated) ? 'Exact.' : 'Pas tout à fait.'}</p>
               <p className="cq-expl">{q.explication}</p>
               {q.correction_figures?.map((f) => (
-                <figure key={f.file} className="cq-fig" onClick={() => setZoom({ src: figUrl(key, f.file), caption: f.caption })}>
-                  <img src={figUrl(key, f.file)} alt={f.caption} loading="lazy" />
+                <figure key={f.upload || f.file} className="cq-fig" onClick={() => setZoom({ src: imageSrc(key, f), caption: f.caption })}>
+                  <img src={imageSrc(key, f)} alt={f.caption} loading="lazy" />
                   <figcaption>{f.caption}<span className="cq-zoom"> · toucher pour agrandir</span></figcaption>
                 </figure>
               ))}
