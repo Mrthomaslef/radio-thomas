@@ -1,4 +1,4 @@
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   const { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } = process.env;
   if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
     return res.status(500).json({ error: 'Supabase env vars missing' });
@@ -16,4 +16,4 @@ module.exports = async (req, res) => {
 
   const [row] = await r.json();
   res.status(200).json({ message: row ? row.message : 'Hello World (no rows)' });
-};
+}
