@@ -2,20 +2,22 @@ import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar.jsx';
 import Home from './components/Home.jsx';
 import Footer from './components/Footer.jsx';
-import CoursePage from './components/CoursePage.jsx';
+import ChapterQuiz from './components/ChapterQuiz.jsx';
 import AdminPage from './components/AdminPage.jsx';
+import ch1 from './data/quiz/ch1.json';
+import ch2 from './data/quiz/ch2.json';
+import ch3 from './data/quiz/ch3.json';
+import ch4 from './data/quiz/ch4.json';
 
-// Tiny hash router: "#/cours/<slug>" shows a course page, anything else is the landing page.
-// Add a course here (slug -> course data) when its content is ready.
-const coursesBySlug = {};
+// Tiny hash router: "#/quiz/<key>" plays a chapter quiz, "#/epaule" opens a theme, anything else is the home page.
+const chapters = { ch1, ch2, ch3, ch4 };
 
 const isAdminRoute = () => window.location.hash === '#/admin';
-// "#/epaule" opens that theme's chapter list on the home page.
 const parseTheme = () => (window.location.hash.match(/^#\/([\w-]+)$/) || [])[1] || null;
 
 function parseRoute() {
-  const m = window.location.hash.match(/^#\/cours\/([\w-]+)/);
-  return m && coursesBySlug[m[1]] ? coursesBySlug[m[1]] : null;
+  const m = window.location.hash.match(/^#\/quiz\/([\w-]+)/);
+  return m && chapters[m[1]] ? { key: m[1], data: chapters[m[1]] } : null;
 }
 
 export default function App() {
@@ -33,13 +35,9 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  // Coming back to the landing page with an anchor (e.g. #courses): scroll once it is rendered.
   useEffect(() => {
-    if (course || admin) return;
-    const id = window.location.hash.slice(1);
-    if (id && !id.startsWith('/')) requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
-    else if (!id) window.scrollTo(0, 0);
-  }, [course, admin]);
+    window.scrollTo(0, 0);
+  }, [course, admin, theme]);
 
   return (
     <>
@@ -49,7 +47,7 @@ export default function App() {
         {admin ? (
           <AdminPage />
         ) : course ? (
-          <CoursePage course={course} />
+          <ChapterQuiz key={course.key} chapter={course} />
         ) : (
           <Home openTheme={theme} />
         )}

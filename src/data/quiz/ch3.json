@@ -1,0 +1,159 @@
+{
+ "chapitre": {"numero": 3, "titre": "Pathologies nerveuses de la ceinture scapulaire", "auteurs": "A. Cotten, G. Lefebvre, C. Chantelot, X. Demondion", "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"},
+ "questions": [
+  {"id": "c3-q01", "type": "QCU", "theme": "Anatomie du plexus brachial : troncs",
+   "enonce": "Concernant la constitution des troncs du plexus brachial, quelle proposition est exacte ?",
+   "enonce_image": null,
+   "items": [
+    {"id": "A", "texte": "C5 et C6 s’unissent pour former le tronc supérieur.", "correct": true},
+    {"id": "B", "texte": "C6 et C7 s’unissent pour former le tronc intermédiaire.", "correct": false},
+    {"id": "C", "texte": "C7 et C8 s’unissent pour former le tronc inférieur.", "correct": false},
+    {"id": "D", "texte": "C8 se prolonge seule par le tronc intermédiaire.", "correct": false}
+   ],
+   "explication": "Les rameaux ventraux des nerfs spinaux C5 à T1 constituent les cinq racines du plexus brachial. C5 et C6 s’unissent pour former le tronc supérieur ; C7 se prolonge seule par le tronc intermédiaire ; C8 et T1 forment le tronc inférieur. Les propositions B, C et D mélangent ces regroupements : le tronc intermédiaire n’est que la continuation de C7 et le tronc inférieur est formé de C8 et T1. Ces trois troncs se constituent dans le triangle interscalénique, au-dessus et en arrière de l’artère subclavière.",
+   "correction_figures": [{"file": "03. Pathologie nerveuse de la ceinture scapulaire_p98_2.png", "caption": "Fig. 3.2 Schéma du plexus brachial."}],
+   "source": {"page": 98, "element": "Texte", "refs": "[136]"}},
+
+  {"id": "c3-q02", "type": "QCU", "theme": "Anatomie du plexus brachial : faisceaux et branches terminales",
+   "enonce": "Parmi les propositions suivantes concernant les faisceaux du plexus brachial et leurs branches terminales, laquelle est exacte ?",
+   "enonce_image": null,
+   "items": [
+    {"id": "A", "texte": "Le faisceau latéral se divise en nerf ulnaire et racine médiale du nerf médian.", "correct": false},
+    {"id": "B", "texte": "Le faisceau médial se divise en nerf musculocutané et racine latérale du nerf médian.", "correct": false},
+    {"id": "C", "texte": "Le faisceau postérieur se divise en nerf radial et nerf axillaire.", "correct": true},
+    {"id": "D", "texte": "Le faisceau postérieur se divise en nerf radial et nerf musculocutané.", "correct": false}
+   ],
+   "explication": "Le faisceau postérieur (réunion des divisions postérieures des trois troncs) donne le nerf radial et le nerf axillaire. Le faisceau latéral (divisions antérieures des troncs supérieur et moyen) donne le nerf musculocutané et la racine latérale du médian ; le faisceau médial (division antérieure du tronc inférieur) donne le nerf ulnaire et la racine médiale du médian. Les items A, B et D intervertissent ces origines. Les faisceaux sont nommés d’après leur position par rapport à l’artère axillaire et sont situés dans le tunnel du muscle petit pectoral.",
+   "correction_figures": [
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p98_2.png", "caption": "Fig. 3.2 Schéma du plexus brachial."},
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p99_1.png", "caption": "Fig. 3.3 Éléments du plexus brachial. Coupes sagittales T1 réalisées bras surélevé dans le triangle interscalénique (a), dans la pince costoclaviculaire (b) et dans le tunnel du muscle petit pectoral (c). a : artère subclavière (a, b) et axillaire (c) ; Sa : muscle scalène antérieur ; sup : tronc supérieur ; int : tronc intermédiaire ; inf : tronc inférieur ; Cl : clavicule ; pp : muscle petit pectoral ; l : faisceau latéral ; m : faisceau médial ; p : faisceau postérieur."}
+   ],
+   "source": {"page": 98, "element": "Texte", "refs": ""}},
+
+  {"id": "c3-q03", "type": "QRM", "theme": "Échographie du plexus brachial",
+   "enonce": "À propos de l’échographie du plexus brachial, quelles propositions sont exactes ?",
+   "enonce_image": null,
+   "items": [
+    {"id": "A", "texte": "Les racines, hypoéchogènes, sont analysables dans tous les plans.", "correct": true},
+    {"id": "B", "texte": "Le processus transverse de C7 se reconnaît à l’absence ou à la petite taille de son tubercule antérieur sur les coupes axiales.", "correct": true},
+    {"id": "C", "texte": "Dans le triangle interscalénique, C5 est la racine la plus profonde et C8 la plus superficielle.", "correct": false},
+    {"id": "D", "texte": "Le contenu de la pince costoclaviculaire est facilement étudié par cette technique.", "correct": false},
+    {"id": "E", "texte": "La racine C6 se situe entre les tubercules antérieur et postérieur du processus transverse de C6, ce qui permet de numéroter les racines adjacentes.", "correct": true}
+   ],
+   "explication": "Les racines sont hypoéchogènes et analysables dans tous les plans (A vrai). Le repérage du niveau repose sur les processus transverses : ceux des vertèbres sus-jacentes à C7 ont une extrémité en U (tubercules antérieur et postérieur), alors que C7 n’a pas ou presque pas de tubercule antérieur ; la racine C6 passe entre les deux tubercules de C6, d’où la numérotation des racines voisines (B et E vrais). C est faux : dans le triangle interscalénique, C5 est la plus superficielle et C8 (voire T1) la plus profonde. D est faux : le contenu de la pince costoclaviculaire ne peut pas être étudié en raison de l’interposition de la clavicule.",
+   "correction_figures": [
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p100_1.png", "caption": "Fig. 3.5 Racines C6 et C7 (tête de flèche) en coupes transversales. La racine C6 est située entre les tubercules antérieur et postérieur (flèches) du processus transverse de C6 (a) ; seul le tubercule postérieur (flèche) est objectivé en arrière de la racine C7 (tête de flèche) (b)."},
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p101_1.png", "caption": "Fig. 3.6 Plexus brachial dans le triangle interscalénique (coupe transversale). SA : scalène antérieur ; SM : scalène moyen."}
+   ],
+   "source": {"page": 100, "element": "Texte", "refs": "[13, 173, 192, 193]"}},
+
+  {"id": "c3-q04", "type": "QRM", "theme": "IRM des lésions traumatiques préganglionnaires",
+   "enonce": "Dans un traumatisme du plexus brachial, quelles propositions sont exactes concernant les signes IRM de lésion préganglionnaire ?",
+   "enonce_image": null,
+   "items": [
+    {"id": "A", "texte": "Les pseudo-méningocèles sont très évocatrices d’avulsions radiculaires.", "correct": true},
+    {"id": "B", "texte": "Une plage médullaire en hyposignal T2 en regard de l’avulsion témoigne de dépôts d’hémosidérine.", "correct": true},
+    {"id": "C", "texte": "Les avulsions radiculaires s’accompagnent toujours d’une pseudo-méningocèle.", "correct": false},
+    {"id": "D", "texte": "Les névromes en continuité font partie des lésions préganglionnaires.", "correct": false},
+    {"id": "E", "texte": "Les ruptures nerveuses font partie des lésions préganglionnaires.", "correct": false}
+   ],
+   "explication": "Les pseudo-méningocèles, dues à l’extravasation de LCS par une déchirure latérale de la dure-mère, sont très évocatrices d’avulsion radiculaire (A vrai). Dans la moelle, une plage hyperintense T2 traduit un œdème ou une hémorragie à la phase aiguë puis une myélomalacie chronique, tandis qu’une plage hypo-intense traduit des dépôts d’hémosidérine (B vrai). C est faux : il existe des avulsions « in situ » sans pseudo-méningocèle. D et E sont faux : ruptures nerveuses et névromes appartiennent aux lésions post-ganglionnaires (tableau 3.3). Rappel : les lésions préganglionnaires sont les plus sévères car sans possibilité de réparation spontanée.",
+   "correction_figures": [
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p102_1.png", "caption": "Fig. 3.7 Plexus brachial traumatique : coupes axiales pondérées en T2. Avulsion des racines ventrale et dorsale gauches (a) avec myéloméningocèle (flèches) (b)."},
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p103_3.png", "caption": "Fig. 3.8 Plexus brachial traumatique : plage médullaire en hyposignal T2 (flèche) témoignant de dépôts d’hémosidérine, en regard d’une avulsion radiculaire."}
+   ],
+   "source": {"page": 102, "element": "Tableau 3.3", "refs": "[3, 109, 209, 321]"}},
+
+  {"id": "c3-q05", "type": "QCU", "theme": "Syndrome de Parsonage-Turner : nerfs atteints",
+   "enonce": "Dans le syndrome de Parsonage-Turner, quel nerf est affecté dans plus de 80 % des cas, ce que l’IRM peut révéler par une dénervation des muscles supra- et infra-épineux ?",
+   "enonce_image": null,
+   "items": [
+    {"id": "A", "texte": "Le nerf axillaire.", "correct": false},
+    {"id": "B", "texte": "Le nerf suprascapulaire.", "correct": true},
+    {"id": "C", "texte": "Le nerf musculocutané.", "correct": false},
+    {"id": "D", "texte": "Les nerfs subscapulaires.", "correct": false}
+   ],
+   "explication": "Le nerf suprascapulaire (muscles supra- et infra-épineux) est affecté dans plus de 80 % des cas, de façon isolée dans 50 % des cas. Le nerf axillaire (petit rond et deltoïde) est atteint dans environ 50 % des cas, rarement de façon isolée ; les nerfs subscapulaires ne le sont que rarement (3 % des cas) ; le nerf musculocutané n’est cité que parmi les autres nerfs possibles. La topographie de l’œdème de dénervation (hypersignal STIR/T2 dans les 2 à 4 semaines, puis atrophie en T1) permet de reconnaître le nerf atteint.",
+   "correction_figures": [
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p106_3.png", "caption": "Fig. 3.16 Syndrome de Parsonage-Turner : coupes sagittales pondérées en T1 (a) et T2 (b). Œdème de dénervation (a) et dégénérescence graisseuse (b) des muscles supra (SE) et infra-épineux (IE), témoignant d’une atteinte du nerf suprascapulaire."},
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p107_1.png", "caption": "Fig. 3.17 Syndrome de Parsonage-Turner : coupes axiales pondérées en T2. Œdème de dénervation plurifocal intéressant les muscles deltoïde (flèches), supraépineux (tête de flèche) (a) et petit rond (b), témoignant d’une atteinte des nerfs axillaire et suprascapulaire."}
+   ],
+   "source": {"page": 106, "element": "Texte", "refs": "[112, 260]"}},
+
+  {"id": "c3-q06", "type": "QCU", "theme": "Nerf suprascapulaire : topographie de l’atteinte musculaire",
+   "enonce": "Un kyste mucoïde paralabral comprime le nerf suprascapulaire dans l’échancrure spinoglénoïdale. Quelle est, en règle générale, la conséquence sur les muscles ?",
+   "enonce_image": null,
+   "items": [
+    {"id": "A", "texte": "Une dénervation du seul muscle infra-épineux.", "correct": true},
+    {"id": "B", "texte": "Une dénervation des muscles supra-épineux et infra-épineux.", "correct": false},
+    {"id": "C", "texte": "Une dénervation du seul muscle supra-épineux.", "correct": false},
+    {"id": "D", "texte": "Une dénervation des muscles petit rond et deltoïde.", "correct": false}
+   ],
+   "explication": "Une lésion du nerf suprascapulaire à hauteur de l’échancrure suprascapulaire retentit sur le supra- et l’infra-épineux, alors qu’une lésion dans l’échancrure spinoglénoïdale (cas du kyste mucoïde issu d’une fissure du labrum) ne touche que l’infra-épineux, car la branche du supra-épineux est déjà née en amont. L’item B correspond à l’atteinte plus proximale, C n’est pas attendu, et D correspond au territoire du nerf axillaire. Des variations anatomiques peuvent toutefois expliquer des atypies cliniques. En IRM, on observe un œdème de dénervation (hypersignal T2), puis une amyotrophie et une involution graisseuse.",
+   "correction_figures": [
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p118_3.png", "caption": "Fig. 3.37 Atteinte du nerf suprascapulaire. Œdème de dénervation du muscle infra-épineux (étoile) de façon isolée (a) ou en association à celle du muscle supraépineux (b, double étoile)."},
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p119_1.png", "caption": "Fig. 3.38 Compression du nerf suprascapulaire : coupes sagittales pondérées en T1 (a) et T2 (b). Kyste mucoïde de l’échancrure spinoglénoïdale. Notez le discret hypersignal T1 et T2 du muscle infra-épineux (IE) témoignant de sa dénervation."}
+   ],
+   "source": {"page": 117, "element": "Texte", "refs": ""}},
+
+  {"id": "c3-q07", "type": "QRM", "theme": "Anatomie du nerf suprascapulaire",
+   "enonce": "À propos de l’anatomie du nerf suprascapulaire, quelles propositions sont exactes ?",
+   "enonce_image": null,
+   "items": [
+    {"id": "A", "texte": "Il passe sous le ligament scapulaire transverse supérieur, accompagné le plus souvent de la veine homonyme, alors que l’artère passe au-dessus.", "correct": true},
+    {"id": "B", "texte": "Dans l’échancrure spinoglénoïdale, il est accompagné de l’artère et de la veine homonymes.", "correct": true},
+    {"id": "C", "texte": "Il passe sous le ligament scapulaire transverse supérieur avec l’artère et la veine suprascapulaires.", "correct": false},
+    {"id": "D", "texte": "Il naît du faisceau postérieur du plexus brachial.", "correct": false},
+    {"id": "E", "texte": "C’est un nerf exclusivement moteur destiné aux muscles supra- et infra-épineux.", "correct": false}
+   ],
+   "explication": "Le nerf suprascapulaire naît du tronc supérieur (C5-C6) ou de sa division postérieure. Il pénètre dans l’échancrure suprascapulaire fermée par le ligament scapulaire transverse supérieur : le nerf passe sous ce ligament avec la veine, l’artère passant au-dessus (A vrai, C faux). Dans l’échancrure spinoglénoïdale, il est cette fois accompagné de l’artère et de la veine (B vrai). D est faux (origine : tronc supérieur). E est faux : il est aussi sensitif (bourse subacromiodeltoïdienne, face postérieure des articulations glénohumérale et acromioclaviculaire, ligaments coracoclaviculaire et coracohuméral, peau du versant latéral du tiers proximal du bras).",
+   "correction_figures": [{"file": "03. Pathologie nerveuse de la ceinture scapulaire_p115_2.png", "caption": "Fig. 3.32 Schéma du nerf suprascapulaire. AC : articulation acromioclaviculaire ; SE : muscle supraépineux ; IE : muscle infra-épineux ; Lig ST sup. et inf. : ligaments scapulaires transverses supérieur et inférieur ; E : échancrure."}],
+   "source": {"page": 115, "element": "Texte", "refs": "[229, 236, 320]"}},
+
+  {"id": "c3-q08", "type": "QCU", "theme": "Nerf axillaire : espace quadrilatère",
+   "enonce": "Concernant les limites de l’espace quadrilatère (espace de Velpeau), traversé par le nerf axillaire, quelle proposition est exacte ?",
+   "enonce_image": null,
+   "items": [
+    {"id": "A", "texte": "Il est limité en haut par le muscle petit rond et en bas par le muscle grand rond.", "correct": true},
+    {"id": "B", "texte": "Il est limité en haut par le muscle grand rond et en bas par le muscle petit rond.", "correct": false},
+    {"id": "C", "texte": "Il est limité en dedans par le muscle deltoïde.", "correct": false},
+    {"id": "D", "texte": "Il est limité en dehors par le chef long du muscle triceps brachial.", "correct": false}
+   ],
+   "explication": "L’espace quadrilatère est limité en haut par le petit rond, en bas par le grand rond, en dedans par le chef long du triceps brachial et en dehors par le bord médial de l’extrémité proximale de l’humérus. B inverse haut et bas ; C et D attribuent de façon erronée le deltoïde en dedans et le chef long du triceps en dehors. Le nerf axillaire (issu du faisceau postérieur, C5-C6) y passe après avoir croisé la capsule glénohumérale, puis contourne le col chirurgical de l’humérus sous le deltoïde. Son atteinte se traduit en IRM par une dénervation du petit rond et du deltoïde.",
+   "correction_figures": [{"file": "03. Pathologie nerveuse de la ceinture scapulaire_p120_1.png", "caption": "Fig. 3.40 Schéma du nerf axillaire dans l’espace quadrilatère (vue postérieure). PR : muscle petit rond ; GR : muscle grand rond ; CL : chef long (du muscle triceps brachial) ; B sup et B inf : branches supérieure et inférieure du nerf axillaire ; AC : artère circonflexe humérale postérieure."}],
+   "source": {"page": 120, "element": "Texte", "refs": ""}},
+
+  {"id": "c3-q09", "type": "QRM", "theme": "Scapula alata dynamique : nerfs impliqués",
+   "enonce": "Quels nerfs sont potentiellement impliqués dans une scapula alata dynamique, c’est-à-dire se majorant avec les mouvements du membre supérieur ?",
+   "enonce_image": null,
+   "items": [
+    {"id": "A", "texte": "Le nerf thoracique long, avec un décollement médial distal.", "correct": true},
+    {"id": "B", "texte": "Le nerf accessoire, avec un décollement médial proximal.", "correct": true},
+    {"id": "C", "texte": "Le nerf dorsal de la scapula.", "correct": true},
+    {"id": "D", "texte": "Le nerf suprascapulaire.", "correct": false},
+    {"id": "E", "texte": "Le nerf musculocutané.", "correct": false}
+   ],
+   "explication": "L’encadré 3.7 cite quatre nerfs : thoracique long (décollement médial distal, innervant le dentelé antérieur), accessoire (décollement médial proximal, innervant le trapèze), dorsal de la scapula (rhomboïdes et élévateur de la scapula) et, de façon exceptionnelle, pectoral médial. Le nerf suprascapulaire (supra- et infra-épineux) et le nerf musculocutané (coracobrachial, brachial, biceps) ne figurent pas parmi les causes de scapula alata dynamique. L’atteinte du nerf thoracique long est l’étiologie la plus fréquente.",
+   "correction_figures": [
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p124_2.png", "caption": "Fig. 3.47 Scapula alata secondaire à une atteinte du nerf thoracique long. Notez le décollement de la scapula prédominant au niveau de son bord inféromédial lors de la mobilisation active du membre supérieur. Courtoisie Dr G Wavreille."},
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p125_3.png", "caption": "Fig. 3.51 Atteinte du nerf accessoire : coupes axiales pondérées en T1 (a) et T2 (b). Amyotrophie et discret œdème du muscle trapèze gauche (flèche)."}
+   ],
+   "source": {"page": 124, "element": "Encadré", "refs": ""}},
+
+  {"id": "c3-q10", "type": "QCU", "theme": "Nerf musculocutané",
+   "enonce": "Concernant le nerf musculocutané, quelle proposition est exacte ?",
+   "enonce_image": null,
+   "items": [
+    {"id": "A", "texte": "Il perfore le muscle coracobrachial, où il est particulièrement vulnérable.", "correct": true},
+    {"id": "B", "texte": "Il est issu du faisceau médial du plexus brachial.", "correct": false},
+    {"id": "C", "texte": "Il innerve les muscles coracobrachial, brachial et triceps brachial.", "correct": false},
+    {"id": "D", "texte": "Il se termine en nerf cutané médial de l’avant-bras.", "correct": false}
+   ],
+   "explication": "Le nerf musculocutané, branche terminale du faisceau latéral (C5-C7), se dirige en bas, en dehors et en avant pour perforer le muscle coracobrachial, puis chemine entre les muscles brachial et biceps brachial ; il est particulièrement vulnérable lors de la traversée du coracobrachial. Il innerve le coracobrachial, le brachial et le biceps brachial (pas le triceps, innervé par le radial) et se termine en nerf cutané latéral de l’avant-bras, sensitif pur, sur la face antérolatérale. En cas d’atteinte, l’IRM montre une dénervation de ces trois muscles de la loge antérieure du bras, parfois associée à un hypersignal du nerf lui-même.",
+   "correction_figures": [
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p122_1.png", "caption": "Fig. 3.43 Schéma du nerf musculocutané. Il perfore le muscle coracobrachial."},
+    {"file": "03. Pathologie nerveuse de la ceinture scapulaire_p123_1.png", "caption": "Fig. 3.45 Lésion iatrogène du nerf musculocutané. Hypersignal T2 du muscle coracobrachial (dénervation) (grande flèche) et du nerf musculocutané le traversant (petite flèche). T : muscle triceps brachial ; D : muscle deltoïde."}
+   ],
+   "source": {"page": 122, "element": "Texte", "refs": ""}}
+ ]
+}

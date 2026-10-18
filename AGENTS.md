@@ -75,7 +75,7 @@ Rules:
 
 ## Figures and copyright
 
-Course text is our own wording. Do **not** commit figures copied from books or other copyrighted sources. `public/figures/` is git-ignored; image-based quiz questions stay off (`SHOW_FIGURES` in `src/data/coursCoiffe.js`) until the owner confirms the right to publish them or replaces them with openly licensed images.
+Quiz text is our own wording. The owner confirmed (Oct 2026) that they have the right to publish the figures extracted from the source book (chapters 1–4 of « Imagerie musculosquelettique », Elsevier Masson), so `public/figures/<chX>/` is committed and shown in the corrections. Do not add figures from other sources without the owner confirming the rights.
 
 ## Never
 

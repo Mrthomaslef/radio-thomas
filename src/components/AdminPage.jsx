@@ -2,8 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 
 // Friendly names for course slugs; unknown slugs are shown as-is.
 const COURSE_LABELS = {
-  'pathologie-coiffe': 'Pathologies de la coiffe des rotateurs',
-  'landing-demo': 'Quiz d’essai (accueil)',
+  epaule: 'L’épaule',
+  ch1: 'Pathologies de la coiffe',
+  ch2: 'Instabilité d’épaule',
+  ch3: 'Plexus brachial',
+  ch4: 'Autres pathologies de l’épaule',
+  'pathologie-coiffe': 'Pathologies de la coiffe des rotateurs (ancien)',
+  'landing-demo': 'Quiz d’essai (ancien)',
 };
 const courseLabel = (slug) => COURSE_LABELS[slug] || slug;
 
