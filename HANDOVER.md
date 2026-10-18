@@ -361,7 +361,7 @@ Start Antigravity inside the project folder. It automatically reads `AGENTS.md` 
 > Start the dev server and tell me the address. Then list what files you changed.
 
 **Save and send to GitHub**
-> Create a git branch called `add-radiation-protection`, commit the changes with a clear message, and push it. Then give me the link to open a pull request.
+> Run `npm run build`, and if it passes, commit my changes with a clear message and push them to `master`. Then tell me when the "Deploy site" run on GitHub has finished.
 
 **Deploy / check the live site**
 > Show me the latest deployments of the radio-thomas project and tell me if the newest one is Ready, Blocked or in Error, and why.
