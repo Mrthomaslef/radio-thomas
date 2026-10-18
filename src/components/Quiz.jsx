@@ -29,7 +29,7 @@ export default function Quiz({
   id = 'quiz',
   course = 'landing-demo', // slugs stored with the result
   quizId = 'essai',
-  eyebrow = 'Essai gratuit',
+  eyebrow = 'Quiz d’essai',
   title = 'Testez-vous dès maintenant',
   intro = 'Cinq questions rapides pour découvrir l’esprit des cours avant de commencer.',
   passMark = 0.6,

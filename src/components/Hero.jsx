@@ -31,7 +31,7 @@ export default function Hero() {
             Découvrir les cours <Icon name="arrow" size={18} />
           </a>
           <a href="#quiz" className="btn btn-ghost">
-            <Icon name="play" size={16} /> Essayer un quiz gratuit
+            <Icon name="play" size={16} /> Essayer un quiz
           </a>
         </motion.div>
       </div>

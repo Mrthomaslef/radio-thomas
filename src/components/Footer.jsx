@@ -18,7 +18,7 @@ export default function Footer() {
       <section className="cta">
         <Reveal>
           <h2>Prêt à lire votre première image en toute confiance ?</h2>
-          <p>Commencez par le quiz gratuit, puis choisissez le cours adapté à votre niveau.</p>
+          <p>Commencez par un quiz d’essai, puis choisissez le cours adapté à votre niveau.</p>
           <a href="#courses" className="btn">Commencer</a>
         </Reveal>
       </section>
