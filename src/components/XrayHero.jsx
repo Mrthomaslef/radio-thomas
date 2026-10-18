@@ -7,7 +7,7 @@ export default function XrayHero() {
   return (
     <div className="xray">
       <div className="xray-glow" />
-      <svg viewBox="0 0 400 480" className="xray-svg" role="img" aria-label="Animated chest X-ray">
+      <svg viewBox="0 0 400 480" className="xray-svg" role="img" aria-label="Radiographie thoracique animée">
         <defs>
           <radialGradient id="lung" cx="50%" cy="45%" r="60%">
             <stop offset="0%" stopColor="#7fe9ff" stopOpacity="0.07" />
@@ -97,7 +97,7 @@ export default function XrayHero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.1 }}
       >
-        <span className="dot" /> PA erect · 120 kVp
+        <span className="dot" /> PA debout · 120 kV
       </motion.div>
       <motion.div
         className="chip chip-b"
@@ -105,7 +105,7 @@ export default function XrayHero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.4 }}
       >
-        Finding: spot the abnormality
+        À vous : repérez l’anomalie
       </motion.div>
     </div>
   );

@@ -7,9 +7,9 @@ export default function Courses() {
   return (
     <section className="section" id="courses">
       <Reveal className="section-head">
-        <span className="eyebrow">Curriculum</span>
-        <h2>Everything from first exposure to final exam</h2>
-        <p>Pick a course, or follow the full path. Each lesson ends with a quick quiz so it actually sticks.</p>
+        <span className="eyebrow">Programme</span>
+        <h2>De la première exposition à l’examen final</h2>
+        <p>Choisissez un cours ou suivez le parcours complet. Chaque leçon se termine par un petit quiz pour bien retenir.</p>
       </Reveal>
 
       <div className="grid">
@@ -26,9 +26,9 @@ export default function Courses() {
               <h3>{c.title}</h3>
               <p>{c.blurb}</p>
               <div className="card-meta">
-                <span>{c.lessons} lessons</span>
+                <span>{c.lessons} leçons</span>
                 <span>{c.hours} h</span>
-                <span className="card-go">Start <Icon name="arrow" size={16} /></span>
+                <span className="card-go">Commencer <Icon name="arrow" size={16} /></span>
               </div>
             </motion.article>
           </Reveal>

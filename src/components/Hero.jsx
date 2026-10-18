@@ -8,12 +8,12 @@ const word = {
 };
 
 export default function Hero() {
-  const headline = ['See', 'inside', 'the', 'human', 'body.', 'Learn', 'to', 'read', 'it.'];
+  const headline = ['Voyez', 'l’intérieur', 'du', 'corps', 'humain.', 'Apprenez', 'à', 'le', 'lire.'];
   return (
     <section className="hero" id="top">
       <div className="hero-copy">
         <motion.span className="eyebrow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.05 }}>
-          Medical radiography · courses & quizzes
+          Radiologie médicale · cours & quiz
         </motion.span>
         <h1>
           {headline.map((w, i) => (
@@ -23,15 +23,15 @@ export default function Hero() {
           ))}
         </h1>
         <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.7 }}>
-          Structured courses, bite-size lessons and interactive quizzes that take you from
-          positioning basics to confident image interpretation.
+          Des cours structurés, des leçons courtes et des quiz interactifs pour passer des
+          bases du positionnement à une interprétation d’image sûre.
         </motion.p>
         <motion.div className="hero-actions" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.7 }}>
           <a href="#courses" className="btn">
-            Explore courses <Icon name="arrow" size={18} />
+            Découvrir les cours <Icon name="arrow" size={18} />
           </a>
           <a href="#quiz" className="btn btn-ghost">
-            <Icon name="play" size={16} /> Try a free quiz
+            <Icon name="play" size={16} /> Essayer un quiz gratuit
           </a>
         </motion.div>
       </div>

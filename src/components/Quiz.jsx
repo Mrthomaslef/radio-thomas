@@ -37,9 +37,9 @@ export default function Quiz() {
   return (
     <section className="section" id="quiz">
       <Reveal className="section-head">
-        <span className="eyebrow">Free sample</span>
-        <h2>Test yourself — right now</h2>
-        <p>Five quick questions. See how every course feels before you start.</p>
+        <span className="eyebrow">Essai gratuit</span>
+        <h2>Testez-vous dès maintenant</h2>
+        <p>Cinq questions rapides pour découvrir l’esprit des cours avant de commencer.</p>
       </Reveal>
 
       <Reveal className="quiz">
@@ -56,16 +56,16 @@ export default function Quiz() {
               <div className="score-ring" style={{ '--p': (score / quiz.length) * 100 }}>
                 <span>{score}/{quiz.length}</span>
               </div>
-              <h3>{score === quiz.length ? 'Perfect score!' : score >= 3 ? 'Nice work!' : 'Good start — keep going!'}</h3>
-              <p>The full courses go much deeper, with explanations and spaced repetition for every miss.</p>
+              <h3>{score === quiz.length ? 'Sans faute !' : score >= 3 ? 'Bien joué !' : 'Bon début, continuez !'}</h3>
+              <p>Les cours complets vont beaucoup plus loin, avec des explications et une répétition espacée pour chaque erreur.</p>
               <div className="hero-actions center">
-                <button className="btn" onClick={restart}>Try again</button>
-                <a className="btn btn-ghost" href="#courses">Browse courses</a>
+                <button className="btn" onClick={restart}>Réessayer</button>
+                <a className="btn btn-ghost" href="#courses">Voir les cours</a>
               </div>
             </motion.div>
           ) : (
             <motion.div key={index} className="quiz-body" initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }} transition={{ duration: 0.35 }}>
-              <span className="quiz-count">Question {index + 1} of {quiz.length}</span>
+              <span className="quiz-count">Question {index + 1} sur {quiz.length}</span>
               <h3>{current.q}</h3>
               <div className="options">
                 {current.options.map((o, i) => {
@@ -84,9 +84,9 @@ export default function Quiz() {
               <AnimatePresence>
                 {answered && (
                   <motion.div className="explain" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
-                    <p><strong>{picked === current.answer ? 'Correct. ' : 'Not quite. '}</strong>{current.why}</p>
+                    <p><strong>{picked === current.answer ? 'Exact. ' : 'Pas tout à fait. '}</strong>{current.why}</p>
                     <button className="btn btn-small" onClick={next}>
-                      {index + 1 >= quiz.length ? 'See my score' : 'Next question'} <Icon name="arrow" size={16} />
+                      {index + 1 >= quiz.length ? 'Voir mon score' : 'Question suivante'} <Icon name="arrow" size={16} />
                     </button>
                   </motion.div>
                 )}

@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'framer-motion';
 import Reveal from './Reveal.jsx';
 
-// Placeholder figures — replace with real numbers once the content exists.
+// Chiffres provisoires — à remplacer par les vrais quand le contenu existera.
 const stats = [
-  { value: 6, suffix: '', label: 'Complete courses' },
-  { value: 120, suffix: '+', label: 'Bite-size lessons' },
-  { value: 1500, suffix: '+', label: 'Quiz questions' },
-  { value: 100, suffix: '%', label: 'Learn at your pace' },
+  { value: 6, suffix: '', label: 'Cours complets' },
+  { value: 120, suffix: '+', label: 'Leçons courtes' },
+  { value: 1500, suffix: '+', label: 'Questions de quiz' },
+  { value: 100, suffix: '%', label: 'À votre rythme' },
 ];
 
 function Counter({ to, suffix }) {
@@ -29,7 +29,7 @@ function Counter({ to, suffix }) {
     return () => cancelAnimationFrame(raf);
   }, [inView, to]);
 
-  return <span ref={ref}>{n.toLocaleString()}{suffix}</span>;
+  return <span ref={ref}>{n.toLocaleString('fr-FR')}{suffix}</span>;
 }
 
 export default function Stats() {

@@ -3,8 +3,9 @@ import Reveal from './Reveal.jsx';
 
 export default function Footer() {
   const [status, setStatus] = useState('checking');
+  const labels = { checking: 'en vérification', online: 'en ligne', offline: 'hors ligne' };
 
-  // Tiny end-to-end check: frontend -> /api/hello -> Supabase.
+  // Petit test de bout en bout : frontend -> /api/hello -> Supabase.
   useEffect(() => {
     fetch('/api/hello')
       .then((r) => (r.ok ? r.json() : Promise.reject()))
@@ -16,17 +17,17 @@ export default function Footer() {
     <>
       <section className="cta">
         <Reveal>
-          <h2>Ready to read your first image with confidence?</h2>
-          <p>Start with the free quiz, then pick the course that fits your level.</p>
-          <a href="#courses" className="btn">Get started</a>
+          <h2>Prêt à lire votre première image en toute confiance ?</h2>
+          <p>Commencez par le quiz gratuit, puis choisissez le cours adapté à votre niveau.</p>
+          <a href="#courses" className="btn">Commencer</a>
         </Reveal>
       </section>
       <footer className="footer">
         <span className="brand"><span className="brand-mark">R</span> Radio&nbsp;Thomas</span>
         <span className={`status status-${status}`}>
-          <span className="dot" /> Backend {status}
+          <span className="dot" /> Serveur {labels[status]}
         </span>
-        <span className="muted">© {new Date().getFullYear()} Radio Thomas. For education only — not medical advice.</span>
+        <span className="muted">© {new Date().getFullYear()} Radio Thomas. À but pédagogique uniquement, ne remplace pas un avis médical.</span>
       </footer>
     </>
   );

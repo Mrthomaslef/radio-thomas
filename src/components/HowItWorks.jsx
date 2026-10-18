@@ -1,18 +1,18 @@
 import Reveal from './Reveal.jsx';
 
 const steps = [
-  { n: '01', title: 'Learn', text: 'Short, visual lessons covering anatomy, physics, technique and pathology.' },
-  { n: '02', title: 'Practice', text: 'Interactive quizzes with instant feedback and clear explanations for every answer.' },
-  { n: '03', title: 'Review', text: 'Spaced repetition brings back the questions you struggled with, right on time.' },
-  { n: '04', title: 'Master', text: 'Timed mock exams and a weak-spot report get you exam-ready with confidence.' },
+  { n: '01', title: 'Apprendre', text: 'Des leçons courtes et visuelles : anatomie, physique, technique et pathologie.' },
+  { n: '02', title: 'S’entraîner', text: 'Des quiz interactifs avec correction immédiate et explication claire de chaque réponse.' },
+  { n: '03', title: 'Réviser', text: 'La répétition espacée ramène les questions ratées au moment idéal.' },
+  { n: '04', title: 'Maîtriser', text: 'Examens blancs chronométrés et bilan des points faibles pour arriver prêt le jour J.' },
 ];
 
 export default function HowItWorks() {
   return (
     <section className="section" id="how">
       <Reveal className="section-head">
-        <span className="eyebrow">How it works</span>
-        <h2>A simple loop that builds real skill</h2>
+        <span className="eyebrow">Comment ça marche</span>
+        <h2>Une boucle simple pour progresser vraiment</h2>
       </Reveal>
       <div className="steps">
         {steps.map((s, i) => (
