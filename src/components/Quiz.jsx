@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { quiz as defaultQuiz } from '../data/quiz.js';
 import Icon from './Icons.jsx';
 import Reveal from './Reveal.jsx';
 import { readName, saveName } from '../data/player.js';
@@ -19,7 +18,7 @@ function shuffleQuestions(questions) {
 
 
 export default function Quiz({
-  questions = defaultQuiz,
+  questions,
   id = 'quiz',
   course = 'landing-demo', // slugs stored with the result
   quizId = 'essai',

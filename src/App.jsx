@@ -4,10 +4,10 @@ import Home from './components/Home.jsx';
 import Footer from './components/Footer.jsx';
 import CoursePage from './components/CoursePage.jsx';
 import AdminPage from './components/AdminPage.jsx';
-import { coursCoiffe } from './data/coursCoiffe.js';
 
 // Tiny hash router: "#/cours/<slug>" shows a course page, anything else is the landing page.
-const coursesBySlug = { [coursCoiffe.slug]: coursCoiffe };
+// Add a course here (slug -> course data) when its content is ready.
+const coursesBySlug = {};
 
 const isAdminRoute = () => window.location.hash === '#/admin';
 // "#/epaule" opens that theme's chapter list on the home page.
