@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { themes } from '../data/themes.js';
+import { useQuestions } from '../data/useQuestions.js';
 import { readName, saveName } from '../data/player.js';
 import Icon from './Icons.jsx';
 
 // Home: ask a pseudo, then pick a theme and one of its chapters.
 // `openTheme` comes from the URL (#/epaule) so "back" from a chapter lands on the chapter list.
 export default function Home({ openTheme }) {
+  const { byChapter } = useQuestions();
   const [pseudo, setPseudo] = useState(readName);
   const [draft, setDraft] = useState(pseudo);
   const [editing, setEditing] = useState(!pseudo);
@@ -71,7 +73,7 @@ export default function Home({ openTheme }) {
                         {c.href ? (
                           <a href={c.href} className="chapter">
                             <b>{i + 1}</b> <span>{c.title}</span>
-                            <span className="chapter-go">{c.questions} questions <Icon name="arrow" size={16} /></span>
+                            <span className="chapter-go">{(byChapter[c.id] || []).length || c.fallbackCount} questions <Icon name="arrow" size={16} /></span>
                           </a>
                         ) : (
                           <div className="chapter chapter-soon">

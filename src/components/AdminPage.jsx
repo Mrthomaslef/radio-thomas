@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import QuestionsAdmin from './QuestionsAdmin.jsx';
 
 // Friendly names for course slugs; unknown slugs are shown as-is.
 const COURSE_LABELS = {
@@ -23,6 +24,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [nameFilter, setNameFilter] = useState('');
   const [courseFilter, setCourseFilter] = useState('');
+  const [tab, setTab] = useState('results'); // results | questions
 
   // Keep this page out of search engines while it is displayed.
   useEffect(() => {
@@ -62,6 +64,7 @@ export default function AdminPage() {
     setPassword('');
     setNameFilter('');
     setCourseFilter('');
+    setTab('results');
     setError('');
   };
 
@@ -106,11 +109,20 @@ export default function AdminPage() {
       <div className="admin-head">
         <div>
           <span className="eyebrow">Espace privé</span>
-          <h1 className="admin-title">Résultats des quiz</h1>
+          <h1 className="admin-title">{tab === 'results' ? 'Résultats des quiz' : 'Questions du quiz'}</h1>
         </div>
         <button className="btn btn-ghost btn-small" onClick={logout}>Se déconnecter</button>
       </div>
 
+      <div className="cq-chips admin-tabs" role="tablist" aria-label="Sections">
+        <button role="tab" aria-selected={tab === 'results'} className={tab === 'results' ? 'on' : ''} onClick={() => setTab('results')}>Résultats</button>
+        <button role="tab" aria-selected={tab === 'questions'} className={tab === 'questions' ? 'on' : ''} onClick={() => setTab('questions')}>Questions</button>
+      </div>
+
+      {tab === 'questions' ? (
+        <QuestionsAdmin password={password} />
+      ) : (
+      <>
       <div className="admin-summary">
         <div className="admin-stat"><strong>{rows.length}</strong><span>passages</span></div>
         <div className="admin-stat"><strong>{passedCount}</strong><span>réussites</span></div>
@@ -168,6 +180,8 @@ export default function AdminPage() {
             </tbody>
           </table>
         </div>
+      )}
+      </>
       )}
     </section>
   );

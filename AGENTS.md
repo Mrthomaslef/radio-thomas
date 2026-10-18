@@ -73,6 +73,13 @@ Rules:
 - Admin page: `#/admin` on the site (linked as "Espace formateur" in the footer, hidden from search engines). It asks for a password, checked in the database (`admin_list_attempts`). **Never write the admin password in the repo or in chat.**
 - Names are personal data (GDPR): keep the privacy notice in the quiz name step, collect nothing more, and delete a person's rows if asked.
 
+## Editable quiz questions
+
+- The 40 shoulder questions (4 chapters, `ch1`–`ch4`) live in the database table `quiz_questions` (migration `supabase/migrations/20261018150000_quiz_questions.sql`, to be run once in the Supabase SQL editor). The public reads them through `GET /api/questions` (30 s cache); the JSON files in `src/data/quiz/` are the **fallback** (API down or table empty), the **chapter metadata** (title/authors for the reference line) and the **source of the one-time import**.
+- Editing happens on `#/admin`, tab « Questions » (`src/components/QuestionsAdmin.jsx`). All writes go through `POST /api/admin-questions`, which validates the content (`api/_validate.js`) and calls SQL functions that check the admin password. Deleting is soft (`deleted_at`) and every change keeps the previous version in `private.quiz_question_versions`.
+- Import never overwrites: edits made on the site are never replaced by the JSON files. If you change a JSON file and want it live, edit the question in the admin instead.
+- Figures stay static files in `public/figures/<chX>/`; adding new images from the admin is not built yet.
+
 ## Figures and copyright
 
 Quiz text is our own wording. The owner confirmed (Oct 2026) that they have the right to publish the figures extracted from the source book (chapters 1–4 of « Imagerie musculosquelettique », Elsevier Masson), so `public/figures/<chX>/` is committed and shown in the corrections. Do not add figures from other sources without the owner confirming the rights.

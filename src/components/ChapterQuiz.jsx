@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Icon from './Icons.jsx';
 import { readName } from '../data/player.js';
+import { useQuestions } from '../data/useQuestions.js';
 
 // ---------- helpers ----------
 const hash = (s) => {
@@ -36,12 +37,32 @@ const store = (key) => ({
   clear: () => { try { localStorage.removeItem(key); } catch { /* ignore */ } },
 });
 
+// Loads the live questions (editable from the admin page), then plays them.
 export default function ChapterQuiz({ chapter }) {
   const { key, data } = chapter;
-  const storage = useMemo(() => store(`quiz-cotten:v1:${key}`), [key]);
-  const saved = useMemo(() => storage.read(), [storage]);
+  const { byChapter, loading } = useQuestions();
+  const questions = byChapter[key] || [];
 
-  const questions = useMemo(() => data.questions.map((q) => ({ ...q, shown: mixItems(q) })), [data]);
+  if (loading) {
+    return <div className="cq"><p className="cq-loading" role="status">Chargement des questions…</p></div>;
+  }
+  if (questions.length === 0) {
+    return (
+      <div className="cq">
+        <a href="#/epaule" className="cq-back">← Chapitres</a>
+        <p className="cq-loading">Ce chapitre ne contient plus de questions pour le moment.</p>
+      </div>
+    );
+  }
+  return <QuizPlayer chapterKey={key} meta={data.chapitre} questions={questions} />;
+}
+
+// `preview` (admin): no saved progress and no result sent to the database.
+export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, preview = false }) {
+  const storage = useMemo(() => store(`quiz-cotten:v1:${key}`), [key]);
+  const saved = useMemo(() => (preview ? {} : storage.read()), [storage, preview]);
+
+  const questions = useMemo(() => rawQuestions.map((q) => ({ ...q, shown: mixItems(q) })), [rawQuestions]);
   const themes = useMemo(() => [...new Set(questions.map((q) => q.theme))], [questions]);
 
   const [filter, setFilter] = useState(saved.filter && themes.includes(saved.filter) ? saved.filter : 'all');
@@ -56,7 +77,7 @@ export default function ChapterQuiz({ chapter }) {
   const firstOpen = (l, a) => { const i = l.findIndex((q) => !a[q.id]); return i === -1 ? l.length : i; };
   const [idx, setIdx] = useState(() => firstOpen(list, answers));
 
-  useEffect(() => { storage.write({ filter, answers, sent }); }, [storage, filter, answers, sent]);
+  useEffect(() => { if (!preview) storage.write({ filter, answers, sent }); }, [storage, preview, filter, answers, sent]);
 
   const q = list[idx];
   const validated = q ? answers[q.id] : null;
@@ -92,12 +113,13 @@ export default function ChapterQuiz({ chapter }) {
   };
 
   const restart = () => {
-    storage.clear();
+    if (!preview) storage.clear();
     setAnswers({}); setSent(false); setPicked([]); setFilter('all'); setIdx(0); setSaveState('idle');
   };
 
   // Send the result once, when every question of the chapter has been answered.
   const sendResult = async () => {
+    if (preview) return;
     const name = readName();
     if (!name) return;
     setSaveState('saving');
@@ -123,7 +145,7 @@ export default function ChapterQuiz({ chapter }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [zoom]);
 
-  const c = data.chapitre;
+  const c = meta;
   const ref = (s) =>
     `Chapitre ${c.numero} (${c.titre}, ${c.auteurs}), Page ${s.page}, ${s.element}${s.refs ? ` ${s.refs}` : ''}`;
 
