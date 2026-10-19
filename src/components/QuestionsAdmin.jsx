@@ -115,7 +115,16 @@ export default function QuestionsAdmin({ password }) {
   const load = useCallback(async () => {
     setError('');
     try {
-      const data = await call(password, { action: 'list' });
+      let data = await call(password, { action: 'list' });
+      if (data.questions.length > 0) {
+        const known = new Set(data.questions.map((r) => r.id));
+        const missing = bundledQuestions.filter((b) => !known.has(b.id));
+        if (missing.length > 0) {
+          await call(password, { action: 'import', items: missing });
+          resetQuestionsCache();
+          data = await call(password, { action: 'list' });
+        }
+      }
       setRows(data.questions);
     } catch (e) {
       setError(e.message);

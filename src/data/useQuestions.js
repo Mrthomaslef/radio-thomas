@@ -21,11 +21,13 @@ const toQuestion = (row) => ({ id: row.id, ...row.data });
 export const imageSrc = (chapter, img) =>
   img.upload ? `/api/image?id=${img.upload}` : encodeURI(`/figures/${chapter}/${img.file}`);
 
-// Group database rows by chapter; keeps only known chapters.
+// Group database rows by chapter; keeps only known chapters and includes any new bundled questions not yet in DB.
 function groupByChapter(rows) {
+  const seen = new Set(rows.map((r) => r.id));
+  const merged = [...rows, ...bundledQuestions.filter((b) => !seen.has(b.id))];
   const out = {};
   for (const key of CHAPTER_KEYS) out[key] = [];
-  for (const row of rows) if (out[row.chapter]) out[row.chapter].push(row);
+  for (const row of merged) if (out[row.chapter]) out[row.chapter].push(row);
   for (const key of CHAPTER_KEYS) {
     out[key].sort((a, b) => a.position - b.position);
     out[key] = out[key].map(toQuestion);
