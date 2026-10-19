@@ -41,4 +41,24 @@ export const themes = [
       chapter('ch14', 'Pathologies dégénératives et tendineuses de la main et des doigts'),
     ],
   },
+  {
+    id: 'rachis',
+    title: 'Rachis',
+    chapters: [
+      chapter('ch15', 'Discopathies dégénératives cervicales'),
+      chapter('ch16', 'Affections mécaniques du rachis dorsolombaire'),
+      chapter('ch17', 'Autres affections rachidiennes'),
+    ],
+  },
+  {
+    id: 'hanche',
+    title: 'La Hanche',
+    chapters: [
+      chapter('ch18', 'Pathologies osseuses de la hanche'),
+      chapter('ch19', 'Pathologies articulaires de la hanche'),
+      chapter('ch20', 'Pathologies abarticulaires de la hanche'),
+      chapter('ch21', 'Pathologies du plexus lombosacré'),
+      chapter('ch22', 'Autres pathologies de la ceinture pelvienne'),
+    ],
+  },
 ];

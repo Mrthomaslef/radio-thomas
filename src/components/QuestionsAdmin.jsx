@@ -79,6 +79,14 @@ const CHAPTER_LABELS = {
   ch12: 'Poignet : pathologies tendineuses',
   ch13: 'Poignet & main : vasculonerveux',
   ch14: 'Main & doigts : dégénératif et tendineux',
+  ch15: 'Rachis : discopathies cervicales',
+  ch16: 'Rachis : mécanique dorsolombaire',
+  ch17: 'Rachis : autres affections',
+  ch18: 'Hanche : pathologies osseuses',
+  ch19: 'Hanche : pathologies articulaires',
+  ch20: 'Hanche : pathologies abarticulaires',
+  ch21: 'Hanche : plexus lombosacré',
+  ch22: 'Hanche : ceinture pelvienne',
 };
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
