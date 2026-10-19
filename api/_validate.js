@@ -60,8 +60,8 @@ export function validateQuestion(q) {
   }
   const good = items.filter((i) => i.correct).length;
   if (q.type === 'QCU' && good !== 1) return { error: 'Un QCU doit avoir exactement 1 bonne réponse' };
-  if (q.type === 'QRM' && (good < 2 || good === items.length)) {
-    return { error: 'Un QRM doit avoir au moins 2 bonnes réponses, et au moins 1 mauvaise' };
+  if (q.type === 'QRM' && good < 1) {
+    return { error: 'Un QRM doit avoir au moins 1 bonne réponse' };
   }
 
   let enonce_image = null;
