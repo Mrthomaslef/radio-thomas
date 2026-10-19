@@ -11,6 +11,7 @@ import {
   syncProgressFromServer,
 } from '../data/player.js';
 import { useQuestions, imageSrc } from '../data/useQuestions.js';
+import { submitQuestionReport } from '../data/reports.js';
 
 // ---------- helpers ----------
 const hash = (s) => {
@@ -130,7 +131,18 @@ export function QuizPlayer({
   const [showCorrection, setShowCorrection] = useState(false);
   const [zoom, setZoom] = useState(null);
   const [saveState, setSaveState] = useState('idle');
+  const [reportOpen, setReportOpen] = useState(false);
+  const [reportText, setReportText] = useState('');
+  const [reportStatus, setReportStatus] = useState('idle'); // idle | sending | sent
+  const [reportError, setReportError] = useState('');
   const topRef = useRef(null);
+
+  const resetReportBox = () => {
+    setReportOpen(false);
+    setReportText('');
+    setReportStatus('idle');
+    setReportError('');
+  };
 
   const firstOpen = (l, a) => { const i = l.findIndex((q) => !a[q.id]); return i === -1 ? l.length : i; };
   const [idx, setIdx] = useState(() => {
@@ -169,6 +181,7 @@ export function QuizPlayer({
     setIdx(i);
     setPicked([]);
     setShowCorrection(false);
+    resetReportBox();
   };
 
   const toggle = (id) => {
@@ -208,6 +221,7 @@ export function QuizPlayer({
     }
     setPicked([]);
     setShowCorrection(false);
+    resetReportBox();
     topRef.current?.scrollIntoView({ block: 'start' });
   };
 
@@ -218,6 +232,27 @@ export function QuizPlayer({
     }
     if (!preview && !randomMode) clearChapterProgress(key);
     setAnswers({}); setSent(false); setPicked([]); setShowCorrection(false); setIdx(0); setSaveState('idle');
+    resetReportBox();
+  };
+
+  const sendReport = async (e) => {
+    e.preventDefault();
+    if (!q || reportStatus === 'sending') return;
+    setReportError('');
+    setReportStatus('sending');
+    try {
+      await submitQuestionReport({
+        name: readName() || 'Anonyme',
+        chapter: qKey,
+        questionId: q.id,
+        message: reportText,
+      });
+      setReportStatus('sent');
+      setReportText('');
+    } catch (err) {
+      setReportError(err.message || 'Impossible d’envoyer le retour.');
+      setReportStatus('idle');
+    }
   };
 
   const themeId = meta.theme || 'epaule';
@@ -394,6 +429,59 @@ export function QuizPlayer({
                   ))}
                   <p className="cq-ref"><strong>Référence</strong>{ref(q.source)}</p>
                 </>
+              )}
+            </div>
+          )}
+
+          {!preview && (
+            <div className="cq-report">
+              {reportStatus === 'sent' ? (
+                <p className="cq-report-sent" role="status">
+                  ✓ Merci ! Votre retour a bien été transmis à l’administrateur.
+                </p>
+              ) : !reportOpen ? (
+                <button
+                  type="button"
+                  className="cq-report-trigger"
+                  onClick={() => setReportOpen(true)}
+                >
+                  ⚑ Signaler une erreur ou faire un retour sur cette question
+                </button>
+              ) : (
+                <form className="cq-report-form" onSubmit={sendReport}>
+                  <label htmlFor={`report-${q.id}`}>
+                    Votre retour pour l’administrateur (coquille, remarque, question…)
+                  </label>
+                  <textarea
+                    id={`report-${q.id}`}
+                    className="admin-input"
+                    rows={3}
+                    maxLength={600}
+                    placeholder="Écrivez quelques phrases pour décrire votre remarque…"
+                    value={reportText}
+                    onChange={(e) => setReportText(e.target.value)}
+                    autoFocus
+                    required
+                  />
+                  {reportError && <p className="admin-error" role="alert">{reportError}</p>}
+                  <div className="cq-report-actions">
+                    <button
+                      type="submit"
+                      className="btn btn-small"
+                      disabled={reportStatus === 'sending' || reportText.trim().length < 2}
+                    >
+                      {reportStatus === 'sending' ? 'Envoi…' : 'Envoyer le retour'}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-small btn-ghost"
+                      onClick={resetReportBox}
+                      disabled={reportStatus === 'sending'}
+                    >
+                      Annuler
+                    </button>
+                  </div>
+                </form>
               )}
             </div>
           )}

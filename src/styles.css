@@ -678,4 +678,69 @@ a.cq-dot:hover { transform: scale(1.08); }
   .rnd-play-top { margin-top: 96px; margin-bottom: -86px; }
 }
 
+/* question feedback / report (learner + admin) */
+.cq-report { margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--q-line); }
+.cq-report-trigger {
+  font-size: 0.84rem; color: var(--muted); padding: 4px 0;
+  transition: color 0.2s;
+}
+.cq-report-trigger:hover { color: var(--cyan); }
+.cq-report-form { display: grid; gap: 10px; }
+.cq-report-form label { font-size: 0.88rem; color: var(--muted); font-weight: 500; }
+.cq-report-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.cq-report-sent {
+  font-size: 0.88rem; color: var(--good); font-weight: 500;
+  padding: 8px 12px; border-radius: 10px; background: rgba(74, 222, 128, 0.1);
+}
+
+.admin-notif-banner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 14px 18px; margin-bottom: 18px; border-radius: 14px;
+  background: rgba(251, 146, 60, 0.12); border: 1px solid rgba(251, 146, 60, 0.45);
+}
+.admin-notif-banner div { display: grid; gap: 2px; }
+.admin-notif-banner strong { color: #fb923c; font-size: 0.96rem; }
+.admin-notif-banner span { color: var(--muted); font-size: 0.86rem; }
+
+.admin-tab-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 20px; height: 20px; padding: 0 6px; margin-left: 7px;
+  border-radius: 999px; background: #fb923c; color: #0a0d12;
+  font-size: 0.75rem; font-weight: 700;
+}
+
+.admin-reports-list { display: grid; gap: 14px; }
+.admin-report-card {
+  display: grid; gap: 10px; padding: 16px 18px;
+  border-radius: 14px; background: var(--panel); border: 1px solid rgba(251, 146, 60, 0.4);
+}
+.admin-report-card.is-resolved { border-color: var(--line); opacity: 0.72; }
+.admin-report-meta {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+  font-size: 0.86rem; color: var(--muted);
+}
+.admin-report-meta strong { color: var(--text); }
+.admin-report-tag {
+  padding: 3px 10px; border-radius: 999px;
+  background: rgba(56, 225, 255, 0.1); color: var(--cyan); font-size: 0.8rem; font-weight: 600;
+}
+.admin-report-q {
+  font-size: 0.88rem; color: var(--muted);
+  padding: 8px 12px; border-radius: 10px; background: rgba(255, 255, 255, 0.03);
+}
+.admin-report-q span { font-weight: 600; color: var(--text); }
+.admin-report-msg {
+  font-size: 0.98rem; color: var(--text); line-height: 1.5;
+  padding: 10px 14px; border-left: 3px solid #fb923c; background: rgba(251, 146, 60, 0.07); border-radius: 0 10px 10px 0;
+}
+.admin-report-actions { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 2px; }
+
+.admin-report-banner {
+  display: grid; gap: 4px; padding: 12px 16px; border-radius: 12px;
+  background: rgba(251, 146, 60, 0.12); border: 1px solid rgba(251, 146, 60, 0.45);
+}
+.admin-report-banner strong { color: #fb923c; font-size: 0.88rem; }
+.admin-report-banner p { color: var(--text); font-size: 0.95rem; }
+
+
 

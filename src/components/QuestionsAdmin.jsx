@@ -108,12 +108,12 @@ const newId = (chapter, rows) => {
   return `${chapter}-${Date.now()}`;
 };
 
-export default function QuestionsAdmin({ password }) {
+export default function QuestionsAdmin({ password, editTarget = null, onClearEditTarget = null, onResolveReport = null }) {
   const [rows, setRows] = useState(null);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [chapter, setChapter] = useState('ch1');
-  const [editing, setEditing] = useState(null); // { id, chapter, position, q, isNew }
+  const [editing, setEditing] = useState(null); // { id, chapter, position, q, isNew, reportContext }
   const [preview, setPreview] = useState(false);
   const [busy, setBusy] = useState(false);
 
@@ -138,6 +138,28 @@ export default function QuestionsAdmin({ password }) {
   }, [password]);
 
   useEffect(() => { load(); }, [load]);
+
+  // Open a specific question directly when arriving from a user report
+  useEffect(() => {
+    if (!editTarget?.questionId || rows === null) return;
+    const found =
+      rows.find((r) => r.id === editTarget.questionId) ||
+      bundledQuestions.find((b) => b.id === editTarget.questionId);
+    if (found) {
+      setChapter(found.chapter);
+      setEditing({
+        id: found.id,
+        chapter: found.chapter,
+        position: found.position,
+        q: structuredClone(found.data),
+        isNew: false,
+        reportContext: editTarget,
+      });
+    } else if (editTarget.chapter) {
+      setChapter(editTarget.chapter);
+    }
+    onClearEditTarget?.();
+  }, [editTarget, rows, onClearEditTarget]);
 
   const live = useMemo(
     () => (rows || []).filter((r) => !r.deleted_at && r.chapter === chapter).sort((a, b) => a.position - b.position),
@@ -165,6 +187,9 @@ export default function QuestionsAdmin({ password }) {
     setBusy(true); setError(''); setNotice('');
     try {
       await call(password, { action: 'save', id: editing.id, chapter: editing.chapter, position: editing.position, question: editing.q });
+      if (editing.reportContext && onResolveReport) {
+        await onResolveReport(editing.reportContext);
+      }
       resetQuestionsCache();
       setNotice('Question enregistrée. Elle apparaît sur le site d’ici une trentaine de secondes.');
       setEditing(null); setPreview(false);
@@ -326,6 +351,12 @@ function Editor({ editing, setEditing, busy, error, onSave, onCancel, onDelete, 
       <div className="qa-bar">
         <span>{editing.isNew ? 'Nouvelle question' : `Question ${editing.id}`} · {CHAPTER_LABELS[editing.chapter]}</span>
       </div>
+      {editing.reportContext?.reportMessage && (
+        <div className="admin-report-banner">
+          <strong>Retour de {editing.reportContext.reportAuthor || 'Anonyme'} :</strong>
+          <p>« {editing.reportContext.reportMessage} »</p>
+        </div>
+      )}
       {error && <p className="admin-error" role="alert">{error}</p>}
 
       <div className="qa-grid">

@@ -28,13 +28,15 @@ export default async function handler(req, res) {
   }
 
   try {
+    const headers = {
+      apikey: SUPABASE_PUBLISHABLE_KEY,
+      Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+      'Content-Type': 'application/json',
+    };
+
     const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_list_attempts`, {
       method: 'POST',
-      headers: {
-        apikey: SUPABASE_PUBLISHABLE_KEY,
-        Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({ p_password: password }),
     });
     if (!r.ok) return res.status(502).json({ error: `Erreur base de données (${r.status})` });
@@ -46,7 +48,79 @@ export default async function handler(req, res) {
     if (data.status !== 'ok') {
       return res.status(401).json({ error: 'Mot de passe incorrect' });
     }
-    return res.status(200).json({ attempts: data.attempts });
+
+    const rawAttempts = Array.isArray(data.attempts) ? data.attempts : [];
+    const attempts = [];
+    const reportGroups = new Map();
+
+    for (const a of rawAttempts) {
+      if (typeof a.course === 'string' && a.course.startsWith('report-')) {
+        if (!reportGroups.has(a.course)) {
+          reportGroups.set(a.course, {
+            id: a.course,
+            created_at: a.created_at,
+            question_id: a.quiz,
+            chunks: new Map(),
+            resolved_at: null,
+          });
+        }
+        const g = reportGroups.get(a.course);
+        if (a.created_at < g.created_at) g.created_at = a.created_at;
+        if (a.passed || a.name === '__resolved__') {
+          g.resolved_at = a.created_at;
+        } else {
+          g.chunks.set(a.score, a.name);
+        }
+      } else {
+        attempts.push(a);
+      }
+    }
+
+    const fallbackReports = [];
+    for (const g of reportGroups.values()) {
+      if (g.chunks.size === 0) continue;
+      const b64 = [...g.chunks.entries()]
+        .sort((x, y) => x[0] - y[0])
+        .map((x) => x[1])
+        .join('');
+      try {
+        const parsed = JSON.parse(Buffer.from(b64, 'base64').toString('utf8'));
+        fallbackReports.push({
+          id: g.id,
+          created_at: g.created_at,
+          name: parsed.u || 'Anonyme',
+          chapter: parsed.c || 'ch1',
+          question_id: g.question_id,
+          message: parsed.m || '',
+          resolved_at: g.resolved_at,
+        });
+      } catch {
+        // Ignore malformed fallback row
+      }
+    }
+
+    let tableReports = [];
+    try {
+      const rr = await fetch(`${SUPABASE_URL}/rest/v1/rpc/admin_list_reports`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ p_password: password }),
+      });
+      if (rr.ok) {
+        const rdata = await rr.json();
+        if (rdata?.status === 'ok' && Array.isArray(rdata.reports)) {
+          tableReports = rdata.reports;
+        }
+      }
+    } catch {
+      // Migration not applied yet; fallbackReports is used
+    }
+
+    const reports = [...tableReports, ...fallbackReports].sort(
+      (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
+
+    return res.status(200).json({ attempts, reports });
   } catch {
     return res.status(502).json({ error: 'Base de données injoignable' });
   }
