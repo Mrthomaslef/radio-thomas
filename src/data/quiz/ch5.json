@@ -6,5 +6,166 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c5-q01",
+      "type": "QCU",
+      "theme": "Anatomie : tendon commun des épicondyliens latéraux",
+      "enonce": "Lequel de ces muscles ne fait PAS partie des muscles épicondyliens latéraux s’insérant par le tendon commun sur l’épicondyle latéral ?",
+      "enonce_image": null,
+      "items": [
+        {"id": "A", "texte": "Le court extenseur radial du carpe (CERC)", "correct": false},
+        {"id": "B", "texte": "L’extenseur commun des doigts (ECD)", "correct": false},
+        {"id": "C", "texte": "Le long extenseur radial du carpe (LERC)", "correct": true},
+        {"id": "D", "texte": "L’extenseur ulnaire du carpe (EUC)", "correct": false}
+      ],
+      "explication": "Le tendon commun des extenseurs-supinateurs est composé des tendons du CERC, de l’ECD, de l’extenseur propre du petit doigt (EPD), de l’EUC et du faisceau superficiel du supinateur. Le LERC s’insère plus haut sur la crête supracondylaire et ne fait pas partie du tendon commun.",
+      "correction_figures": [],
+      "source": {"page": 160, "element": "Figure 5.1", "refs": ""}
+    },
+    {
+      "id": "c5-q02",
+      "type": "QRM",
+      "theme": "Échographie : épicondylite latérale",
+      "enonce": "Lors d’une échographie pour suspicion d’épicondylite latérale, quels signes morphologiques et Doppler sont en faveur de ce diagnostic ?",
+      "enonce_image": null,
+      "items": [
+        {"id": "A", "texte": "Une disparition de l’échostructure fibrillaire hyperéchogène avec apparition d’une plage hypoéchogène", "correct": true},
+        {"id": "B", "texte": "Un amincissement global et systématique de l’enthèse", "correct": false},
+        {"id": "C", "texte": "Une hyperhémie intra et/ou péritendineuse en mode Doppler", "correct": true},
+        {"id": "D", "texte": "Une lame liquidienne péritendineuse", "correct": true}
+      ],
+      "explication": "L’épicondylite se manifeste par une plage hypoéchogène (tendinose), une éventuelle hyperhémie Doppler (processus de réparation), et parfois une fine lame liquidienne. L’enthèse est généralement épaissie, et non amincie (l’amincissement ferait plutôt suspecter une rupture partielle).",
+      "correction_figures": [],
+      "source": {"page": 160, "element": "Texte", "refs": ""}
+    },
+    {
+      "id": "c5-q03",
+      "type": "QCU",
+      "theme": "Pathologie ostéochondrale : maladie de Panner",
+      "enonce": "Un garçon de 9 ans consulte pour des douleurs modérées de la face latérale du coude. La radiographie montre une raréfaction et une fragmentation touchant la totalité du noyau d’ossification du capitulum, sans aucun fragment intra-articulaire libre. Quel est le diagnostic le plus probable et son évolution attendue ?",
+      "enonce_image": null,
+      "items": [
+        {"id": "A", "texte": "Ostéochondrite disséquante (OCD), de mauvais pronostic avec forte probabilité d’évolution arthrosique", "correct": false},
+        {"id": "B", "texte": "Maladie de Panner, avec restitution ad integrum spontanée et guérison en environ 2 ans", "correct": true},
+        {"id": "C", "texte": "Fracture ostéochondrale traumatique du capitulum nécessitant un brochage", "correct": false},
+        {"id": "D", "texte": "Pseudo-défect physiologique du capitulum, asymptomatique", "correct": false}
+      ],
+      "explication": "L’âge de survenue (7-12 ans), l’atteinte de la totalité du noyau du capitulum et l’absence de corps étrangers libres sont caractéristiques de la maladie de Panner (ostéochondrose). Contrairement à l’ostéochondrite disséquante (12-15 ans, portion antérolatérale), le pronostic de la maladie de Panner est très bon avec une guérison et un remodelage spontanés.",
+      "correction_figures": [],
+      "source": {"page": 168, "element": "Tableau 5.1", "refs": ""}
+    },
+    {
+      "id": "c5-q04",
+      "type": "QRM",
+      "theme": "Instabilité rotatoire postérolatérale",
+      "enonce": "Une lésion du ligament collatéral ulnaire latéral (LCUL) entraîne une instabilité rotatoire postérolatérale du coude. Quels signes IRM indirects sont associés à cette pathologie ?",
+      "enonce_image": null,
+      "items": [
+        {"id": "A", "texte": "Une subluxation postérieure de la tête radiale", "correct": true},
+        {"id": "B", "texte": "Une contusion osseuse de la partie antérieure de la tête radiale et de la partie postérieure du capitulum", "correct": true},
+        {"id": "C", "texte": "Un bâillement huméro-olécrânien latéral dans le plan axial", "correct": true},
+        {"id": "D", "texte": "Une subluxation antérieure de la tête radiale par rapport au capitulum", "correct": false}
+      ],
+      "explication": "L’instabilité rotatoire postérolatérale se définit par une rotation latérale de l’ulna et du radius entraînant une subluxation postérieure (et non antérieure) de la tête radiale. On y associe des contusions ostéochondrales (tête radiale antérieure / capitulum postérieur) et un bâillement huméro-olécrânien latéral.",
+      "correction_figures": [],
+      "source": {"page": 162, "element": "Encadré 5.3 (p. 162, 164)", "refs": ""}
+    },
+    {
+      "id": "c5-q05",
+      "type": "QCU",
+      "theme": "Syndromes canalaires : nerf interosseux postérieur",
+      "enonce": "Un peintre en bâtiment de 42 ans se plaint d’une faiblesse d’apparition progressive l’empêchant d’étendre complètement ses doigts (notamment le médius). L’extension de son poignet reste cependant conservée et il n’a pas de perte de sensibilité cutanée. Quel syndrome canalaire présente-t-il et quel est le site de compression le plus probable ?",
+      "enonce_image": null,
+      "items": [
+        {"id": "A", "texte": "Syndrome du tunnel radial avec compression du rameau superficiel sensitif", "correct": false},
+        {"id": "B", "texte": "Syndrome du nerf interosseux postérieur avec compression au niveau de l’arcade de Fröhse", "correct": true},
+        {"id": "C", "texte": "Syndrome du nerf interosseux postérieur avec compression dans le sillon rétro-huméral", "correct": false},
+        {"id": "D", "texte": "Atteinte du nerf cutané latéral de l’avant-bras par le lacertus fibrosus", "correct": false}
+      ],
+      "explication": "Le tableau clinique (déficit moteur de l’extension des doigts avec extension du poignet préservée et absence de déficit sensitif) est le signe d’une atteinte du rameau profond moteur du nerf radial, appelé syndrome du nerf interosseux postérieur. Le site de compression de loin le plus fréquent pour ce rameau est l’arcade de Fröhse (bord proximal du chef superficiel du muscle supinateur).",
+      "correction_figures": [],
+      "source": {"page": 171, "element": "Texte (p. 171-172)", "refs": ""}
+    },
+    {
+      "id": "c5-q06",
+      "type": "QCU",
+      "theme": "Pédiatrie : pronation douloureuse",
+      "enonce": "Lors d’une « pronation douloureuse » (pulled elbow) chez un enfant en bas âge, quelle structure anatomique se subluxant vient s’interposer dans l’interligne articulaire huméroradial ?",
+      "enonce_image": null,
+      "items": [
+        {"id": "A", "texte": "Le ligament collatéral radial (LCR)", "correct": false},
+        {"id": "B", "texte": "Le tendon du muscle biceps brachial", "correct": false},
+        {"id": "C", "texte": "Le ligament annulaire (LA)", "correct": true},
+        {"id": "D", "texte": "Le pli synovial huméroradial (plica)", "correct": false}
+      ],
+      "explication": "Lors d’une traction brusque du membre supérieur chez le jeune enfant, la tête radiale immature se subluxe en dehors du ligament annulaire. Ce dernier vient alors s’interposer et se coincer dans l’interligne huméroradial, causant la symptomatologie.",
+      "correction_figures": [],
+      "source": {"page": 165, "element": "Texte", "refs": ""}
+    },
+    {
+      "id": "c5-q07",
+      "type": "QRM",
+      "theme": "Ostéochondrite disséquante du capitulum",
+      "enonce": "Quels sont les critères IRM permettant d’affirmer le caractère instable d’une ostéochondrite disséquante (OCD) du capitulum ?",
+      "enonce_image": null,
+      "items": [
+        {"id": "A", "texte": "Un liseré périphérique de démarcation en franc hypersignal T2", "correct": true},
+        {"id": "B", "texte": "Un liseré périphérique de démarcation en franc hyposignal T2", "correct": false},
+        {"id": "C", "texte": "La présence de lésions kystiques périphériques dans l’os adjacent", "correct": true},
+        {"id": "D", "texte": "Un rehaussement autour du fragment après injection de gadolinium", "correct": true}
+      ],
+      "explication": "En IRM, les critères d’instabilité d’une OCD sont la présence de kystes périphériques, un liseré en hypersignal T2 (le liquide s’insinuant sous le fragment), un rehaussement périphérique, un défect liquidien, ou un fragment déplacé. Un liseré en hyposignal T2 signe au contraire une lésion stable.",
+      "correction_figures": [],
+      "source": {"page": 168, "element": "Texte", "refs": ""}
+    },
+    {
+      "id": "c5-q08",
+      "type": "QCU",
+      "theme": "Variantes anatomiques : pseudo-défect du capitulum",
+      "enonce": "En IRM, vous visualisez un décroché abrupt et irrégulier au niveau de l’os sous-chondral à la jonction entre le capitulum et l’épicondyle latéral, localisé strictement à la partie postérieure et latérale. L’os spongieux adjacent est d’aspect normal, sans aucun œdème. Le patient n’a pas d’antécédent traumatique. Quelle est l’interprétation la plus juste ?",
+      "enonce_image": null,
+      "items": [
+        {"id": "A", "texte": "Il s’agit d’une impaction ostéochondrale séquellaire d’une luxation passée inaperçue", "correct": false},
+        {"id": "B", "texte": "Il s’agit d’une ostéochondrite disséquante (OCD) au stade précoce", "correct": false},
+        {"id": "C", "texte": "Il s’agit d’un pseudo-défect physiologique du capitulum ne nécessitant pas de prise en charge", "correct": true},
+        {"id": "D", "texte": "Il s’agit d’un arrachement chronique de l’enthèse du tendon commun des extenseurs", "correct": false}
+      ],
+      "explication": "Le pseudo-défect du capitulum est une irrégularité physiologique due à la transition entre la surface cartilagineuse du capitulum et l’os non cartilagineux de l’épicondyle, localisée en postérolatéral. Son aspect asymptomatique, l’absence d’œdème osseux et sa position typique (les OCD sont antérolatérales) permettent d’écarter une lésion pathologique.",
+      "correction_figures": [],
+      "source": {"page": 169, "element": "Texte", "refs": ""}
+    },
+    {
+      "id": "c5-q09",
+      "type": "QRM",
+      "theme": "Nerf cutané latéral de l’avant-bras",
+      "enonce": "Le nerf cutané latéral de l’avant-bras est une branche terminale exclusivement sensitive. Quelles situations iatrogènes ou anatomiques peuvent provoquer sa lésion ou sa compression ?",
+      "enonce_image": null,
+      "items": [
+        {"id": "A", "texte": "Une prise de sang (ponction de la veine céphalique)", "correct": true},
+        {"id": "B", "texte": "Une compression au niveau du tunnel radial par l’arcade de Fröhse", "correct": false},
+        {"id": "C", "texte": "Une rupture du tendon distal du muscle biceps brachial", "correct": true},
+        {"id": "D", "texte": "Un frottement aigu ou chronique contre le bord libre latéral du tendon du biceps brachial", "correct": true}
+      ],
+      "explication": "Le nerf cutané latéral de l’avant-bras (issu du nerf musculocutané) chemine très superficiellement à la face antérolatérale du coude, au contact de la veine céphalique (risque lors des ponctions) et du bord latéral du tendon du biceps (risque lors de ruptures ou de frottements). L’arcade de Fröhse est le site de compression du nerf radial profond.",
+      "correction_figures": [],
+      "source": {"page": 173, "element": "Texte (p. 173-174)", "refs": ""}
+    },
+    {
+      "id": "c5-q10",
+      "type": "QCU",
+      "theme": "Syndrome de la plica huméroradiale",
+      "enonce": "Parmi les éléments de l’imagerie d’un pli synovial huméroradial (plica), quel signe échographique est le plus en faveur de son caractère pathogène (syndrome de la plica) et non d’un simple reliquat physiologique ?",
+      "enonce_image": null,
+      "items": [
+        {"id": "A", "texte": "Sa présence dans l’interligne postérieur", "correct": false},
+        {"id": "B", "texte": "Son échostructure parfaitement homogène et isoéchogène au muscle", "correct": false},
+        {"id": "C", "texte": "Son échostructure hétérogène associée à des contours irréguliers et à une synovite focale Doppler", "correct": true},
+        {"id": "D", "texte": "Sa forme méniscoïde triangulaire classique", "correct": false}
+      ],
+      "explication": "La présence d’un pli synovial est quasi constante chez les sujets sains (86 à 100 %). En échographie, le caractère pathologique se manifeste par un épaississement, une échostructure hétérogène, des contours irréguliers et une synovite focale hyperhémique en mode Doppler (témoin des microtraumatismes).",
+      "correction_figures": [],
+      "source": {"page": 166, "element": "Texte", "refs": ""}
+    }
+  ]
 }
