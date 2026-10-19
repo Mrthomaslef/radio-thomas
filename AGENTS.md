@@ -133,7 +133,7 @@ git push                           # pushes to master
 gh run list --limit 1              # "Deploy site" should end in success
 ```
 
-Live site: https://radio-thomas-charlesandres-projects.vercel.app
+Live site: https://quizcotten.fr (domain bought at OVH, DNS: `A @ 216.198.79.1` and `CNAME www` → Vercel; `www` redirects to the root; the old `radio-thomas-charlesandres-projects.vercel.app` address still works and is the default target of the local dev proxy in `vite.config.js`)
 
 Rules:
 - Run `npm run build` before pushing. If it fails, fix it first. Never push a broken build.

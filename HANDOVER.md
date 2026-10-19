@@ -49,7 +49,7 @@ Simple picture:
      +----------+
 ```
 
-Live site: https://radio-thomas-charlesandres-projects.vercel.app
+Live site: https://quizcotten.fr
 
 ---
 
@@ -252,7 +252,7 @@ After merging: `git checkout master && git pull`.
 you push to master  →  automatic build & publish (≈1–2 min)  →  site is live
 ```
 
-Live site: https://radio-thomas-charlesandres-projects.vercel.app
+Live site: https://quizcotten.fr
 
 ### 5.1 Watching a deploy
 
@@ -260,7 +260,7 @@ Live site: https://radio-thomas-charlesandres-projects.vercel.app
 2. On GitHub: repo `charlesandre/radio-thomas` → **Actions** tab → the top run named **Deploy site**. Green check = live. Red cross = click it to read the error.
 3. Or in the terminal: `gh run list --limit 3` and `gh run watch`.
 4. Open the live URL and hard-refresh (`Cmd/Ctrl + Shift + R`).
-5. Backend test: open https://radio-thomas-charlesandres-projects.vercel.app/api/hello. You should see JSON with a `message`.
+5. Backend test: open https://quizcotten.fr/api/hello. You should see JSON with a `message`.
 
 **If the run fails:** most often `npm run build` fails. Run it on your computer, read the error, fix, push again. Ask the AI: *"The Deploy site GitHub Action failed, here is the log, please fix it."*
 
@@ -394,7 +394,7 @@ Tips: if the AI wants to run a command you don't understand, ask *"explain what 
 | `npm install` fails with permission or network errors | Check your internet, then delete the `node_modules` folder and run `npm install` again. Make sure `node --version` is a recent LTS. |
 | `npm run dev`: **port 5173 already in use** | Another copy is running — close it (`Ctrl + C`) or use the new port Vite suggests. |
 | Page is blank / red error in the browser | Read the terminal running `npm run dev` and the browser console (`F12`). Paste the error to your AI and ask it to fix it. |
-| The backend message never appears locally | The `/api` proxy needs internet. Check https://radio-thomas-charlesandres-projects.vercel.app/api/hello opens in your browser. |
+| The backend message never appears locally | The `/api` proxy needs internet. Check https://quizcotten.fr/api/hello opens in your browser. |
 | I pushed, but the live site didn't change | GitHub → **Actions** tab (section 5.2). **Red cross** → open the run and read the error; usually run `npm run build` locally. **No run at all** → you pushed a branch, not `master`; merge it first. |
 | The Action fails at the last step with an authentication error | The deploy credential expired. Tell Charles. |
 | Wrong email on my commits | `git config --global user.email "right@email.com"`. Only affects *new* commits. |
