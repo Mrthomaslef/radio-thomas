@@ -23,10 +23,19 @@ import ch19 from './quiz/ch19.json';
 import ch20 from './quiz/ch20.json';
 import ch21 from './quiz/ch21.json';
 import ch22 from './quiz/ch22.json';
+import ch23 from './quiz/ch23.json';
+import ch24 from './quiz/ch24.json';
+import ch25 from './quiz/ch25.json';
+import ch26 from './quiz/ch26.json';
+import ch27 from './quiz/ch27.json';
+import ch28 from './quiz/ch28.json';
+import ch29 from './quiz/ch29.json';
+import ch30 from './quiz/ch30.json';
 
 // Chapter metadata (title/authors feed the reference line of each correction).
 export const CHAPTERS = {
   ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11, ch12, ch13, ch14, ch15, ch16, ch17, ch18, ch19, ch20, ch21, ch22,
+  ch23, ch24, ch25, ch26, ch27, ch28, ch29, ch30,
 };
 export const CHAPTER_KEYS = Object.keys(CHAPTERS);
 

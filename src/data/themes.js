@@ -61,4 +61,24 @@ export const themes = [
       chapter('ch22', 'Autres pathologies de la ceinture pelvienne'),
     ],
   },
+  {
+    id: 'genou',
+    title: 'Le Genou',
+    chapters: [
+      chapter('ch23', 'Pathologies antérieures'),
+      chapter('ch24', 'Pathologies des ménisques'),
+      chapter('ch25', 'Pathologies des ligaments croisés'),
+      chapter('ch26', 'Pathologies des tissus mous collatéraux et postérieurs'),
+      chapter('ch27', 'Autres pathologies du genou'),
+    ],
+  },
+  {
+    id: 'jambe-cheville-pied',
+    title: 'Jambe, Cheville et Pied',
+    chapters: [
+      chapter('ch28', 'Pathologies de la jambe'),
+      chapter('ch29', 'Pathologies des tissus mous'),
+      chapter('ch30', 'Autres pathologies de la cheville et du pied'),
+    ],
+  },
 ];

@@ -87,6 +87,14 @@ const CHAPTER_LABELS = {
   ch20: 'Hanche : pathologies abarticulaires',
   ch21: 'Hanche : plexus lombosacré',
   ch22: 'Hanche : ceinture pelvienne',
+  ch23: 'Genou : pathologies antérieures',
+  ch24: 'Genou : ménisques',
+  ch25: 'Genou : ligaments croisés',
+  ch26: 'Genou : collatéraux et postérieurs',
+  ch27: 'Genou : autres pathologies',
+  ch28: 'Jambe : pathologies de la jambe',
+  ch29: 'Cheville & pied : tissus mous',
+  ch30: 'Cheville & pied : autres pathologies',
 };
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
