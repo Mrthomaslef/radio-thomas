@@ -63,9 +63,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
   const saved = useMemo(() => (preview ? {} : storage.read()), [storage, preview]);
 
   const questions = useMemo(() => rawQuestions.map((q) => ({ ...q, shown: mixItems(q) })), [rawQuestions]);
-  const themes = useMemo(() => [...new Set(questions.map((q) => q.theme))], [questions]);
 
-  const [filter, setFilter] = useState(saved.filter && themes.includes(saved.filter) ? saved.filter : 'all');
   const [answers, setAnswers] = useState(saved.answers || {}); // qid -> picked item ids
   const [sent, setSent] = useState(Boolean(saved.sent));
   const [picked, setPicked] = useState([]);
@@ -73,25 +71,21 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
   const [saveState, setSaveState] = useState('idle');
   const topRef = useRef(null);
 
-  const list = useMemo(() => (filter === 'all' ? questions : questions.filter((q) => q.theme === filter)), [questions, filter]);
   const firstOpen = (l, a) => { const i = l.findIndex((q) => !a[q.id]); return i === -1 ? l.length : i; };
-  const [idx, setIdx] = useState(() => firstOpen(list, answers));
+  const [idx, setIdx] = useState(() => firstOpen(questions, answers));
 
-  useEffect(() => { if (!preview) storage.write({ filter, answers, sent }); }, [storage, preview, filter, answers, sent]);
+  useEffect(() => { if (!preview) storage.write({ answers, sent }); }, [storage, preview, answers, sent]);
 
-  const q = list[idx];
+  const q = questions[idx];
   const validated = q ? answers[q.id] : null;
-  const finished = idx >= list.length;
+  const finished = idx >= questions.length;
 
   const answeredAll = questions.filter((x) => answers[x.id]);
   const score = answeredAll.filter((x) => isPerfect(x, answers[x.id])).length;
   const total = questions.length;
-  const listDone = list.filter((x) => answers[x.id]).length;
 
-  const changeFilter = (f) => {
-    setFilter(f);
-    const l = f === 'all' ? questions : questions.filter((x) => x.theme === f);
-    setIdx(firstOpen(l, answers));
+  const goTo = (i) => {
+    setIdx(i);
     setPicked([]);
   };
 
@@ -107,14 +101,18 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
   };
 
   const next = () => {
-    setIdx((i) => i + 1);
+    if (idx + 1 < questions.length) {
+      setIdx(idx + 1);
+    } else {
+      setIdx(firstOpen(questions, answers));
+    }
     setPicked([]);
     topRef.current?.scrollIntoView({ block: 'start' });
   };
 
   const restart = () => {
     if (!preview) storage.clear();
-    setAnswers({}); setSent(false); setPicked([]); setFilter('all'); setIdx(0); setSaveState('idle');
+    setAnswers({}); setSent(false); setPicked([]); setIdx(0); setSaveState('idle');
   };
 
   // Send the result once, when every question of the chapter has been answered.
@@ -159,6 +157,14 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
   };
   const mark = { ok: '✓', ko: '✗', miss: '!', 'miss-qcu': '✓' };
 
+  const dotStatus = (question) => {
+    const a = answers[question.id];
+    if (!a) return { cls: 'pending', label: 'non validée' };
+    return isPerfect(question, a)
+      ? { cls: 'ok', label: 'bonne réponse' }
+      : { cls: 'ko', label: 'erreur' };
+  };
+
   return (
     <div className="cq" ref={topRef}>
       <header className="cq-head">
@@ -169,21 +175,31 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
           <span>{answeredAll.length} / {total} questions</span>
         </div>
         <div className="cq-bar"><div style={{ width: `${(answeredAll.length / total) * 100}%` }} /></div>
-        <div className="cq-chips" role="tablist" aria-label="Sous-thèmes">
-          <button className={filter === 'all' ? 'on' : ''} onClick={() => changeFilter('all')}>Tous</button>
-          {themes.map((t) => (
-            <button key={t} className={filter === t ? 'on' : ''} onClick={() => changeFilter(t)}>{t}</button>
-          ))}
+        <div className="cq-dots" role="navigation" aria-label="Progression des questions">
+          {questions.map((item, i) => {
+            const { cls, label } = dotStatus(item);
+            const active = !finished && idx === i;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                className={`cq-dot ${cls}${active ? ' on' : ''}`}
+                onClick={() => goTo(i)}
+                aria-label={`Question ${i + 1} (${label})`}
+                aria-current={active ? 'step' : undefined}
+              >
+                {i + 1}
+              </button>
+            );
+          })}
         </div>
       </header>
 
       {finished ? (
         <section className="cq-card cq-end">
-          <h2>{listDone === list.length && filter === 'all' ? 'Quiz terminé !' : 'Série terminée'}</h2>
+          <h2>Quiz terminé !</h2>
           <p className="cq-big">{score} / {total}</p>
-          <p>{answeredAll.length < total
-            ? `Il reste ${total - answeredAll.length} question(s) dans les autres sous-thèmes.`
-            : 'Une question compte juste seulement si toutes les bonnes réponses (et elles seules) sont cochées.'}</p>
+          <p>Une question compte juste seulement si toutes les bonnes réponses (et elles seules) sont cochées.</p>
           {answeredAll.length === total && (
             <p className={`cq-save cq-save-${saveState}`} role="status">
               {sent && '✓ Résultat enregistré'}
@@ -199,7 +215,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
       ) : (
         <section className="cq-card" key={q.id}>
           <div className="cq-meta">
-            <span>Question {idx + 1} / {list.length}</span>
+            <span>Question {idx + 1} / {questions.length}</span>
             <span className={`cq-type cq-${q.type}`}>{q.type === 'QCU' ? 'Une seule réponse' : 'Plusieurs réponses possibles'}</span>
           </div>
           {q.enonce_image && (
@@ -249,7 +265,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
             <button className="btn cq-main" onClick={validate} disabled={!picked.length}>Valider</button>
           ) : (
             <button className="btn cq-main" onClick={next}>
-              {idx + 1 >= list.length ? 'Voir le résultat' : 'Question suivante'} <Icon name="arrow" size={18} />
+              {idx + 1 >= questions.length && answeredAll.length === total ? 'Voir le résultat' : 'Question suivante'} <Icon name="arrow" size={18} />
             </button>
           )}
         </div>
