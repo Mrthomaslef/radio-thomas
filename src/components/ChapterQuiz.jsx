@@ -42,6 +42,7 @@ export default function ChapterQuiz({ chapter }) {
   const { key, data } = chapter;
   const { byChapter, loading } = useQuestions();
   const questions = byChapter[key] || [];
+  const backHref = `#/${data.chapitre.theme || 'epaule'}`;
 
   if (loading) {
     return <div className="cq"><p className="cq-loading" role="status">Chargement des questions…</p></div>;
@@ -49,8 +50,8 @@ export default function ChapterQuiz({ chapter }) {
   if (questions.length === 0) {
     return (
       <div className="cq">
-        <a href="#/epaule" className="cq-back">← Chapitres</a>
-        <p className="cq-loading">Ce chapitre ne contient plus de questions pour le moment.</p>
+        <a href={backHref} className="cq-back">← Chapitres</a>
+        <p className="cq-loading">Ce chapitre ne contient pas encore de questions pour le moment.</p>
       </div>
     );
   }
@@ -115,6 +116,9 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
     setAnswers({}); setSent(false); setPicked([]); setIdx(0); setSaveState('idle');
   };
 
+  const themeId = meta.theme || 'epaule';
+  const backHref = `#/${themeId}`;
+
   // Send the result once, when every question of the chapter has been answered.
   const sendResult = async () => {
     if (preview) return;
@@ -125,7 +129,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
       const r = await fetch('/api/attempts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, course: 'epaule', quiz: key, score, total, passed: score / total >= 0.6 }),
+        body: JSON.stringify({ name, course: themeId, quiz: key, score, total, passed: score / total >= 0.6 }),
       });
       if (!r.ok) throw new Error(String(r.status));
       setSent(true); setSaveState('saved');
@@ -168,7 +172,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
   return (
     <div className="cq" ref={topRef}>
       <header className="cq-head">
-        <a href="#/epaule" className="cq-back">← Chapitres</a>
+        <a href={backHref} className="cq-back">← Chapitres</a>
         <h1>{c.titre}</h1>
         <div className="cq-stats" aria-live="polite">
           <span>Score <b>{score}</b> / {answeredAll.length || 0}</span>
@@ -209,7 +213,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
           )}
           <div className="cq-end-actions">
             <button className="btn btn-ghost" onClick={restart}>Recommencer</button>
-            <a className="btn" href="#/epaule">Autres chapitres</a>
+            <a className="btn" href={backHref}>Autres chapitres</a>
           </div>
         </section>
       ) : (

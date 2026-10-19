@@ -4,13 +4,9 @@ import Home from './components/Home.jsx';
 import Footer from './components/Footer.jsx';
 import ChapterQuiz from './components/ChapterQuiz.jsx';
 import AdminPage from './components/AdminPage.jsx';
-import ch1 from './data/quiz/ch1.json';
-import ch2 from './data/quiz/ch2.json';
-import ch3 from './data/quiz/ch3.json';
-import ch4 from './data/quiz/ch4.json';
+import { CHAPTERS as chapters } from './data/useQuestions.js';
 
-// Tiny hash router: "#/quiz/<key>" plays a chapter quiz, "#/epaule" opens a theme, anything else is the home page.
-const chapters = { ch1, ch2, ch3, ch4 };
+// Tiny hash router: "#/quiz/<key>" plays a chapter quiz, "#/<theme>" opens a theme, anything else is the home page.
 
 const isAdminRoute = () => window.location.hash === '#/admin';
 const parseTheme = () => (window.location.hash.match(/^#\/([\w-]+)$/) || [])[1] || null;

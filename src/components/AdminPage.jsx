@@ -4,10 +4,16 @@ import QuestionsAdmin from './QuestionsAdmin.jsx';
 // Friendly names for course slugs; unknown slugs are shown as-is.
 const COURSE_LABELS = {
   epaule: 'L’épaule',
+  coude: 'Le coude',
   ch1: 'Pathologies de la coiffe',
   ch2: 'Instabilité d’épaule',
   ch3: 'Plexus brachial',
   ch4: 'Autres pathologies de l’épaule',
+  ch5: 'Pathologies du compartiment latéral',
+  ch6: 'Pathologies du compartiment médial',
+  ch7: 'Pathologies du compartiment antérieur',
+  ch8: 'Pathologies du compartiment postérieur',
+  ch9: 'Autres affections du coude',
   'pathologie-coiffe': 'Pathologies de la coiffe des rotateurs (ancien)',
   'landing-demo': 'Quiz d’essai (ancien)',
 };

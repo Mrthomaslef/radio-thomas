@@ -68,7 +68,12 @@ const CHAPTER_LABELS = {
   ch1: 'Coiffe des rotateurs',
   ch2: 'Instabilité',
   ch3: 'Plexus brachial',
-  ch4: 'Autres pathologies',
+  ch4: 'Autres pathologies (épaule)',
+  ch5: 'Coude : compartiment latéral',
+  ch6: 'Coude : compartiment médial',
+  ch7: 'Coude : compartiment antérieur',
+  ch8: 'Coude : compartiment postérieur',
+  ch9: 'Coude : autres affections',
 };
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
