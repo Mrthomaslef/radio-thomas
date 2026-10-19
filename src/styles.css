@@ -742,5 +742,60 @@ a.cq-dot:hover { transform: scale(1.08); }
 .admin-report-banner strong { color: #fb923c; font-size: 0.88rem; }
 .admin-report-banner p { color: var(--text); font-size: 0.95rem; }
 
+/* trainer question review tracking */
+.qa-review-summary {
+  display: grid; gap: 10px; padding: 14px 18px;
+  border-radius: 14px; background: var(--panel); border: 1px solid var(--line);
+}
+.qa-review-head {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+}
+.qa-review-head > div:first-child { display: grid; gap: 2px; }
+.qa-review-head strong { font-size: 0.96rem; color: var(--text); }
+.qa-review-head span { font-size: 0.86rem; color: var(--muted); }
+.qa-review-head b { color: var(--good); }
+.qa-review-bar > div { background: var(--good); }
+.qa-review-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.qa-filter-pill {
+  padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03); color: var(--muted); font-size: 0.82rem; font-weight: 600;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.qa-filter-pill.on { border-color: var(--cyan); background: rgba(56, 225, 255, 0.12); color: var(--text); }
+
+.qa-chip-count {
+  margin-left: 6px; padding: 1px 7px; border-radius: 999px;
+  font-size: 0.74rem; background: rgba(255, 255, 255, 0.08); color: var(--muted);
+}
+.qa-chip-count.is-done { background: rgba(74, 222, 128, 0.18); color: var(--good); }
+
+.qa-list-item {
+  display: flex; align-items: stretch; gap: 10px;
+}
+.qa-list-item .qa-row { flex: 1; }
+.qa-list-item.is-reviewed .qa-row {
+  border-color: rgba(74, 222, 128, 0.35);
+}
+.qa-review-check {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--panel); color: var(--muted); font-size: 0.82rem; font-weight: 600;
+  white-space: nowrap; cursor: pointer; user-select: none;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.qa-review-check input[type='checkbox'] {
+  width: 16px; height: 16px; accent-color: var(--good); cursor: pointer;
+}
+.qa-review-check.on {
+  border-color: rgba(74, 222, 128, 0.5);
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--good);
+}
+@media (max-width: 640px) {
+  .qa-list-item { flex-direction: column; gap: 6px; }
+  .qa-review-check { align-self: flex-start; }
+}
+
+
 
 

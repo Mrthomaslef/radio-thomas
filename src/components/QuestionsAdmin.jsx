@@ -115,6 +115,25 @@ async function call(password, payload) {
   return data;
 }
 
+const REVIEW_STORAGE_KEY = 'radio-thomas:reviewed-questions';
+
+function readLocalReviewed() {
+  try {
+    const raw = localStorage.getItem(REVIEW_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeLocalReviewed(map) {
+  try {
+    localStorage.setItem(REVIEW_STORAGE_KEY, JSON.stringify(map));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
 const blankQuestion = () => ({
   type: 'QCU',
   theme: '',
@@ -124,6 +143,7 @@ const blankQuestion = () => ({
   explication: '',
   correction_figures: [],
   source: { page: 1, element: 'Texte', refs: '' },
+  reviewed: false,
 });
 
 const newId = (chapter, rows) => {
@@ -137,6 +157,8 @@ const newId = (chapter, rows) => {
 
 export default function QuestionsAdmin({ password, editTarget = null, onClearEditTarget = null, onResolveReport = null }) {
   const [rows, setRows] = useState(null);
+  const [localReviewed, setLocalReviewed] = useState(readLocalReviewed);
+  const [reviewFilter, setReviewFilter] = useState('all'); // all | todo | done
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [chapter, setChapter] = useState('ch1');
@@ -157,14 +179,48 @@ export default function QuestionsAdmin({ password, editTarget = null, onClearEdi
           data = await call(password, { action: 'list' });
         }
       }
-      setRows(data.questions);
+      // Merge with bundledQuestions if DB is still empty so all bundled questions are visible
+      const dbList = data.questions || [];
+      const seen = new Set(dbList.map((r) => r.id));
+      const merged = [...dbList, ...bundledQuestions.filter((b) => !seen.has(b.id))];
+      setRows(merged);
     } catch (e) {
       setError(e.message);
-      setRows([]);
+      setRows(bundledQuestions);
     }
   }, [password]);
 
   useEffect(() => { load(); }, [load]);
+
+  const isRowReviewed = useCallback(
+    (row) => {
+      if (!row) return false;
+      if (localReviewed[row.id] !== undefined) return Boolean(localReviewed[row.id]);
+      return Boolean(row.data?.reviewed);
+    },
+    [localReviewed]
+  );
+
+  const toggleReviewed = async (row, nextVal = !isRowReviewed(row)) => {
+    const updatedMap = { ...localReviewed, [row.id]: nextVal };
+    setLocalReviewed(updatedMap);
+    writeLocalReviewed(updatedMap);
+    setRows((prev) =>
+      (prev || []).map((r) => (r.id === row.id ? { ...r, data: { ...r.data, reviewed: nextVal } } : r))
+    );
+    try {
+      await call(password, {
+        action: 'save',
+        id: row.id,
+        chapter: row.chapter,
+        position: row.position,
+        question: { ...row.data, reviewed: nextVal },
+      });
+      resetQuestionsCache();
+    } catch {
+      // Kept in localStorage even if offline or before backend deploy
+    }
+  };
 
   // Open a specific question directly when arriving from a user report
   useEffect(() => {
@@ -178,7 +234,7 @@ export default function QuestionsAdmin({ password, editTarget = null, onClearEdi
         id: found.id,
         chapter: found.chapter,
         position: found.position,
-        q: structuredClone(found.data),
+        q: { ...structuredClone(found.data), reviewed: isRowReviewed(found) },
         isNew: false,
         reportContext: editTarget,
       });
@@ -186,12 +242,36 @@ export default function QuestionsAdmin({ password, editTarget = null, onClearEdi
       setChapter(editTarget.chapter);
     }
     onClearEditTarget?.();
-  }, [editTarget, rows, onClearEditTarget]);
+  }, [editTarget, rows, onClearEditTarget, isRowReviewed]);
+
+  const allLive = useMemo(() => (rows || []).filter((r) => !r.deleted_at), [rows]);
+  const reviewedTotal = useMemo(() => allLive.filter((r) => isRowReviewed(r)).length, [allLive, isRowReviewed]);
+  const globalPct = allLive.length ? Math.round((reviewedTotal / allLive.length) * 100) : 0;
+
+  const chapterCounts = useMemo(() => {
+    const map = {};
+    for (const k of CHAPTER_KEYS) map[k] = { total: 0, reviewed: 0 };
+    for (const r of allLive) {
+      if (map[r.chapter]) {
+        map[r.chapter].total += 1;
+        if (isRowReviewed(r)) map[r.chapter].reviewed += 1;
+      }
+    }
+    return map;
+  }, [allLive, isRowReviewed]);
 
   const live = useMemo(
     () => (rows || []).filter((r) => !r.deleted_at && r.chapter === chapter).sort((a, b) => a.position - b.position),
     [rows, chapter]
   );
+
+  const filteredLive = useMemo(() => {
+    if (reviewFilter === 'todo') return live.filter((r) => !isRowReviewed(r));
+    if (reviewFilter === 'done') return live.filter((r) => isRowReviewed(r));
+    return live;
+  }, [live, reviewFilter, isRowReviewed]);
+
+  const chapterReviewedCount = useMemo(() => live.filter((r) => isRowReviewed(r)).length, [live, isRowReviewed]);
   const deleted = useMemo(() => (rows || []).filter((r) => r.deleted_at && r.chapter === chapter), [rows, chapter]);
 
   const importBundled = async () => {
@@ -204,16 +284,28 @@ export default function QuestionsAdmin({ password, editTarget = null, onClearEdi
     } catch (e) { setError(e.message); } finally { setBusy(false); }
   };
 
-  const edit = (row) => setEditing({ id: row.id, chapter: row.chapter, position: row.position, q: structuredClone(row.data), isNew: false });
+  const edit = (row) =>
+    setEditing({
+      id: row.id,
+      chapter: row.chapter,
+      position: row.position,
+      q: { ...structuredClone(row.data), reviewed: isRowReviewed(row) },
+      isNew: false,
+    });
   const create = () => {
     const position = live.length ? Math.max(...live.map((r) => r.position)) + 1 : 0;
     setEditing({ id: newId(chapter, rows || []), chapter, position, q: blankQuestion(), isNew: true });
   };
 
-  const save = async () => {
+  const save = async (forceReviewed = null) => {
     setBusy(true); setError(''); setNotice('');
+    const nextReviewed = forceReviewed !== null ? forceReviewed : Boolean(editing.q.reviewed);
+    const nextQ = { ...editing.q, reviewed: nextReviewed };
+    const updatedMap = { ...localReviewed, [editing.id]: nextReviewed };
+    setLocalReviewed(updatedMap);
+    writeLocalReviewed(updatedMap);
     try {
-      await call(password, { action: 'save', id: editing.id, chapter: editing.chapter, position: editing.position, question: editing.q });
+      await call(password, { action: 'save', id: editing.id, chapter: editing.chapter, position: editing.position, question: nextQ });
       if (editing.reportContext && onResolveReport) {
         await onResolveReport(editing.reportContext);
       }
@@ -255,7 +347,8 @@ export default function QuestionsAdmin({ password, editTarget = null, onClearEdi
         setEditing={setEditing}
         busy={busy}
         error={error}
-        onSave={save}
+        onSave={() => save( null )}
+        onSaveAndReview={() => save(true)}
         onCancel={() => { setEditing(null); setPreview(false); setError(''); }}
         onDelete={editing.isNew ? null : () => remove(editing)}
         preview={preview}
@@ -270,39 +363,100 @@ export default function QuestionsAdmin({ password, editTarget = null, onClearEdi
       {error && <p className="admin-error" role="alert">{error}</p>}
       {notice && <p className="qa-notice" role="status">{notice}</p>}
 
-      {rows.length === 0 && (
-        <div className="qa-import">
-          <p>La base ne contient encore aucune question. Importez les 40 questions du site pour pouvoir les modifier.</p>
-          <button className="btn" onClick={importBundled} disabled={busy}>
-            {busy ? 'Import…' : 'Importer les 40 questions'}
-          </button>
+      <div className="qa-review-summary">
+        <div className="qa-review-head">
+          <div>
+            <strong>Suivi de relecture des questions</strong>
+            <span>
+              <b>{reviewedTotal}</b> / {allLive.length} questions relues et validées ({globalPct} %)
+            </span>
+          </div>
+          <div className="qa-review-filters" role="group" aria-label="Filtrer par état de relecture">
+            <button
+              type="button"
+              className={`qa-filter-pill ${reviewFilter === 'all' ? 'on' : ''}`}
+              onClick={() => setReviewFilter('all')}
+            >
+              Toutes ({live.length})
+            </button>
+            <button
+              type="button"
+              className={`qa-filter-pill ${reviewFilter === 'todo' ? 'on' : ''}`}
+              onClick={() => setReviewFilter('todo')}
+            >
+              À relire ({live.length - chapterReviewedCount})
+            </button>
+            <button
+              type="button"
+              className={`qa-filter-pill ${reviewFilter === 'done' ? 'on' : ''}`}
+              onClick={() => setReviewFilter('done')}
+            >
+              Relues ({chapterReviewedCount})
+            </button>
+          </div>
         </div>
-      )}
+        <div className="cq-bar qa-review-bar">
+          <div style={{ width: `${globalPct}%` }} />
+        </div>
+      </div>
 
       <div className="cq-chips" role="tablist" aria-label="Chapitres">
-        {CHAPTER_KEYS.map((k) => (
-          <button key={k} className={chapter === k ? 'on' : ''} onClick={() => setChapter(k)}>
-            {CHAPTER_LABELS[k]}
-          </button>
-        ))}
+        {CHAPTER_KEYS.map((k) => {
+          const st = chapterCounts[k] || { total: 0, reviewed: 0 };
+          const allDone = st.total > 0 && st.reviewed === st.total;
+          return (
+            <button key={k} className={chapter === k ? 'on' : ''} onClick={() => setChapter(k)}>
+              {CHAPTER_LABELS[k]}
+              {st.total > 0 && (
+                <span className={`qa-chip-count ${allDone ? 'is-done' : ''}`}>
+                  {allDone ? `✓ ${st.reviewed}/${st.total}` : `${st.reviewed}/${st.total}`}
+                </span>
+              )}
+            </button>
+          );
+        })}
       </div>
 
       <div className="qa-bar">
-        <span>{live.length} question(s) dans « {CHAPTER_LABELS[chapter]} »</span>
+        <span>
+          {live.length} question(s) dans « {CHAPTER_LABELS[chapter]} » · <b>{chapterReviewedCount}</b> relue(s) sur {live.length}
+        </span>
         <button className="btn btn-small" onClick={create}>+ Nouvelle question</button>
       </div>
 
-      <ol className="qa-list">
-        {live.map((r, i) => (
-          <li key={r.id}>
-            <button className="qa-row" onClick={() => edit(r)}>
-              <b>{i + 1}</b>
-              <span className="qa-text">{r.data.enonce}</span>
-              <span className={`qa-type qa-${r.data.type}`}>{r.data.type}</span>
-            </button>
-          </li>
-        ))}
-      </ol>
+      {filteredLive.length === 0 ? (
+        <p className="admin-empty">
+          {live.length === 0
+            ? 'Aucune question dans ce chapitre pour le moment.'
+            : reviewFilter === 'todo'
+            ? 'Toutes les questions de ce chapitre ont été relues et validées !'
+            : 'Aucune question relue dans ce chapitre pour le moment.'}
+        </p>
+      ) : (
+        <ol className="qa-list">
+          {filteredLive.map((r) => {
+            const idxInChapter = live.findIndex((x) => x.id === r.id);
+            const checked = isRowReviewed(r);
+            return (
+              <li key={r.id} className={`qa-list-item ${checked ? 'is-reviewed' : ''}`}>
+                <label className={`qa-review-check ${checked ? 'on' : ''}`} title="Marquer comme relue et validée">
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={(e) => toggleReviewed(r, e.target.checked)}
+                  />
+                  <span>{checked ? '✓ Relue' : 'À relire'}</span>
+                </label>
+                <button className="qa-row" onClick={() => edit(r)}>
+                  <b>{idxInChapter + 1}</b>
+                  <span className="qa-text">{r.data.enonce}</span>
+                  <span className={`qa-type qa-${r.data.type}`}>{r.data.type}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      )}
 
       {deleted.length > 0 && (
         <details className="qa-deleted">
@@ -321,7 +475,7 @@ export default function QuestionsAdmin({ password, editTarget = null, onClearEdi
   );
 }
 
-function Editor({ editing, setEditing, busy, error, onSave, onCancel, onDelete, preview, setPreview, password }) {
+function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onCancel, onDelete, preview, setPreview, password }) {
   const q = editing.q;
   const set = (patch) => setEditing((e) => ({ ...e, q: { ...e.q, ...patch } }));
   const setItem = (i, patch) => set({ items: q.items.map((it, k) => (k === i ? { ...it, ...patch } : it)) });
@@ -377,6 +531,14 @@ function Editor({ editing, setEditing, busy, error, onSave, onCancel, onDelete, 
     <div className="qa qa-editor">
       <div className="qa-bar">
         <span>{editing.isNew ? 'Nouvelle question' : `Question ${editing.id}`} · {CHAPTER_LABELS[editing.chapter]}</span>
+        <label className={`qa-review-check ${q.reviewed ? 'on' : ''}`}>
+          <input
+            type="checkbox"
+            checked={Boolean(q.reviewed)}
+            onChange={(e) => set({ reviewed: e.target.checked })}
+          />
+          <span>{q.reviewed ? '✓ Question relue et validée' : 'Marquer comme relue et validée'}</span>
+        </label>
       </div>
       {editing.reportContext?.reportMessage && (
         <div className="admin-report-banner">
@@ -490,6 +652,11 @@ function Editor({ editing, setEditing, busy, error, onSave, onCancel, onDelete, 
 
       <div className="qa-actions">
         <button className="btn" onClick={onSave} disabled={busy}>{busy ? 'Enregistrement…' : 'Enregistrer'}</button>
+        {!q.reviewed && onSaveAndReview && (
+          <button className="btn btn-ghost" onClick={onSaveAndReview} disabled={busy}>
+            ✓ Enregistrer et valider la relecture
+          </button>
+        )}
         <button className="btn btn-ghost" onClick={() => setPreview(true)}>Aperçu</button>
         <button className="btn btn-ghost" onClick={onCancel} disabled={busy}>Annuler</button>
         {onDelete && <button className="btn btn-ghost qa-danger" onClick={onDelete} disabled={busy}>Supprimer</button>}

@@ -6,5 +6,166 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c7-q01",
+      "type": "QCU",
+      "theme": "Anatomie : tendon distal du biceps brachial",
+      "enonce": "Concernant l’anatomie du tendon distal du muscle biceps brachial, sur quelle structure osseuse s’insère-t-il classiquement après s’être enroulé sur lui-même ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "La tubérosité ulnaire", "correct": false },
+        { "id": "B", "texte": "Le processus coronoïde", "correct": false },
+        { "id": "C", "texte": "La tubérosité radiale", "correct": true },
+        { "id": "D", "texte": "L’épicondyle médial", "correct": false }
+      ],
+      "explication": "Le tendon distal du muscle biceps brachial s’enroule sur lui-même juste avant de s’insérer sur le bord ulnaire ou postérieur de la tubérosité radiale.",
+      "correction_figures": [],
+      "source": { "page": 183, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c7-q02",
+      "type": "QRM",
+      "theme": "Anatomie : lacertus fibrosus",
+      "enonce": "Le lacertus fibrosus (expansion aponévrotique du biceps brachial) possède des rapports anatomiques étroits au niveau du coude. Quelles structures recouvre-t-il directement en superficie ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le nerf radial", "correct": false },
+        { "id": "B", "texte": "Le nerf médian", "correct": true },
+        { "id": "C", "texte": "L’artère brachiale", "correct": true },
+        { "id": "D", "texte": "Le muscle brachioradial", "correct": false }
+      ],
+      "explication": "Le lacertus fibrosus se dirige en bas et en dedans, recouvrant en superficie l’artère brachiale, le nerf médian et les muscles fléchisseurs-pronateurs de l’avant-bras.",
+      "correction_figures": [],
+      "source": { "page": 183, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c7-q03",
+      "type": "QCU",
+      "theme": "Rupture distale du biceps : examen clinique",
+      "enonce": "Un homme de 50 ans se présente aux urgences après avoir ressenti un claquage dans le pli du coude en soulevant un meuble lourd. À l’examen, vous observez une contraction en « boule » à la partie moyenne du bras. Afin de confirmer cliniquement la suspicion de rupture complète du tendon distal du biceps brachial, quel test spécifique allez-vous réaliser et quel en sera le résultat attendu ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le test de Cozen, qui sera positif à l’extension du poignet", "correct": false },
+        { "id": "B", "texte": "Le hook-test, qui révélera l’impossibilité de crocheter une structure en corde dans la fosse antébrachiale", "correct": true },
+        { "id": "C", "texte": "Le signe de Tinel, qui déclenchera des paresthésies en aval", "correct": false },
+        { "id": "D", "texte": "Le jerk test, qui montrera un ressaut articulaire médial", "correct": false }
+      ],
+      "explication": "La présentation clinique de contraction en boule (signe de « Popeye ») et la notion de claquage évoquent une rupture complète distale du biceps. Le hook-test est cliniquement positif en cas d’impossibilité de crocheter avec l’index une structure en corde dans la fosse antébrachiale d’un coude fléchi et en supination, ce qui confirme l’absence de tendon en continuité.",
+      "correction_figures": [],
+      "source": { "page": 184, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c7-q04",
+      "type": "QCU",
+      "theme": "Tendon distal du biceps : position FABS en IRM",
+      "enonce": "En IRM, quelle position spécifique du bras du patient permet d’analyser de manière optimale le tendon du muscle biceps brachial, de sa jonction myotendineuse jusqu’à son insertion, sur une seule coupe sagittale ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "La position ABER (Abduction et Rotation Externe)", "correct": false },
+        { "id": "B", "texte": "La position FABS (Flexion-Abduction-Supination)", "correct": true },
+        { "id": "C", "texte": "La position du « cobra »", "correct": false },
+        { "id": "D", "texte": "La position de pronation maximale coude tendu", "correct": false }
+      ],
+      "explication": "Le positionnement du bras au-dessus de la tête, le coude fléchi à 90°, l’avant-bras en supination et le pouce orienté vers le haut (position en flexion-abduction-supination : FABS) permet d’analyser parfaitement le tendon du muscle biceps brachial sur une seule coupe sagittale.",
+      "correction_figures": [],
+      "source": { "page": 184, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c7-q05",
+      "type": "QRM",
+      "theme": "Bursopathie bicipito-radiale",
+      "enonce": "Concernant la bursopathie bicipito-radiale (inflammation de la bourse située entre la tubérosité radiale et le tendon distal du biceps), quelles affirmations sont exactes ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "La bourse bicipito-radiale communique physiologiquement avec la cavité articulaire du coude", "correct": false },
+        { "id": "B", "texte": "Les douleurs associées sont typiquement majorées lors des mouvements de pronation", "correct": true },
+        { "id": "C", "texte": "Elle peut se manifester par des signes de compression du rameau profond du nerf radial", "correct": true },
+        { "id": "D", "texte": "En IRM, elle présente des parois qui se rehaussent après injection de gadolinium", "correct": true }
+      ],
+      "explication": "La douleur se majore en pronation car la tubérosité radiale passe en situation postérieure, entraînant le tendon qui s’enroule et comprime la bourse. Cette bursopathie peut entraîner un déficit de l’extension par compression du rameau profond du nerf radial. En IRM, ses parois lisses ou irrégulières se rehaussent après injection de gadolinium. Cette bourse ne communique pas physiologiquement avec la cavité articulaire du coude.",
+      "correction_figures": [],
+      "source": { "page": 187, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c7-q06",
+      "type": "QCU",
+      "theme": "Anatomie : muscle brachial",
+      "enonce": "Sur quelles structures osseuses s’insère le chef profond du muscle brachial ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Uniquement sur la face antérieure de la tubérosité radiale", "correct": false },
+        { "id": "B", "texte": "Sur le processus coronoïde et la tubérosité ulnaire via une lame aponévrotique", "correct": true },
+        { "id": "C", "texte": "Sur l’épicondyle médial par un tendon commun", "correct": false },
+        { "id": "D", "texte": "Sur la face postérieure de l’olécrâne", "correct": false }
+      ],
+      "explication": "Le chef profond du muscle brachial s’insère par une lame aponévrotique large sur le processus coronoïde et sur la tubérosité ulnaire. Le chef superficiel s’insère par un tendon rond et épais uniquement sur la tubérosité ulnaire.",
+      "correction_figures": [],
+      "source": { "page": 187, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c7-q07",
+      "type": "QCU",
+      "theme": "Syndrome du rond pronateur : diagnostic différentiel",
+      "enonce": "Une patiente développe des paresthésies de la face ventrale des 1er, 2e et 3e doigts de la main droite avec une douleur à l’avant-bras. Le clinicien hésite entre un syndrome du canal carpien distal et un syndrome du rond pronateur (compression proximale du nerf médian). Quel signe clinique permet d’orienter le diagnostic spécifiquement vers un syndrome du rond pronateur ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Un signe de Tinel fortement positif au niveau du pli de flexion du poignet", "correct": false },
+        { "id": "B", "texte": "Une aggravation des symptômes lors de la flexion passive et prolongée du poignet", "correct": false },
+        { "id": "C", "texte": "Une hypoesthésie isolée des téguments de l’éminence thénar associée à des douleurs irradiant à l’avant-bras sans recrudescence nocturne", "correct": true },
+        { "id": "D", "texte": "L’apparition de symptômes nocturnes intenses la réveillant", "correct": false }
+      ],
+      "explication": "Les similitudes cliniques avec le syndrome du canal carpien rendent le diagnostic parfois complexe. Cependant, une irradiation inhabituelle à l’avant-bras, une hypoesthésie des téguments de l’éminence thénar, l’absence de symptômes nocturnes ou lors de la flexion du poignet, ainsi qu’un signe de Tinel négatif au poignet permettent d’orienter vers une compression proximale de type syndrome du rond pronateur.",
+      "correction_figures": [],
+      "source": { "page": 189, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c7-q08",
+      "type": "QRM",
+      "theme": "Syndrome du rond pronateur : sites de compression",
+      "enonce": "Dans le cadre du syndrome du rond pronateur, le nerf médian peut être comprimé à plusieurs niveaux anatomiques au coude. Quels sont les sites potentiels de compression proximale ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Entre les chefs huméral et ulnaire du muscle rond pronateur", "correct": true },
+        { "id": "B", "texte": "Sous le ligament de Struthers", "correct": true },
+        { "id": "C", "texte": "Dans la gouttière rétro-épicondylienne médiale", "correct": false },
+        { "id": "D", "texte": "Sous le lacertus fibrosus", "correct": true }
+      ],
+      "explication": "Les principaux sites de compression du nerf médian au coude sont : entre les chefs du muscle rond pronateur (le plus fréquent), sous le lacertus fibrosus, sous l’arcade du muscle fléchisseur superficiel des doigts, et sous le ligament de Struthers. La gouttière rétro-épicondylienne médiale est un site de compression du nerf ulnaire, pas du médian.",
+      "correction_figures": [],
+      "source": { "page": 189, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c7-q09",
+      "type": "QRM",
+      "theme": "Syndrome du nerf interosseux antérieur (NIOA)",
+      "enonce": "Le syndrome du nerf interosseux antérieur (NIOA) reflète une compression à la partie proximale de l’avant-bras. Quelles sont les caractéristiques cliniques et anatomiques de ce nerf et de son atteinte ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "L’atteinte se traduit typiquement par un déficit moteur pur, sans troubles sensitifs", "correct": true },
+        { "id": "B", "texte": "Le patient est incapable de former un « O » avec son pouce et son index", "correct": true },
+        { "id": "C", "texte": "Le NIOA repose sur la face dorsale de la membrane interosseuse", "correct": false },
+        { "id": "D", "texte": "Le nerf innerve notamment le muscle carré pronateur et le long fléchisseur du pouce", "correct": true }
+      ],
+      "explication": "Le syndrome du NIOA se traduit par un déficit moteur pur (les troubles sensitifs sont typiquement absents) entraînant une faiblesse de la pince pollicidigitale avec incapacité à former un « O ». Le nerf innerve le muscle fléchisseur profond des doigts, le long fléchisseur du pouce et le carré pronateur. Anatomiquement, le NIOA repose sur la face palmaire (et non dorsale) de la membrane interosseuse.",
+      "correction_figures": [],
+      "source": { "page": 190, "element": "Texte (p. 190–191)", "refs": "" }
+    },
+    {
+      "id": "c7-q10",
+      "type": "QCU",
+      "theme": "Syndrome du NIOA : signes IRM de dénervation",
+      "enonce": "Quel est le signe IRM indirect de dénervation le plus fréquemment observé lors d’un syndrome du nerf interosseux antérieur (NIOA) ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une atrophie du muscle biceps brachial", "correct": false },
+        { "id": "B", "texte": "Un œdème diffus ou une involution graisseuse du muscle carré pronateur", "correct": true },
+        { "id": "C", "texte": "Un œdème osseux de l’épicondyle médial", "correct": false },
+        { "id": "D", "texte": "Une hypertrophie du muscle brachioradial", "correct": false }
+      ],
+      "explication": "En IRM, les signes indirects de dénervation liés au syndrome du NIOA sont fréquents et se traduisent par un œdème diffus ou une involution graisseuse affectant le muscle carré pronateur, ou moins souvent, le versant radial du muscle fléchisseur profond des doigts et le muscle long fléchisseur du pouce.",
+      "correction_figures": [],
+      "source": { "page": 191, "element": "Texte", "refs": "" }
+    }
+  ]
 }

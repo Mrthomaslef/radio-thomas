@@ -98,6 +98,7 @@ export function validateQuestion(q) {
       explication: clean(q.explication),
       correction_figures,
       source: { page: s.page, element: clean(s.element), refs: clean(s.refs ?? '') },
+      reviewed: Boolean(q.reviewed),
     },
   };
 }
