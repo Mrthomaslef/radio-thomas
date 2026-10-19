@@ -10,9 +10,14 @@ import ch6 from './quiz/ch6.json';
 import ch7 from './quiz/ch7.json';
 import ch8 from './quiz/ch8.json';
 import ch9 from './quiz/ch9.json';
+import ch10 from './quiz/ch10.json';
+import ch11 from './quiz/ch11.json';
+import ch12 from './quiz/ch12.json';
+import ch13 from './quiz/ch13.json';
+import ch14 from './quiz/ch14.json';
 
 // Chapter metadata (title/authors feed the reference line of each correction).
-export const CHAPTERS = { ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9 };
+export const CHAPTERS = { ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11, ch12, ch13, ch14 };
 export const CHAPTER_KEYS = Object.keys(CHAPTERS);
 
 // Questions bundled with the site, in the same shape as the database rows.

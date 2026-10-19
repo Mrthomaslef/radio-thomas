@@ -74,6 +74,11 @@ const CHAPTER_LABELS = {
   ch7: 'Coude : compartiment antérieur',
   ch8: 'Coude : compartiment postérieur',
   ch9: 'Coude : autres affections',
+  ch10: 'Poignet : pathologies dégénératives',
+  ch11: 'Poignet : pathologies ligamentaires',
+  ch12: 'Poignet : pathologies tendineuses',
+  ch13: 'Poignet & main : vasculonerveux',
+  ch14: 'Main & doigts : dégénératif et tendineux',
 };
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 

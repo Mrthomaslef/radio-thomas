@@ -7,6 +7,7 @@ import { extractAttemptsAndReports, resolveQuestionReport } from '../data/report
 const COURSE_LABELS = {
   epaule: 'L’épaule',
   coude: 'Le coude',
+  'main-poignet': 'Main et poignet',
   mixte: 'Mixte',
   'quiz-aleatoire': 'Quiz aléatoire',
   ch1: 'Pathologies de la coiffe',
@@ -18,6 +19,11 @@ const COURSE_LABELS = {
   ch7: 'Pathologies du compartiment antérieur',
   ch8: 'Pathologies du compartiment postérieur',
   ch9: 'Autres affections du coude',
+  ch10: 'Pathologies dégénératives du poignet',
+  ch11: 'Pathologies ligamentaires du poignet',
+  ch12: 'Pathologies tendineuses du poignet',
+  ch13: 'Pathologies vasculonerveuses',
+  ch14: 'Pathologies dégénératives et tendineuses de la main et des doigts',
   'pathologie-coiffe': 'Pathologies de la coiffe des rotateurs (ancien)',
   'landing-demo': 'Quiz d’essai (ancien)',
 };

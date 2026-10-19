@@ -30,4 +30,15 @@ export const themes = [
       chapter('ch9', 'Autres affections du coude'),
     ],
   },
+  {
+    id: 'main-poignet',
+    title: 'Main et poignet',
+    chapters: [
+      chapter('ch10', 'Pathologies dégénératives du poignet'),
+      chapter('ch11', 'Pathologies ligamentaires du poignet'),
+      chapter('ch12', 'Pathologies tendineuses du poignet'),
+      chapter('ch13', 'Pathologies vasculonerveuses'),
+      chapter('ch14', 'Pathologies dégénératives et tendineuses de la main et des doigts'),
+    ],
+  },
 ];
