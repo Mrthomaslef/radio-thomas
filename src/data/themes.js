@@ -81,4 +81,16 @@ export const themes = [
       chapter('ch30', 'Autres pathologies de la cheville et du pied'),
     ],
   },
+  {
+    id: 'dysostose',
+    title: 'Dysostose',
+    chapters: [
+      chapter('ch31', 'Dysostoses crâniennes'),
+      chapter('ch32', 'Dysostoses rachidiennes'),
+      chapter('ch33', 'Dysostoses de la paroi thoracique'),
+      chapter('ch34', 'Dysostoses de la ceinture scapulaire et du membre supérieur'),
+      chapter('ch35', 'Dysostoses du membre inférieur'),
+      chapter('ch36', 'Déformation du pied du nourrisson'),
+    ],
+  },
 ];

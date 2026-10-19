@@ -95,6 +95,12 @@ const CHAPTER_LABELS = {
   ch28: 'Jambe : pathologies de la jambe',
   ch29: 'Cheville & pied : tissus mous',
   ch30: 'Cheville & pied : autres pathologies',
+  ch31: 'Dysostose : crâniennes',
+  ch32: 'Dysostose : rachidiennes',
+  ch33: 'Dysostose : paroi thoracique',
+  ch34: 'Dysostose : ceinture scapulaire & membre sup.',
+  ch35: 'Dysostose : membre inférieur',
+  ch36: 'Dysostose : pied du nourrisson',
 };
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
