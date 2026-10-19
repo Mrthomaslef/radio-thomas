@@ -6,6 +6,7 @@ import {
   readChapterProgress,
   writeChapterProgress,
   clearChapterProgress,
+  writeQuestionAnswer,
   subscribePlayer,
   syncProgressFromServer,
 } from '../data/player.js';
@@ -105,8 +106,21 @@ export default function ChapterQuiz({ chapter }) {
 }
 
 // `preview` (admin): no saved progress and no result sent to the database.
-export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, preview = false, initialIdx = null }) {
-  const saved = useMemo(() => (preview ? { answers: {}, sent: false } : readChapterProgress(key)), [key, preview]);
+// `randomMode`: plays a custom random selection of questions across chapters.
+export function QuizPlayer({
+  chapterKey: key,
+  meta,
+  questions: rawQuestions,
+  preview = false,
+  randomMode = false,
+  onRestart = null,
+  backLabel = '← Chapitres',
+  initialIdx = null,
+}) {
+  const saved = useMemo(
+    () => (preview || randomMode ? { answers: {}, sent: false } : readChapterProgress(key)),
+    [key, preview, randomMode]
+  );
 
   const questions = useMemo(() => rawQuestions.map((q) => ({ ...q, shown: mixItems(q) })), [rawQuestions]);
 
@@ -128,20 +142,22 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
 
   // Sync from server on mount so answers from another device are merged in.
   useEffect(() => {
-    if (preview) return undefined;
+    if (preview || randomMode) return undefined;
     syncProgressFromServer();
     return subscribePlayer(() => {
       const latest = readChapterProgress(key);
       setAnswers((prev) => ({ ...(latest.answers || {}), ...prev }));
       if (latest.sent) setSent(true);
     });
-  }, [key, preview]);
+  }, [key, preview, randomMode]);
 
   useEffect(() => {
-    if (!preview) writeChapterProgress(key, { answers, sent });
-  }, [key, preview, answers, sent]);
+    if (!preview && !randomMode) writeChapterProgress(key, { answers, sent });
+  }, [key, preview, randomMode, answers, sent]);
 
   const q = questions[idx];
+  const qKey = q?._chapterKey || key;
+  const qMeta = q?._meta || meta;
   const validated = q ? answers[q.id] : null;
   const finished = idx >= questions.length;
 
@@ -165,6 +181,9 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
     if (!picked.length) return;
     setShowCorrection(false);
     setAnswers((a) => ({ ...a, [q.id]: picked }));
+    if (randomMode && !preview) {
+      writeQuestionAnswer(qKey, q.id, picked);
+    }
   };
 
   const retryQuestion = () => {
@@ -174,6 +193,9 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
       delete copy[q.id];
       return copy;
     });
+    if (randomMode && !preview) {
+      writeQuestionAnswer(qKey, q.id, null);
+    }
     setPicked([]);
     setShowCorrection(false);
   };
@@ -190,14 +212,18 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
   };
 
   const restart = () => {
-    if (!preview) clearChapterProgress(key);
+    if (onRestart) {
+      onRestart();
+      return;
+    }
+    if (!preview && !randomMode) clearChapterProgress(key);
     setAnswers({}); setSent(false); setPicked([]); setShowCorrection(false); setIdx(0); setSaveState('idle');
   };
 
   const themeId = meta.theme || 'epaule';
-  const backHref = `#/${themeId}`;
+  const backHref = meta.backHref || `#/${themeId}`;
 
-  // Send the result once, when every question of the chapter has been answered.
+  // Send the result once, when every question of the quiz has been answered.
   const sendResult = async () => {
     if (preview) return;
     const name = readName();
@@ -226,8 +252,8 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
   }, [zoom]);
 
   const c = meta;
-  const ref = (s) =>
-    `Chapitre ${c.numero} (${c.titre}, ${c.auteurs}), Page ${s.page}, ${s.element}${s.refs ? ` ${s.refs}` : ''}`;
+  const ref = (s, m = qMeta) =>
+    `Chapitre ${m.numero} (${m.titre}, ${m.auteurs}), Page ${s.page}, ${s.element}${s.refs ? ` ${s.refs}` : ''}`;
 
   const state = (item) => {
     if (!validated) return picked.includes(item.id) ? 'sel' : '';
@@ -252,7 +278,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
     <div className="cq" ref={topRef}>
       <header className="cq-head">
         <div className="cq-top-links">
-          <a href={backHref} className="cq-back">← Chapitres</a>
+          <a href={backHref} className="cq-back">{backLabel}</a>
           <a href="#/progression" className="cq-back">Ma progression →</a>
         </div>
         <h1>{c.titre}</h1>
@@ -294,20 +320,27 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
             </p>
           )}
           <div className="cq-end-actions">
-            <button className="btn btn-ghost" onClick={restart}>Recommencer</button>
+            <button className="btn btn-ghost" onClick={restart}>
+              {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
+            </button>
             <a className="btn btn-ghost" href="#/progression">Ma progression</a>
-            <a className="btn" href={backHref}>Autres chapitres</a>
+            <a className="btn" href={backHref}>
+              {randomMode ? 'Configurer un autre quiz' : 'Autres chapitres'}
+            </a>
           </div>
         </section>
       ) : (
         <section className="cq-card" key={q.id}>
           <div className="cq-meta">
-            <span>Question {idx + 1} / {questions.length}</span>
+            <span>
+              Question {idx + 1} / {questions.length}
+              {randomMode && qMeta?.titre ? ` · ${qMeta.titre}` : ''}
+            </span>
             <span className={`cq-type cq-${q.type}`}>{q.type === 'QCU' ? 'Une seule réponse' : 'Plusieurs réponses possibles'}</span>
           </div>
           {q.enonce_image && (
-            <figure className="cq-fig cq-fig-top" onClick={() => setZoom({ src: imageSrc(key, q.enonce_image), caption: q.enonce_image.alt })}>
-              <img src={imageSrc(key, q.enonce_image)} alt={q.enonce_image.alt || ''} />
+            <figure className="cq-fig cq-fig-top" onClick={() => setZoom({ src: imageSrc(qKey, q.enonce_image), caption: q.enonce_image.alt })}>
+              <img src={imageSrc(qKey, q.enonce_image)} alt={q.enonce_image.alt || ''} />
             </figure>
           )}
           <h2 className="cq-q">{q.enonce}</h2>
@@ -354,8 +387,8 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
                   </p>
                   <p className="cq-expl">{q.explication}</p>
                   {q.correction_figures?.map((f) => (
-                    <figure key={f.upload || f.file} className="cq-fig" onClick={() => setZoom({ src: imageSrc(key, f), caption: f.caption })}>
-                      <img src={imageSrc(key, f)} alt={f.caption} loading="lazy" />
+                    <figure key={f.upload || f.file} className="cq-fig" onClick={() => setZoom({ src: imageSrc(qKey, f), caption: f.caption })}>
+                      <img src={imageSrc(qKey, f)} alt={f.caption} loading="lazy" />
                       <figcaption>{f.caption}<span className="cq-zoom"> · toucher pour agrandir</span></figcaption>
                     </figure>
                   ))}

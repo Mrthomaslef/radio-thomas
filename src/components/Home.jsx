@@ -77,9 +77,14 @@ export default function Home({ openTheme }) {
                 Changer de pseudo
               </button>
             </p>
-            <a href="#/progression" className="btn btn-ghost btn-small">
-              Voir ma progression <Icon name="arrow" size={15} />
-            </a>
+            <div className="home-bar-actions">
+              <a href="#/aleatoire" className="btn btn-small">
+                Quiz aléatoire <Icon name="arrow" size={15} />
+              </a>
+              <a href="#/progression" className="btn btn-ghost btn-small">
+                Voir ma progression <Icon name="arrow" size={15} />
+              </a>
+            </div>
           </div>
 
           {themes.map((t) => {

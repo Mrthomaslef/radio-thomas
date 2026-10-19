@@ -600,6 +600,7 @@ a.chapter:hover { border-color: var(--cyan); background: rgba(56, 225, 255, 0.07
 .nav-right { display: flex; align-items: center; gap: 12px; }
 .nav-user { color: var(--muted); font-size: 0.9rem; font-weight: 600; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .home-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.home-bar-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .cq-top-links { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .cq-back:hover { color: var(--cyan); }
 
@@ -637,4 +638,44 @@ a.cq-dot:hover { transform: scale(1.08); }
   .nav-user { display: none; }
   .prog-legend-hint { margin-left: 0; width: 100%; }
 }
+
+/* random quiz builder (#/aleatoire) */
+.rnd { display: grid; gap: 18px; }
+.rnd .prog-head { margin-bottom: 4px; }
+.rnd-box { display: grid; gap: 16px; }
+.rnd-sec-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.rnd-sec-head h2 { font-size: 1.25rem; }
+.rnd-pool-info { font-size: 0.9rem; color: var(--cyan); font-weight: 600; }
+.rnd-themes { display: grid; gap: 20px; }
+.rnd-theme { display: grid; gap: 10px; }
+.rnd-theme-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.rnd-theme-head h3 { font-size: 1.05rem; color: var(--cyan); }
+.rnd-ch-list { display: grid; gap: 8px; }
+.rnd-ch {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+  border: 1px solid var(--q-line); border-radius: 12px; background: var(--q-bg);
+  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+}
+.rnd-ch input[type='checkbox'] { width: 20px; height: 20px; accent-color: var(--cyan); cursor: pointer; }
+.rnd-ch.on { border-color: var(--cyan); background: rgba(56, 225, 255, 0.08); }
+.rnd-ch.is-disabled { opacity: 0.45; cursor: not-allowed; }
+.rnd-ch.is-disabled input[type='checkbox'] { cursor: not-allowed; }
+.rnd-ch-title { flex: 1; font-size: 0.95rem; }
+.rnd-ch-title b { color: var(--cyan); margin-right: 4px; }
+.rnd-ch-count { font-size: 0.84rem; color: var(--muted); white-space: nowrap; }
+.rnd-counts { display: flex; flex-wrap: wrap; gap: 10px; }
+.rnd-pill {
+  padding: 10px 18px; border-radius: 999px; border: 1px solid var(--q-line);
+  background: var(--q-bg); color: var(--muted); font-weight: 600; font-size: 0.92rem;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.rnd-pill.on { border-color: var(--cyan); background: rgba(56, 225, 255, 0.14); color: var(--text); }
+.rnd-custom { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; color: var(--muted); font-size: 0.92rem; }
+.rnd-input { width: 110px; padding: 10px 14px; }
+.rnd-launch { padding-top: 4px; }
+.rnd-play-top { max-width: 760px; margin: 84px auto -74px; padding: 0 14px; }
+@media (min-width: 761px) {
+  .rnd-play-top { margin-top: 96px; margin-bottom: -86px; }
+}
+
 

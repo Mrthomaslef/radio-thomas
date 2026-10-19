@@ -5,18 +5,21 @@ import Footer from './components/Footer.jsx';
 import ChapterQuiz from './components/ChapterQuiz.jsx';
 import AdminPage from './components/AdminPage.jsx';
 import ProgressPage from './components/ProgressPage.jsx';
+import RandomQuiz from './components/RandomQuiz.jsx';
 import { CHAPTERS as chapters } from './data/useQuestions.js';
 
 // Tiny hash router:
 // - "#/quiz/<key>" (or "#/quiz/<key>?q=<1-based>") plays a chapter quiz
+// - "#/aleatoire" opens the random quiz builder & player
 // - "#/progression" shows the player's progress page
 // - "#/admin" opens the password-protected trainer page
 // - "#/<theme>" opens a theme on the home page
 const isAdminRoute = () => window.location.hash === '#/admin';
 const isProgressRoute = () => window.location.hash === '#/progression';
+const isRandomRoute = () => window.location.hash === '#/aleatoire';
 const parseTheme = () => {
   const m = window.location.hash.match(/^#\/([\w-]+)$/);
-  if (!m || m[1] === 'admin' || m[1] === 'progression') return null;
+  if (!m || m[1] === 'admin' || m[1] === 'progression' || m[1] === 'aleatoire') return null;
   return m[1];
 };
 
@@ -35,6 +38,7 @@ export default function App() {
   const [course, setCourse] = useState(parseRoute);
   const [admin, setAdmin] = useState(isAdminRoute);
   const [progressPage, setProgressPage] = useState(isProgressRoute);
+  const [randomPage, setRandomPage] = useState(isRandomRoute);
   const [theme, setTheme] = useState(parseTheme);
 
   useEffect(() => {
@@ -42,6 +46,7 @@ export default function App() {
       setCourse(parseRoute());
       setAdmin(isAdminRoute());
       setProgressPage(isProgressRoute());
+      setRandomPage(isRandomRoute());
       setTheme(parseTheme());
     };
     window.addEventListener('hashchange', onHash);
@@ -50,7 +55,7 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [course, admin, progressPage, theme]);
+  }, [course, admin, progressPage, randomPage, theme]);
 
   return (
     <>
@@ -61,6 +66,8 @@ export default function App() {
           <AdminPage />
         ) : progressPage ? (
           <ProgressPage />
+        ) : randomPage ? (
+          <RandomQuiz />
         ) : course ? (
           <ChapterQuiz key={`${course.key}:${course.initialIdx ?? 'auto'}`} chapter={course} />
         ) : (

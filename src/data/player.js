@@ -121,6 +121,15 @@ export function clearChapterProgress(chapterKey, name = readName()) {
   schedulePush(name);
 }
 
+export function writeQuestionAnswer(chapterKey, questionId, picked, name = readName()) {
+  if (!name || !chapterKey || !questionId) return;
+  const cur = readChapterProgress(chapterKey, name);
+  const answers = { ...(cur.answers || {}) };
+  if (picked && picked.length) answers[questionId] = picked;
+  else delete answers[questionId];
+  writeChapterProgress(chapterKey, { answers, sent: cur.sent }, name);
+}
+
 export async function syncProgressFromServer(name = readName()) {
   const clean = (name || '').trim().replace(/\s+/g, ' ');
   if (!clean) return;

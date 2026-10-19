@@ -5,6 +5,8 @@ import QuestionsAdmin from './QuestionsAdmin.jsx';
 const COURSE_LABELS = {
   epaule: 'L’épaule',
   coude: 'Le coude',
+  mixte: 'Mixte',
+  'quiz-aleatoire': 'Quiz aléatoire',
   ch1: 'Pathologies de la coiffe',
   ch2: 'Instabilité d’épaule',
   ch3: 'Plexus brachial',
