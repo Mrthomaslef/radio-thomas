@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { themes } from '../data/themes.js';
 import { useQuestions } from '../data/useQuestions.js';
-import { readName, saveName } from '../data/player.js';
+import {
+  readName,
+  saveName,
+  readAllProgress,
+  subscribePlayer,
+  syncProgressFromServer,
+} from '../data/player.js';
 import Icon from './Icons.jsx';
 
 // Home: ask a pseudo, then pick a theme and one of its chapters.
@@ -12,6 +18,17 @@ export default function Home({ openTheme }) {
   const [pseudo, setPseudo] = useState(readName);
   const [draft, setDraft] = useState(pseudo);
   const [editing, setEditing] = useState(!pseudo);
+  const [progress, setProgress] = useState(() => readAllProgress(readName()));
+
+  useEffect(() => {
+    const n = readName();
+    if (n) syncProgressFromServer(n);
+    return subscribePlayer(() => {
+      const curr = readName();
+      setPseudo(curr);
+      setProgress(readAllProgress(curr));
+    });
+  }, []);
 
   const submit = (e) => {
     e.preventDefault();
@@ -19,6 +36,7 @@ export default function Home({ openTheme }) {
     if (!clean) return;
     saveName(clean);
     setPseudo(clean);
+    setProgress(readAllProgress(clean));
     setEditing(false);
   };
 
@@ -30,7 +48,7 @@ export default function Home({ openTheme }) {
 
       {editing ? (
         <motion.form className="home-panel name-step" onSubmit={submit} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <label htmlFor="pseudo">Choisis un pseudo pour commencer</label>
+          <label htmlFor="pseudo">Choisis un pseudo pour commencer ou reprendre ta session</label>
           <input
             id="pseudo"
             className="name-input"
@@ -44,19 +62,25 @@ export default function Home({ openTheme }) {
             required
           />
           <p className="privacy">
-            Ton pseudo, ton score et la date sont enregistrés à la fin de chaque quiz pour le suivi des résultats.
-            Aucune autre donnée n’est collectée.
+            Ton pseudo mémorise ta progression (questions déjà répondues et scores) pour que tu puisses reprendre à tout moment.
           </p>
           <button className="btn" type="submit" disabled={!draft.trim()}>
-            Commencer <Icon name="arrow" size={18} />
+            Continuer <Icon name="arrow" size={18} />
           </button>
         </motion.form>
       ) : (
         <motion.div className="home-panel" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <p className="home-hello">
-            Salut <strong>{pseudo}</strong> !{' '}
-            <button className="link-btn" onClick={() => setEditing(true)}>Changer de pseudo</button>
-          </p>
+          <div className="home-bar">
+            <p className="home-hello">
+              Salut <strong>{pseudo}</strong> !{' '}
+              <button className="link-btn" onClick={() => { setDraft(pseudo); setEditing(true); }}>
+                Changer de pseudo
+              </button>
+            </p>
+            <a href="#/progression" className="btn btn-ghost btn-small">
+              Voir ma progression <Icon name="arrow" size={15} />
+            </a>
+          </div>
 
           {themes.map((t) => {
             const open = openTheme === t.id;
@@ -68,21 +92,29 @@ export default function Home({ openTheme }) {
                 </a>
                 {open && (
                   <motion.ol className="chapters" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}>
-                    {t.chapters.map((c, i) => (
-                      <li key={c.id}>
-                        {c.href ? (
-                          <a href={c.href} className="chapter">
-                            <b>{i + 1}</b> <span>{c.title}</span>
-                            <span className="chapter-go">{(byChapter[c.id] || []).length || c.fallbackCount} questions <Icon name="arrow" size={16} /></span>
-                          </a>
-                        ) : (
-                          <div className="chapter chapter-soon">
-                            <b>{i + 1}</b> <span>{c.title}</span>
-                            <span className="chapter-go">Bientôt</span>
-                          </div>
-                        )}
-                      </li>
-                    ))}
+                    {t.chapters.map((c, i) => {
+                      const qs = byChapter[c.id] || [];
+                      const total = qs.length || c.fallbackCount;
+                      const ans = progress[c.id]?.answers || {};
+                      const done = qs.filter((q) => ans[q.id]).length;
+                      return (
+                        <li key={c.id}>
+                          {c.href ? (
+                            <a href={c.href} className="chapter">
+                              <b>{i + 1}</b> <span>{c.title}</span>
+                              <span className="chapter-go">
+                                {done > 0 ? `${done} / ${total} répondues` : `${total} questions`} <Icon name="arrow" size={16} />
+                              </span>
+                            </a>
+                          ) : (
+                            <div className="chapter chapter-soon">
+                              <b>{i + 1}</b> <span>{c.title}</span>
+                              <span className="chapter-go">Bientôt</span>
+                            </div>
+                          )}
+                        </li>
+                      );
+                    })}
                   </motion.ol>
                 )}
               </div>

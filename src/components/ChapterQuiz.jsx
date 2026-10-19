@@ -1,6 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Icon from './Icons.jsx';
-import { readName } from '../data/player.js';
+import {
+  readName,
+  saveName,
+  readChapterProgress,
+  writeChapterProgress,
+  clearChapterProgress,
+  subscribePlayer,
+  syncProgressFromServer,
+} from '../data/player.js';
 import { useQuestions, imageSrc } from '../data/useQuestions.js';
 
 // ---------- helpers ----------
@@ -29,20 +37,50 @@ const isPerfect = (q, picked) => {
   const good = q.items.filter((i) => i.correct).map((i) => i.id).sort().join();
   return good === [...picked].sort().join();
 };
-// (figure URLs: see imageSrc in data/useQuestions.js)
-
-const store = (key) => ({
-  read: () => { try { return JSON.parse(localStorage.getItem(key)) || {}; } catch { return {}; } },
-  write: (v) => { try { localStorage.setItem(key, JSON.stringify(v)); } catch { /* private mode */ } },
-  clear: () => { try { localStorage.removeItem(key); } catch { /* ignore */ } },
-});
 
 // Loads the live questions (editable from the admin page), then plays them.
 export default function ChapterQuiz({ chapter }) {
-  const { key, data } = chapter;
+  const { key, data, initialIdx } = chapter;
   const { byChapter, loading } = useQuestions();
+  const [pseudo, setPseudo] = useState(readName);
+  const [draft, setDraft] = useState('');
   const questions = byChapter[key] || [];
   const backHref = `#/${data.chapitre.theme || 'epaule'}`;
+
+  useEffect(() => subscribePlayer(() => setPseudo(readName())), []);
+
+  if (!pseudo) {
+    const onSubmit = (e) => {
+      e.preventDefault();
+      const clean = draft.trim().replace(/\s+/g, ' ');
+      if (!clean) return;
+      saveName(clean);
+      setPseudo(clean);
+    };
+    return (
+      <div className="cq">
+        <a href={backHref} className="cq-back">← Chapitres</a>
+        <form className="cq-card name-step" onSubmit={onSubmit} style={{ marginTop: 14 }}>
+          <label htmlFor="quiz-pseudo">Choisis un pseudo pour enregistrer ta progression</label>
+          <input
+            id="quiz-pseudo"
+            className="name-input"
+            type="text"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            placeholder="Ton pseudo"
+            maxLength={80}
+            autoComplete="nickname"
+            autoFocus
+            required
+          />
+          <button className="btn" type="submit" disabled={!draft.trim()}>
+            Commencer le quiz <Icon name="arrow" size={18} />
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   if (loading) {
     return <div className="cq"><p className="cq-loading" role="status">Chargement des questions…</p></div>;
@@ -55,27 +93,53 @@ export default function ChapterQuiz({ chapter }) {
       </div>
     );
   }
-  return <QuizPlayer chapterKey={key} meta={data.chapitre} questions={questions} />;
+  return (
+    <QuizPlayer
+      key={`${pseudo}:${key}`}
+      chapterKey={key}
+      meta={data.chapitre}
+      questions={questions}
+      initialIdx={initialIdx}
+    />
+  );
 }
 
 // `preview` (admin): no saved progress and no result sent to the database.
-export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, preview = false }) {
-  const storage = useMemo(() => store(`quiz-cotten:v1:${key}`), [key]);
-  const saved = useMemo(() => (preview ? {} : storage.read()), [storage, preview]);
+export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, preview = false, initialIdx = null }) {
+  const saved = useMemo(() => (preview ? { answers: {}, sent: false } : readChapterProgress(key)), [key, preview]);
 
   const questions = useMemo(() => rawQuestions.map((q) => ({ ...q, shown: mixItems(q) })), [rawQuestions]);
 
   const [answers, setAnswers] = useState(saved.answers || {}); // qid -> picked item ids
   const [sent, setSent] = useState(Boolean(saved.sent));
   const [picked, setPicked] = useState([]);
+  const [showCorrection, setShowCorrection] = useState(false);
   const [zoom, setZoom] = useState(null);
   const [saveState, setSaveState] = useState('idle');
   const topRef = useRef(null);
 
   const firstOpen = (l, a) => { const i = l.findIndex((q) => !a[q.id]); return i === -1 ? l.length : i; };
-  const [idx, setIdx] = useState(() => firstOpen(questions, answers));
+  const [idx, setIdx] = useState(() => {
+    if (Number.isInteger(initialIdx) && initialIdx >= 0 && initialIdx < questions.length) {
+      return initialIdx;
+    }
+    return firstOpen(questions, answers);
+  });
 
-  useEffect(() => { if (!preview) storage.write({ answers, sent }); }, [storage, preview, answers, sent]);
+  // Sync from server on mount so answers from another device are merged in.
+  useEffect(() => {
+    if (preview) return undefined;
+    syncProgressFromServer();
+    return subscribePlayer(() => {
+      const latest = readChapterProgress(key);
+      setAnswers((prev) => ({ ...(latest.answers || {}), ...prev }));
+      if (latest.sent) setSent(true);
+    });
+  }, [key, preview]);
+
+  useEffect(() => {
+    if (!preview) writeChapterProgress(key, { answers, sent });
+  }, [key, preview, answers, sent]);
 
   const q = questions[idx];
   const validated = q ? answers[q.id] : null;
@@ -88,6 +152,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
   const goTo = (i) => {
     setIdx(i);
     setPicked([]);
+    setShowCorrection(false);
   };
 
   const toggle = (id) => {
@@ -98,7 +163,19 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
 
   const validate = () => {
     if (!picked.length) return;
+    setShowCorrection(false);
     setAnswers((a) => ({ ...a, [q.id]: picked }));
+  };
+
+  const retryQuestion = () => {
+    if (!q) return;
+    setAnswers((a) => {
+      const copy = { ...a };
+      delete copy[q.id];
+      return copy;
+    });
+    setPicked([]);
+    setShowCorrection(false);
   };
 
   const next = () => {
@@ -108,12 +185,13 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
       setIdx(firstOpen(questions, answers));
     }
     setPicked([]);
+    setShowCorrection(false);
     topRef.current?.scrollIntoView({ block: 'start' });
   };
 
   const restart = () => {
-    if (!preview) storage.clear();
-    setAnswers({}); setSent(false); setPicked([]); setIdx(0); setSaveState('idle');
+    if (!preview) clearChapterProgress(key);
+    setAnswers({}); setSent(false); setPicked([]); setShowCorrection(false); setIdx(0); setSaveState('idle');
   };
 
   const themeId = meta.theme || 'epaule';
@@ -153,6 +231,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
 
   const state = (item) => {
     if (!validated) return picked.includes(item.id) ? 'sel' : '';
+    if (!showCorrection) return validated.includes(item.id) ? 'sel' : '';
     const on = validated.includes(item.id);
     if (on && item.correct) return 'ok';
     if (on && !item.correct) return 'ko';
@@ -172,7 +251,10 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
   return (
     <div className="cq" ref={topRef}>
       <header className="cq-head">
-        <a href={backHref} className="cq-back">← Chapitres</a>
+        <div className="cq-top-links">
+          <a href={backHref} className="cq-back">← Chapitres</a>
+          <a href="#/progression" className="cq-back">Ma progression →</a>
+        </div>
         <h1>{c.titre}</h1>
         <div className="cq-stats" aria-live="polite">
           <span>Score <b>{score}</b> / {answeredAll.length || 0}</span>
@@ -213,6 +295,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
           )}
           <div className="cq-end-actions">
             <button className="btn btn-ghost" onClick={restart}>Recommencer</button>
+            <a className="btn btn-ghost" href="#/progression">Ma progression</a>
             <a className="btn" href={backHref}>Autres chapitres</a>
           </div>
         </section>
@@ -233,7 +316,7 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
             {q.shown.map((it, i) => {
               const s = state(it);
               return (
-                <button key={it.id} className={`cq-item ${s}`} onClick={() => toggle(it.id)} aria-pressed={picked.includes(it.id)} disabled={Boolean(validated)}>
+                <button key={it.id} className={`cq-item ${s}`} onClick={() => toggle(it.id)} aria-pressed={(validated || picked).includes(it.id)} disabled={Boolean(validated)}>
                   <span className="cq-key">{String.fromCharCode(65 + i)}</span>
                   <span className="cq-text">{it.texte}</span>
                   {mark[s] && <span className="cq-mark" aria-hidden="true">{mark[s]}</span>}
@@ -244,20 +327,41 @@ export function QuizPlayer({ chapterKey: key, meta, questions: rawQuestions, pre
 
           {validated && (
             <div className="cq-correction">
-              <p className="cq-legend">
-                <span className="lg ok">✓ Bonne réponse cochée</span>
-                <span className="lg ko">✗ Cochée à tort</span>
-                {q.type === 'QRM' && <span className="lg miss">! Oubliée</span>}
+              <p className={`cq-verdict ${isPerfect(q, validated) ? 'ok' : 'ko'}`}>
+                {isPerfect(q, validated) ? '✓ Bonne réponse !' : '✗ Mauvaise réponse.'}
               </p>
-              <p className="cq-verdict">{isPerfect(q, validated) ? 'Exact.' : 'Pas tout à fait.'}</p>
-              <p className="cq-expl">{q.explication}</p>
-              {q.correction_figures?.map((f) => (
-                <figure key={f.upload || f.file} className="cq-fig" onClick={() => setZoom({ src: imageSrc(key, f), caption: f.caption })}>
-                  <img src={imageSrc(key, f)} alt={f.caption} loading="lazy" />
-                  <figcaption>{f.caption}<span className="cq-zoom"> · toucher pour agrandir</span></figcaption>
-                </figure>
-              ))}
-              <p className="cq-ref"><strong>Référence</strong>{ref(q.source)}</p>
+
+              <div className="cq-post-actions">
+                <button
+                  type="button"
+                  className="btn btn-small btn-ghost"
+                  onClick={() => setShowCorrection((v) => !v)}
+                  aria-expanded={showCorrection}
+                >
+                  {showCorrection ? 'Masquer la correction' : 'Voir la correction'}
+                </button>
+                <button type="button" className="btn btn-small btn-ghost" onClick={retryQuestion}>
+                  Réessayer la question
+                </button>
+              </div>
+
+              {showCorrection && (
+                <>
+                  <p className="cq-legend">
+                    <span className="lg ok">✓ Bonne réponse cochée</span>
+                    <span className="lg ko">✗ Cochée à tort</span>
+                    {q.type === 'QRM' && <span className="lg miss">! Oubliée</span>}
+                  </p>
+                  <p className="cq-expl">{q.explication}</p>
+                  {q.correction_figures?.map((f) => (
+                    <figure key={f.upload || f.file} className="cq-fig" onClick={() => setZoom({ src: imageSrc(key, f), caption: f.caption })}>
+                      <img src={imageSrc(key, f)} alt={f.caption} loading="lazy" />
+                      <figcaption>{f.caption}<span className="cq-zoom"> · toucher pour agrandir</span></figcaption>
+                    </figure>
+                  ))}
+                  <p className="cq-ref"><strong>Référence</strong>{ref(q.source)}</p>
+                </>
+              )}
             </div>
           )}
         </section>
