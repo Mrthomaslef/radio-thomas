@@ -3,7 +3,7 @@
 // - POST /api/leaderboard[?type=contributors] -> updates a player's leaderboard entry
 
 const LEADERBOARD_KEY = '__leaderboard_v2__';
-const CONTRIB_KEY = '__contributors_v3__';
+const CONTRIB_KEY = '__contributors_v4__';
 const cleanName = (s) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ') : '');
 const normKey = (s) => cleanName(s).toLowerCase();
 
@@ -31,13 +31,13 @@ function decodeEntryKey(key) {
 
 function decodeContribKey(key) {
   if (typeof key !== 'string') return null;
-  const m = key.match(/^cb3-([0-9a-f]{2,24})-(\d{1,6})$/);
+  const m = key.match(/^cb4-([0-9a-f]{2,24})-(\d{1,6})$/);
   if (!m) return null;
   const name = cleanName(fromHex(m[1]));
   if (!name) return null;
   const points = parseInt(m[2], 10) || 0;
   return {
-    kind: 'contributors_v3',
+    kind: 'contributors_v4',
     name,
     points,
     reports: points,
@@ -74,7 +74,7 @@ export default async function handler(req, res) {
         if (!raw || typeof raw !== 'object') return;
         const name = cleanName(raw.name);
         if (!name || name === LEADERBOARD_KEY || name === CONTRIB_KEY || name === '__leaderboard__') return;
-        if (isContrib && raw.kind !== 'contributors_v3') {
+        if (isContrib && raw.kind !== 'contributors_v4') {
           return;
         }
         const k = normKey(name);
@@ -85,7 +85,7 @@ export default async function handler(req, res) {
         const prev = merged.get(k);
         if (!prev) {
           merged.set(k, {
-            ...(isContrib ? { kind: 'contributors_v3' } : {}),
+            ...(isContrib ? { kind: 'contributors_v4' } : {}),
             name,
             points: isContrib ? reports : points,
             quizzes,
@@ -96,7 +96,7 @@ export default async function handler(req, res) {
           const nextReports = Math.max(prev.reports, reports);
           const nextPoints = isContrib ? nextReports : Math.max(prev.points, points);
           merged.set(k, {
-            ...(isContrib ? { kind: 'contributors_v3' } : {}),
+            ...(isContrib ? { kind: 'contributors_v4' } : {}),
             name: updatedAt && (!prev.updatedAt || updatedAt >= prev.updatedAt) ? name : prev.name,
             points: nextPoints,
             quizzes: Math.max(prev.quizzes, quizzes),
@@ -155,7 +155,7 @@ export default async function handler(req, res) {
       );
 
       res.setHeader('Cache-Control', 'no-store');
-      return res.status(200).json({ type: isContrib ? 'contributors_v3' : 'quiz', entries });
+      return res.status(200).json({ type: isContrib ? 'contributors_v4' : 'quiz', entries });
     }
 
     if (req.method === 'POST') {
@@ -168,7 +168,7 @@ export default async function handler(req, res) {
       const reports = isContrib ? Math.max(0, Math.min(10000, Math.round(Number(body.reports ?? points) || 0))) : 0;
       const k = normKey(name);
       const entry = {
-        ...(isContrib ? { kind: 'contributors_v3' } : {}),
+        ...(isContrib ? { kind: 'contributors_v4' } : {}),
         name,
         points: isContrib ? reports : points,
         quizzes,

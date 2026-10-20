@@ -1,10 +1,10 @@
 import { readName, readAllProgress } from './player.js';
 
 const LOCAL_LB_KEY = 'quiz-cotten:leaderboard:v2';
-const LOCAL_CONTRIB_KEY = 'quiz-cotten:contributors:v3';
+const LOCAL_CONTRIB_KEY = 'quiz-cotten:contributors:v4';
 const USER_PREFIX = 'quiz-cotten:user:';
 const SERVER_SHARED_KEY = '__leaderboard_v2__';
-const SERVER_CONTRIB_KEY = '__contributors_v3__';
+const SERVER_CONTRIB_KEY = '__contributors_v4__';
 
 const cleanName = (s) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ') : '');
 const normKey = (s) => cleanName(s).toLowerCase();
@@ -64,18 +64,18 @@ export function encodeContribKey(entry) {
   const hex = toHex(name);
   if (!hex) return null;
   const pts = Math.max(0, Math.min(999999, Math.round(Number(entry.reports ?? entry.points) || 0)));
-  return `cb3-${hex}-${pts}`;
+  return `cb4-${hex}-${pts}`;
 }
 
 export function decodeContribKey(key) {
   if (typeof key !== 'string') return null;
-  const m = key.match(/^cb3-([0-9a-f]{2,24})-(\d{1,6})$/);
+  const m = key.match(/^cb4-([0-9a-f]{2,24})-(\d{1,6})$/);
   if (!m) return null;
   const name = cleanName(fromHex(m[1]));
   if (!name) return null;
   const points = parseInt(m[2], 10) || 0;
   return {
-    kind: 'contributors_v3',
+    kind: 'contributors_v4',
     name,
     points,
     reports: points,
@@ -462,6 +462,7 @@ function readLocalContribMap() {
   try {
     localStorage.removeItem('quiz-cotten:contributors:v1');
     localStorage.removeItem('quiz-cotten:contributors:v2');
+    localStorage.removeItem('quiz-cotten:contributors:v3');
     const raw = JSON.parse(localStorage.getItem(LOCAL_CONTRIB_KEY) || '{}');
     return raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
   } catch {
@@ -490,7 +491,7 @@ async function pushContributorsToServer(mapOrEntry, { replace = false } = {}) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          kind: 'contributors_v3',
+          kind: 'contributors_v4',
           type: 'contributors',
           name: entry.name,
           points: entry.reports,
@@ -530,7 +531,7 @@ async function pushContributorsToServer(mapOrEntry, { replace = false } = {}) {
       if (!prev || rep >= prev.reports) {
         const pts = Math.max(prev?.reports || 0, rep);
         existingByUser.set(k, {
-          kind: 'contributors_v3',
+          kind: 'contributors_v4',
           name: entry.name,
           points: pts,
           reports: pts,
@@ -578,10 +579,10 @@ export async function recordContributorReport(name) {
   }
   const k = normKey(clean);
   const map = readLocalContribMap();
-  const prev = map[k] || { kind: 'contributors_v3', name: clean, points: 0, reports: 0 };
+  const prev = map[k] || { kind: 'contributors_v4', name: clean, points: 0, reports: 0 };
   const pts = (Number(prev.reports) || 0) + 1;
   const next = {
-    kind: 'contributors_v3',
+    kind: 'contributors_v4',
     name: clean,
     points: pts,
     reports: pts,
@@ -589,7 +590,7 @@ export async function recordContributorReport(name) {
   };
   map[k] = next;
   writeLocalContribMap(map);
-  await pushContributorsToServer(map);
+  await pushContributorsToServer(next);
   return next;
 }
 
@@ -618,7 +619,7 @@ export async function syncContributorsFromReports(reports) {
 
   for (const [k, { name, count }] of counts.entries()) {
     map[k] = {
-      kind: 'contributors_v3',
+      kind: 'contributors_v4',
       name,
       points: count,
       reports: count,
@@ -637,8 +638,8 @@ export async function fetchContributorsLeaderboard() {
 
   const mergeOne = (raw) => {
     if (!raw || typeof raw !== 'object') return;
-    // Strictly require v3 contributor entries (never accept quiz leaderboard or polluted v1/v2 entries!)
-    if (raw.kind !== 'contributors_v3') return;
+    // Strictly require v4 contributor entries (never accept quiz leaderboard or polluted v1/v2/v3 entries!)
+    if (raw.kind !== 'contributors_v4') return;
 
     const name = cleanName(raw.name);
     if (
@@ -657,7 +658,7 @@ export async function fetchContributorsLeaderboard() {
     if (!prev || pts >= prev.reports) {
       const bestPts = Math.max(prev?.reports || 0, pts);
       merged.set(k, {
-        kind: 'contributors_v3',
+        kind: 'contributors_v4',
         name: prev && prev.reports > pts ? prev.name : name,
         points: bestPts,
         reports: bestPts,
@@ -673,7 +674,7 @@ export async function fetchContributorsLeaderboard() {
     const r = await fetch('/api/leaderboard?type=contributors');
     if (r.ok) {
       const data = await r.json();
-      if (data?.type === 'contributors_v3' && Array.isArray(data?.entries)) {
+      if (data?.type === 'contributors_v4' && Array.isArray(data?.entries)) {
         data.entries.forEach(mergeOne);
       }
     }
@@ -681,7 +682,7 @@ export async function fetchContributorsLeaderboard() {
     // Ignore
   }
 
-  // 2) Also check /api/progress?name=__contributors_v3__
+  // 2) Also check /api/progress?name=__contributors_v4__
   try {
     const r2 = await fetch(`/api/progress?name=${encodeURIComponent(SERVER_CONTRIB_KEY)}`);
     if (r2.ok) {
@@ -694,7 +695,7 @@ export async function fetchContributorsLeaderboard() {
               const decoded = decodeContribKey(qid);
               if (decoded) mergeOne(decoded);
             }
-          } else if (v && typeof v === 'object' && v.name && v.kind === 'contributors_v3') {
+          } else if (v && typeof v === 'object' && v.name && v.kind === 'contributors_v4') {
             mergeOne(v);
           }
         }
@@ -709,10 +710,6 @@ export async function fetchContributorsLeaderboard() {
     finalMap[k] = v;
   }
   writeLocalContribMap(finalMap);
-
-  if (Object.keys(localMap).length > 0) {
-    pushContributorsToServer(finalMap);
-  }
 
   return [...merged.values()].sort(
     (a, b) => b.points - a.points || a.name.localeCompare(b.name, 'fr')
