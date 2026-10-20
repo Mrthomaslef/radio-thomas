@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import QuestionsAdmin from './QuestionsAdmin.jsx';
 import { useQuestions } from '../data/useQuestions.js';
 import { extractAttemptsAndReports, resolveQuestionReport } from '../data/reports.js';
+import { syncLeaderboardFromAttempts } from '../data/leaderboard.js';
 
 // Friendly names for course slugs; unknown slugs are shown as-is.
 const COURSE_LABELS = {
@@ -112,6 +113,7 @@ export default function AdminPage() {
       const parsed = extractAttemptsAndReports(data);
       setAttempts(parsed.attempts);
       setReports(parsed.reports);
+      syncLeaderboardFromAttempts(parsed.attempts);
     } catch {
       setError('Serveur injoignable, réessayez.');
     } finally {

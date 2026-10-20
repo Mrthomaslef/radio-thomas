@@ -12,6 +12,7 @@ import {
 } from '../data/player.js';
 import { useQuestions, imageSrc } from '../data/useQuestions.js';
 import { submitQuestionReport } from '../data/reports.js';
+import { recordCompletedQuiz } from '../data/leaderboard.js';
 
 // ---------- helpers ----------
 const hash = (s) => {
@@ -209,6 +210,8 @@ export function QuizPlayer({
     if (randomMode && !preview) {
       writeQuestionAnswer(qKey, q.id, null);
     }
+    setSent(false);
+    setSaveState('idle');
     setPicked([]);
     setShowCorrection(false);
   };
@@ -264,6 +267,8 @@ export function QuizPlayer({
     const name = readName();
     if (!name) return;
     setSaveState('saving');
+    // Record points on the leaderboard (1 point per correct answer, only when quiz is finished)
+    recordCompletedQuiz({ name, quizKey: key, score, randomMode });
     try {
       const r = await fetch('/api/attempts', {
         method: 'POST',
@@ -275,7 +280,13 @@ export function QuizPlayer({
     } catch { setSaveState('error'); }
   };
   useEffect(() => {
-    if (answeredAll.length === total && !sent && saveState === 'idle') sendResult();
+    if (answeredAll.length === total && !preview) {
+      const name = readName();
+      if (name && !randomMode) {
+        recordCompletedQuiz({ name, quizKey: key, score, randomMode: false });
+      }
+      if (!sent && saveState === 'idle') sendResult();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answeredAll.length]);
 
@@ -314,7 +325,11 @@ export function QuizPlayer({
       <header className="cq-head">
         <div className="cq-top-links">
           <a href={backHref} className="cq-back">{backLabel}</a>
-          <a href="#/progression" className="cq-back">Ma progression →</a>
+          <div className="cq-top-right">
+            <a href="#/classement" className="cq-back">Classement</a>
+            <span className="cq-sep" aria-hidden="true">·</span>
+            <a href="#/progression" className="cq-back">Ma progression →</a>
+          </div>
         </div>
         <h1>{c.titre}</h1>
         <div className="cq-stats" aria-live="polite">
@@ -358,6 +373,7 @@ export function QuizPlayer({
             <button className="btn btn-ghost" onClick={restart}>
               {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
             </button>
+            <a className="btn btn-ghost" href="#/classement">Classement</a>
             <a className="btn btn-ghost" href="#/progression">Ma progression</a>
             <a className="btn" href={backHref}>
               {randomMode ? 'Configurer un autre quiz' : 'Autres chapitres'}
