@@ -13,16 +13,39 @@
       "enonce": "Sur une radiographie de face, quel est le signe radiographique le plus fréquent et le plus précoce de l’omarthrose ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Un pincement complet de l’interligne glénohuméral", "correct": false},
-        {"id": "B", "texte": "Une ostéophytose marginale de la tête humérale et de la glène, prédominant à la partie antéro-inférieure", "correct": true},
-        {"id": "C", "texte": "De volumineuses géodes sous-chondrales", "correct": false},
-        {"id": "D", "texte": "Une diminution de l’espace subacromial", "correct": false}
+        {
+          "id": "A",
+          "texte": "Un pincement complet de l’interligne glénohuméral",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une ostéophytose marginale de la tête humérale et de la glène, prédominant à la partie antéro-inférieure",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "De volumineuses géodes sous-chondrales",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une diminution de l’espace subacromial",
+          "correct": false
+        }
       ],
       "explication": "L’ostéophytose marginale de la tête humérale et de la glène, à l’insertion du labrum, prédomine à la partie antéro-inférieure de l’articulation : c’est le signe le plus fréquent et le plus précoce. Sa taille semble corrélée à la durée d’évolution et non à la sévérité de l’omarthrose.\n\nLe pincement de l’interligne (significatif sous 2 mm) est un autre signe, mais il peut être majoré en rotation latérale, et l’interligne peut paraître normal ou élargi en cas d’épanchement. Les géodes sous-chondrales sont rares. Dans l’omarthrose centrée, l’espace subacromial est respecté (≥ 7 mm) ; sa diminution (< 6 mm) évoque au contraire une omarthrose excentrée sur rupture de coiffe.\n\nÀ retenir : l’ostéophytose peut aussi se développer sur la surface articulaire de la tête humérale et mimer une chondrocalcinose.",
       "correction_figures": [
-        {"file": "04. Autres pathologies scapulaires_p128_1.png", "caption": "Fig. 4.2 Omarthrose centrée avec ostéophytose marginale et centrale de la tête humérale (flèches). Notez l’interligne glénohuméral qui paraît élargi ainsi que la présence d’un petit ostéochondrome (tête de flèche)."}
+        {
+          "file": "04. Autres pathologies scapulaires_p128_1.png",
+          "caption": "Fig. 4.2 Omarthrose centrée avec ostéophytose marginale et centrale de la tête humérale (flèches). Notez l’interligne glénohuméral qui paraît élargi ainsi que la présence d’un petit ostéochondrome (tête de flèche)."
+        }
       ],
-      "source": {"page": 128, "element": "Texte", "refs": "[25]"}
+      "source": {
+        "page": 128,
+        "element": "Texte",
+        "refs": "[25]"
+      }
     },
     {
       "id": "c4-q02",
@@ -31,16 +54,39 @@
       "enonce": "À propos de l’angle critique de l’épaule mesuré sur la radiographie de face, quelle affirmation est exacte ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Un angle inférieur à 30° majorerait la compression du cartilage glénoïdal par le deltoïde et favoriserait l’omarthrose centrée", "correct": true},
-        {"id": "B", "texte": "Un angle supérieur à 35° favoriserait l’omarthrose centrée", "correct": false},
-        {"id": "C", "texte": "Il est formé par les plans glénoïdal et coracoïdien", "correct": false},
-        {"id": "D", "texte": "Il n’est jamais influencé par l’incidence radiographique", "correct": false}
+        {
+          "id": "A",
+          "texte": "Un angle inférieur à 30° majorerait la compression du cartilage glénoïdal par le deltoïde et favoriserait l’omarthrose centrée",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un angle supérieur à 35° favoriserait l’omarthrose centrée",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Il est formé par les plans glénoïdal et coracoïdien",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il n’est jamais influencé par l’incidence radiographique",
+          "correct": false
+        }
       ],
-      "explication": "L’angle critique est compris entre le plan glénoïdal (ligne passant par les berges supérieure et inférieure de la glène) et le plan glénoacromial (ligne passant par le rebord inférieur de la glène et le rebord le plus latéral de l’acromion). Un angle inférieur à 30° majorerait la compression mécanique exercée par le deltoïde sur le cartilage glénoïdal et favoriserait donc l’omarthrose centrée.\n\nB est faux : un angle > 35° serait plutôt associé aux ruptures de coiffe, donc à l’omarthrose excentrée. C est faux : c’est le plan glénoacromial, pas coracoïdien. D est faux : cet angle est susceptible d’être influencé par l’incidence radiographique et l’usure glénoïdale.\n\nDans l’exemple de la figure, l’angle critique est de 27°, dans une omarthrose centrée avec pincement complet de l’interligne et préservation de l’espace sous-acromial.",
+      "explication": "L’angle critique est compris entre le plan glénoïdal (ligne passant par les berges supérieure et inférieure de la glène) et le plan glénoacromial (ligne passant par le rebord inférieur de la glène et le rebord le plus latéral de l’acromion). Un angle inférieur à 30° majorerait la compression mécanique exercée par le deltoïde sur le cartilage glénoïdal et favoriserait donc l’omarthrose centrée.\n\nUn angle > 35° serait plutôt associé aux ruptures de coiffe, donc à l’omarthrose excentrée. C’est le plan glénoacromial, pas coracoïdien. Cet angle est susceptible d’être influencé par l’incidence radiographique et l’usure glénoïdale.\n\nDans l’exemple de la figure, l’angle critique est de 27°, dans une omarthrose centrée avec pincement complet de l’interligne et préservation de l’espace sous-acromial.",
       "correction_figures": [
-        {"file": "04. Autres pathologies scapulaires_p127_1.png", "caption": "Fig. 4.1 Omarthrose centrée avec pincement complet de l’interligne glénohuméral et préservation de l’espace sous-acromial. L’angle critique a est de 27°."}
+        {
+          "file": "04. Autres pathologies scapulaires_p127_1.png",
+          "caption": "Fig. 4.1 Omarthrose centrée avec pincement complet de l’interligne glénohuméral et préservation de l’espace sous-acromial. L’angle critique a est de 27°."
+        }
       ],
-      "source": {"page": 129, "element": "Texte", "refs": "[23, 140, 141, 208]"}
+      "source": {
+        "page": 129,
+        "element": "Texte",
+        "refs": "[23, 140, 141, 208]"
+      }
     },
     {
       "id": "c4-q03",
@@ -49,18 +95,48 @@
       "enonce": "Dans le bilan scanographique préopératoire d’une omarthrose, quels éléments sont à préciser ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Un excès de rétroversion glénoïdale, défini au-delà de 10°", "correct": true},
-        {"id": "B", "texte": "Une éventuelle subluxation postérieure de la tête humérale", "correct": true},
-        {"id": "C", "texte": "Le capital osseux de la glène, avec une profondeur intraspongieuse d’au moins 15 mm pour une prothèse anatomique complète", "correct": true},
-        {"id": "D", "texte": "Une rétroversion glénoïdale physiologique comprise entre 15 et 25°", "correct": false},
-        {"id": "E", "texte": "Le type de glène selon la classification de Walch, où le type D correspond à une tête humérale centrée", "correct": false}
+        {
+          "id": "A",
+          "texte": "Un excès de rétroversion glénoïdale, défini au-delà de 10°",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une éventuelle subluxation postérieure de la tête humérale",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le capital osseux de la glène, avec une profondeur intraspongieuse d’au moins 15 mm pour une prothèse anatomique complète",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une rétroversion glénoïdale physiologique comprise entre 15 et 25°",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Le type de glène selon la classification de Walch, où le type D correspond à une tête humérale centrée",
+          "correct": false
+        }
       ],
-      "explication": "Le scanner et l’arthroscanner servent surtout au bilan préopératoire : chondrolyse, ostéophytes exubérants, ostéochondromes, rétroversion glénoïdale, subluxation postérieure, capital osseux de la glène, inclinaison de la glène, état de la coiffe et arthrose acromioclaviculaire.\n\nLa glène est physiologiquement légèrement rétroversée, entre 0 et 8° ; on parle d’excès de rétroversion au-delà de 10° (D est faux). Une subluxation postérieure de la tête humérale, facteur péjoratif, est suspectée lorsque le taux de subluxation T = a/b dépasse 55 % (normal : 45 à 55 %). Le capital osseux de la glène doit offrir au moins 15 mm de profondeur intraspongieuse pour contenir la quille de l’implant glénoïdal.\n\nLa classification de Walch comporte quatre types dans le plan axial : A (tête humérale centrée), B (subluxation postérieure), C (glène dysplasique), D (glène antéversée). E est donc faux : le type A correspond à la tête centrée.",
+      "explication": "Le scanner et l’arthroscanner servent surtout au bilan préopératoire : chondrolyse, ostéophytes exubérants, ostéochondromes, rétroversion glénoïdale, subluxation postérieure, capital osseux de la glène, inclinaison de la glène, état de la coiffe et arthrose acromioclaviculaire.\n\nLa glène est physiologiquement légèrement rétroversée, entre 0 et 8° ; on parle d’excès de rétroversion au-delà de 10°. Une subluxation postérieure de la tête humérale, facteur péjoratif, est suspectée lorsque le taux de subluxation T = a/b dépasse 55 % (normal : 45 à 55 %). Le capital osseux de la glène doit offrir au moins 15 mm de profondeur intraspongieuse pour contenir la quille de l’implant glénoïdal.\n\nLa classification de Walch comporte quatre types dans le plan axial : A (tête humérale centrée), B (subluxation postérieure), C (glène dysplasique), D (glène antéversée). Le type A correspond donc à la tête centrée.",
       "correction_figures": [
-        {"file": "04. Autres pathologies scapulaires_p131_3.png", "caption": "Fig. 4.9 Schéma des différents aspects morphologiques de la glène au cours de l’omarthrose primitive selon Walch [210]. Type A : tête humérale centrée (A1 : usure glénoïdale centrale limitée, A2 : protrusion de la tête dans la glène qui est évasée, en cupule) ; type B : tête humérale subluxée en arrière (B1 : sans érosion osseuse, B2 : avec érosion osseuse postérieure responsable d’un aspect biconcave de la glène, B3 : avec érosion osseuse postérieure responsable d’une glène monoconcave, subluxation postérieure de la tête d’au moins 70° et/ou rétroversion glénoïdale d’au moins 15°) ; type C : glène dysplasique sans érosion osseuse postérieure majeure mais avec une rétroversion d’au moins 25° ; type D : glène antéversée ou subluxation antérieure de la tête."},
-        {"file": "04. Autres pathologies scapulaires_p130_2.png", "caption": "Fig. 4.7 Rétroversion glénoïdale mesurée par l’angle entre le grand axe de la glène (AB) et la perpendiculaire au grand axe de la scapula XX’ (droite passant par le milieu de AB [C] et le bord médial de l’écaille de la scapula) (a). Cette coupe axiale devrait être repérée sur une scapula 3D pour passer par le centre de la glène et le point de jonction entre le bord médial et l’épine de la scapula, dans un plan perpendiculaire au plan de la scapula (b). Il importe de ne pas prendre en compte d’éventuels ostéophytes glénoïdaux lors de cette mesure."}
+        {
+          "file": "04. Autres pathologies scapulaires_p131_3.png",
+          "caption": "Fig. 4.9 Schéma des différents aspects morphologiques de la glène au cours de l’omarthrose primitive selon Walch [210]. Type A : tête humérale centrée (A1 : usure glénoïdale centrale limitée, A2 : protrusion de la tête dans la glène qui est évasée, en cupule) ; type B : tête humérale subluxée en arrière (B1 : sans érosion osseuse, B2 : avec érosion osseuse postérieure responsable d’un aspect biconcave de la glène, B3 : avec érosion osseuse postérieure responsable d’une glène monoconcave, subluxation postérieure de la tête d’au moins 70° et/ou rétroversion glénoïdale d’au moins 15°) ; type C : glène dysplasique sans érosion osseuse postérieure majeure mais avec une rétroversion d’au moins 25° ; type D : glène antéversée ou subluxation antérieure de la tête."
+        },
+        {
+          "file": "04. Autres pathologies scapulaires_p130_2.png",
+          "caption": "Fig. 4.7 Rétroversion glénoïdale mesurée par l’angle entre le grand axe de la glène (AB) et la perpendiculaire au grand axe de la scapula XX’ (droite passant par le milieu de AB [C] et le bord médial de l’écaille de la scapula) (a). Cette coupe axiale devrait être repérée sur une scapula 3D pour passer par le centre de la glène et le point de jonction entre le bord médial et l’épine de la scapula, dans un plan perpendiculaire au plan de la scapula (b). Il importe de ne pas prendre en compte d’éventuels ostéophytes glénoïdaux lors de cette mesure."
+        }
       ],
-      "source": {"page": 130, "element": "Encadré 4.2", "refs": "[10, 65, 108, 209]"}
+      "source": {
+        "page": 130,
+        "element": "Encadré 4.2",
+        "refs": "[10, 65, 108, 209]"
+      }
     },
     {
       "id": "c4-q04",
@@ -69,17 +145,43 @@
       "enonce": "Quel signe radiographique de face caractérise typiquement l’omarthrose excentrée, sur rupture massive de la coiffe ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Un pincement de l’interligne glénohuméral avec un espace subacromial < 6 mm", "correct": true},
-        {"id": "B", "texte": "Un pincement de l’interligne glénohuméral avec un espace subacromial ≥ 7 mm", "correct": false},
-        {"id": "C", "texte": "Une usure de la partie basse de la glène avec respect de l’espace subacromial", "correct": false},
-        {"id": "D", "texte": "Un élargissement de l’espace subacromial", "correct": false}
+        {
+          "id": "A",
+          "texte": "Un pincement de l’interligne glénohuméral avec un espace subacromial < 6 mm",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un pincement de l’interligne glénohuméral avec un espace subacromial ≥ 7 mm",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une usure de la partie basse de la glène avec respect de l’espace subacromial",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un élargissement de l’espace subacromial",
+          "correct": false
+        }
       ],
-      "explication": "L’omarthrose excentrée associe un pincement de l’interligne glénohuméral à une diminution de l’espace subacromial (< 6 mm), par ascension de la tête humérale secondaire à la rupture de coiffe. Cette ascension rompt le cintre glénohuméral inférieur sur la radiographie de face.\n\nÀ l’inverse, l’omarthrose centrée respecte l’espace subacromial (≥ 7 mm) et s’accompagne d’une usure de la partie basse de la glène (B et C décrivent donc l’omarthrose centrée).\n\nAvec le temps, des remaniements microtraumatiques de la tête humérale et de la face inférieure de l’acromion aboutissent à une néoarticulation acromiohumérale, puis à une chondrolyse glénohumérale essentiellement supérieure. Attention : une omarthrose avec importante rupture de coiffe peut apparaître centrée si les clichés sont faits debout, d’où l’intérêt de l’imagerie complémentaire.",
+      "explication": "L’omarthrose excentrée associe un pincement de l’interligne glénohuméral à une diminution de l’espace subacromial (< 6 mm), par ascension de la tête humérale secondaire à la rupture de coiffe. Cette ascension rompt le cintre glénohuméral inférieur sur la radiographie de face.\n\nÀ l’inverse, l’omarthrose centrée respecte l’espace subacromial (≥ 7 mm) et s’accompagne d’une usure de la partie basse de la glène.\n\nAvec le temps, des remaniements microtraumatiques de la tête humérale et de la face inférieure de l’acromion aboutissent à une néoarticulation acromiohumérale, puis à une chondrolyse glénohumérale essentiellement supérieure. Attention : une omarthrose avec importante rupture de coiffe peut apparaître centrée si les clichés sont faits debout, d’où l’intérêt de l’imagerie complémentaire.",
       "correction_figures": [
-        {"file": "04. Autres pathologies scapulaires_p131_2.png", "caption": "Fig. 4.11 Omarthrose excentrée : ascension de la tête humérale avec rupture du cintre glénohuméral inférieur (flèches), pincement débutant de l’interligne glénohuméral supérieur."},
-        {"file": "04. Autres pathologies scapulaires_p132_1.png", "caption": "Fig. 4.13 Omarthrose à coiffe incontinente en arthroscanner : ascension de la tête humérale à proximité immédiate de la face inférieure de l’acromion. Notez la dégénérescence graisseuse des muscles supra et infra-épineux (étoiles) et l’arthrose acromioclaviculaire associée."}
+        {
+          "file": "04. Autres pathologies scapulaires_p131_2.png",
+          "caption": "Fig. 4.11 Omarthrose excentrée : ascension de la tête humérale avec rupture du cintre glénohuméral inférieur (flèches), pincement débutant de l’interligne glénohuméral supérieur."
+        },
+        {
+          "file": "04. Autres pathologies scapulaires_p132_1.png",
+          "caption": "Fig. 4.13 Omarthrose à coiffe incontinente en arthroscanner : ascension de la tête humérale à proximité immédiate de la face inférieure de l’acromion. Notez la dégénérescence graisseuse des muscles supra et infra-épineux (étoiles) et l’arthrose acromioclaviculaire associée."
+        }
       ],
-      "source": {"page": 131, "element": "Encadré 4.1", "refs": "[150]"}
+      "source": {
+        "page": 131,
+        "element": "Encadré 4.1",
+        "refs": "[150]"
+      }
     },
     {
       "id": "c4-q05",
@@ -88,17 +190,43 @@
       "enonce": "En IRM, l’ostéonécrose systémique de la tête humérale (ONTH) est délimitée par quel signe ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Un liseré de démarcation", "correct": true},
-        {"id": "B", "texte": "Un défect épiphysaire sous-chondral bordé de sclérose à la partie antérosupérieure", "correct": false},
-        {"id": "C", "texte": "Un épaississement du ligament coracohuméral", "correct": false},
-        {"id": "D", "texte": "Une infiltration du triangle graisseux subcoracoïdien", "correct": false}
+        {
+          "id": "A",
+          "texte": "Un liseré de démarcation",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un défect épiphysaire sous-chondral bordé de sclérose à la partie antérosupérieure",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Un épaississement du ligament coracohuméral",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une infiltration du triangle graisseux subcoracoïdien",
+          "correct": false
+        }
       ],
-      "explication": "En IRM, l’ONTH, d’étendue variable (affectant le plus souvent la partie supéromédiane de la tête humérale), est délimitée par un liseré de démarcation. Un œdème médullaire périlésionnel et un épanchement intra-articulaire peuvent être associés. En radiographie, on peut voir une bande ostéocondensée arciforme cerclant le territoire nécrosé ; une dissection de l’os sous-chondral et un décroché de la surface articulaire s’observent aux stades évolués.\n\nB décrit l’ostéochondrite disséquante de la tête humérale (défect épiphysaire souvent antérosupérieur, renfermant un fragment ostéochondral). C et D sont des signes IRM de la capsulite rétractile.\n\nL’ONTH est volontiers asymptomatique, l’articulation étant non portante. Elle se situe au deuxième rang des ostéonécroses épiphysaires systémiques, après la tête fémorale.",
+      "explication": "En IRM, l’ONTH, d’étendue variable (affectant le plus souvent la partie supéromédiane de la tête humérale), est délimitée par un liseré de démarcation. Un œdème médullaire périlésionnel et un épanchement intra-articulaire peuvent être associés. En radiographie, on peut voir une bande ostéocondensée arciforme cerclant le territoire nécrosé ; une dissection de l’os sous-chondral et un décroché de la surface articulaire s’observent aux stades évolués.\n\nUn défect épiphysaire antérosupérieur renfermant un fragment ostéochondral décrit l’ostéochondrite disséquante de la tête humérale, tandis que l’épaississement du ligament coracohuméral et l’oblitération du triangle graisseux subcoracoïdien sont des signes IRM de la capsulite rétractile.\n\nL’ONTH est volontiers asymptomatique, l’articulation étant non portante. Elle se situe au deuxième rang des ostéonécroses épiphysaires systémiques, après la tête fémorale.",
       "correction_figures": [
-        {"file": "04. Autres pathologies scapulaires_p133_1.png", "caption": "Fig. 4.15 Ostéonécrose systémique de la tête humérale (patient sous corticothérapie). Notez l’impaction de la surface articulaire, la dissection de l’os sous-chondral (tête de flèche), le liseré de démarcation (flèches) et l’omarthrose glénohumérale centrée associée (ostéophytose de la tête humérale et pincement articulaire focal)."},
-        {"file": "04. Autres pathologies scapulaires_p133_2.png", "caption": "Fig. 4.14 Ostéonécrose systémique de la tête humérale (patient sous corticothérapie). Liseré dense de démarcation (flèches) sans impaction de la surface articulaire."}
+        {
+          "file": "04. Autres pathologies scapulaires_p133_1.png",
+          "caption": "Fig. 4.15 Ostéonécrose systémique de la tête humérale (patient sous corticothérapie). Notez l’impaction de la surface articulaire, la dissection de l’os sous-chondral (tête de flèche), le liseré de démarcation (flèches) et l’omarthrose glénohumérale centrée associée (ostéophytose de la tête humérale et pincement articulaire focal)."
+        },
+        {
+          "file": "04. Autres pathologies scapulaires_p133_2.png",
+          "caption": "Fig. 4.14 Ostéonécrose systémique de la tête humérale (patient sous corticothérapie). Liseré dense de démarcation (flèches) sans impaction de la surface articulaire."
+        }
       ],
-      "source": {"page": 133, "element": "Texte", "refs": ""}
+      "source": {
+        "page": 133,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c4-q06",
@@ -107,18 +235,48 @@
       "enonce": "Parmi les signes IRM de la capsulite rétractile, lesquels sont décrits dans la région de l’intervalle des rotateurs et du ligament glénohuméral inférieur ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Une infiltration (oblitération) du triangle graisseux subcoracoïdien", "correct": true},
-        {"id": "B", "texte": "Un épaississement du ligament coracohuméral", "correct": true},
-        {"id": "C", "texte": "Un épaississement et un hypersignal T2 modéré du ligament glénohuméral inférieur", "correct": true},
-        {"id": "D", "texte": "Une augmentation du volume de l’intervalle des rotateurs", "correct": false},
-        {"id": "E", "texte": "Un amincissement du ligament glénohuméral inférieur", "correct": false}
+        {
+          "id": "A",
+          "texte": "Une infiltration (oblitération) du triangle graisseux subcoracoïdien",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un épaississement du ligament coracohuméral",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un épaississement et un hypersignal T2 modéré du ligament glénohuméral inférieur",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une augmentation du volume de l’intervalle des rotateurs",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Un amincissement du ligament glénohuméral inférieur",
+          "correct": false
+        }
       ],
-      "explication": "Dans la région de l’intervalle des rotateurs, on recherche une infiltration du triangle graisseux subcoracoïdien (délimité par le ligament coracohuméral en haut, le processus coracoïde en avant et la capsule en arrière), un épaississement du ligament coracohuméral (spécificité de 89 à 95 % quand l’épaisseur maximale atteint 4 mm ou plus), un épaississement de la capsule et une diminution du volume de l’intervalle (D est donc faux : le volume diminue).\n\nDans la région du ligament glénohuméral inférieur, on observe un épaississement (spécificité de 95 % s’il dépasse 4 mm) et surtout un hypersignal T2 modéré, plus évocateur, ainsi qu’une fine bande hyperintense T2 dans la graisse adjacente. E est faux : le ligament s’épaissit.\n\nD’autres signes sont possibles : anomalie de signal de la tête humérale, distension du récessus subscapulaire ou de la gaine bicipitale, synovite et bursite subacromiodeltoïdienne.",
+      "explication": "Dans la région de l’intervalle des rotateurs, on recherche une infiltration du triangle graisseux subcoracoïdien (délimité par le ligament coracohuméral en haut, le processus coracoïde en avant et la capsule en arrière), un épaississement du ligament coracohuméral (spécificité de 89 à 95 % quand l’épaisseur maximale atteint 4 mm ou plus), un épaississement de la capsule et une diminution du volume de l’intervalle.\n\nDans la région du ligament glénohuméral inférieur, on observe un épaississement (spécificité de 95 % s’il dépasse 4 mm) et surtout un hypersignal T2 modéré, plus évocateur, ainsi qu’une fine bande hyperintense T2 dans la graisse adjacente.\n\nD’autres signes sont possibles : anomalie de signal de la tête humérale, distension du récessus subscapulaire ou de la gaine bicipitale, synovite et bursite subacromiodeltoïdienne.",
       "correction_figures": [
-        {"file": "04. Autres pathologies scapulaires_p137_1.png", "caption": "Fig. 4.21 Capsulite rétractile chez deux patients différents. Notez, sur ces coupes sagittales pondérées en T1, l’infiltration modérée (a) et marquée (b) du triangle graisseux subcoracoïdien (¤), ainsi que l’épaississement du ligament coracohuméral (flèches). C : processus coracoïde ; SS : muscle subscapulaire ; B : longue portion du tendon du muscle biceps brachial."},
-        {"file": "04. Autres pathologies scapulaires_p138_1.png", "caption": "Fig. 4.24 Capsulite rétractile chez deux patients différents. Épaississement et hypersignal modéré (a) et marqué (b) du ligament glénohuméral inférieur (grande flèche). Notez la petite bande hyperintense bordant le ligament au niveau de la graisse adjacente (petites flèches)."}
+        {
+          "file": "04. Autres pathologies scapulaires_p137_1.png",
+          "caption": "Fig. 4.21 Capsulite rétractile chez deux patients différents. Notez, sur ces coupes sagittales pondérées en T1, l’infiltration modérée (a) et marquée (b) du triangle graisseux subcoracoïdien (¤), ainsi que l’épaississement du ligament coracohuméral (flèches). C : processus coracoïde ; SS : muscle subscapulaire ; B : longue portion du tendon du muscle biceps brachial."
+        },
+        {
+          "file": "04. Autres pathologies scapulaires_p138_1.png",
+          "caption": "Fig. 4.24 Capsulite rétractile chez deux patients différents. Épaississement et hypersignal modéré (a) et marqué (b) du ligament glénohuméral inférieur (grande flèche). Notez la petite bande hyperintense bordant le ligament au niveau de la graisse adjacente (petites flèches)."
+        }
       ],
-      "source": {"page": 137, "element": "Encadré 4.4", "refs": "[68, 133]"}
+      "source": {
+        "page": 137,
+        "element": "Encadré 4.4",
+        "refs": "[68, 133]"
+      }
     },
     {
       "id": "c4-q07",
@@ -127,17 +285,43 @@
       "enonce": "Quelle variante anatomique constitue le principal diagnostic différentiel d’un ligament coracohuméral épaissi en échographie ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Une variante du muscle petit pectoral dont des fibres passent en avant du processus coracoïde", "correct": true},
-        {"id": "B", "texte": "Une variante d’insertion du muscle grand pectoral sur le sillon intertubérositaire", "correct": false},
-        {"id": "C", "texte": "Un os acromial", "correct": false},
-        {"id": "D", "texte": "Une duplication de l’articulation acromioclaviculaire", "correct": false}
+        {
+          "id": "A",
+          "texte": "Une variante du muscle petit pectoral dont des fibres passent en avant du processus coracoïde",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une variante d’insertion du muscle grand pectoral sur le sillon intertubérositaire",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Un os acromial",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une duplication de l’articulation acromioclaviculaire",
+          "correct": false
+        }
       ],
-      "explication": "Une variation d’insertion distale du muscle petit pectoral (passage de fibres musculaires en avant du processus coracoïde, dans 10 à 15 % des cas) donne une bande hypoéchogène au voisinage du bord latéral du processus coracoïde, qui peut prêter à confusion avec un ligament coracohuméral épaissi.\n\nPour les distinguer : contrairement au ligament coracohuméral, cette bande se poursuit en avant du processus coracoïde et se mobilise lors des manœuvres de rotation du bras. À connaître en cas de suspicion de capsulite rétractile pour ne pas surdiagnostiquer.\n\nÀ l’état pathologique, le ligament coracohuméral médial mesure 3 ± 0,85 mm, contre 1,34 ± 0,32 mm chez les témoins. Les autres propositions ne sont pas des pièges décrits pour ce signe.",
+      "explication": "Une variation d’insertion distale du muscle petit pectoral (passage de fibres musculaires en avant du processus coracoïde, dans 10 à 15 % des cas) donne une bande hypoéchogène au voisinage du bord latéral du processus coracoïde, qui peut prêter à confusion avec un ligament coracohuméral épaissi.\n\nPour les distinguer : contrairement au ligament coracohuméral, cette bande se poursuit en avant du processus coracoïde et se mobilise lors des manœuvres de rotation du bras. À connaître en cas de suspicion de capsulite rétractile pour ne pas surdiagnostiquer.\n\nÀ l’état pathologique, le ligament coracohuméral médial mesure 3 ± 0,85 mm, contre 1,34 ± 0,32 mm chez les témoins.",
       "correction_figures": [
-        {"file": "04. Autres pathologies scapulaires_p155_1.png", "caption": "Fig. 4.52 Variante du petit pectoral (flèches) qui passe en pont devant le processus coracoïde (C)."},
-        {"file": "04. Autres pathologies scapulaires_p136_3.png", "caption": "Fig. 4.20 Capsulite rétractile. Épaississement hypoéchogène du ligament coracohuméral (LCH) mesuré à 4,2 mm. CORAC : processus coracoïde ; ACRO : acromion ; LAC : ligament acromio-coracoïdien."}
+        {
+          "file": "04. Autres pathologies scapulaires_p155_1.png",
+          "caption": "Fig. 4.52 Variante du petit pectoral (flèches) qui passe en pont devant le processus coracoïde (C)."
+        },
+        {
+          "file": "04. Autres pathologies scapulaires_p136_3.png",
+          "caption": "Fig. 4.20 Capsulite rétractile. Épaississement hypoéchogène du ligament coracohuméral (LCH) mesuré à 4,2 mm. CORAC : processus coracoïde ; ACRO : acromion ; LAC : ligament acromio-coracoïdien."
+        }
       ],
-      "source": {"page": 136, "element": "Texte", "refs": "[84]"}
+      "source": {
+        "page": 136,
+        "element": "Texte",
+        "refs": "[84]"
+      }
     },
     {
       "id": "c4-q08",
@@ -146,17 +330,43 @@
       "enonce": "Un kyste arthrosynovial acromioclaviculaire avec « signe du geyser » s’explique le plus souvent par quoi ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Une rupture massive de la coiffe des rotateurs mettant en communication les articulations glénohumérale et acromioclaviculaire", "correct": true},
-        {"id": "B", "texte": "Une capsulite rétractile", "correct": false},
-        {"id": "C", "texte": "Une ostéonécrose de la tête humérale", "correct": false},
-        {"id": "D", "texte": "Une luxation acromioclaviculaire ancienne uniquement", "correct": false}
+        {
+          "id": "A",
+          "texte": "Une rupture massive de la coiffe des rotateurs mettant en communication les articulations glénohumérale et acromioclaviculaire",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une capsulite rétractile",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une ostéonécrose de la tête humérale",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une luxation acromioclaviculaire ancienne uniquement",
+          "correct": false
+        }
       ],
-      "explication": "En échographie, un kyste arthrosynovial s’explique le plus souvent par une rupture massive de la coiffe des rotateurs, qui met en communication les articulations glénohumérale et acromioclaviculaire : le liquide articulaire est « chassé » dans le kyste (« signe du geyser »). Il apparaît comme une lésion anéchogène uni ou plurilobulée, aux parois parfois épaisses et contenant souvent des débris.\n\nL’opacification du kyste par le produit de contraste injecté dans l’articulation glénohumérale est possible en arthroscanner. En IRM, un volumineux kyste synovial bombant sous la peau peut s’observer avec une large rupture de coiffe ; des kystes plus petits communiquant avec la bourse subacromiodeltoïdienne ont été décrits en l’absence de rupture de coiffe.\n\nLes autres propositions ne sont pas les mécanismes décrits pour ce kyste.",
+      "explication": "En échographie, un kyste arthrosynovial s’explique le plus souvent par une rupture massive de la coiffe des rotateurs, qui met en communication les articulations glénohumérale et acromioclaviculaire : le liquide articulaire est « chassé » dans le kyste (« signe du geyser »). Il apparaît comme une lésion anéchogène uni ou plurilobulée, aux parois parfois épaisses et contenant souvent des débris.\n\nL’opacification du kyste par le produit de contraste injecté dans l’articulation glénohumérale est possible en arthroscanner. En IRM, un volumineux kyste synovial bombant sous la peau peut s’observer avec une large rupture de coiffe ; des kystes plus petits communiquant avec la bourse subacromiodeltoïdienne ont été décrits en l’absence de rupture de coiffe.",
       "correction_figures": [
-        {"file": "04. Autres pathologies scapulaires_p141_3.png", "caption": "Fig. 4.29 Arthrose acromioclaviculaire avec opacification d’un kyste arthrosynovial (flèche) sur rupture massive de la coiffe des rotateurs."},
-        {"file": "04. Autres pathologies scapulaires_p140_1.png", "caption": "Fig. 4.28 Arthrose acromioclaviculaire avec développement d’un kyste plurilobé (flèches) (a) dont la composante la plus volumineuse était située un peu plus médialement (b). Notez la présence de multiples ponctuations en son sein témoignant de la présence d’un liquide épais et de débris. A : acromion ; C : clavicule."}
+        {
+          "file": "04. Autres pathologies scapulaires_p141_3.png",
+          "caption": "Fig. 4.29 Arthrose acromioclaviculaire avec opacification d’un kyste arthrosynovial (flèche) sur rupture massive de la coiffe des rotateurs."
+        },
+        {
+          "file": "04. Autres pathologies scapulaires_p140_1.png",
+          "caption": "Fig. 4.28 Arthrose acromioclaviculaire avec développement d’un kyste plurilobé (flèches) (a) dont la composante la plus volumineuse était située un peu plus médialement (b). Notez la présence de multiples ponctuations en son sein témoignant de la présence d’un liquide épais et de débris. A : acromion ; C : clavicule."
+        }
       ],
-      "source": {"page": 140, "element": "Texte", "refs": "[45, 181]"}
+      "source": {
+        "page": 140,
+        "element": "Texte",
+        "refs": "[45, 181]"
+      }
     },
     {
       "id": "c4-q09",
@@ -165,18 +375,48 @@
       "enonce": "À propos de la scapula à ressaut, quelles sont les affirmations exactes ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Elle traduit un conflit mécanique entre la scapula et la cage thoracique", "correct": true},
-        {"id": "B", "texte": "Le diagnostic est clinique ; l’imagerie vise à rechercher une cause éventuelle", "correct": true},
-        {"id": "C", "texte": "Une scapula alata éventuellement associée est statique, non majorée par les mouvements du bras", "correct": true},
-        {"id": "D", "texte": "Elle touche surtout le sujet âgé, avec une prédominance masculine", "correct": false},
-        {"id": "E", "texte": "Le scanner est l’examen de choix pour l’étude des tissus mous", "correct": false}
+        {
+          "id": "A",
+          "texte": "Elle traduit un conflit mécanique entre la scapula et la cage thoracique",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le diagnostic est clinique ; l’imagerie vise à rechercher une cause éventuelle",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une scapula alata éventuellement associée est statique, non majorée par les mouvements du bras",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Elle touche surtout le sujet âgé, avec une prédominance masculine",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Le scanner est l’examen de choix pour l’étude des tissus mous",
+          "correct": false
+        }
       ],
-      "explication": "La scapula à ressaut (snapping scapula) est un conflit mécanique entre la scapula et la cage thoracique, avec un accrochage perçu comme craquement, crépitement ou frottement à l’élévation du bras. Le diagnostic est clinique : l’imagerie recherche une cause (ostéochondrome, cal osseux, anomalie morphologique de la scapula, bursite…).\n\nUne scapula alata peut être présente ; elle est statique (non majorée par les mouvements du bras), à la différence de la scapula alata dynamique des neuropathies.\n\nD est faux : elle survient volontiers chez des sujets jeunes, sportifs (lancer, natation, gymnastique, haltérophilie) ou non, avec une prédominance féminine. E est faux : le scanner (avec reconstructions 3D) analyse bien les causes osseuses mais son intérêt est limité pour les tissus mous, qui relèvent de l’échographie et surtout de l’IRM.",
+      "explication": "La scapula à ressaut (snapping scapula) est un conflit mécanique entre la scapula et la cage thoracique, avec un accrochage perçu comme craquement, crépitement ou frottement à l’élévation du bras. Le diagnostic est clinique : l’imagerie recherche une cause (ostéochondrome, cal osseux, anomalie morphologique de la scapula, bursite…).\n\nUne scapula alata peut être présente ; elle est statique (non majorée par les mouvements du bras), à la différence de la scapula alata dynamique des neuropathies.\n\nElle survient volontiers chez des sujets jeunes, sportifs (lancer, natation, gymnastique, haltérophilie) ou non, avec une prédominance féminine. Le scanner (avec reconstructions 3D) analyse bien les causes osseuses mais son intérêt est limité pour les tissus mous, qui relèvent de l’échographie et surtout de l’IRM.",
       "correction_figures": [
-        {"file": "04. Autres pathologies scapulaires_p146_3.png", "caption": "Fig. 4.39 Scapula à ressaut du côté droit expliquée par la saillie du tubercule de Luschka à l’angle supéromédial de la scapula (flèche), comparativement au côté controlatéral normal. a, b : reconstructions MPR. c : vue supérieure d’une reconstruction VRT. Courtoisie Dr P. Teixeira."},
-        {"file": "04. Autres pathologies scapulaires_p145_1.png", "caption": "Fig. 4.37 Schéma de l’espace scapulothoracique."}
+        {
+          "file": "04. Autres pathologies scapulaires_p146_3.png",
+          "caption": "Fig. 4.39 Scapula à ressaut du côté droit expliquée par la saillie du tubercule de Luschka à l’angle supéromédial de la scapula (flèche), comparativement au côté controlatéral normal. a, b : reconstructions MPR. c : vue supérieure d’une reconstruction VRT. Courtoisie Dr P. Teixeira."
+        },
+        {
+          "file": "04. Autres pathologies scapulaires_p145_1.png",
+          "caption": "Fig. 4.37 Schéma de l’espace scapulothoracique."
+        }
       ],
-      "source": {"page": 145, "element": "Texte", "refs": "[63, 128]"}
+      "source": {
+        "page": 145,
+        "element": "Texte",
+        "refs": "[63, 128]"
+      }
     },
     {
       "id": "c4-q10",
@@ -185,16 +425,39 @@
       "enonce": "Quelle est la cause la plus fréquente de la contracture du muscle deltoïde ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Des injections intramusculaires itératives (vaccins, antibiotiques, analgésiques, surtout stéroïdes et anabolisants)", "correct": true},
-        {"id": "B", "texte": "Une lésion du nerf axillaire", "correct": false},
-        {"id": "C", "texte": "Une acromioplastie", "correct": false},
-        {"id": "D", "texte": "Une luxation glénohumérale antérieure", "correct": false}
+        {
+          "id": "A",
+          "texte": "Des injections intramusculaires itératives (vaccins, antibiotiques, analgésiques, surtout stéroïdes et anabolisants)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une lésion du nerf axillaire",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une acromioplastie",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une luxation glénohumérale antérieure",
+          "correct": false
+        }
       ],
-      "explication": "La contracture du deltoïde résulte d’une fibrose intramusculaire. Elle peut être congénitale, post-traumatique ou idiopathique, mais résulte le plus souvent d’injections intramusculaires itératives (vaccin, antibiotiques, analgésiques, mais surtout stéroïdes et anabolisants). La portion moyenne du deltoïde est la plus souvent touchée, et l’atteinte est fréquemment bilatérale (65 % des cas) en raison d’injections alternées.\n\nB est faux : une atteinte du nerf axillaire donne une atrophie du deltoïde, pas une fibrose. C est faux : l’acromioplastie est une cause de rupture deltoïdienne postopératoire (elle détache environ 70 % des fibres de la face profonde de l’insertion acromiale), pas de contracture.\n\nEn imagerie : IRM = examen de choix (plages ou bandes intramusculaires en hyposignal T1 et T2 pour la fibrose mature) ; à la radiographie, la scapula est latéralisée et l’humérus fixé en abduction.",
+      "explication": "La contracture du deltoïde résulte d’une fibrose intramusculaire. Elle peut être congénitale, post-traumatique ou idiopathique, mais résulte le plus souvent d’injections intramusculaires itératives (vaccin, antibiotiques, analgésiques, mais surtout stéroïdes et anabolisants). La portion moyenne du deltoïde est la plus souvent touchée, et l’atteinte est fréquemment bilatérale (65 % des cas) en raison d’injections alternées.\n\nUne atteinte du nerf axillaire donne une atrophie du deltoïde, pas une fibrose. L’acromioplastie est une cause de rupture deltoïdienne postopératoire (elle détache environ 70 % des fibres de la face profonde de l’insertion acromiale), pas de contracture.\n\nEn imagerie : IRM = examen de choix (plages ou bandes intramusculaires en hyposignal T1 et T2 pour la fibrose mature) ; à la radiographie, la scapula est latéralisée et l’humérus fixé en abduction.",
       "correction_figures": [
-        {"file": "04. Autres pathologies scapulaires_p149_1.png", "caption": "Fig. 4.41 Contracture du deltoïde. À l’examen clinique (a), présence d’une contracture en abduction avec rétractions cutanées et décollement du bord médial de la scapula. En IRM (pondération T1 (b) et T2 (c)), présence de plages intramusculaires en hyposignal (fibrose mature) (flèches)."}
+        {
+          "file": "04. Autres pathologies scapulaires_p149_1.png",
+          "caption": "Fig. 4.41 Contracture du deltoïde. À l’examen clinique (a), présence d’une contracture en abduction avec rétractions cutanées et décollement du bord médial de la scapula. En IRM (pondération T1 (b) et T2 (c)), présence de plages intramusculaires en hyposignal (fibrose mature) (flèches)."
+        }
       ],
-      "source": {"page": 148, "element": "Texte", "refs": "[32, 86, 205]"}
+      "source": {
+        "page": 148,
+        "element": "Texte",
+        "refs": "[32, 86, 205]"
+      }
     }
   ]
 }

@@ -14,14 +14,34 @@
       "enonce": "Parmi les articulations de la main, laquelle est classiquement épargnée par l’arthrose digitale (arthrose interphalangienne) ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’articulation interphalangienne distale de l’index", "correct": false },
-        { "id": "B", "texte": "L’articulation interphalangienne du pouce", "correct": true },
-        { "id": "C", "texte": "L’articulation interphalangienne distale de l’annulaire", "correct": false },
-        { "id": "D", "texte": "L’articulation interphalangienne proximale du majeur", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’articulation interphalangienne distale de l’index",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’articulation interphalangienne du pouce",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’articulation interphalangienne distale de l’annulaire",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’articulation interphalangienne proximale du majeur",
+          "correct": false
+        }
       ],
       "explication": "L’arthrose interphalangienne se développe de façon insidieuse en affectant d’abord l’index et le majeur, et s’étend aux autres doigts (notamment l’annulaire), mais le pouce est classiquement épargné.",
       "correction_figures": [],
-      "source": { "page": 313, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 313,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c14-q02",
@@ -30,14 +50,34 @@
       "enonce": "La déformation des doigts due aux nodosités d’Heberden est une caractéristique de l’arthrose interphalangienne distale. Quels sont les signes cliniques et anatomiques typiques de ces nodosités ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Elles sont généralement très sensibles à la palpation et s’accompagnent d’une inflammation cutanée importante", "correct": false },
-        { "id": "B", "texte": "Elles se présentent sous la forme d’une double saillie dorsolatérale arrondie, séparée par une dépression centrale", "correct": true },
-        { "id": "C", "texte": "Elles témoignent d’une ostéophytose développée entre le tendon extenseur et les ligaments collatéraux", "correct": true },
-        { "id": "D", "texte": "Elles s’accompagnent souvent d’une hyperextension de la phalange distale", "correct": false }
+        {
+          "id": "A",
+          "texte": "Elles sont généralement très sensibles à la palpation et s’accompagnent d’une inflammation cutanée importante",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Elles se présentent sous la forme d’une double saillie dorsolatérale arrondie, séparée par une dépression centrale",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Elles témoignent d’une ostéophytose développée entre le tendon extenseur et les ligaments collatéraux",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Elles s’accompagnent souvent d’une hyperextension de la phalange distale",
+          "correct": false
+        }
       ],
       "explication": "Les nodosités d’Heberden se caractérisent par une double saillie dorsolatérale avec une dépression centrale. Elles sont dues à une ostéophytose entre le tendon extenseur et les ligaments collatéraux. Elles sont dures, peu sensibles et la peau en regard est normale, et elles s’associent à une flexion progressive (et non une hyperextension) de la phalange distale.",
       "correction_figures": [],
-      "source": { "page": 314, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 314,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c14-q03",
@@ -46,14 +86,34 @@
       "enonce": "Une patiente de 55 ans présente des douleurs inflammatoires intenses avec poussées congestives au niveau des articulations interphalangiennes distales (IPD), principalement à l’index et à l’auriculaire, de façon bilatérale et symétrique. Les radiographies révèlent des érosions de la partie centrale des têtes phalangiennes. Quel est le diagnostic le plus probable ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Arthrite de type psoriasique", "correct": false },
-        { "id": "B", "texte": "Arthrose érosive des doigts", "correct": true },
-        { "id": "C", "texte": "Arthrose interphalangienne commune", "correct": false },
-        { "id": "D", "texte": "Polyarthrite rhumatoïde", "correct": false }
+        {
+          "id": "A",
+          "texte": "Arthrite de type psoriasique",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Arthrose érosive des doigts",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Arthrose interphalangienne commune",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Polyarthrite rhumatoïde",
+          "correct": false
+        }
       ],
       "explication": "L’arthrose érosive des doigts se caractérise par des poussées inflammatoires douloureuses et des érosions centrales des têtes phalangiennes, prédominant aux IPD de l’index et de l’auriculaire, de façon bilatérale et symétrique. L’arthrite psoriasique présente plutôt des érosions marginales et une distribution asymétrique. L’arthrose commune ne présente pas d’érosions centrales marquées et la polyarthrite rhumatoïde touche classiquement les articulations métacarpophalangiennes et interphalangiennes proximales avec des érosions marginales.",
       "correction_figures": [],
-      "source": { "page": 314, "element": "Texte (p. 314–315)", "refs": "" }
+      "source": {
+        "page": 314,
+        "element": "Texte (p. 314–315)",
+        "refs": ""
+      }
     },
     {
       "id": "c14-q04",
@@ -62,14 +122,34 @@
       "enonce": "Lors de l’évaluation radiographique d’une rhizarthrose (arthrose trapézo-métacarpienne), quelles incidences spécifiques sont recommandées pour dégager de manière optimale l’interligne articulaire ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Cliché de face strict du poignet", "correct": false },
-        { "id": "B", "texte": "Cliché de profil strict du poignet", "correct": false },
-        { "id": "C", "texte": "Cliché de face selon l’incidence de Kapandji", "correct": true },
-        { "id": "D", "texte": "Cliché de profil selon l’incidence de Kapandji", "correct": true }
+        {
+          "id": "A",
+          "texte": "Cliché de face strict du poignet",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Cliché de profil strict du poignet",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Cliché de face selon l’incidence de Kapandji",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Cliché de profil selon l’incidence de Kapandji",
+          "correct": true
+        }
       ],
       "explication": "L’orientation particulière de l’articulation trapézo-métacarpienne fait que les incidences classiques de face et de profil sous-estiment les lésions. Les incidences spécifiques de Kapandji (face et profil) sont recommandées pour bien dégager l’interligne.",
       "correction_figures": [],
-      "source": { "page": 208, "element": "Texte (p. 208–209)", "refs": "" }
+      "source": {
+        "page": 208,
+        "element": "Texte (p. 208–209)",
+        "refs": ""
+      }
     },
     {
       "id": "c14-q05",
@@ -78,14 +158,34 @@
       "enonce": "Selon la classification de la Fédération internationale des sociétés de chirurgie de la main (IFSSH), à quelle zone anatomique correspond la lésion du tendon conjoint terminal au niveau de l’articulation interphalangienne distale (IPD) ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Zone I", "correct": true },
-        { "id": "B", "texte": "Zone II", "correct": false },
-        { "id": "C", "texte": "Zone III", "correct": false },
-        { "id": "D", "texte": "Zone IV", "correct": false }
+        {
+          "id": "A",
+          "texte": "Zone I",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Zone II",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Zone III",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Zone IV",
+          "correct": false
+        }
       ],
       "explication": "La lésion du tendon conjoint terminal au niveau de l’IPD correspond à la Zone I de la classification topographique des lésions des tendons extenseurs de l’IFSSH.",
       "correction_figures": [],
-      "source": { "page": 318, "element": "Texte (p. 318–319)", "refs": "" }
+      "source": {
+        "page": 318,
+        "element": "Texte (p. 318–319)",
+        "refs": ""
+      }
     },
     {
       "id": "c14-q06",
@@ -94,14 +194,34 @@
       "enonce": "Un patient présente une déformation en « col de cygne » d’un doigt long, caractérisée par une hyperextension de l’articulation interphalangienne proximale (IPP) et une flexion de l’articulation interphalangienne distale (IPD). Parmi les propositions suivantes, quel mécanisme peut être à l’origine de cette déformation ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une rupture du tendon conjoint médian en regard de l’IPP", "correct": false },
-        { "id": "B", "texte": "Une rupture isolée des bandelettes sagittales en regard de la métacarpophalangienne", "correct": false },
-        { "id": "C", "texte": "L’absence de traitement adéquat d’un « doigt en maillet » (mallet finger)", "correct": true },
-        { "id": "D", "texte": "Une rupture du tendon fléchisseur profond des doigts", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une rupture du tendon conjoint médian en regard de l’IPP",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une rupture isolée des bandelettes sagittales en regard de la métacarpophalangienne",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’absence de traitement adéquat d’un « doigt en maillet » (mallet finger)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une rupture du tendon fléchisseur profond des doigts",
+          "correct": false
+        }
       ],
       "explication": "Une déformation en col de cygne peut se développer suite à l’absence de traitement adéquat d’un doigt en maillet (rupture du tendon conjoint terminal en zone I). La force de l’appareil extenseur se concentre alors sur le tendon conjoint médian, entraînant une hyperextension de l’IPP, ce qui dorsalise les tendons conjoints latéraux et majore la flexion de l’IPD par action du fléchisseur profond. Une rupture du tendon conjoint médian entraîne une déformation en boutonnière.",
       "correction_figures": [],
-      "source": { "page": 320, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 320,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c14-q07",
@@ -110,14 +230,34 @@
       "enonce": "La ténosynovite de De Quervain est une affection fréquente du poignet. Quelles sont les caractéristiques anatomiques et échographiques de cette pathologie ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Elle affecte les tendons des muscles long abducteur et court extenseur du pouce", "correct": true },
-        { "id": "B", "texte": "Elle se situe dans le 2e compartiment dorsal du poignet", "correct": false },
-        { "id": "C", "texte": "L’échographie peut révéler un épaississement hypoéchogène du rétinaculum des extenseurs", "correct": true },
-        { "id": "D", "texte": "La présence d’un septum fibreux cloisonnant le compartiment est un facteur favorisant", "correct": true }
+        {
+          "id": "A",
+          "texte": "Elle affecte les tendons des muscles long abducteur et court extenseur du pouce",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Elle se situe dans le 2e compartiment dorsal du poignet",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’échographie peut révéler un épaississement hypoéchogène du rétinaculum des extenseurs",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La présence d’un septum fibreux cloisonnant le compartiment est un facteur favorisant",
+          "correct": true
+        }
       ],
       "explication": "La ténosynovite de De Quervain affecte les tendons du muscle long abducteur et court extenseur du pouce, qui cheminent dans le 1er (et non le 2e) compartiment dorsal du poignet. L’échographie montre typiquement un épaississement hypoéchogène de la gaine synoviale et du rétinaculum des extenseurs. La présence d’un septum fibreux est un facteur anatomique favorisant.",
       "correction_figures": [],
-      "source": { "page": 263, "element": "Texte (p. 263–266)", "refs": "" }
+      "source": {
+        "page": 263,
+        "element": "Texte (p. 263–266)",
+        "refs": ""
+      }
     },
     {
       "id": "c14-q08",
@@ -126,14 +266,34 @@
       "enonce": "Quel test clinique permet de diagnostiquer de manière spécifique une rupture isolée du tendon du muscle fléchisseur profond d’un doigt long ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’incapacité à fléchir activement l’IPP lorsque les autres doigts sont maintenus en extension", "correct": false },
-        { "id": "B", "texte": "L’incapacité à fléchir activement l’IPD lorsque l’examinateur maintient l’IPP en extension", "correct": true },
-        { "id": "C", "texte": "L’apparition d’un aspect en « pseudo-boutonnière » lors du test de Froment", "correct": false },
-        { "id": "D", "texte": "Le test d’Elson positif (extension active de l’IPD possible lorsque l’IPP est fléchie à 90°)", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’incapacité à fléchir activement l’IPP lorsque les autres doigts sont maintenus en extension",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’incapacité à fléchir activement l’IPD lorsque l’examinateur maintient l’IPP en extension",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’apparition d’un aspect en « pseudo-boutonnière » lors du test de Froment",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le test d’Elson positif (extension active de l’IPD possible lorsque l’IPP est fléchie à 90°)",
+          "correct": false
+        }
       ],
-      "explication": "Pour tester spécifiquement le fléchisseur profond (le seul à agir sur l’IPD), l’examinateur doit maintenir l’IPP en extension (pour neutraliser le fléchisseur superficiel) et demander au patient de fléchir l’IPD. La proposition A teste le fléchisseur superficiel, et le test d’Elson évalue la rupture du tendon conjoint médian de l’appareil extenseur.",
+      "explication": "Pour tester spécifiquement le fléchisseur profond (le seul à agir sur l’IPD), l’examinateur doit maintenir l’IPP en extension (pour neutraliser le fléchisseur superficiel) et demander au patient de fléchir l’IPD. La flexion de l’IPP en maintenant les autres doigts en extension teste le fléchisseur superficiel, et le test d’Elson évalue la rupture du tendon conjoint médian de l’appareil extenseur.",
       "correction_figures": [],
-      "source": { "page": 323, "element": "Texte (p. 320 et 323)", "refs": "" }
+      "source": {
+        "page": 323,
+        "element": "Texte (p. 320 et 323)",
+        "refs": ""
+      }
     },
     {
       "id": "c14-q09",
@@ -142,14 +302,34 @@
       "enonce": "Concernant les poulies digitales des doigts longs, quelles poulies annulaires sont fixées au périoste des phalanges et sont considérées comme les plus importantes sur le plan fonctionnel ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La poulie A1", "correct": false },
-        { "id": "B", "texte": "La poulie A2", "correct": true },
-        { "id": "C", "texte": "La poulie A3", "correct": false },
-        { "id": "D", "texte": "La poulie A4", "correct": true }
+        {
+          "id": "A",
+          "texte": "La poulie A1",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La poulie A2",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La poulie A3",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La poulie A4",
+          "correct": true
+        }
       ],
       "explication": "Les poulies paires A2 et A4 sont fixées au périoste des phalanges proximale et moyenne respectivement. Elles sont plus épaisses, très résistantes et sont les plus importantes sur le plan fonctionnel. Les poulies impaires A1, A3 et A5 sont fixées aux plaques palmaires des articulations.",
       "correction_figures": [],
-      "source": { "page": 322, "element": "Texte (p. 322 et 327)", "refs": "" }
+      "source": {
+        "page": 322,
+        "element": "Texte (p. 322 et 327)",
+        "refs": ""
+      }
     },
     {
       "id": "c14-q10",
@@ -158,14 +338,34 @@
       "enonce": "Un grimpeur ressent un « clac » douloureux à la face palmaire de l’annulaire lors d’une prise en escalade. À l’échographie, on observe en coupe longitudinale, lors d’une manœuvre de flexion contrariée, un écartement anormal de 5 mm entre les tendons fléchisseurs et la corticale palmaire de la phalange proximale (P1). Quel diagnostic doit être évoqué selon la gradation lésionnelle ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une entorse de poulie (Grade I)", "correct": false },
-        { "id": "B", "texte": "Une rupture de la poulie A4", "correct": false },
-        { "id": "C", "texte": "Une rupture de la poulie A2", "correct": true },
-        { "id": "D", "texte": "Un « doigt à ressaut » (atteinte de la poulie A1)", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une entorse de poulie (Grade I)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une rupture de la poulie A4",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une rupture de la poulie A2",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Un « doigt à ressaut » (atteinte de la poulie A1)",
+          "correct": false
+        }
       ],
       "explication": "L’écartement anormal (supérieur à 2 mm) entre les tendons et l’os signe une rupture de poulie. La localisation de l’écart maximal en regard de la phalange proximale (P1) indique une rupture de la poulie A2. Un écart de 4,6 ± 0,6 mm est typique d’une rupture isolée de A2. Une rupture de A4 se traduirait par un écart en regard de la phalange moyenne (P2).",
       "correction_figures": [],
-      "source": { "page": 328, "element": "Texte (p. 328–329)", "refs": "" }
+      "source": {
+        "page": 328,
+        "element": "Texte (p. 328–329)",
+        "refs": ""
+      }
     }
   ]
 }

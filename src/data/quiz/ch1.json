@@ -1,274 +1,807 @@
 {
- "chapitre": {"numero": 1, "titre": "Pathologies de la coiffe des rotateurs", "auteurs": "P. Michelin, M. El Rafei, F. Duparc", "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"},
- "questions": [
-  {"id": "c1-q01", "type": "QCU", "theme": "Anatomie : insertions humérales",
-   "enonce": "Concernant les insertions humérales des tendons de la coiffe des rotateurs, quelle proposition est exacte ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Le tendon du muscle infra-épineux s’insère exclusivement sur la facette moyenne du tubercule majeur, sans intéresser le tubercule mineur.", "correct": true},
-    {"id": "B", "texte": "Le tendon du muscle supra-épineux s’insère principalement sur la facette moyenne du tubercule majeur de l’humérus.", "correct": false},
-    {"id": "C", "texte": "Le tendon du muscle petit rond s’insère sur la facette supérieure du tubercule majeur de l’humérus.", "correct": false},
-    {"id": "D", "texte": "Le tendon du muscle subscapulaire s’insère exclusivement sur le tubercule majeur, sans insertion accessoire.", "correct": false}
-   ],
-   "explication": "Le tendon de l’infra-épineux s’insère uniquement sur la facette moyenne du tubercule majeur ; cette facette est allongée dans le sens antéropostérieur et, en arrière du supra-épineux, l’infra-épineux s’y insère seul. Le supra-épineux s’insère principalement sur la facette antérieure (et non moyenne) du tubercule majeur, avec une insertion accessoire sur la facette supérieure du tubercule mineur (B faux). Le petit rond s’insère sur la facette inférieure du tubercule majeur, et non la supérieure (C faux). Le subscapulaire s’insère principalement sur le tubercule mineur (et non le majeur), avec des insertions accessoires au-dessus du tubercule mineur et sur la lèvre latérale du sillon intertuberculaire (D faux).",
-   "correction_figures": [{"file": "01. Pathologie de la coiffe_p6_4.png", "caption": "Fig. 1.4 Surfaces d’insertion des tendons des muscles supra-épineux (SE), infra-épineux (IE) et de la capsule articulaire (C) sur l’extrémité proximale de l’humérus."}],
-   "source": {"page": 7, "element": "Texte", "refs": "[129, 150]"}},
-
-  {"id": "c1-q02", "type": "QCU", "theme": "Anatomie : espaces synoviaux et bourses",
-   "enonce": "À propos des espaces synoviaux de l’épaule, quelle proposition est exacte ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Une rupture isolée de la partie supérieure du tendon subscapulaire ne met pas en communication l’articulation et la bourse sub-acromiodeltoïdienne.", "correct": true},
-    {"id": "B", "texte": "La bourse sub-acromiodeltoïdienne communique normalement avec la cavité articulaire scapulohumérale.", "correct": false},
-    {"id": "C", "texte": "La bourse subcoracoïdienne communique physiologiquement avec la cavité articulaire scapulohumérale.", "correct": false},
-    {"id": "D", "texte": "Une rupture du tendon supra-épineux ou infra-épineux laisse la bourse étanche par rapport à l’articulation.", "correct": false}
-   ],
-   "explication": "La partie supérieure du tendon subscapulaire est recouverte en avant par le récessus subscapulaire, un repli synovial de l’articulation, et non par la bourse sub-acromiodeltoïdienne : une rupture isolée de ce tendon n’ouvre donc pas de communication avec la bourse. À l’état normal, il n’existe aucune communication entre la cavité articulaire et la bourse sub-acromiodeltoïdienne (B faux). La bourse subcoracoïdienne peut communiquer avec la bourse sub-acromiodeltoïdienne, mais pas avec la cavité articulaire (C faux). Les feuillets de la bourse adhèrent fortement aux tendons supra- et infra-épineux : leur rupture fait communiquer directement bourse et articulation (D faux).",
-   "correction_figures": [{"file": "01. Pathologie de la coiffe_p11_2.png", "caption": "Fig. 1.14 Récessus subscapulaire normal : coupe sagittale en arthroscanner. Le récessus subscapulaire (flèche) enjambe le bord supérieur du tendon du muscle subscapulaire (SS). C : processus coracoïde."}],
-   "source": {"page": 11, "element": "Texte", "refs": "[242, 185]"}},
-
-  {"id": "c1-q03", "type": "QRM", "theme": "Tendinopathies : histoire naturelle des ruptures",
-   "enonce": "Concernant l’histoire naturelle des ruptures de la partie supérieure de la coiffe des rotateurs, quelles propositions sont exactes ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Les ruptures débutent souvent au-dessus du sommet de la tête humérale, dans l’intervalle postérieur où les tendons supra- et infra-épineux sont superposés.", "correct": true},
-    {"id": "B", "texte": "Les ruptures non transfixiantes du versant bursal sont plus fréquentes que celles du versant articulaire.", "correct": false},
-    {"id": "C", "texte": "Le renforcement antérieur du tendon du muscle supra-épineux est longtemps préservé lors de l’extension de la rupture.", "correct": true},
-    {"id": "D", "texte": "Le tendon du muscle infra-épineux se rétracte médialement, comme le tendon du muscle supra-épineux.", "correct": false},
-    {"id": "E", "texte": "Le tendon du muscle subscapulaire est habituellement le premier tendon de la coiffe à se rompre.", "correct": false}
-   ],
-   "explication": "Dans le plan antéropostérieur, la rupture débute en arrière du biceps intra-articulaire, au-dessus du sommet de la tête, dans l’intervalle postérieur ; elle s’étend ensuite vers l’avant et vers l’arrière, et le puissant renforcement antérieur du supra-épineux reste longtemps préservé (A et C vrais). Les ruptures non transfixiantes du versant articulaire (zone du croissant) sont plus fréquentes que celles du versant bursal (B faux). L’infra-épineux se rétracte vers l’arrière plutôt que médialement et peut entraîner le supra-épineux avec lui (D faux). Le subscapulaire est rarement le premier tendon rompu, même si cela reste possible (E faux).",
-   "correction_figures": [
-    {"file": "01. Pathologie de la coiffe_p14_1.png", "caption": "Fig. 1.17 Initiation et extension des ruptures de la partie supérieure de la coiffe des rotateurs. IE : muscle infra-épineux ; SEa : tendon du muscle supra-épineux antérieur ; SEp : tendon du muscle supra-épineux postérieur."},
-    {"file": "01. Pathologie de la coiffe_p15_1.png", "caption": "Fig. 1.18 Ruptures non transfixiantes de l’intervalle postérieur de la coiffe des rotateurs. a. Rupture du tendon de la partie postérieure du muscle supra-épineux (rupture partielle profonde de la coiffe). b. Rupture distale du tendon du muscle infra-épineux (rupture partielle superficielle de la coiffe des rotateurs). IE : muscle infra-épineux ; IEa : tendon du muscle infra-épineux antérieur ; SEa : tendon du muscle supra-épineux antérieur ; SEp : tendon du muscle supra-épineux postérieur."}],
-   "source": {"page": 14, "element": "Texte", "refs": "[203, 109, 106]"}},
-
-  {"id": "c1-q04", "type": "QCU", "theme": "Conséquences musculaires des ruptures",
-   "enonce": "Comment distingue-t-on l’involution graisseuse d’un muscle secondaire à une rupture tendineuse de celle secondaire à une dénervation ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Après rupture tendineuse, la graisse prédomine autour des bandelettes tendineuses intramusculaires, alors qu’elle est diffuse et homogène après dénervation.", "correct": true},
-    {"id": "B", "texte": "Après rupture tendineuse, la répartition de la graisse est diffuse et homogène, alors qu’elle est grossière après dénervation.", "correct": false},
-    {"id": "C", "texte": "Les deux étiologies donnent une répartition identique, seule l’ancienneté de la lésion les distingue.", "correct": false},
-    {"id": "D", "texte": "Après rupture tendineuse, la graisse apparaît d’abord à la périphérie du corps musculaire, loin des zones de contrainte.", "correct": false}
-   ],
-   "explication": "La rupture du tendon supprime la tension sur les fibres musculaires, qui diminuent en taille et en nombre ; des espaces libres se forment, comblés par des adipocytes. L’infiltration débute là où les contraintes mécaniques étaient les plus fortes, c’est-à-dire autour des bandelettes tendineuses intramusculaires, d’où une répartition assez grossière. En cas de dénervation, la répartition est plus diffuse et homogène (fig. 1.22). Les propositions B et C sont donc fausses ; D est faux car l’infiltration débute dans les zones de forte contrainte, non à la périphérie.",
-   "correction_figures": [{"file": "01. Pathologie de la coiffe_p17_1.png", "caption": "Fig. 1.22 Involution graisseuse des muscles supra et infra-épineux (flèches) secondaire à une rupture tendineuse (a) et à une dénervation (b)."}],
-   "source": {"page": 17, "element": "Texte", "refs": "[102, 118, 17]"}},
-
-  {"id": "c1-q05", "type": "QCU", "theme": "Examen clinique : tests tendineux",
-   "enonce": "Selon le tableau des tests tendineux de l’épaule, quel test explore le muscle subscapulaire ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "La rotation médiale à vide et contre résistance, main dans le dos (test de Gerber).", "correct": true},
-    {"id": "B", "texte": "L’abduction contre résistance, épaule en abduction à 90° dans l’axe de la scapula (test de Jobe).", "correct": false},
-    {"id": "C", "texte": "La rotation latérale contre résistance, épaule en abduction à 90° (test de Patte).", "correct": false},
-    {"id": "D", "texte": "La manœuvre contre résistance, bras tendu en avant, paume vers le haut (palm up test).", "correct": false}
-   ],
-   "explication": "Le test de Gerber (rotation médiale à vide et contre résistance, main dans le dos) explore le subscapulaire, rotateur médial. Le test de Jobe explore le supra-épineux, le test de Patte (rotation latérale contre résistance en abduction à 90°) l’infra-épineux, et le palm up test le tendon du chef long du biceps brachial.",
-   "correction_figures": [],
-   "source": {"page": 20, "element": "Tableau 1.1", "refs": "[16, 91]"}},
-
-  {"id": "c1-q06", "type": "QRM", "theme": "Radiographies : signes de rupture",
-   "enonce": "Concernant les signes radiographiques associés aux ruptures de la coiffe des rotateurs, quelles propositions sont exactes ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Une hauteur subacromiale inférieure ou égale à 6 mm témoigne d’une large rupture touchant au moins les tendons supra- et infra-épineux.", "correct": true},
-    {"id": "B", "texte": "Une hauteur subacromiale normale permet d’exclure une large rupture de la coiffe.", "correct": false},
-    {"id": "C", "texte": "L’ossification de l’enthèse acromiale du ligament coraco-acromial (épine acromiale) est un signe fortement prédictif de rupture tendineuse.", "correct": true},
-    {"id": "D", "texte": "L’acétabulisation de l’acromion correspond à un remodelage creusé de sa face inférieure en cas de rupture large avec excentration supérieure.", "correct": true},
-    {"id": "E", "texte": "Les clichés en rotation sont fiables pour apprécier le centrage de la tête humérale.", "correct": false}
-   ],
-   "explication": "Une hauteur ≤ 6 mm témoigne d’une large rupture supra- et infra-épineuse, mais ce signe n’a de valeur que lorsqu’il est positif : il n’est présent que dans les larges ruptures et n’est pas constant (B faux). L’épine acromiale est fortement prédictive d’une rupture, sans que l’on sache si elle en est cause, conséquence ou simple association. En cas de rupture large avec excentration supérieure, le conflit avec l’acromion creuse sa face inférieure (acétabulisation) avec une corticale inférieure plus dense. Le centrage s’apprécie sur la face en rotation neutre ou sur les incidences de Railhac et de Leclercq ; les clichés en rotation ne sont pas fiables (E faux).",
-   "correction_figures": [
-    {"file": "01. Pathologie de la coiffe_p24_1.png", "caption": "Fig. 1.27 Espace subacromial inférieur à 6 mm : large rupture des tendons de la partie supérieure de la coiffe des rotateurs."},
-    {"file": "01. Pathologie de la coiffe_p24_2.png", "caption": "Fig. 1.28 Ossification de l’enthèse acromiale du ligament coraco-acromial (épine acromiale)."}],
-   "source": {"page": 24, "element": "Texte", "refs": "[155, 176, 87]"}},
-
-  {"id": "c1-q07", "type": "QCU", "theme": "Échographie : calcifications tendineuses",
-   "enonce": "En échographie, que traduit une calcification tendineuse dure ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Une surface très réfléchissante avec un cône d’ombre postérieur marqué, laissant présager une ponction difficile.", "correct": true},
-    {"id": "B", "texte": "Un aspect transsonore sans cône d’ombre, laissant présager une ponction aisée.", "correct": false},
-    {"id": "C", "texte": "Une contre-indication formelle à la tentative de ponction percutanée.", "correct": false},
-    {"id": "D", "texte": "Une image invisible en échographie, nécessitant une IRM pour la caractériser.", "correct": false}
-   ],
-   "explication": "L’échographie est le meilleur examen pour prédire la consistance d’une calcification : plus elle est dure, plus sa surface est réfléchissante et plus le cône d’ombre postérieur est marqué ; la ponction sera plus difficile, sans que la tentative soit contre-indiquée (C faux). La calcification molle est au contraire transsonore, sans cône d’ombre (B correspond à la calcification molle). Les calcifications sont facilement détectées en échographie sous forme d’échos intratendineux intenses (D faux) ; c’est l’IRM qui les détecte mal.",
-   "correction_figures": [{"file": "01. Pathologie de la coiffe_p28_4.png", "caption": "Fig. 1.37 Calcifications tendineuses (flèche) de la partie supérieure de la coiffe des rotateurs : coupes longitudinales. a. Calcification dure, très réfléchissante avec cône d’ombre. b. Calcification molle, transsonore, sans cône d’ombre."}],
-   "source": {"page": 29, "element": "Texte", "refs": "[36, 97]"}},
-
-  {"id": "c1-q08", "type": "QRM", "theme": "Échographie : signes indirects de rupture",
-   "enonce": "Concernant les signes indirects de rupture transfixiante en échographie, quelles propositions sont exactes ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Le méplat du bord supérieur de la coiffe est assez spécifique : un tissu synovial moins résistant perd sa convexité sous la pression du deltoïde.", "correct": true},
-    {"id": "B", "texte": "Le double épanchement (articulation et bourse sub-acromiodeltoïdienne) est peu sensible mais assez spécifique d’une rupture transfixiante.", "correct": true},
-    {"id": "C", "texte": "Un épanchement isolé de la bourse sub-acromiodeltoïdienne suffit à affirmer une rupture.", "correct": false},
-    {"id": "D", "texte": "Le signe de l’interface cartilagineuse n’est visible que dans les ruptures transfixiantes.", "correct": false},
-    {"id": "E", "texte": "Dans les ruptures complètes aiguës, la rétraction tendineuse est toujours évidente.", "correct": false}
-   ],
-   "explication": "Le méplat est un signe indirect assez spécifique, lié au comblement de la rupture par un tissu synovial moins résistant. Le double épanchement est peu sensible mais assez spécifique. Les épanchements uniques de la bourse ou de l’articulation ne sont pas fiables à eux seuls (C faux). Le signe de l’interface cartilagineuse (double corticale) est un artefact visible dès que la face profonde du tendon est rompue, que la rupture soit transfixiante ou non (D faux). Dans les ruptures complètes aiguës, il n’y a pas de rétraction tendineuse : le tendon peut sembler continu mais épais et hypoéchogène (« trop belle coiffe ») (E faux).",
-   "correction_figures": [{"file": "01. Pathologie de la coiffe_p31_2.png", "caption": "Fig. 1.46 Méplat du bord bursal de la coiffe des rotateurs (flèche) accompagnant une rupture : coupe longitudinale."}],
-   "source": {"page": 31, "element": "Texte", "refs": "[6, 95, 98]"}},
-
-  {"id": "c1-q09", "type": "QRM", "theme": "Arthroscanner et arthro-IRM",
-   "enonce": "Concernant l’arthroscanner et l’arthro-IRM de l’épaule, quelles propositions sont exactes ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Une rupture transfixiante est démontrée lorsque le produit de contraste injecté dans l’articulation opacifie la bourse sub-acromiodeltoïdienne.", "correct": true},
-    {"id": "B", "texte": "L’arthroscanner permet de diagnostiquer les tendinopathies non rompues de la coiffe.", "correct": false},
-    {"id": "C", "texte": "En cas de rupture isolée du subscapulaire, la bourse sub-acromiodeltoïdienne est opacifiée.", "correct": false},
-    {"id": "D", "texte": "L’arthro-IRM permet, à la différence de l’arthroscanner, de diagnostiquer les tendinopathies et les ruptures partielles superficielles.", "correct": true},
-    {"id": "E", "texte": "Ce sont des examens non invasifs, à réaliser en première intention.", "correct": false}
-   ],
-   "explication": "Le passage du produit de contraste de l’articulation vers la bourse via la rupture démontre une rupture transfixiante ; en l’absence de rupture transfixiante, une bursite n’est pas opacifiée et garde un signal liquidien. L’arthro-IRM, grâce à sa résolution en contraste, diagnostique tendinopathies et ruptures partielles superficielles, ce que l’arthroscanner ne fait pas (B faux). Le subscapulaire n’est pas directement recouvert par la bourse : celle-ci n’est pas opacifiée en cas de rupture isolée de ce tendon (C faux). Ces examens sont invasifs (injection intra-articulaire ; l’arthroscanner est de plus irradiant) et réservés au bilan préopératoire (E faux).",
-   "correction_figures": [
-    {"file": "01. Pathologie de la coiffe_p47_5.png", "caption": "Fig. 1.91 Rupture transfixiante de la coiffe supérieure (tendon du muscle supra-épineux et partie antérieure du tendon du muscle infra-épineux) (flèche), comme en atteste le passage de produit de contraste dans la bourse subacromiodeltoïdienne (tête de flèche) : coupes frontale (a), axiale (b) et sagittale (c)."},
-    {"file": "01. Pathologie de la coiffe_p48_1.png", "caption": "Fig. 1.92 Rupture non transfixiante de la coiffe supérieure (tendon postérieur du muscle supraépineux) (flèche). Notez l’absence de passage du produit de contraste dans la bourse subacromiodeltoïdienne."}],
-   "source": {"page": 47, "element": "Texte", "refs": ""}},
-
-  {"id": "c1-q10", "type": "QCU", "theme": "Aspects postopératoires : acromioplastie",
-   "enonce": "Après acromioplastie, que faut-il savoir pour l’interprétation des radiographies de suivi ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Le signe de rupture constitué par une hauteur subacromiale inférieure à 6 mm se positivera plus tardivement que sur une épaule non opérée.", "correct": true},
-    {"id": "B", "texte": "Le signe de rupture par hauteur subacromiale inférieure à 6 mm se positive plus précocement que sur une épaule non opérée.", "correct": false},
-    {"id": "C", "texte": "La comparaison à des clichés précoces peut se faire quelle que soit la rotation de l’épaule.", "correct": false},
-    {"id": "D", "texte": "La rotation latérale doit être privilégiée pour comparer les clichés successifs.", "correct": false}
-   ],
-   "explication": "L’acromioplastie augmente artificiellement la hauteur de l’espace subacromial : la diminution sous 6 mm, signe classique de rupture, apparaîtra donc plus tardivement. Une récidive douloureuse avec excentration supérieure de la tête doit faire envisager une rupture de la coiffe réparée, en comparant le cintre glénohuméral ou la hauteur subacromiale à des clichés précoces. La comparaison doit toujours se faire avec la même rotation, car la rotation de la tête modifie à elle seule ces mesures ; la rotation neutre est à privilégier (C et D faux).",
-   "correction_figures": [{"file": "01. Pathologie de la coiffe_p50_1.png", "caption": "Fig. 1.98 Radiographies de l’épaule droite avant (a) et après (b) acromioplastie (face en rotation neutre). Notez l’ascension de la tête humérale au cours du suivi."}],
-   "source": {"page": 50, "element": "Texte", "refs": ""}},
-
-  {"id": "c1-q11", "type": "QCU", "theme": "Anatomie : coiffe des rotateurs",
-   "enonce": "Parmi les muscles suivants, lequel constitue la partie antérieure de la coiffe des rotateurs ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Le muscle supra-épineux", "correct": false},
-    {"id": "B", "texte": "Le muscle infra-épineux", "correct": false},
-    {"id": "C", "texte": "Le muscle subscapulaire", "correct": true},
-    {"id": "D", "texte": "Le muscle petit rond", "correct": false}
-   ],
-   "explication": "Le muscle subscapulaire occupe la partie antérieure de la coiffe des rotateurs, tandis que le supra-épineux est supérieur, l’infra-épineux postérosupérieur et le petit rond postéro-inférieur.",
-   "correction_figures": [],
-   "source": {"page": 7, "element": "Texte", "refs": ""}},
-
-  {"id": "c1-q12", "type": "QRM", "theme": "Tendinopathies : facteurs de risque",
-   "enonce": "Quels sont les facteurs de risque reconnus de rupture de la coiffe des rotateurs ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "L’obésité", "correct": true},
-    {"id": "B", "texte": "Le tabagisme", "correct": true},
-    {"id": "C", "texte": "Les traumatismes", "correct": true},
-    {"id": "D", "texte": "La pratique de la natation intensive", "correct": false}
-   ],
-   "explication": "L’obésité, le tabagisme et les traumatismes sont explicitement cités comme facteurs de risque de rupture de la coiffe des rotateurs.",
-   "correction_figures": [],
-   "source": {"page": 13, "element": "Texte", "refs": ""}},
-
-  {"id": "c1-q13", "type": "QCU", "theme": "Radiographies : signes de rupture",
-   "enonce": "Quel est le seuil de mesure de la hauteur de l’espace subacromial en radiographie conventionnelle en dessous duquel on suspecte fortement une large rupture des tendons de la partie supérieure de la coiffe ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Inférieur ou égal à 10 mm", "correct": false},
-    {"id": "B", "texte": "Inférieur ou égal à 8 mm", "correct": false},
-    {"id": "C", "texte": "Inférieur ou égal à 6 mm", "correct": true},
-    {"id": "D", "texte": "Inférieur ou égal à 4 mm", "correct": false}
-   ],
-   "explication": "Une hauteur subacromiale inférieure ou égale à 6 mm témoigne d’une large rupture de la coiffe des rotateurs concernant au moins les tendons des muscles supra et infra-épineux.",
-   "correction_figures": [],
-   "source": {"page": 24, "element": "Texte", "refs": ""}},
-
-  {"id": "c1-q14", "type": "QRM", "theme": "Arthroscanner et arthro-IRM",
-   "enonce": "Quels examens d’imagerie permettent de mettre en évidence de manière formelle le passage de produit de contraste dans la bourse sub-acromiodeltoïdienne (signe de rupture transfixiante) ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "L’échographie standard", "correct": false},
-    {"id": "B", "texte": "L’arthroscanner", "correct": true},
-    {"id": "C", "texte": "L’arthro-IRM", "correct": true},
-    {"id": "D", "texte": "L’IRM conventionnelle sans injection", "correct": false}
-   ],
-   "explication": "L’arthroscanner et l’arthro-IRM utilisent l’injection intra-articulaire d’un produit de contraste dont l’opacification ou le passage direct dans la bourse sub-acromiodeltoïdienne signe une rupture transfixiante.",
-   "correction_figures": [],
-   "source": {"page": 45, "element": "Texte (p. 45, 47)", "refs": ""}},
-
-  {"id": "c1-q15", "type": "QCU", "theme": "Conséquences musculaires : signe de la tangente",
-   "enonce": "En imagerie, à quoi correspond le « signe de la tangente » positif sur la coupe sagittale oblique (coupe en Y) de l’épaule ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Une tendinopathie calcifiante de type A", "correct": false},
-    {"id": "B", "texte": "Une dégénérescence musculaire sévère (amyotrophie et rétraction du muscle supra-épineux)", "correct": true},
-    {"id": "C", "texte": "Une luxation du tendon du long biceps", "correct": false},
-    {"id": "D", "texte": "Une bursite sub-acromiodeltoïdienne isolée", "correct": false}
-   ],
-   "explication": "Lorsque le bord supérieur du corps du muscle supra-épineux ne dépasse plus la tangente unissant le sommet de l’écaille de la scapula à celui de la partie médiale du processus coracoïde, le signe est positif et traduit une dégénérescence musculaire sévère.",
-   "correction_figures": [],
-   "source": {"page": 22, "element": "Texte", "refs": ""}},
-
-  {"id": "c1-q16", "type": "QCU", "theme": "Conséquences musculaires : involution graisseuse",
-   "enonce": "Quelle est la classification sémiologique semi-quantitative en cinq stades (de 0 à 4) la plus couramment utilisée pour évaluer l’involution graisseuse des corps musculaires de la coiffe des rotateurs ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "La classification de Bernageau et Goutallier", "correct": true},
-    {"id": "B", "texte": "La classification de Lafosse", "correct": false},
-    {"id": "C", "texte": "La classification de Gärtner", "correct": false},
-    {"id": "D", "texte": "La classification de Sugaya", "correct": false}
-   ],
-   "explication": "L’involution graisseuse est évaluée selon la classification de Bernageau et Goutallier. (La classification de Lafosse concerne les ruptures du subscapulaire, Gärtner les calcifications, et Sugaya les aspects postopératoires en IRM).",
-   "correction_figures": [],
-   "source": {"page": 23, "element": "Texte", "refs": ""}},
-
-  {"id": "c1-q17", "type": "QRM", "theme": "Anatomie : poulie de réflexion du biceps",
-   "enonce": "Quelles structures anatomiques forment la poulie de réflexion du tendon du chef long du muscle biceps brachial au niveau de l’intervalle antérieur ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Des fibres de l’insertion accessoire du tendon du muscle supra-épineux", "correct": true},
-    {"id": "B", "texte": "Le ligament coracohuméral et la capsule articulaire", "correct": true},
-    {"id": "C", "texte": "Une expansion fibreuse supérolatérale issue de la fusion du faisceau supérieur du subscapulaire et du ligament glénohuméral supérieur", "correct": true},
-    {"id": "D", "texte": "Le muscle deltoïde dans sa totalité", "correct": false}
-   ],
-   "explication": "La poulie est stabilisée par les insertions du supra-épineux, du ligament coracohuméral, de la capsule, et par l’expansion du tendon du subscapulaire. Le muscle deltoïde n’en fait pas partie.",
-   "correction_figures": [],
-   "source": {"page": 10, "element": "Texte", "refs": ""}},
-
-  {"id": "c1-q18", "type": "QCU", "theme": "Anatomie : insertions humérales",
-   "enonce": "Quel tendon de la coiffe des rotateurs s’insère exclusivement sur la facette moyenne du tubercule majeur de l’humérus ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Le tendon du muscle supra-épineux", "correct": false},
-    {"id": "B", "texte": "Le tendon du muscle infra-épineux", "correct": true},
-    {"id": "C", "texte": "Le tendon du muscle subscapulaire", "correct": false},
-    {"id": "D", "texte": "Le tendon du muscle petit rond", "correct": false}
-   ],
-   "explication": "Le tendon du muscle infra-épineux s’insère exclusivement sur la facette moyenne du tubercule majeur de l’humérus.",
-   "correction_figures": [],
-   "source": {"page": 7, "element": "Texte", "refs": ""}},
-
-  {"id": "c1-q19", "type": "QRM", "theme": "Tendinopathies calcifiantes",
-   "enonce": "Parmi les propositions suivantes concernant les tendinopathies calcifiantes de la coiffe des rotateurs, lesquelles sont exactes ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Elles sont dominées en fréquence par des dépôts de cristaux d’apatite de calcium (phosphate de calcium basique).", "correct": true},
-    {"id": "B", "texte": "Elles touchent plus fréquemment les femmes et s’observent principalement entre 30 et 60 ans.", "correct": true},
-    {"id": "C", "texte": "Les calcifications deviennent brutalement symptomatiques lorsqu’une réaction inflammatoire se déclenche autour de celles-ci.", "correct": true},
-    {"id": "D", "texte": "Elles sont constamment associées à des ruptures massives de la coiffe des rotateurs.", "correct": false}
-   ],
-   "explication": "Les tendinopathies calcifiantes sont dominées par les dépôts d’apatite de calcium, touchent plus souvent les femmes entre 30 et 60 ans et deviennent brutalement symptomatiques lors d’une réaction inflammatoire autour des calcifications. Les ruptures de la coiffe sont au contraire très rarement associées aux tendinopathies calcifiantes (4 à 7 %).",
-   "correction_figures": [],
-   "source": {"page": 19, "element": "Texte", "refs": ""}},
-
-  {"id": "c1-q20", "type": "QCU", "theme": "Terminologie des ruptures",
-   "enonce": "Comment qualifie-t-on une rupture de la coiffe des rotateurs qui traverse toute l’épaisseur du tendon et met en communication directe la cavité articulaire scapulohumérale avec la bourse sub-acromiodeltoïdienne ?",
-   "enonce_image": null,
-   "items": [
-    {"id": "A", "texte": "Une rupture non transfixiante (ou partielle)", "correct": false},
-    {"id": "B", "texte": "Un clivage intratendineux", "correct": false},
-    {"id": "C", "texte": "Une rupture transfixiante", "correct": true},
-    {"id": "D", "texte": "Une désinsertion myotendineuse pure", "correct": false}
-   ],
-   "explication": "Une rupture transfixiante traverse toute l’épaisseur de la coiffe et met en communication la cavité articulaire et la bourse sub-acromiodeltoïdienne.",
-   "correction_figures": [],
-   "source": {"page": 21, "element": "Texte", "refs": ""}}
- ]
+  "chapitre": {
+    "numero": 1,
+    "titre": "Pathologies de la coiffe des rotateurs",
+    "auteurs": "P. Michelin, M. El Rafei, F. Duparc",
+    "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
+  },
+  "questions": [
+    {
+      "id": "c1-q01",
+      "type": "QCU",
+      "theme": "Anatomie : insertions humérales",
+      "enonce": "Concernant les insertions humérales des tendons de la coiffe des rotateurs, quelle proposition est exacte ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le tendon du muscle infra-épineux s’insère exclusivement sur la facette moyenne du tubercule majeur, sans intéresser le tubercule mineur.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le tendon du muscle supra-épineux s’insère principalement sur la facette moyenne du tubercule majeur de l’humérus.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le tendon du muscle petit rond s’insère sur la facette supérieure du tubercule majeur de l’humérus.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le tendon du muscle subscapulaire s’insère exclusivement sur le tubercule majeur, sans insertion accessoire.",
+          "correct": false
+        }
+      ],
+      "explication": "Le tendon de l’infra-épineux s’insère uniquement sur la facette moyenne du tubercule majeur ; cette facette est allongée dans le sens antéropostérieur et, en arrière du supra-épineux, l’infra-épineux s’y insère seul. Le supra-épineux s’insère principalement sur la facette antérieure (et non moyenne) du tubercule majeur, avec une insertion accessoire sur la facette supérieure du tubercule mineur. Le petit rond s’insère sur la facette inférieure du tubercule majeur, et non la supérieure. Le subscapulaire s’insère principalement sur le tubercule mineur (et non le majeur), avec des insertions accessoires au-dessus du tubercule mineur et sur la lèvre latérale du sillon intertuberculaire.",
+      "correction_figures": [
+        {
+          "file": "01. Pathologie de la coiffe_p6_4.png",
+          "caption": "Fig. 1.4 Surfaces d’insertion des tendons des muscles supra-épineux (SE), infra-épineux (IE) et de la capsule articulaire (C) sur l’extrémité proximale de l’humérus."
+        }
+      ],
+      "source": {
+        "page": 7,
+        "element": "Texte",
+        "refs": "[129, 150]"
+      }
+    },
+    {
+      "id": "c1-q02",
+      "type": "QCU",
+      "theme": "Anatomie : espaces synoviaux et bourses",
+      "enonce": "À propos des espaces synoviaux de l’épaule, quelle proposition est exacte ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une rupture isolée de la partie supérieure du tendon subscapulaire ne met pas en communication l’articulation et la bourse sub-acromiodeltoïdienne.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La bourse sub-acromiodeltoïdienne communique normalement avec la cavité articulaire scapulohumérale.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La bourse subcoracoïdienne communique physiologiquement avec la cavité articulaire scapulohumérale.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une rupture du tendon supra-épineux ou infra-épineux laisse la bourse étanche par rapport à l’articulation.",
+          "correct": false
+        }
+      ],
+      "explication": "La partie supérieure du tendon subscapulaire est recouverte en avant par le récessus subscapulaire, un repli synovial de l’articulation, et non par la bourse sub-acromiodeltoïdienne : une rupture isolée de ce tendon n’ouvre donc pas de communication avec la bourse. À l’état normal, il n’existe aucune communication entre la cavité articulaire et la bourse sub-acromiodeltoïdienne. La bourse subcoracoïdienne peut communiquer avec la bourse sub-acromiodeltoïdienne, mais pas avec la cavité articulaire. Les feuillets de la bourse adhèrent fortement aux tendons supra- et infra-épineux : leur rupture fait communiquer directement bourse et articulation.",
+      "correction_figures": [
+        {
+          "file": "01. Pathologie de la coiffe_p11_2.png",
+          "caption": "Fig. 1.14 Récessus subscapulaire normal : coupe sagittale en arthroscanner. Le récessus subscapulaire (flèche) enjambe le bord supérieur du tendon du muscle subscapulaire (SS). C : processus coracoïde."
+        }
+      ],
+      "source": {
+        "page": 11,
+        "element": "Texte",
+        "refs": "[242, 185]"
+      }
+    },
+    {
+      "id": "c1-q03",
+      "type": "QRM",
+      "theme": "Tendinopathies : histoire naturelle des ruptures",
+      "enonce": "Concernant l’histoire naturelle des ruptures de la partie supérieure de la coiffe des rotateurs, quelles propositions sont exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Les ruptures débutent souvent au-dessus du sommet de la tête humérale, dans l’intervalle postérieur où les tendons supra- et infra-épineux sont superposés.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Les ruptures non transfixiantes du versant bursal sont plus fréquentes que celles du versant articulaire.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le renforcement antérieur du tendon du muscle supra-épineux est longtemps préservé lors de l’extension de la rupture.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le tendon du muscle infra-épineux se rétracte médialement, comme le tendon du muscle supra-épineux.",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Le tendon du muscle subscapulaire est habituellement le premier tendon de la coiffe à se rompre.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans le plan antéropostérieur, la rupture débute en arrière du biceps intra-articulaire, au-dessus du sommet de la tête, dans l’intervalle postérieur ; elle s’étend ensuite vers l’avant et vers l’arrière, et le puissant renforcement antérieur du supra-épineux reste longtemps préservé. Les ruptures non transfixiantes du versant articulaire (zone du croissant) sont plus fréquentes que celles du versant bursal. L’infra-épineux se rétracte vers l’arrière plutôt que médialement et peut entraîner le supra-épineux avec lui. Le subscapulaire est rarement le premier tendon rompu, même si cela reste possible.",
+      "correction_figures": [
+        {
+          "file": "01. Pathologie de la coiffe_p14_1.png",
+          "caption": "Fig. 1.17 Initiation et extension des ruptures de la partie supérieure de la coiffe des rotateurs. IE : muscle infra-épineux ; SEa : tendon du muscle supra-épineux antérieur ; SEp : tendon du muscle supra-épineux postérieur."
+        },
+        {
+          "file": "01. Pathologie de la coiffe_p15_1.png",
+          "caption": "Fig. 1.18 Ruptures non transfixiantes de l’intervalle postérieur de la coiffe des rotateurs. a. Rupture du tendon de la partie postérieure du muscle supra-épineux (rupture partielle profonde de la coiffe). b. Rupture distale du tendon du muscle infra-épineux (rupture partielle superficielle de la coiffe des rotateurs). IE : muscle infra-épineux ; IEa : tendon du muscle infra-épineux antérieur ; SEa : tendon du muscle supra-épineux antérieur ; SEp : tendon du muscle supra-épineux postérieur."
+        }
+      ],
+      "source": {
+        "page": 14,
+        "element": "Texte",
+        "refs": "[203, 109, 106]"
+      }
+    },
+    {
+      "id": "c1-q04",
+      "type": "QCU",
+      "theme": "Conséquences musculaires des ruptures",
+      "enonce": "Comment distingue-t-on l’involution graisseuse d’un muscle secondaire à une rupture tendineuse de celle secondaire à une dénervation ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Après rupture tendineuse, la graisse prédomine autour des bandelettes tendineuses intramusculaires, alors qu’elle est diffuse et homogène après dénervation.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Après rupture tendineuse, la répartition de la graisse est diffuse et homogène, alors qu’elle est grossière après dénervation.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Les deux étiologies donnent une répartition identique, seule l’ancienneté de la lésion les distingue.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Après rupture tendineuse, la graisse apparaît d’abord à la périphérie du corps musculaire, loin des zones de contrainte.",
+          "correct": false
+        }
+      ],
+      "explication": "La rupture du tendon supprime la tension sur les fibres musculaires, qui diminuent en taille et en nombre ; des espaces libres se forment, comblés par des adipocytes. L’infiltration débute là où les contraintes mécaniques étaient les plus fortes, c’est-à-dire autour des bandelettes tendineuses intramusculaires, d’où une répartition assez grossière. En cas de dénervation, la répartition est plus diffuse et homogène (fig. 1.22). L’infiltration débute dans les zones de forte contrainte, non à la périphérie.",
+      "correction_figures": [
+        {
+          "file": "01. Pathologie de la coiffe_p17_1.png",
+          "caption": "Fig. 1.22 Involution graisseuse des muscles supra et infra-épineux (flèches) secondaire à une rupture tendineuse (a) et à une dénervation (b)."
+        }
+      ],
+      "source": {
+        "page": 17,
+        "element": "Texte",
+        "refs": "[102, 118, 17]"
+      }
+    },
+    {
+      "id": "c1-q05",
+      "type": "QCU",
+      "theme": "Examen clinique : tests tendineux",
+      "enonce": "Selon le tableau des tests tendineux de l’épaule, quel test explore le muscle subscapulaire ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La rotation médiale à vide et contre résistance, main dans le dos (test de Gerber).",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’abduction contre résistance, épaule en abduction à 90° dans l’axe de la scapula (test de Jobe).",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La rotation latérale contre résistance, épaule en abduction à 90° (test de Patte).",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La manœuvre contre résistance, bras tendu en avant, paume vers le haut (palm up test).",
+          "correct": false
+        }
+      ],
+      "explication": "Le test de Gerber (rotation médiale à vide et contre résistance, main dans le dos) explore le subscapulaire, rotateur médial. Le test de Jobe explore le supra-épineux, le test de Patte (rotation latérale contre résistance en abduction à 90°) l’infra-épineux, et le palm up test le tendon du chef long du biceps brachial.",
+      "correction_figures": [],
+      "source": {
+        "page": 20,
+        "element": "Tableau 1.1",
+        "refs": "[16, 91]"
+      }
+    },
+    {
+      "id": "c1-q06",
+      "type": "QRM",
+      "theme": "Radiographies : signes de rupture",
+      "enonce": "Concernant les signes radiographiques associés aux ruptures de la coiffe des rotateurs, quelles propositions sont exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une hauteur subacromiale inférieure ou égale à 6 mm témoigne d’une large rupture touchant au moins les tendons supra- et infra-épineux.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une hauteur subacromiale normale permet d’exclure une large rupture de la coiffe.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’ossification de l’enthèse acromiale du ligament coraco-acromial (épine acromiale) est un signe fortement prédictif de rupture tendineuse.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’acétabulisation de l’acromion correspond à un remodelage creusé de sa face inférieure en cas de rupture large avec excentration supérieure.",
+          "correct": true
+        },
+        {
+          "id": "E",
+          "texte": "Les clichés en rotation sont fiables pour apprécier le centrage de la tête humérale.",
+          "correct": false
+        }
+      ],
+      "explication": "Une hauteur ≤ 6 mm témoigne d’une large rupture supra- et infra-épineuse, mais ce signe n’a de valeur que lorsqu’il est positif : il n’est présent que dans les larges ruptures et n’est pas constant. L’épine acromiale est fortement prédictive d’une rupture, sans que l’on sache si elle en est cause, conséquence ou simple association. En cas de rupture large avec excentration supérieure, le conflit avec l’acromion creuse sa face inférieure (acétabulisation) avec une corticale inférieure plus dense. Le centrage s’apprécie sur la face en rotation neutre ou sur les incidences de Railhac et de Leclercq ; les clichés en rotation ne sont pas fiables.",
+      "correction_figures": [
+        {
+          "file": "01. Pathologie de la coiffe_p24_1.png",
+          "caption": "Fig. 1.27 Espace subacromial inférieur à 6 mm : large rupture des tendons de la partie supérieure de la coiffe des rotateurs."
+        },
+        {
+          "file": "01. Pathologie de la coiffe_p24_2.png",
+          "caption": "Fig. 1.28 Ossification de l’enthèse acromiale du ligament coraco-acromial (épine acromiale)."
+        }
+      ],
+      "source": {
+        "page": 24,
+        "element": "Texte",
+        "refs": "[155, 176, 87]"
+      }
+    },
+    {
+      "id": "c1-q07",
+      "type": "QCU",
+      "theme": "Échographie : calcifications tendineuses",
+      "enonce": "En échographie, que traduit une calcification tendineuse dure ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une surface très réfléchissante avec un cône d’ombre postérieur marqué, laissant présager une ponction difficile.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un aspect transsonore sans cône d’ombre, laissant présager une ponction aisée.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une contre-indication formelle à la tentative de ponction percutanée.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une image invisible en échographie, nécessitant une IRM pour la caractériser.",
+          "correct": false
+        }
+      ],
+      "explication": "L’échographie est le meilleur examen pour prédire la consistance d’une calcification : plus elle est dure, plus sa surface est réfléchissante et plus le cône d’ombre postérieur est marqué ; la ponction sera plus difficile, sans que la tentative soit contre-indiquée. La calcification molle est au contraire transsonore, sans cône d’ombre. Les calcifications sont facilement détectées en échographie sous forme d’échos intratendineux intenses ; c’est l’IRM qui les détecte mal.",
+      "correction_figures": [
+        {
+          "file": "01. Pathologie de la coiffe_p28_4.png",
+          "caption": "Fig. 1.37 Calcifications tendineuses (flèche) de la partie supérieure de la coiffe des rotateurs : coupes longitudinales. a. Calcification dure, très réfléchissante avec cône d’ombre. b. Calcification molle, transsonore, sans cône d’ombre."
+        }
+      ],
+      "source": {
+        "page": 29,
+        "element": "Texte",
+        "refs": "[36, 97]"
+      }
+    },
+    {
+      "id": "c1-q08",
+      "type": "QRM",
+      "theme": "Échographie : signes indirects de rupture",
+      "enonce": "Concernant les signes indirects de rupture transfixiante en échographie, quelles propositions sont exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le méplat du bord supérieur de la coiffe est assez spécifique : un tissu synovial moins résistant perd sa convexité sous la pression du deltoïde.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le double épanchement (articulation et bourse sub-acromiodeltoïdienne) est peu sensible mais assez spécifique d’une rupture transfixiante.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un épanchement isolé de la bourse sub-acromiodeltoïdienne suffit à affirmer une rupture.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le signe de l’interface cartilagineuse n’est visible que dans les ruptures transfixiantes.",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Dans les ruptures complètes aiguës, la rétraction tendineuse est toujours évidente.",
+          "correct": false
+        }
+      ],
+      "explication": "Le méplat est un signe indirect assez spécifique, lié au comblement de la rupture par un tissu synovial moins résistant. Le double épanchement est peu sensible mais assez spécifique. Les épanchements uniques de la bourse ou de l’articulation ne sont pas fiables à eux seuls. Le signe de l’interface cartilagineuse (double corticale) est un artefact visible dès que la face profonde du tendon est rompue, que la rupture soit transfixiante ou non. Dans les ruptures complètes aiguës, il n’y a pas de rétraction tendineuse : le tendon peut sembler continu mais épais et hypoéchogène (« trop belle coiffe »).",
+      "correction_figures": [
+        {
+          "file": "01. Pathologie de la coiffe_p31_2.png",
+          "caption": "Fig. 1.46 Méplat du bord bursal de la coiffe des rotateurs (flèche) accompagnant une rupture : coupe longitudinale."
+        }
+      ],
+      "source": {
+        "page": 31,
+        "element": "Texte",
+        "refs": "[6, 95, 98]"
+      }
+    },
+    {
+      "id": "c1-q09",
+      "type": "QRM",
+      "theme": "Arthroscanner et arthro-IRM",
+      "enonce": "Concernant l’arthroscanner et l’arthro-IRM de l’épaule, quelles propositions sont exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une rupture transfixiante est démontrée lorsque le produit de contraste injecté dans l’articulation opacifie la bourse sub-acromiodeltoïdienne.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’arthroscanner permet de diagnostiquer les tendinopathies non rompues de la coiffe.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "En cas de rupture isolée du subscapulaire, la bourse sub-acromiodeltoïdienne est opacifiée.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’arthro-IRM permet, à la différence de l’arthroscanner, de diagnostiquer les tendinopathies et les ruptures partielles superficielles.",
+          "correct": true
+        },
+        {
+          "id": "E",
+          "texte": "Ce sont des examens non invasifs, à réaliser en première intention.",
+          "correct": false
+        }
+      ],
+      "explication": "Le passage du produit de contraste de l’articulation vers la bourse via la rupture démontre une rupture transfixiante ; en l’absence de rupture transfixiante, une bursite n’est pas opacifiée et garde un signal liquidien. L’arthro-IRM, grâce à sa résolution en contraste, diagnostique tendinopathies et ruptures partielles superficielles, ce que l’arthroscanner ne fait pas. Le subscapulaire n’est pas directement recouvert par la bourse : celle-ci n’est pas opacifiée en cas de rupture isolée de ce tendon. Ces examens sont invasifs (injection intra-articulaire ; l’arthroscanner est de plus irradiant) et réservés au bilan préopératoire.",
+      "correction_figures": [
+        {
+          "file": "01. Pathologie de la coiffe_p47_5.png",
+          "caption": "Fig. 1.91 Rupture transfixiante de la coiffe supérieure (tendon du muscle supra-épineux et partie antérieure du tendon du muscle infra-épineux) (flèche), comme en atteste le passage de produit de contraste dans la bourse subacromiodeltoïdienne (tête de flèche) : coupes frontale (a), axiale (b) et sagittale (c)."
+        },
+        {
+          "file": "01. Pathologie de la coiffe_p48_1.png",
+          "caption": "Fig. 1.92 Rupture non transfixiante de la coiffe supérieure (tendon postérieur du muscle supraépineux) (flèche). Notez l’absence de passage du produit de contraste dans la bourse subacromiodeltoïdienne."
+        }
+      ],
+      "source": {
+        "page": 47,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q10",
+      "type": "QCU",
+      "theme": "Aspects postopératoires : acromioplastie",
+      "enonce": "Après acromioplastie, que faut-il savoir pour l’interprétation des radiographies de suivi ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le signe de rupture constitué par une hauteur subacromiale inférieure à 6 mm se positivera plus tardivement que sur une épaule non opérée.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le signe de rupture par hauteur subacromiale inférieure à 6 mm se positive plus précocement que sur une épaule non opérée.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La comparaison à des clichés précoces peut se faire quelle que soit la rotation de l’épaule.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La rotation latérale doit être privilégiée pour comparer les clichés successifs.",
+          "correct": false
+        }
+      ],
+      "explication": "L’acromioplastie augmente artificiellement la hauteur de l’espace subacromial : la diminution sous 6 mm, signe classique de rupture, apparaîtra donc plus tardivement. Une récidive douloureuse avec excentration supérieure de la tête doit faire envisager une rupture de la coiffe réparée, en comparant le cintre glénohuméral ou la hauteur subacromiale à des clichés précoces. La comparaison doit toujours se faire avec la même rotation, car la rotation de la tête modifie à elle seule ces mesures ; la rotation neutre est à privilégier.",
+      "correction_figures": [
+        {
+          "file": "01. Pathologie de la coiffe_p50_1.png",
+          "caption": "Fig. 1.98 Radiographies de l’épaule droite avant (a) et après (b) acromioplastie (face en rotation neutre). Notez l’ascension de la tête humérale au cours du suivi."
+        }
+      ],
+      "source": {
+        "page": 50,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q11",
+      "type": "QCU",
+      "theme": "Anatomie : coiffe des rotateurs",
+      "enonce": "Parmi les muscles suivants, lequel constitue la partie antérieure de la coiffe des rotateurs ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le muscle supra-épineux",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le muscle infra-épineux",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle subscapulaire",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le muscle petit rond",
+          "correct": false
+        }
+      ],
+      "explication": "Le muscle subscapulaire occupe la partie antérieure de la coiffe des rotateurs, tandis que le supra-épineux est supérieur, l’infra-épineux postérosupérieur et le petit rond postéro-inférieur.",
+      "correction_figures": [],
+      "source": {
+        "page": 7,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q12",
+      "type": "QRM",
+      "theme": "Tendinopathies : facteurs de risque",
+      "enonce": "Quels sont les facteurs de risque reconnus de rupture de la coiffe des rotateurs ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’obésité",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le tabagisme",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Les traumatismes",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La pratique de la natation intensive",
+          "correct": false
+        }
+      ],
+      "explication": "L’obésité, le tabagisme et les traumatismes sont explicitement cités comme facteurs de risque de rupture de la coiffe des rotateurs.",
+      "correction_figures": [],
+      "source": {
+        "page": 13,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q13",
+      "type": "QCU",
+      "theme": "Radiographies : signes de rupture",
+      "enonce": "Quel est le seuil de mesure de la hauteur de l’espace subacromial en radiographie conventionnelle en dessous duquel on suspecte fortement une large rupture des tendons de la partie supérieure de la coiffe ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Inférieur ou égal à 10 mm",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Inférieur ou égal à 8 mm",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Inférieur ou égal à 6 mm",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Inférieur ou égal à 4 mm",
+          "correct": false
+        }
+      ],
+      "explication": "Une hauteur subacromiale inférieure ou égale à 6 mm témoigne d’une large rupture de la coiffe des rotateurs concernant au moins les tendons des muscles supra et infra-épineux.",
+      "correction_figures": [],
+      "source": {
+        "page": 24,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q14",
+      "type": "QRM",
+      "theme": "Arthroscanner et arthro-IRM",
+      "enonce": "Quels examens d’imagerie permettent de mettre en évidence de manière formelle le passage de produit de contraste dans la bourse sub-acromiodeltoïdienne (signe de rupture transfixiante) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’échographie standard",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’arthroscanner",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’arthro-IRM",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’IRM conventionnelle sans injection",
+          "correct": false
+        }
+      ],
+      "explication": "L’arthroscanner et l’arthro-IRM utilisent l’injection intra-articulaire d’un produit de contraste dont l’opacification ou le passage direct dans la bourse sub-acromiodeltoïdienne signe une rupture transfixiante.",
+      "correction_figures": [],
+      "source": {
+        "page": 45,
+        "element": "Texte (p. 45, 47)",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q15",
+      "type": "QCU",
+      "theme": "Conséquences musculaires : signe de la tangente",
+      "enonce": "En imagerie, à quoi correspond le « signe de la tangente » positif sur la coupe sagittale oblique (coupe en Y) de l’épaule ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une tendinopathie calcifiante de type A",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une dégénérescence musculaire sévère (amyotrophie et rétraction du muscle supra-épineux)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une luxation du tendon du long biceps",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une bursite sub-acromiodeltoïdienne isolée",
+          "correct": false
+        }
+      ],
+      "explication": "Lorsque le bord supérieur du corps du muscle supra-épineux ne dépasse plus la tangente unissant le sommet de l’écaille de la scapula à celui de la partie médiale du processus coracoïde, le signe est positif et traduit une dégénérescence musculaire sévère.",
+      "correction_figures": [],
+      "source": {
+        "page": 22,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q16",
+      "type": "QCU",
+      "theme": "Conséquences musculaires : involution graisseuse",
+      "enonce": "Quelle est la classification sémiologique semi-quantitative en cinq stades (de 0 à 4) la plus couramment utilisée pour évaluer l’involution graisseuse des corps musculaires de la coiffe des rotateurs ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La classification de Bernageau et Goutallier",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La classification de Lafosse",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La classification de Gärtner",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La classification de Sugaya",
+          "correct": false
+        }
+      ],
+      "explication": "L’involution graisseuse est évaluée selon la classification de Bernageau et Goutallier. (La classification de Lafosse concerne les ruptures du subscapulaire, Gärtner les calcifications, et Sugaya les aspects postopératoires en IRM).",
+      "correction_figures": [],
+      "source": {
+        "page": 23,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q17",
+      "type": "QRM",
+      "theme": "Anatomie : poulie de réflexion du biceps",
+      "enonce": "Quelles structures anatomiques forment la poulie de réflexion du tendon du chef long du muscle biceps brachial au niveau de l’intervalle antérieur ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Des fibres de l’insertion accessoire du tendon du muscle supra-épineux",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le ligament coracohuméral et la capsule articulaire",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une expansion fibreuse supérolatérale issue de la fusion du faisceau supérieur du subscapulaire et du ligament glénohuméral supérieur",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le muscle deltoïde dans sa totalité",
+          "correct": false
+        }
+      ],
+      "explication": "La poulie est stabilisée par les insertions du supra-épineux, du ligament coracohuméral, de la capsule, et par l’expansion du tendon du subscapulaire. Le muscle deltoïde n’en fait pas partie.",
+      "correction_figures": [],
+      "source": {
+        "page": 10,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q18",
+      "type": "QCU",
+      "theme": "Anatomie : insertions humérales",
+      "enonce": "Quel tendon de la coiffe des rotateurs s’insère exclusivement sur la facette moyenne du tubercule majeur de l’humérus ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le tendon du muscle supra-épineux",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le tendon du muscle infra-épineux",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le tendon du muscle subscapulaire",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le tendon du muscle petit rond",
+          "correct": false
+        }
+      ],
+      "explication": "Le tendon du muscle infra-épineux s’insère exclusivement sur la facette moyenne du tubercule majeur de l’humérus.",
+      "correction_figures": [],
+      "source": {
+        "page": 7,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q19",
+      "type": "QRM",
+      "theme": "Tendinopathies calcifiantes",
+      "enonce": "Parmi les propositions suivantes concernant les tendinopathies calcifiantes de la coiffe des rotateurs, lesquelles sont exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Elles sont dominées en fréquence par des dépôts de cristaux d’apatite de calcium (phosphate de calcium basique).",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Elles touchent plus fréquemment les femmes et s’observent principalement entre 30 et 60 ans.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Les calcifications deviennent brutalement symptomatiques lorsqu’une réaction inflammatoire se déclenche autour de celles-ci.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Elles sont constamment associées à des ruptures massives de la coiffe des rotateurs.",
+          "correct": false
+        }
+      ],
+      "explication": "Les tendinopathies calcifiantes sont dominées par les dépôts d’apatite de calcium, touchent plus souvent les femmes entre 30 et 60 ans et deviennent brutalement symptomatiques lors d’une réaction inflammatoire autour des calcifications. Les ruptures de la coiffe sont au contraire très rarement associées aux tendinopathies calcifiantes (4 à 7 %).",
+      "correction_figures": [],
+      "source": {
+        "page": 19,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c1-q20",
+      "type": "QCU",
+      "theme": "Terminologie des ruptures",
+      "enonce": "Comment qualifie-t-on une rupture de la coiffe des rotateurs qui traverse toute l’épaisseur du tendon et met en communication directe la cavité articulaire scapulohumérale avec la bourse sub-acromiodeltoïdienne ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une rupture non transfixiante (ou partielle)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un clivage intratendineux",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une rupture transfixiante",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une désinsertion myotendineuse pure",
+          "correct": false
+        }
+      ],
+      "explication": "Une rupture transfixiante traverse toute l’épaisseur de la coiffe et met en communication la cavité articulaire et la bourse sub-acromiodeltoïdienne.",
+      "correction_figures": [],
+      "source": {
+        "page": 21,
+        "element": "Texte",
+        "refs": ""
+      }
+    }
+  ]
 }

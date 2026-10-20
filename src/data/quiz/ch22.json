@@ -14,14 +14,34 @@
       "enonce": "Sur quel versant de l’articulation sacro-iliaque la couche de cartilage hyalin est-elle physiologiquement la plus mince, ce qui expliquerait en partie la prédominance des lésions mécaniques et inflammatoires de ce côté ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le versant iliaque", "correct": true },
-        { "id": "B", "texte": "Le versant sacré", "correct": false },
-        { "id": "C", "texte": "Les deux versants ont une épaisseur strictement identique", "correct": false },
-        { "id": "D", "texte": "Le cartilage hyalin est absent de cette articulation", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le versant iliaque",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le versant sacré",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Les deux versants ont une épaisseur strictement identique",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le cartilage hyalin est absent de cette articulation",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est A. Les surfaces auriculaires de l’articulation sacro-iliaque sont recouvertes d’une couche de cartilage hyalin qui est deux fois plus mince au versant iliaque qu’au versant sacré. Cette particularité anatomique pourrait expliquer la prédominance des lésions (mécaniques et inflammatoires) sur le versant iliaque.",
+      "explication": "Les surfaces auriculaires de l’articulation sacro-iliaque sont recouvertes d’une couche de cartilage hyalin qui est deux fois plus mince au versant iliaque qu’au versant sacré. Cette particularité anatomique pourrait expliquer la prédominance des lésions (mécaniques et inflammatoires) sur le versant iliaque.",
       "correction_figures": [],
-      "source": { "page": 611, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 611,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c22-q02",
@@ -30,14 +50,34 @@
       "enonce": "L’IRM des articulations sacro-iliaques peut révéler des variantes anatomiques telles que le « complexe iliosacré » ou le « défect semi-circulaire ». Quelles affirmations sont correctes concernant l’analyse IRM de ces variantes ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Elles présentent un hypersignal T2 périphérique pathognomonique d’une sacro-iliite active.", "correct": false },
-        { "id": "B", "texte": "Un hypersignal T2 ou un rehaussement post-gadolinium peut border ces défects en raison de l’important contingent vasculaire de ces régions.", "correct": true },
-        { "id": "C", "texte": "Elles correspondent toujours à des séquelles d’ostéomyélite infantile.", "correct": false },
-        { "id": "D", "texte": "Leurs signaux vasculaires adjacents ne doivent pas être interprétés à tort comme des enthésites ou des érosions inflammatoires actives.", "correct": true }
+        {
+          "id": "A",
+          "texte": "Elles présentent un hypersignal T2 périphérique pathognomonique d’une sacro-iliite active.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un hypersignal T2 ou un rehaussement post-gadolinium peut border ces défects en raison de l’important contingent vasculaire de ces régions.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Elles correspondent toujours à des séquelles d’ostéomyélite infantile.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Leurs signaux vasculaires adjacents ne doivent pas être interprétés à tort comme des enthésites ou des érosions inflammatoires actives.",
+          "correct": true
+        }
       ],
-      "explication": "Les réponses correctes sont B et D. Le complexe iliosacré et le défect semi-circulaire sont des variantes anatomiques dont les parois sont longées par d’importantes structures vasculaires. Celles-ci génèrent un hypersignal en pondération T2 ou un rehaussement qui ne doivent surtout pas être confondus avec des enthésites ou des lésions inflammatoires (sacro-iliite).",
+      "explication": "Le complexe iliosacré et le défect semi-circulaire sont des variantes anatomiques dont les parois sont longées par d’importantes structures vasculaires. Celles-ci génèrent un hypersignal en pondération T2 ou un rehaussement qui ne doivent surtout pas être confondus avec des enthésites ou des lésions inflammatoires (sacro-iliite).",
       "correction_figures": [],
-      "source": { "page": 613, "element": "Texte", "refs": "p. 613-614" }
+      "source": {
+        "page": 613,
+        "element": "Texte",
+        "refs": "p. 613-614"
+      }
     },
     {
       "id": "c22-q03",
@@ -46,14 +86,34 @@
       "enonce": "Chez un patient lombalgique, l’imagerie en coupes (TDM ou IRM) objective des remaniements dégénératifs des articulations sacro-iliaques (ostéocondensation sous-chondrale, ostéophytes). À quelle topographie précise de l’interligne articulaire ces signes de surcharge mécanique prédominent-ils typiquement ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "À la partie postérieure du tiers supérieur", "correct": false },
-        { "id": "B", "texte": "Exclusivement sur l’interligne strictement sagittal du quart inférieur", "correct": false },
-        { "id": "C", "texte": "À la partie antérieure du tiers moyen", "correct": true },
-        { "id": "D", "texte": "De façon diffuse et symétrique sur toute la surface cartilagineuse sacrée", "correct": false }
+        {
+          "id": "A",
+          "texte": "À la partie postérieure du tiers supérieur",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Exclusivement sur l’interligne strictement sagittal du quart inférieur",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "À la partie antérieure du tiers moyen",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "De façon diffuse et symétrique sur toute la surface cartilagineuse sacrée",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est C. Les remaniements dégénératifs mécaniques des articulations sacro-iliaques siègent typiquement dans la zone de contrainte mécanique maximale, qui correspond à la partie antérieure du tiers moyen de l’articulation. En IRM, des anomalies de signal localisées spéciquement dans cette zone antérieure ne doivent pas faire évoquer une sacro-iliite à tort.",
+      "explication": "Les remaniements dégénératifs mécaniques des articulations sacro-iliaques siègent typiquement dans la zone de contrainte mécanique maximale, qui correspond à la partie antérieure du tiers moyen de l’articulation. En IRM, des anomalies de signal localisées spéciquement dans cette zone antérieure ne doivent pas faire évoquer une sacro-iliite à tort.",
       "correction_figures": [],
-      "source": { "page": 615, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 615,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c22-q04",
@@ -62,14 +122,34 @@
       "enonce": "L’ostéose iliaque condensante est une entité souvent asymptomatique touchant préférentiellement la femme après une grossesse. Quelle est sa traduction radiologique la plus caractéristique ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une ostéolyse agressive et bilatérale des berges iliaques.", "correct": false },
-        { "id": "B", "texte": "Une ankylose complète et symétrique de l’interligne sacro-iliaque.", "correct": false },
-        { "id": "C", "texte": "Une ostéocondensation iliaque triangulaire compacte avec une atteinte très modérée ou absente du versant sacré.", "correct": true },
-        { "id": "D", "texte": "Un élargissement majeur de l’interligne articulaire associé à un phénomène du vide intra-articulaire.", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une ostéolyse agressive et bilatérale des berges iliaques.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une ankylose complète et symétrique de l’interligne sacro-iliaque.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une ostéocondensation iliaque triangulaire compacte avec une atteinte très modérée ou absente du versant sacré.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Un élargissement majeur de l’interligne articulaire associé à un phénomène du vide intra-articulaire.",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est C. L’ostéose iliaque condensante se traduit par une ostéocondensation de forme triangulaire et compacte, généralement bilatérale, qui intéresse le versant iliaque tout en épargnant presque totalement le versant sacré. Elle ne présente pas de destruction majeure de l’interligne ou d’érosions profondes.",
+      "explication": "L’ostéose iliaque condensante se traduit par une ostéocondensation de forme triangulaire et compacte, généralement bilatérale, qui intéresse le versant iliaque tout en épargnant presque totalement le versant sacré. Elle ne présente pas de destruction majeure de l’interligne ou d’érosions profondes.",
       "correction_figures": [],
-      "source": { "page": 616, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 616,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c22-q05",
@@ -78,14 +158,34 @@
       "enonce": "L’IRM est l’examen de référence pour le diagnostic précoce de la sacro-iliite rhumatismale (spondyloarthrite axiale). Quels sont les critères de positivité et les pièges diagnostiques à retenir lors de son interprétation ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le diagnostic formel exige qu’un œdème osseux sous-chondral soit visible sur au moins deux coupes adjacentes (ou au moins deux plages sur une même coupe).", "correct": true },
-        { "id": "B", "texte": "Un œdème osseux strictement localisé à la partie antérieure du tiers moyen de l’articulation est pathognomonique d’une atteinte rhumatismale.", "correct": false },
-        { "id": "C", "texte": "L’IRM ne permet de visualiser que l’œdème inflammatoire aigu ; les remaniements structuraux (comme l’ankylose) nécessitent un scanner.", "correct": false },
-        { "id": "D", "texte": "Les remaniements structuraux observables incluent la conversion graisseuse, la sclérose sous-chondrale et les érosions du cartilage.", "correct": true }
+        {
+          "id": "A",
+          "texte": "Le diagnostic formel exige qu’un œdème osseux sous-chondral soit visible sur au moins deux coupes adjacentes (ou au moins deux plages sur une même coupe).",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un œdème osseux strictement localisé à la partie antérieure du tiers moyen de l’articulation est pathognomonique d’une atteinte rhumatismale.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’IRM ne permet de visualiser que l’œdème inflammatoire aigu ; les remaniements structuraux (comme l’ankylose) nécessitent un scanner.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Les remaniements structuraux observables incluent la conversion graisseuse, la sclérose sous-chondrale et les érosions du cartilage.",
+          "correct": true
+        }
       ],
-      "explication": "Les réponses correctes sont A et D. Pour retenir le diagnostic d’œdème sous-chondral caractéristique, celui-ci doit être visible sur au moins deux coupes adjacentes (ou correspondre à deux plages distinctes sur une même coupe). Un œdème localisé à la partie antérieure du tiers moyen de l’articulation n’a aucune valeur en faveur d’une sacro-iliite, car il correspond à la zone de contrainte mécanique maximale (arthrose). L’IRM permet non seulement de voir l’inflammation active, mais détecte aussi très bien les remaniements structuraux (conversion graisseuse, sclérose, érosions, ankylose).",
+      "explication": "Pour retenir le diagnostic d’œdème sous-chondral caractéristique, celui-ci doit être visible sur au moins deux coupes adjacentes (ou correspondre à deux plages distinctes sur une même coupe). Un œdème localisé à la partie antérieure du tiers moyen de l’articulation n’a aucune valeur en faveur d’une sacro-iliite, car il correspond à la zone de contrainte mécanique maximale (arthrose). L’IRM permet non seulement de voir l’inflammation active, mais détecte aussi très bien les remaniements structuraux (conversion graisseuse, sclérose, érosions, ankylose).",
       "correction_figures": [],
-      "source": { "page": 618, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 618,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c22-q06",
@@ -94,14 +194,34 @@
       "enonce": "La « pubalgie du sportif » est un syndrome de surmenage douloureux du carrefour inguinopubien. Sur le plan anatomopathologique, ce syndrome est complexe et regroupe souvent plusieurs types de lésions intriquées. Lesquelles en font classiquement partie ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’ostéoarthropathie pubienne (OAP).", "correct": true },
-        { "id": "B", "texte": "Une pathologie d’insertion des muscles adducteurs (tendinopathie, enthésopathie).", "correct": true },
-        { "id": "C", "texte": "Une pathologie de l’insertion distale des muscles droits et larges de l’abdomen.", "correct": true },
-        { "id": "D", "texte": "Une coxite laminaire rapidement destructrice de l’articulation coxo-fémorale.", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’ostéoarthropathie pubienne (OAP).",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une pathologie d’insertion des muscles adducteurs (tendinopathie, enthésopathie).",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une pathologie de l’insertion distale des muscles droits et larges de l’abdomen.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une coxite laminaire rapidement destructrice de l’articulation coxo-fémorale.",
+          "correct": false
+        }
       ],
-      "explication": "Les réponses correctes sont A, B et C. Le syndrome douloureux du carrefour pubien (pubalgie) recouvre des lésions souvent intriquées telles que l’ostéoarthropathie pubienne, l’atteinte des muscles adducteurs, l’atteinte des muscles droits de l’abdomen, et parfois une déhiscence du canal inguinal. La coxite laminaire est une affection destructrice rapide de l’articulation coxo-fémorale (hanche) et n’appartient pas au démembrement de la pubalgie.",
+      "explication": "Le syndrome douloureux du carrefour pubien (pubalgie) recouvre des lésions souvent intriquées telles que l’ostéoarthropathie pubienne, l’atteinte des muscles adducteurs, l’atteinte des muscles droits de l’abdomen, et parfois une déhiscence du canal inguinal. La coxite laminaire est une affection destructrice rapide de l’articulation coxo-fémorale (hanche) et n’appartient pas au démembrement de la pubalgie.",
       "correction_figures": [],
-      "source": { "page": 620, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 620,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c22-q07",
@@ -110,14 +230,34 @@
       "enonce": "Au cours du bilan d’imagerie d’une pubalgie du sportif, l’IRM est souvent réalisée. Quel est le signe IRM le plus évocateur pour retenir le diagnostic d’ostéoarthropathie pubienne (OAP) réactionnelle ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une ankylose osseuse complète et fusionnelle de la symphyse pubienne.", "correct": false },
-        { "id": "B", "texte": "Un œdème de l’os spongieux du corps du pubis s’étendant dans le plan sagittal, de façon volontiers asymétrique.", "correct": true },
-        { "id": "C", "texte": "Le refoulement de la symphyse par un volumineux kyste sous-pubien.", "correct": false },
-        { "id": "D", "texte": "Une avulsion complète de l’épine iliaque antérosupérieure.", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une ankylose osseuse complète et fusionnelle de la symphyse pubienne.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un œdème de l’os spongieux du corps du pubis s’étendant dans le plan sagittal, de façon volontiers asymétrique.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le refoulement de la symphyse par un volumineux kyste sous-pubien.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une avulsion complète de l’épine iliaque antérosupérieure.",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. L’œdème de l’os spongieux du corps du pubis (parfois marqué ou limité à l’os sous-chondral, et souvent asymétrique) est le signe le plus évocateur de l’ostéoarthropathie pubienne (OAP) réactionnelle à l’instabilité de la symphyse pubienne en IRM.",
+      "explication": "L’œdème de l’os spongieux du corps du pubis (parfois marqué ou limité à l’os sous-chondral, et souvent asymétrique) est le signe le plus évocateur de l’ostéoarthropathie pubienne (OAP) réactionnelle à l’instabilité de la symphyse pubienne en IRM.",
       "correction_figures": [],
-      "source": { "page": 623, "element": "Encadré 22.2", "refs": "" }
+      "source": {
+        "page": 623,
+        "element": "Encadré 22.2",
+        "refs": ""
+      }
     },
     {
       "id": "c22-q08",
@@ -126,14 +266,34 @@
       "enonce": "Dans le cadre de l’exploration IRM d’une pubalgie, la mise en évidence d’un « signe de la seconde fente » est très spécifique. À quelle lésion anatomique cette image correspond-elle le plus souvent ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une fracture de fatigue de la branche ischiopubienne.", "correct": false },
-        { "id": "B", "texte": "Une déchirure ou lésion de l’aponévrose médiale des muscles droit de l’abdomen et surtout long adducteur.", "correct": true },
-        { "id": "C", "texte": "Un dédoublement dégénératif du fibrocartilage symphysaire pathognomonique d’une chondrocalcinose.", "correct": false },
-        { "id": "D", "texte": "Un kyste synovial d’origine coxo-fémorale migrant vers le canal inguinal.", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une fracture de fatigue de la branche ischiopubienne.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une déchirure ou lésion de l’aponévrose médiale des muscles droit de l’abdomen et surtout long adducteur.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un dédoublement dégénératif du fibrocartilage symphysaire pathognomonique d’une chondrocalcinose.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un kyste synovial d’origine coxo-fémorale migrant vers le canal inguinal.",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. Le « signe de la seconde fente » est une image d’addition linéaire de type liquidien en T2, qui prolonge la fente symphysaire vers le bas et le dehors. Il témoigne le plus souvent d’une lésion (déchirure) de l’aponévrose médiale des muscles droit de l’abdomen et du long adducteur.",
+      "explication": "Le « signe de la seconde fente » est une image d’addition linéaire de type liquidien en T2, qui prolonge la fente symphysaire vers le bas et le dehors. Il témoigne le plus souvent d’une lésion (déchirure) de l’aponévrose médiale des muscles droit de l’abdomen et du long adducteur.",
       "correction_figures": [],
-      "source": { "page": 623, "element": "Texte", "refs": "p. 623-624" }
+      "source": {
+        "page": 623,
+        "element": "Texte",
+        "refs": "p. 623-624"
+      }
     },
     {
       "id": "c22-q09",
@@ -142,14 +302,34 @@
       "enonce": "Lorsqu’on suspecte une instabilité de la symphyse pubienne (par exemple en cas de surcharge mécanique excessive), un bilan radiographique dynamique en appui monopodal alterné peut être réalisé. À partir de quel seuil de décalage vertical des deux berges pubiennes considère-t-on l’instabilité dynamique comme significative ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un décalage de plus de 1 mm", "correct": false },
-        { "id": "B", "texte": "Un décalage de plus de 3 mm", "correct": true },
-        { "id": "C", "texte": "Un décalage de plus de 10 mm", "correct": false },
-        { "id": "D", "texte": "Un décalage de plus de 15 mm", "correct": false }
+        {
+          "id": "A",
+          "texte": "Un décalage de plus de 1 mm",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un décalage de plus de 3 mm",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un décalage de plus de 10 mm",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un décalage de plus de 15 mm",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. Un décalage des deux berges pubiennes de plus de 3 mm sur un cliché en appui monopodal alterné témoigne d’une instabilité dynamique de la symphyse pubienne (un diastasis horizontal de plus de 7 à 10 mm serait également anormal).",
+      "explication": "Un décalage des deux berges pubiennes de plus de 3 mm sur un cliché en appui monopodal alterné témoigne d’une instabilité dynamique de la symphyse pubienne (un diastasis horizontal de plus de 7 à 10 mm serait également anormal).",
       "correction_figures": [],
-      "source": { "page": 621, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 621,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c22-q10",
@@ -158,14 +338,34 @@
       "enonce": "L’intégrité de la symphyse pubienne est assurée par un réseau complexe de ligaments et d’insertions musculaires. Concernant l’anatomie de cette région et la constitution du « complexe aponévrotique prépubien » (plaque aponévrotique pubienne médiane), quelles propositions sont exactes ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le complexe aponévrotique prépubien est formé par la réunion centrale des aponévroses des muscles grands droits de l’abdomen et des longs adducteurs.", "correct": true },
-        { "id": "B", "texte": "Le tendon du muscle droit de l’abdomen est en continuité avec le ligament antérieur du pubis.", "correct": true },
-        { "id": "C", "texte": "Le muscle grand fessier (gluteus maximus) s’insère directement sur le tubercule du pubis pour renforcer la plaque antérieure.", "correct": false },
-        { "id": "D", "texte": "Le muscle long adducteur possède une insertion mixte (tendineuse en superficie et musculaire en profondeur) qui s’unit à l’insertion distale du muscle droit de l’abdomen controlatéral.", "correct": true }
+        {
+          "id": "A",
+          "texte": "Le complexe aponévrotique prépubien est formé par la réunion centrale des aponévroses des muscles grands droits de l’abdomen et des longs adducteurs.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le tendon du muscle droit de l’abdomen est en continuité avec le ligament antérieur du pubis.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle grand fessier (gluteus maximus) s’insère directement sur le tubercule du pubis pour renforcer la plaque antérieure.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le muscle long adducteur possède une insertion mixte (tendineuse en superficie et musculaire en profondeur) qui s’unit à l’insertion distale du muscle droit de l’abdomen controlatéral.",
+          "correct": true
+        }
       ],
-      "explication": "Les réponses correctes sont A, B et D. Les muscles droit de l’abdomen et long adducteur sont fondamentaux pour la stabilité pubienne et leurs aponévroses fusionnent au centre pour former le complexe aponévrotique prépubien. Le tendon du muscle droit de l’abdomen se continue avec le ligament antérieur du pubis. Le muscle long adducteur a bien une insertion tendineuse/musculaire et ses fibres croisent la ligne médiane pour rejoindre le grand droit controlatéral. Le grand fessier a une insertion postérieure (sacrum/ilion) et n’intervient pas dans l’anatomie pubienne.",
+      "explication": "Les muscles droit de l’abdomen et long adducteur sont fondamentaux pour la stabilité pubienne et leurs aponévroses fusionnent au centre pour former le complexe aponévrotique prépubien. Le tendon du muscle droit de l’abdomen se continue avec le ligament antérieur du pubis. Le muscle long adducteur a bien une insertion tendineuse/musculaire et ses fibres croisent la ligne médiane pour rejoindre le grand droit controlatéral. Le grand fessier a une insertion postérieure (sacrum/ilion) et n’intervient pas dans l’anatomie pubienne.",
       "correction_figures": [],
-      "source": { "page": 620, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 620,
+        "element": "Texte",
+        "refs": ""
+      }
     }
   ]
 }

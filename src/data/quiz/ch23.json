@@ -6,5 +6,659 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c23-q01",
+      "type": "QRM",
+      "theme": "Instabilité patellaire objective (IPO)",
+      "enonce": "Selon le démembrement de l’école lyonnaise, quels éléments permettent de définir l’instabilité patellaire objective (IPO) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’existence d’au moins un antécédent de luxation vraie de la patella authentifiée",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’absence totale d’anomalie morphologique en radiographie",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La présence d’au moins un facteur principal d’instabilité (dysplasie de la trochlée, patella alta, distance TA-GT augmentée)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une bascule latérale de la patella considérée isolément comme le facteur de risque principal exclusif",
+          "correct": false
+        }
+      ],
+      "explication": "L’instabilité patellaire objective (IPO) se définit par l’association d’au moins un antécédent de luxation vraie de la patella (authentifiée par le patient, un médecin ou des séquelles radiologiques) et d’au moins un facteur principal d’instabilité patellaire (dysplasie de la trochlée, patella alta, distance TA-GT augmentée). L’absence d’anomalie morphologique majeure caractérise les syndromes patellaires douloureux. La bascule latérale de la patella est aujourd’hui considérée comme un facteur associé (présent dans plus de 85 % des cas lorsqu’un facteur principal est détecté) et non plus comme un facteur principal isolé.",
+      "correction_figures": [],
+      "source": {
+        "page": 629,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c23-q02",
+      "type": "QCU",
+      "theme": "Syndrome patellaire douloureux : types frontal et sagittal",
+      "enonce": "Un patient consulte pour des douleurs antérieures du genou survenant essentiellement lors de la station assise prolongée, l’obligeant à étendre la jambe (« signe du cinéma »), ainsi qu’à la descente des escaliers, associées à des sensations de dérobement. À quel cadre clinique ce tableau correspond-il et quelle prise en charge rééducative spécifique nécessite-t-il ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Syndrome patellaire douloureux de type sagittal ; levée exclusive des rétractions musculaires par étirement",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Syndrome patellaire douloureux de type frontal ; renforcement des muscles quadriceps fémoral et ischiojambiers associé à la levée des rétractions musculaires",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Blocage méniscal aigu ; méniscectomie sous arthroscopie",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Syndrome de friction fémoropatellaire pur déclenché uniquement par l’hyperextension",
+          "correct": false
+        }
+      ],
+      "explication": "Les douleurs survenant en position assise prolongée (signe du cinéma) ou à la descente des escaliers caractérisent les syndromes patellaires douloureux de type frontal. Leur traitement repose sur le renforcement des muscles quadriceps fémoral et ischiojambiers (travail isométrique ou isocinétique) sans omettre de lever les rétractions musculaires. À l’inverse, le syndrome de type sagittal survient proche de l’extension (marche, montée des escaliers) et se traite avant tout par des étirements pour lever les rétractions.",
+      "correction_figures": [],
+      "source": {
+        "page": 630,
+        "element": "Texte",
+        "refs": "p. 630, 639"
+      }
+    },
+    {
+      "id": "c23-q03",
+      "type": "QCU",
+      "theme": "Dysplasie trochléenne : classification de Dejour",
+      "enonce": "Sur une radiographie de genou de profil strict d’un patient présentant une instabilité patellaire, vous observez que la ligne de fond de la trochlée croise le bord antérieur du condyle latéral. Vous notez également la présence d’un éperon sus-trochléen ainsi qu’un double contour qui se prolonge plus bas que le signe du croisement. Sur les coupes axiales en scanner, il existe un décroché franc en « falaise » entre la facette latérale et une facette médiale hypoplasique. Selon la classification de Dejour, de quel type de dysplasie trochléenne s’agit-il ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Type A",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Type B",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Type C",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Type D",
+          "correct": true
+        }
+      ],
+      "explication": "Selon la classification de Dejour, toutes les dysplasies présentent le signe du croisement. Le type A correspond à une trochlée peu creusée (angle > 145°) mais de forme conservée. Le type B associe le croisement et un éperon sus-trochléen (trochlée plate). Le type C associe le croisement et un double contour pathologique (asymétrie avec hypoplasie médiale sans éperon). Le type D combine le signe du croisement, l’éperon sus-trochléen et le double contour pathologique en radiographie, avec un aspect caractéristique en « falaise » (décroché asymétrique entre les deux facettes) en coupe axiale.",
+      "correction_figures": [],
+      "source": {
+        "page": 632,
+        "element": "Texte",
+        "refs": "p. 632-634"
+      }
+    },
+    {
+      "id": "c23-q04",
+      "type": "QRM",
+      "theme": "Instabilité patellaire : seuils pathologiques en imagerie",
+      "enonce": "Quelles sont les valeurs seuils considérées comme pathologiques en imagerie (radiographie, TDM ou IRM) lors du bilan d’une instabilité patellaire ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une pente latérale de la trochlée au sommet inférieure ou égale à 11° en TDM/IRM",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un angle trochléen supérieur à 150° en TDM",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une profondeur osseuse de la trochlée supérieure à 6 mm en TDM",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une distance TA-GT supérieure à 20 mm",
+          "correct": true
+        },
+        {
+          "id": "E",
+          "texte": "Une bascule patellaire supérieure à 20° en radiographie ou TDM",
+          "correct": true
+        }
+      ],
+      "explication": "Dans le bilan d’instabilité, les seuils pathologiques sont : une pente latérale de la trochlée au sommet ≤ 11° (discriminante pour l’instabilité patellaire, normale entre 15 et 30°), un angle trochléen > 150° (normal à 138 ± 6°), une distance TA-GT > 20 mm, et une bascule de la patella > 20°. En revanche, l’insuffisance de creusement (dysplasie) se traduit par une profondeur de la trochlée inférieure à 3 mm en TDM (ou inférieure à 5 mm en radiographie).",
+      "correction_figures": [],
+      "source": {
+        "page": 630,
+        "element": "Texte",
+        "refs": "p. 630, 634, 639"
+      }
+    },
+    {
+      "id": "c23-q05",
+      "type": "QCU",
+      "theme": "Hauteur patellaire : indice patello-trochléaire",
+      "enonce": "Vous évaluez la hauteur patellaire chez un patient ayant bénéficié dans le passé d’une ostéotomie de la tubérosité tibiale antérieure (TTA) et présentant une pointe patellaire distale constitutionnellement très allongée (« nez de sorcière »). Quel indice d’imagerie réalisée genou en extension (quadriceps décontracté) permet d’évaluer directement l’engagement sagittal fonctionnel en prenant en compte uniquement les surfaces cartilagineuses en contact, sans être faussé ni par la morphologie osseuse de la pointe patellaire ni par les remaniements chirurgicaux de la TTA ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’indice d’Insall et Salvati en radiographie",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’indice de Blackburne et Peel en radiographie",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’indice patello-trochléaire en IRM",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La mesure de la distance TA-GT au scanner",
+          "correct": false
+        }
+      ],
+      "explication": "L’indice patello-trochléaire (mesuré en IRM, genou en extension et quadriceps décontracté) correspond au rapport entre la longueur du cartilage articulaire trochléaire en regard du cartilage patellaire et la longueur articulaire patellaire maximale (patella alta si < 12,5 %). Son avantage majeur est de mesurer directement le contact cartilagineux patello-trochléaire et de ne pas être affecté par les modifications osseuses post-thérapeutiques. À l’inverse, l’indice d’Insall et Salvati prend en compte toute la hauteur osseuse de la patella (et peut occulter une patella alta si la pointe distale est longue, en plus d’être modifié par une chirurgie de la TTA). L’indice de Blackburne et Peel dépend de la pente des plateaux tibiaux et se mesure à 30° de flexion.",
+      "correction_figures": [],
+      "source": {
+        "page": 635,
+        "element": "Texte",
+        "refs": "p. 635-637"
+      }
+    },
+    {
+      "id": "c23-q06",
+      "type": "QRM",
+      "theme": "Distance TA-GT",
+      "enonce": "Concernant la mesure de la distance TA-GT (tubérosité tibiale antérieure – gorge de la trochlée) en imagerie en coupe, quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Elle consiste à superposer la coupe passant par « l’arche romane » et celle passant par l’insertion tibiale du tendon patellaire",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le repère distal doit impérativement être placé au centre osseux géométrique de la tubérosité tibiale antérieure",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le repère distal correspond au milieu de l’insertion tendineuse du tendon patellaire sur la tubérosité tibiale antérieure",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Sa valeur varie selon le degré de flexion du genou, avec une meilleure sensibilité à 15° de flexion qu’à 30°",
+          "correct": true
+        }
+      ],
+      "explication": "La mesure de la TA-GT évalue le valgus de l’appareil extenseur en superposant la coupe à l’arche romane (pour le plan bicondylien postérieur et le fond de la gorge trochléenne GT) et la coupe passant par l’insertion tibiale du tendon patellaire. Il est fondamental de placer la perpendiculaire distale au milieu de l’insertion du tendon patellaire et non au milieu osseux de la tubérosité tibiale antérieure. Enfin, la mesure dépend de la flexion (normale à 9 ± 4,3 mm à 30° et 15 ± 4,5 mm à 15° de flexion, où la sensibilité est meilleure).",
+      "correction_figures": [],
+      "source": {
+        "page": 637,
+        "element": "Texte",
+        "refs": "p. 637-638"
+      }
+    },
+    {
+      "id": "c23-q07",
+      "type": "QRM",
+      "theme": "Luxation aiguë latérale de la patella",
+      "enonce": "Après un traumatisme du genou, quels signes radiologiques ou IRM constituent des stigmates caractéristiques d’une luxation aiguë (transitoire) latérale de la patella ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une avulsion osseuse du bord médial de la patella ou une lésion du ligament fémoropatellaire médial (LFPM)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une lésion ostéochondrale de la partie antéro-inférolatérale du condyle fémoral latéral",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une fracture ostéochondrale de la crête patellaire ou de la facette patellaire médiale",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une impaction ostéochondrale isolée du bord postéromédial du plateau tibial médial",
+          "correct": false
+        }
+      ],
+      "explication": "Lors d’une luxation aiguë latérale de la patella, les stabilisateurs médiaux (LFPM, rétinaculum médial, vaste médial oblique) sont déchirés ou avulsés sur le bord médial de la patella. Par ailleurs, l’impaction de la patella contre le fémur lors de la luxation/réduction entraîne des fractures ostéochondrales typiques en miroir : sur la crête ou la facette médiale de la patella et sur la partie antéro-inférolatérale du condyle fémoral latéral, pouvant libérer des fragments ostéochondraux intra-articulaires. L’impaction postéromédiale du tibia ne fait pas partie de ce tableau.",
+      "correction_figures": [],
+      "source": {
+        "page": 630,
+        "element": "Texte",
+        "refs": "p. 630, 639"
+      }
+    },
+    {
+      "id": "c23-q08",
+      "type": "QCU",
+      "theme": "Arthrose fémoropatellaire : incidence axiale à 30°",
+      "enonce": "Lors de la réalisation d’une incidence radiographique fémoropatellaire axiale à 30° de flexion en décubitus pour explorer une arthrose fémoropatellaire, quelle manœuvre permet d’optimiser la détection d’un pincement de l’interligne selon le compartiment suspecté ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Quadriceps contracté pour rechercher un pincement latéral, et décontracté pour un pincement médial",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Quadriceps décontracté pour rechercher un pincement latéral, et contracté (idéalement en charge) pour un pincement médial",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Rotation interne forcée de la jambe dans tous les cas",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Réalisation systématique en hyperextension stricte à 0°",
+          "correct": false
+        }
+      ],
+      "explication": "Sur l’incidence fémoropatellaire à 30° de flexion réalisée en décubitus, le pincement articulaire latéral (le plus fréquent) se recherche avec le muscle quadriceps fémoral décontracté, tandis que le pincement médial se recherche avec le muscle quadriceps fémoral contracté (idéalement en charge).",
+      "correction_figures": [],
+      "source": {
+        "page": 640,
+        "element": "Texte",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c23-q09",
+      "type": "QCU",
+      "theme": "Défect dorsal vs ostéochondrite de la patella",
+      "enonce": "Un adolescent de 15 ans passe une radiographie du genou suite à une contusion bénigne. Vous découvrez fortuitement une lacune sous-chondrale arrondie, finement cerclée d’un liseré d’ostéocondensation, localisée précisément au tiers supérolatéral de la patella. En IRM, le cartilage en regard est continu et épaissi pour combler le défect osseux. Quel diagnostic devez-vous retenir en priorité et comment le différenciez-vous topographiquement d’une ostéochondrite disséquante de la patella ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il s’agit d’une ostéochondrite de la patella, car celle-ci siège dans 70 % des cas au pôle supérolatéral",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il s’agit d’un défect dorsal de la patella ; contrairement à lui, l’ostéochondrite siège dans les deux tiers distaux (surtout sur la facette médiale) et n’affecte quasiment jamais la partie proximale",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il s’agit d’une patella bipartita de type I, qui siège toujours au pôle supérolatéral",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il s’agit d’une maladie de Sinding-Larsen-Johansson du pôle supérieur",
+          "correct": false
+        }
+      ],
+      "explication": "Le défect dorsal de la patella est une lacune sous-chondrale bénigne cerclée d’ostéocondensation siégeant typiquement au tiers supérolatéral de la patella chez l’adolescent, avec un cartilage en regard souvent épaissi et invaginé. À l’inverse, l’ostéochondrite de la patella siège dans les deux tiers distaux de la patella, principalement sur la facette médiale (70 % des cas), et n’affecte quasiment jamais la partie proximale. La patella bipartita de type I siège au pôle distal (c’est le type III qui est supérolatéral), et la maladie de Sinding-Larsen-Johansson affecte la pointe distale de la patella.",
+      "correction_figures": [],
+      "source": {
+        "page": 642,
+        "element": "Texte",
+        "refs": "p. 642-643"
+      }
+    },
+    {
+      "id": "c23-q10",
+      "type": "QRM",
+      "theme": "Patella bipartita",
+      "enonce": "Concernant la patella bipartita, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Elle touche plus fréquemment les sujets de sexe masculin (sex-ratio 9/1) et est habituellement bilatérale",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le type III, affectant la partie supérolatérale de la patella, est de loin le plus fréquent (75 % des cas)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il existe toujours une solution de continuité complète du cartilage articulaire en regard de la séparation osseuse",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Lorsqu’elle devient douloureuse chez le jeune athlète, l’IRM peut montrer un œdème osseux des berges de part et d’autre de la synchondrose dû aux forces de traction du muscle vaste latéral",
+          "correct": true
+        }
+      ],
+      "explication": "La patella bipartita résulte d’une absence de fusion d’un centre d’ossification secondaire (2 % des sujets, sex-ratio H/F de 9/1, souvent bilatérale). Le type III (supérolatéral) représente 75 % des cas, contre 20 % pour le type II (latéral) et 2 % pour le type I (distal). Parce qu’il s’agit d’un défaut de fusion osseuse, il existe une continuité cartilagineuse malgré la discontinuité osseuse. Chez le sportif, les tractions répétées du muscle vaste latéral sur la synchondrose fibrocartilagineuse peuvent créer une micromobilité douloureuse se traduisant par un œdème osseux des berges en IRM (voire exceptionnellement une nécrose du fragment).",
+      "correction_figures": [],
+      "source": {
+        "page": 644,
+        "element": "Texte",
+        "refs": "p. 644-645"
+      }
+    },
+    {
+      "id": "c23-q11",
+      "type": "QCU",
+      "theme": "Rupture du tendon du muscle quadriceps fémoral",
+      "enonce": "Un homme de 55 ans, diabétique et en surcharge pondérale, ressent un claquement brutal au-dessus du genou lors d’une réception de marche d’escalier. Bien que vous suspectiez une rupture complète du tendon du muscle quadriceps fémoral devant une tuméfaction suprapatellaire et une patella basse en radiographie, le patient parvient encore à réaliser une ébauche d’extension active du genou lors de l’examen clinique. Comment s’explique anatomiquement ce piège diagnostique et comment devez-vous positionner le genou en échographie pour confirmer le caractère complet de la rupture ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’extension active persiste grâce au ligament croisé antérieur ; l’échographie doit être réalisée en hyperextension stricte",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’extension active est assurée par les expansions fibreuses des muscles vastes latéral et médial qui passent en avant de la patella pour s’insérer sur le tibia ; l’échographie doit étudier le tendon sur un genou fléchi à 45° avec manœuvres dynamiques",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’extension active est assurée par le muscle poplité ; l’échographie se fait genou fléchi à 120°",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La persistance d’une extension active élimine formellement toute rupture complète des trois lames du tendon quadricipital",
+          "correct": false
+        }
+      ],
+      "explication": "Certaines ruptures complètes du tendon quadricipital (qui comporte trois lames : superficielle issue du droit fémoral, intermédiaire issue des vastes médial et latéral, et profonde issue du vaste intermédiaire) peuvent être méconnues cliniquement car une extension active reste possible grâce aux expansions fibreuses (rétinaculums) des muscles vastes latéral et médial qui s’entrecroisent en avant de la patella sans lui adhérer pour s’insérer sur l’extrémité proximale du tibia. En échographie, il est crucial d’examiner le genou fléchi à environ 45° (coussin sous le genou) et de réaliser une traction dynamique de la patella vers le bas pour mettre le tendon en tension et élargir la solution de continuité (hématome interfragmentaire).",
+      "correction_figures": [],
+      "source": {
+        "page": 645,
+        "element": "Texte",
+        "refs": "p. 645-646"
+      }
+    },
+    {
+      "id": "c23-q12",
+      "type": "QRM",
+      "theme": "Enthésopathie proximale du tendon patellaire (jumper’s knee)",
+      "enonce": "Quelles propositions caractérisent l’enthésopathie proximale du tendon patellaire (« jumper’s knee ») ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Sur le plan histologique, il s’agit d’une tendinite aiguë riche en polynucléaires neutrophiles",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Sur le plan histologique, il s’agit d’une tendinopathie dégénérative sans cellule inflammatoire secondaire à des microruptures",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "En IRM, elle se traduit par un épaississement antéropostérieur proximal du tendon (> 7 mm) et des anomalies de signal prédominant à la face postérieure (souvent au tiers central ou médial)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Lorsque les anomalies de signal prédominent sur le versant latéral du tendon patellaire, il convient de rechercher une instabilité patellaire ou un syndrome de friction fémoropatellaire",
+          "correct": true
+        }
+      ],
+      "explication": "Le « jumper’s knee » touche les sportifs pratiquant des extensions répétées ou brutales (saut, basket, volley). Histologiquement, il s’agit d’une tendinopathie dégénérative sans cellule inflammatoire, rendant le terme de « tendinite » impropre. En IRM, l’épaississement proximal dépasse 7 mm et les anomalies de signal siègent à la face profonde (postérieure) du tendon, classiquement au tiers central ou médial. Si l’atteinte est latérale, il faut rechercher un conflit (syndrome de friction fémoropatellaire) ou une instabilité patellaire.",
+      "correction_figures": [],
+      "source": {
+        "page": 647,
+        "element": "Texte",
+        "refs": "p. 647-649"
+      }
+    },
+    {
+      "id": "c23-q13",
+      "type": "QCU",
+      "theme": "Apophysoses : Sinding-Larsen-Johansson et Osgood-Schlatter",
+      "enonce": "Quelle est la localisation anatomique de l’apophysose de traction dans la maladie de Sinding-Larsen-Johansson comparativement à la maladie d’Osgood-Schlatter ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Pôle proximal de la patella pour Sinding-Larsen-Johansson ; pôle distal de la patella pour Osgood-Schlatter",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Pôle distal (pointe) de la patella pour Sinding-Larsen-Johansson ; tubérosité tibiale antérieure (TA) pour Osgood-Schlatter",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Tubérosité tibiale antérieure pour Sinding-Larsen-Johansson ; pôle distal de la patella pour Osgood-Schlatter",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Condyle fémoral latéral pour Sinding-Larsen-Johansson ; épine tibiale antérieure pour Osgood-Schlatter",
+          "correct": false
+        }
+      ],
+      "explication": "Ces deux ostéochondroses de croissance (apophysoses de traction) partagent la même pathogénie microtraumatique chez l’adolescent sportif et peuvent coexister : la maladie de Sinding-Larsen-Johansson touche l’enthèse proximale du tendon patellaire au pôle distal (pointe) de la patella (entre 10 et 14 ans), tandis que la maladie d’Osgood-Schlatter affecte l’enthèse distale sur la tubérosité tibiale antérieure (surtout chez les garçons de 11 à 15 ans).",
+      "correction_figures": [],
+      "source": {
+        "page": 649,
+        "element": "Texte",
+        "refs": "p. 649-650"
+      }
+    },
+    {
+      "id": "c23-q14",
+      "type": "QCU",
+      "theme": "Maladie d’Osgood-Schlatter : diagnostic radiographique",
+      "enonce": "Chez un garçon de 12 ans suspect de maladie d’Osgood-Schlatter, quel signe radiographique est indispensable pour affirmer le diagnostic et ne pas confondre l’image avec une simple variante normale de l’ossification de la tubérosité tibiale antérieure (présence physiologique de plusieurs noyaux d’ossification) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La présence d’au moins trois noyaux d’ossification distincts en regard de la métaphyse tibiale",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une fermeture prématurée (épiphysiodèse) du cartilage de croissance tibial proximal",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La tuméfaction des tissus mous en regard de la tubérosité tibiale antérieure (associée à un aspect flou de la partie basse du tendon patellaire)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une patella infera sévère sur le cliché de profil",
+          "correct": false
+        }
+      ],
+      "explication": "À l’état normal (entre 8-12 ans chez la fille et 9-14 ans chez le garçon), plusieurs noyaux d’ossification secondaires peuvent être présents au sein de la tubérosité tibiale antérieure (TA) sans être pathologiques. Le signe indispensable au diagnostic radiographique de maladie d’Osgood-Schlatter est la présence d’une tuméfaction des tissus mous en regard de la TA (souvent associée à un flou du tiers distal du tendon patellaire et de la graisse de Hoffa). Le cartilage de croissance n’est habituellement pas affecté, et la complication éventuelle est une patella alta et non infera.",
+      "correction_figures": [],
+      "source": {
+        "page": 650,
+        "element": "Texte",
+        "refs": "p. 650-651"
+      }
+    },
+    {
+      "id": "c23-q15",
+      "type": "QCU",
+      "theme": "Graisse de Hoffa : syndrome de friction fémoropatellaire",
+      "enonce": "Une jeune femme de 22 ans présente une douleur antérieure du genou exacerbée par l’hyperextension, avec une sensibilité élective du pôle distal de la patella. L’IRM met en évidence un œdème localisé et des remaniements microkystiques de la portion supérolatérale de la graisse de Hoffa, ainsi qu’une distance réduite à 3 mm entre le tendon patellaire et la facette latérale de la trochlée. Quelle est l’entité diagnostique précise et à quels facteurs anatomiques est-elle volontiers associée ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Conflit de la graisse suprapatellaire ; associé à un genu varum sévère",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Syndrome de friction fémoropatellaire ; volontiers associé à une patella alta ou une distance TA-GT augmentée (sans lien démontré avec la dysplasie de trochlée)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Bursopathie infrapatellaire superficielle infectieuse ; associée à une porte d’entrée cutanée",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Hernie de la graisse de Hoffa à travers le rétinaculum médial",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome de friction fémoropatellaire correspond à un conflit (« prise en sandwich ») de la graisse infrapatellaire (Hoffa) supérolatérale entre la face postérieure du tendon patellaire et la face antérieure du condyle fémoral latéral. Il traduit un défaut d’alignement de l’appareil extenseur et est volontiers associé à une patella alta ou une augmentation de la distance TA-GT, alors que la dysplasie de trochlée ne semble pas être un facteur favorisant. Attention toutefois : un œdème de cette zone pouvant se voir chez des sujets asymptomatiques, le diagnostic de conflit nécessite une corrélation avec la douleur clinique.",
+      "correction_figures": [],
+      "source": {
+        "page": 652,
+        "element": "Texte",
+        "refs": "p. 652-654"
+      }
+    },
+    {
+      "id": "c23-q16",
+      "type": "QCU",
+      "theme": "Hernie de la graisse de Hoffa",
+      "enonce": "Un patient consulte pour une tuméfaction indolore du versant antérolatéral de la région infrapatellaire qui présente la particularité clinique de n’apparaître que lors de la flexion du genou et de disparaître en extension. L’IRM réalisée en extension semble quasi normale en dehors d’une petite déhiscence focale du rétinaculum patellaire latéral. Quel examen permet de confirmer facilement le diagnostic et de quelle pathologie s’agit-il ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une échographie dynamique en flexion, démontrant une hernie de la graisse de Hoffa à travers un défect du rétinaculum patellaire latéral",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un arthroscanner en extension, démontrant un kyste méniscal sur fissure de la corne antérieure du ménisque latéral",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une radiographie en charge, démontrant une luxation congénitale permanente de la patella",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une scintigraphie osseuse, démontrant une maladie de Hoffa ossifiée au stade chronique",
+          "correct": false
+        }
+      ],
+      "explication": "Les hernies de la graisse de Hoffa se manifestent par une masse indolore antérolatérale infrapatellaire apparaissant uniquement lors de la flexion du genou, liée à un défect (supposé congénital) du rétinaculum patellaire latéral. L’IRM étant réalisée en extension, la hernie est réduite et seul le défect rétinaculaire est visible. C’est l’échographie dynamique lors des mouvements de flexion qui permet d’objectiver directement la protrusion de la graisse de Hoffa à travers ce défect.",
+      "correction_figures": [],
+      "source": {
+        "page": 656,
+        "element": "Texte",
+        "refs": "p. 656-657"
+      }
+    },
+    {
+      "id": "c23-q17",
+      "type": "QRM",
+      "theme": "Plicae synoviales du genou",
+      "enonce": "Concernant les plicae synoviales du genou et leur analyse en imagerie, quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Par ordre de fréquence décroissante lors d’autopsies, la plica la plus fréquente est la plica infrapatellaire (ligamentum mucosum), suivie de la plica suprapatellaire, puis médiopatellaire, et enfin latérale",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La plica infrapatellaire chemine dans la fosse intercondylaire parallèlement et juste en avant du ligament croisé antérieur (LCA), pouvant parfois prêter à confusion avec un LCA intact lorsque celui-ci est rompu et que la plica est épaissie",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une plica suprapatellaire complète isole la bourse suprapatellaire de la cavité articulaire, ce qui peut simuler une masse tumorale en cas d’épanchement hématique ou d’ostéochondromatose localisée",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "En imagerie, le meilleur critère de pathogénicité d’une plica médiopatellaire est sa simple visibilité sur les séquences pondérées en T2, quelle que soit l’intégrité du cartilage adjacent",
+          "correct": false
+        }
+      ],
+      "explication": "Les quatre plicae synoviales sont, par fréquence décroissante : infrapatellaire (65 % en autopsie), suprapatellaire (55 %), médiopatellaire (24,5 % en autopsie, jusqu’à 79,9 % en arthroscopie) et latérale (très rare). La plica infrapatellaire (ligamentum mucosum) est située juste devant le LCA et lui est parallèle. Lorsqu’une plica suprapatellaire est complète (non perforée), elle cloisonne la bourse suprapatellaire qui peut alors se distendre isolément (hémarthrose, ostéochondromatose) et mimer une tumeur. En revanche, les plicae sont très souvent asymptomatiques et les critères de taille/épaisseur sont débattus ; en imagerie, c’est la mise en évidence d’une chondropathie patellaire médiale ou trochléenne médiale en regard qui constitue le meilleur critère de pathogénicité d’une plica médiopatellaire.",
+      "correction_figures": [],
+      "source": {
+        "page": 657,
+        "element": "Texte",
+        "refs": "p. 657-659"
+      }
+    },
+    {
+      "id": "c23-q18",
+      "type": "QCU",
+      "theme": "Corps adipeux de Hoffa : kyste mucoïde vs kyste méniscal",
+      "enonce": "Un sportif présente en IRM un kyste multiloculé fortement hyperintense en T2 avec de fins septa, développé au sein du corps adipeux infrapatellaire de Hoffa, juste en avant de la corne antérieure du ménisque latéral. Quel élément sémiologique permet de différencier ce kyste mucoïde d’un kyste méniscal ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’absence totale de rehaussement central ou périphérique après injection de gadolinium dans le kyste méniscal",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’absence de fissure au sein de la corne antérieure du ménisque latéral adjacent dans le cas du kyste mucoïde",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le fait qu’un kyste mucoïde soit toujours strictement uniloculaire et hypointense en T2",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La présence systématique de calcifications massives dans le kyste mucoïde dès le stade initial",
+          "correct": false
+        }
+      ],
+      "explication": "Les kystes mucoïdes (ganglion cysts) du corps adipeux de Hoffa siègent volontiers au contact de la corne antérieure du ménisque latéral. Ils se distinguent des kystes méniscaux par l’intégrité du ménisque adjacent (absence de fissure méniscale), leur pertuis provenant souvent de la capsule ou de l’échancrure intercondylaire. Comme les autres kystes, ils sont hyperintenses en T2, volontiers multiloculés avec des septa, et peuvent présenter un fin rehaussement périphérique linéaire après injection de gadolinium.",
+      "correction_figures": [],
+      "source": {
+        "page": 656,
+        "element": "Texte",
+        "refs": "p. 656-657"
+      }
+    }
+  ]
 }

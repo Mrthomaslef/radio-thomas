@@ -13,17 +13,43 @@
       "enonce": "Parmi les ligaments glénohuméraux, lequel est celui qui présente le plus de variations de taille, de forme et d’insertion, et qui peut être absent dans 20 à 30 % des cas ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Le ligament glénohuméral supérieur (LGHS)", "correct": false},
-        {"id": "B", "texte": "Le ligament glénohuméral moyen (LGHM)", "correct": true},
-        {"id": "C", "texte": "Le faisceau antérieur du ligament glénohuméral inférieur", "correct": false},
-        {"id": "D", "texte": "Le faisceau postérieur du ligament glénohuméral inférieur", "correct": false}
+        {
+          "id": "A",
+          "texte": "Le ligament glénohuméral supérieur (LGHS)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le ligament glénohuméral moyen (LGHM)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le faisceau antérieur du ligament glénohuméral inférieur",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le faisceau postérieur du ligament glénohuméral inférieur",
+          "correct": false
+        }
       ],
-      "explication": "Le LGHM est le ligament glénohuméral le plus variable : il peut être absent (20 à 30 % des cas), avoir une insertion proximale distincte, commune avec le LGHS ou le LGHI, ou médiale sur le col de la scapula, et il peut être fin, épais « en corde », atrophique ou bifide. Lorsqu’il est absent, le récessus subscapulaire est de grande taille et l’insertion du LGHI est plus haute qu’habituellement.\n\nLe LGHS (A) est au contraire le ligament le plus constant (décrit dans 97 % des cas en arthro-IRM) : il n’est absent que dans 3 % des cas. Le LGHI (C et D) est constitué d’un faisceau antérieur, généralement plus épais, et d’un faisceau postérieur ; sa variabilité porte surtout sur la hauteur d’insertion du faisceau antérieur.\n\nPoint pratique : l’absence de LGHM ou ses variations anatomiques ne semblent pas associées à un risque majoré d’instabilité, mais il faut les connaître pour ne pas les prendre pour des lésions.",
+      "explication": "Le LGHM est le ligament glénohuméral le plus variable : il peut être absent (20 à 30 % des cas), avoir une insertion proximale distincte, commune avec le LGHS ou le LGHI, ou médiale sur le col de la scapula, et il peut être fin, épais « en corde », atrophique ou bifide. Lorsqu’il est absent, le récessus subscapulaire est de grande taille et l’insertion du LGHI est plus haute qu’habituellement.\n\nLe LGHS est au contraire le ligament le plus constant (décrit dans 97 % des cas en arthro-IRM) : il n’est absent que dans 3 % des cas. Le LGHI est constitué d’un faisceau antérieur, généralement plus épais, et d’un faisceau postérieur ; sa variabilité porte surtout sur la hauteur d’insertion du faisceau antérieur.\n\nPoint pratique : l’absence de LGHM ou ses variations anatomiques ne semblent pas associées à un risque majoré d’instabilité, mais il faut les connaître pour ne pas les prendre pour des lésions.",
       "correction_figures": [
-        {"file": "02. Instabilité glénohuméral_p57_1.png", "caption": "Fig. 2.8 Schéma de variations du LGHM. Insertion haute du LGHM (commune avec le LGHS) (a), LGHM en corde de façon isolée (b), LGHM en corde associé à un foramen sous-labral (c), complexe de Buford (d)."},
-        {"file": "02. Instabilité glénohuméral_p56_1.png", "caption": "Fig. 2.6 LGHM (flèche) en arthroscanner coupe axiale (a) et arthro-IRM coupes axiale (b) et sagittale (c). Il est bien visualisé entre le labrum glénoïdal antérieur et la face profonde du tendon subscapulaire (tête de flèche)."}
+        {
+          "file": "02. Instabilité glénohuméral_p57_1.png",
+          "caption": "Fig. 2.8 Schéma de variations du LGHM. Insertion haute du LGHM (commune avec le LGHS) (a), LGHM en corde de façon isolée (b), LGHM en corde associé à un foramen sous-labral (c), complexe de Buford (d)."
+        },
+        {
+          "file": "02. Instabilité glénohuméral_p56_1.png",
+          "caption": "Fig. 2.6 LGHM (flèche) en arthroscanner coupe axiale (a) et arthro-IRM coupes axiale (b) et sagittale (c). Il est bien visualisé entre le labrum glénoïdal antérieur et la face profonde du tendon subscapulaire (tête de flèche)."
+        }
       ],
-      "source": {"page": 56, "element": "Texte", "refs": "[16, 179, 192, 207]"}
+      "source": {
+        "page": 56,
+        "element": "Texte",
+        "refs": "[16, 179, 192, 207]"
+      }
     },
     {
       "id": "c2-q02",
@@ -32,18 +58,48 @@
       "enonce": "À propos du complexe de Buford, quelles sont les affirmations exactes ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Il associe une absence de labrum antérosupérieur à un LGHM épais, en forme de corde", "correct": true},
-        {"id": "B", "texte": "L’insertion proximale du LGHM siège sur le labrum glénoïdal supérieur, en avant de l’insertion du tendon du chef long du biceps", "correct": true},
-        {"id": "C", "texte": "Il s’observe dans 1 à 2 % des cas", "correct": true},
-        {"id": "D", "texte": "Il atteint le labrum inférieur, comme la lésion de Bankart", "correct": false},
-        {"id": "E", "texte": "Il se situe volontiers au-dessous du tendon du muscle subscapulaire", "correct": false}
+        {
+          "id": "A",
+          "texte": "Il associe une absence de labrum antérosupérieur à un LGHM épais, en forme de corde",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’insertion proximale du LGHM siège sur le labrum glénoïdal supérieur, en avant de l’insertion du tendon du chef long du biceps",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il s’observe dans 1 à 2 % des cas",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Il atteint le labrum inférieur, comme la lésion de Bankart",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Il se situe volontiers au-dessous du tendon du muscle subscapulaire",
+          "correct": false
+        }
       ],
-      "explication": "Le complexe de Buford est une variante anatomique (1 à 2 % des cas) : absence de labrum antérosupérieur et LGHM épais « en corde », inséré sur le labrum supérieur en avant du tendon du chef long du biceps. La corde a souvent la taille du tendon du biceps ou un peu plus.\n\nD est faux : le foramen sous-labral et le complexe de Buford épargnent le labrum inférieur, à la différence de la lésion de Bankart ; ils siègent classiquement dans un rayon de 1 à 3 h. E est faux : ils ne sont jamais constatés à hauteur du tendon du muscle subscapulaire, et a fortiori au-dessous de lui.\n\nL’enjeu est thérapeutique : un complexe de Buford pris pour une déchirure labrale peut conduire à suturer le LGHM à la glène, avec une diminution de la mobilité articulaire. Les contours sont réguliers et il n’y a pas d’extension au complexe bicipitolabral, contrairement aux SLAP lésions.",
+      "explication": "Le complexe de Buford est une variante anatomique (1 à 2 % des cas) : absence de labrum antérosupérieur et LGHM épais « en corde », inséré sur le labrum supérieur en avant du tendon du chef long du biceps. La corde a souvent la taille du tendon du biceps ou un peu plus.\n\nLe foramen sous-labral et le complexe de Buford épargnent le labrum inférieur, à la différence de la lésion de Bankart ; ils siègent classiquement dans un rayon de 1 à 3 h. Ils ne sont jamais constatés à hauteur du tendon du muscle subscapulaire, et a fortiori au-dessous de lui.\n\nL’enjeu est thérapeutique : un complexe de Buford pris pour une déchirure labrale peut conduire à suturer le LGHM à la glène, avec une diminution de la mobilité articulaire. Les contours sont réguliers et il n’y a pas d’extension au complexe bicipitolabral, contrairement aux SLAP lésions.",
       "correction_figures": [
-        {"file": "02. Instabilité glénohuméral_p61_2.png", "caption": "Fig. 2.17 Complexe de Buford : coupes axiale (a) et sagittale en arthroscanner (b). Absence de labrum antérosupérieur et volumineux LGHM en « corde » (flèches)."},
-        {"file": "02. Instabilité glénohuméral_p59_1.png", "caption": "Fig. 2.11 Variantes d’insertion du ligament glénohuméral inférieur (LGHI). Insertion haute de la bande antérieure du LGHI (LGHIa) avec un LGHM d’épaisseur normale (a) ; insertion haute de la bande antérieure du LGHI (LGHIa) avec un LGHM d’épaisseur normale et un labrum antérosupérieur hypoplasique (b, flèche) ; pseudo-foramen sous-labral (c, flèche) avec insertion haute de la bande antérieure du LGHI (LGHIa), LGHM d’épaisseur normale et labrum antérosupérieur absent ; variante du Buford liée à l’insertion haute de la bande antérieure du LGHI avec un LGHM épaissi en corde et un labrum antérosupérieur absent (d, flèche)."}
+        {
+          "file": "02. Instabilité glénohuméral_p61_2.png",
+          "caption": "Fig. 2.17 Complexe de Buford : coupes axiale (a) et sagittale en arthroscanner (b). Absence de labrum antérosupérieur et volumineux LGHM en « corde » (flèches)."
+        },
+        {
+          "file": "02. Instabilité glénohuméral_p59_1.png",
+          "caption": "Fig. 2.11 Variantes d’insertion du ligament glénohuméral inférieur (LGHI). Insertion haute de la bande antérieure du LGHI (LGHIa) avec un LGHM d’épaisseur normale (a) ; insertion haute de la bande antérieure du LGHI (LGHIa) avec un LGHM d’épaisseur normale et un labrum antérosupérieur hypoplasique (b, flèche) ; pseudo-foramen sous-labral (c, flèche) avec insertion haute de la bande antérieure du LGHI (LGHIa), LGHM d’épaisseur normale et labrum antérosupérieur absent ; variante du Buford liée à l’insertion haute de la bande antérieure du LGHI avec un LGHM épaissi en corde et un labrum antérosupérieur absent (d, flèche)."
+        }
       ],
-      "source": {"page": 60, "element": "Texte", "refs": "[255, 292, 325]"}
+      "source": {
+        "page": 60,
+        "element": "Texte",
+        "refs": "[255, 292, 325]"
+      }
     },
     {
       "id": "c2-q03",
@@ -52,17 +108,43 @@
       "enonce": "Dans l’instabilité antérieure, quelle lésion correspond à un labrum déplacé en bas et en dedans, au contact du col de la scapula, mais resté attaché à un périoste non rompu ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "La lésion de Bankart fibreuse", "correct": false},
-        {"id": "B", "texte": "La lésion de Perthes", "correct": false},
-        {"id": "C", "texte": "La lésion ALPSA", "correct": true},
-        {"id": "D", "texte": "La lésion GLAD", "correct": false}
+        {
+          "id": "A",
+          "texte": "La lésion de Bankart fibreuse",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La lésion de Perthes",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La lésion ALPSA",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La lésion GLAD",
+          "correct": false
+        }
       ],
-      "explication": "La lésion ALPSA (Anterior Labroligamentous Periosteal Sleeve Avulsion) associe un labrum déplacé en bas et en dedans, au contact du col de la scapula, et un périoste intact. Sans réparation, elle peut cicatriser en l’état mais reste responsable d’une instabilité antérieure par incompétence fonctionnelle du complexe labro-capsuloligamentaire. Avec le temps, le labrum et le LGHI détachés s’épaississent et se recouvrent de synoviale (masse chronique).\n\nA est faux : dans la lésion de Bankart fibreuse, le périoste est rompu. B est faux : la lésion de Perthes est une lésion de Bankart non déplacée, le labrum restant appliqué contre la glène par le périoste étiré mais non rompu (elle peut être difficile à voir en imagerie ; la position ABER aide). D est faux : la lésion GLAD associe une fissure superficielle non déplacée du labrum antéro-inférieur à une lésion cartilagineuse glénoïdale ; elle est stable puisque le LGHI reste attaché au labrum.\n\nSur le schéma, le périoste est rompu pour Bankart fibreux, osseux et GLOM, et reste continu pour Perthes, ALPSA et GLAD.",
+      "explication": "La lésion ALPSA (Anterior Labroligamentous Periosteal Sleeve Avulsion) associe un labrum déplacé en bas et en dedans, au contact du col de la scapula, et un périoste intact. Sans réparation, elle peut cicatriser en l’état mais reste responsable d’une instabilité antérieure par incompétence fonctionnelle du complexe labro-capsuloligamentaire. Avec le temps, le labrum et le LGHI détachés s’épaississent et se recouvrent de synoviale (masse chronique).\n\nDans la lésion de Bankart fibreuse, le périoste est rompu. La lésion de Perthes est une lésion de Bankart non déplacée, le labrum restant appliqué contre la glène par le périoste étiré mais non rompu (elle peut être difficile à voir en imagerie ; la position ABER aide). La lésion GLAD associe une fissure superficielle non déplacée du labrum antéro-inférieur à une lésion cartilagineuse glénoïdale ; elle est stable puisque le LGHI reste attaché au labrum.\n\nSur le schéma, le périoste est rompu pour Bankart fibreux, osseux et GLOM, et reste continu pour Perthes, ALPSA et GLAD.",
       "correction_figures": [
-        {"file": "02. Instabilité glénohuméral_p63_1.png", "caption": "Fig. 2.18 Différents types de lésions labrales ou cartilagineuse dans le cadre d’une instabilité antérieure de l’épaule. Notez la rupture du périoste en cas de lésions de type Bankart fibreux, osseux et GLOM. Le périoste reste continu en cas de lésions de type Perthes, ALPSA et GLAD."},
-        {"file": "02. Instabilité glénohuméral_p71_6.png", "caption": "Fig. 2.32 Différents types de lésions du labrum glénoïdal antéro-inférieur en arthroscanner. Lésion de Bankart fibreuse avec détachement du labrum antéro-inférieur (a, flèche). Lésion de Bankart osseuse avec fracture du rebord glénoïdal antéro-inférieur (b, flèche). Désinsertion du labrum non déplacé (lésion de Perthes) (c, d) chez deux patients différents ; notez l’encoche de Hill-Sachs (tête de flèche en d). Lésion de Perthes avec petite ossification séquellaire (e). Lésion ALPSA (labrum déplacé en bas et en dedans : tête de flèche) avec LGHI continu (flèche) (f). Imbibition du labrum par le produit de contraste (flèche) (g). Lésion ALPSA avec ossification séquellaire (h)."}
+        {
+          "file": "02. Instabilité glénohuméral_p63_1.png",
+          "caption": "Fig. 2.18 Différents types de lésions labrales ou cartilagineuse dans le cadre d’une instabilité antérieure de l’épaule. Notez la rupture du périoste en cas de lésions de type Bankart fibreux, osseux et GLOM. Le périoste reste continu en cas de lésions de type Perthes, ALPSA et GLAD."
+        },
+        {
+          "file": "02. Instabilité glénohuméral_p71_6.png",
+          "caption": "Fig. 2.32 Différents types de lésions du labrum glénoïdal antéro-inférieur en arthroscanner. Lésion de Bankart fibreuse avec détachement du labrum antéro-inférieur (a, flèche). Lésion de Bankart osseuse avec fracture du rebord glénoïdal antéro-inférieur (b, flèche). Désinsertion du labrum non déplacé (lésion de Perthes) (c, d) chez deux patients différents ; notez l’encoche de Hill-Sachs (tête de flèche en d). Lésion de Perthes avec petite ossification séquellaire (e). Lésion ALPSA (labrum déplacé en bas et en dedans : tête de flèche) avec LGHI continu (flèche) (f). Imbibition du labrum par le produit de contraste (flèche) (g). Lésion ALPSA avec ossification séquellaire (h)."
+        }
       ],
-      "source": {"page": 63, "element": "Texte", "refs": "[67]"}
+      "source": {
+        "page": 63,
+        "element": "Texte",
+        "refs": "[67]"
+      }
     },
     {
       "id": "c2-q04",
@@ -71,17 +153,43 @@
       "enonce": "Quelle est la fréquence de l’encoche de Hill-Sachs à la suite d’un premier épisode de luxation antérieure ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Environ 22 %", "correct": false},
-        {"id": "B", "texte": "65 à 67 %", "correct": true},
-        {"id": "C", "texte": "84 à 94 %", "correct": false},
-        {"id": "D", "texte": "1,6 à 3 %", "correct": false}
+        {
+          "id": "A",
+          "texte": "Environ 22 %",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "65 à 67 %",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "84 à 94 %",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "1,6 à 3 %",
+          "correct": false
+        }
       ],
-      "explication": "L’encoche de Hill-Sachs est retrouvée dans 65 à 67 % des cas après un premier épisode de luxation antérieure ; sa fréquence monte à 84-94 % dans les luxations récidivantes (C correspond donc aux luxations récidivantes). Elle résulte d’une impaction entre le rebord antérieur de la glène et la tête humérale.\n\nLes autres chiffres appartiennent à d’autres lésions : 22 % est la fréquence de la lésion de Bankart osseuse lors du premier épisode de luxation (jusqu’à 90 % dans les luxations récidivantes), et 1,6 à 3 % est la prévalence de la lésion HAGL.\n\nIl est important d’évaluer sa taille, son orientation et sa localisation, car ces éléments influencent le risque d’engagement et de récidive. En radiographie, elle est bien vue de face en rotation médiale avec un rayon descendant, et sur l’incidence de Garth : méplat focal ou défect osseux de la tête humérale.",
+      "explication": "L’encoche de Hill-Sachs est retrouvée dans 65 à 67 % des cas après un premier épisode de luxation antérieure ; sa fréquence monte à 84-94 % dans les luxations récidivantes. Elle résulte d’une impaction entre le rebord antérieur de la glène et la tête humérale.\n\nLes autres chiffres appartiennent à d’autres lésions : 22 % est la fréquence de la lésion de Bankart osseuse lors du premier épisode de luxation (jusqu’à 90 % dans les luxations récidivantes), et 1,6 à 3 % est la prévalence de la lésion HAGL.\n\nIl est important d’évaluer sa taille, son orientation et sa localisation, car ces éléments influencent le risque d’engagement et de récidive. En radiographie, elle est bien vue de face en rotation médiale avec un rayon descendant, et sur l’incidence de Garth : méplat focal ou défect osseux de la tête humérale.",
       "correction_figures": [
-        {"file": "02. Instabilité glénohuméral_p66_3.png", "caption": "Fig. 2.20 Encoche de Hill-Sachs (flèche) sur ce cliché de face en rotation médiale."},
-        {"file": "02. Instabilité glénohuméral_p66_1.png", "caption": "Fig. 2.21 Lésion de Bankart osseuse (flèche) (face en rotation neutre). Notez l’encoche de Hill-Sachs associée (tête de flèche)."}
+        {
+          "file": "02. Instabilité glénohuméral_p66_3.png",
+          "caption": "Fig. 2.20 Encoche de Hill-Sachs (flèche) sur ce cliché de face en rotation médiale."
+        },
+        {
+          "file": "02. Instabilité glénohuméral_p66_1.png",
+          "caption": "Fig. 2.21 Lésion de Bankart osseuse (flèche) (face en rotation neutre). Notez l’encoche de Hill-Sachs associée (tête de flèche)."
+        }
       ],
-      "source": {"page": 64, "element": "Texte", "refs": "[53, 135, 229, 292, 318]"}
+      "source": {
+        "page": 64,
+        "element": "Texte",
+        "refs": "[53, 135, 229, 292, 318]"
+      }
     },
     {
       "id": "c2-q05",
@@ -90,18 +198,48 @@
       "enonce": "À propos du concept de glenoid track, quelles sont les affirmations exactes ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Le glenoid track correspond à 83 % du diamètre de la glène", "correct": true},
-        {"id": "B", "texte": "Une encoche de Hill-Sachs est off track (risque d’engagement) lorsque l’HSI est supérieur au glenoid track", "correct": true},
-        {"id": "C", "texte": "Une perte osseuse glénoïdale antérieure diminue la largeur du glenoid track", "correct": true},
-        {"id": "D", "texte": "Une encoche on track expose à un risque d’engagement", "correct": false},
-        {"id": "E", "texte": "En cas de fracture de la glène, le glenoid track se calcule par GT = 0,83 D + d", "correct": false}
+        {
+          "id": "A",
+          "texte": "Le glenoid track correspond à 83 % du diamètre de la glène",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une encoche de Hill-Sachs est off track (risque d’engagement) lorsque l’HSI est supérieur au glenoid track",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une perte osseuse glénoïdale antérieure diminue la largeur du glenoid track",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une encoche on track expose à un risque d’engagement",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "En cas de fracture de la glène, le glenoid track se calcule par GT = 0,83 D + d",
+          "correct": false
+        }
       ],
-      "explication": "Le glenoid track est la surface de contact entre l’humérus (face postéro-supérieure) et la glène lors de l’abduction et de la rotation latérale. Il correspond à 83 % du diamètre D du cercle ajusté sur la glène (exemple du livre : 0,83 × 25,6 mm = 21,2 mm).\n\nL’HSI (Hill-Sachs interval) est la distance entre le bord médial de l’insertion de la coiffe et le bord médial de l’encoche. Si HSI > GT, l’encoche est off track (engageante) ; si HSI < GT, elle est on track, sans risque d’engagement (D est donc faux).\n\nLa perte osseuse glénoïdale antérieure (d) réduit la largeur du glenoid track : GT = 0,83 D − d (et non + d, E est faux). Exemple du livre : D = 27,1 mm et d = 9 mm donnent GT = 13,4 mm ; avec un HSI de 20,6 mm, l’encoche est off track. Les pertes osseuses glénoïdale et humérale doivent donc être évaluées ensemble.",
+      "explication": "Le glenoid track est la surface de contact entre l’humérus (face postéro-supérieure) et la glène lors de l’abduction et de la rotation latérale. Il correspond à 83 % du diamètre D du cercle ajusté sur la glène (exemple du livre : 0,83 × 25,6 mm = 21,2 mm).\n\nL’HSI (Hill-Sachs interval) est la distance entre le bord médial de l’insertion de la coiffe et le bord médial de l’encoche. Si HSI > GT, l’encoche est off track (engageante) ; si HSI < GT, elle est on track, sans risque d’engagement.\n\nLa perte osseuse glénoïdale antérieure (d) réduit la largeur du glenoid track : GT = 0,83 D − d (et non + d). Exemple du livre : D = 27,1 mm et d = 9 mm donnent GT = 13,4 mm ; avec un HSI de 20,6 mm, l’encoche est off track. Les pertes osseuses glénoïdale et humérale doivent donc être évaluées ensemble.",
       "correction_figures": [
-        {"file": "02. Instabilité glénohuméral_p70_5.png", "caption": "Fig. 2.31 Glenoid track. Le diamètre de la perte osseuse glénoïdale est d = 9 mm (b) ; le diamètre de la glène est D = 27,1 mm (b) ; glenoid track = (0,83 × 27,1) – 9 = 13,4 mm. HSI = 20,6 mm (a). L’encoche d’Hill-Sachs est donc off track (risque d’engagement)."},
-        {"file": "02. Instabilité glénohuméral_p70_4.png", "caption": "Fig. 2.30 Schémas d’une articulation glénohumérale en abduction et rotation latérale (position ABER). Encoche on track : pas de risque d’engagement (a) ; encoche off track (risque d’engagement) (b). HSI : Hill-Sachs interval ; GT : glenoid track. D’après [80]."}
+        {
+          "file": "02. Instabilité glénohuméral_p70_5.png",
+          "caption": "Fig. 2.31 Glenoid track. Le diamètre de la perte osseuse glénoïdale est d = 9 mm (b) ; le diamètre de la glène est D = 27,1 mm (b) ; glenoid track = (0,83 × 27,1) – 9 = 13,4 mm. HSI = 20,6 mm (a). L’encoche d’Hill-Sachs est donc off track (risque d’engagement)."
+        },
+        {
+          "file": "02. Instabilité glénohuméral_p70_4.png",
+          "caption": "Fig. 2.30 Schémas d’une articulation glénohumérale en abduction et rotation latérale (position ABER). Encoche on track : pas de risque d’engagement (a) ; encoche off track (risque d’engagement) (b). HSI : Hill-Sachs interval ; GT : glenoid track. D’après [80]."
+        }
       ],
-      "source": {"page": 70, "element": "Figure 2.31", "refs": "[78, 80]"}
+      "source": {
+        "page": 70,
+        "element": "Figure 2.31",
+        "refs": "[78, 80]"
+      }
     },
     {
       "id": "c2-q06",
@@ -110,17 +248,43 @@
       "enonce": "Quelle lésion du ligament glénohuméral inférieur (avulsion humérale) est rare (prévalence de 1,6 à 3 %), souvent associée à une rupture du subscapulaire, et constitue une cause classique d’échec d’une réparation labrale lorsqu’elle est méconnue ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "La lésion de Bankart fibreuse", "correct": false},
-        {"id": "B", "texte": "La lésion de Perthes", "correct": false},
-        {"id": "C", "texte": "La lésion HAGL", "correct": true},
-        {"id": "D", "texte": "La lésion GLAD", "correct": false}
+        {
+          "id": "A",
+          "texte": "La lésion de Bankart fibreuse",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La lésion de Perthes",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La lésion HAGL",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La lésion GLAD",
+          "correct": false
+        }
       ],
-      "explication": "La lésion HAGL (Humeral Avulsion of the Glenohumeral Ligament) est la désinsertion du LGHI à son insertion humérale ; avec avulsion osseuse, on parle de BHAGL. Elle est rare mais son dépistage préopératoire est important car elle peut être méconnue pendant le geste opératoire : les lésions HAGL méconnues sont une cause classique d’échec après réparation labrale. Elle est parfois associée à une rupture de la coiffe, en particulier du tendon du subscapulaire (incidence de 68 à 95 %).\n\nEn imagerie : fuite de produit de contraste le long de la diaphyse humérale, récessus axillaire en « J » au lieu de « U » (arthrographie), signe du « J » en arthroscanner ou IRM. Chez un patient avec une encoche de Hill-Sachs sans lésion labrale décelable, il faut rechercher une HAGL.\n\nA, B et D sont des lésions labrales ou cartilagineuses (Bankart, Perthes, GLAD), pas des avulsions humérales du LGHI.",
+      "explication": "La lésion HAGL (Humeral Avulsion of the Glenohumeral Ligament) est la désinsertion du LGHI à son insertion humérale ; avec avulsion osseuse, on parle de BHAGL. Elle est rare mais son dépistage préopératoire est important car elle peut être méconnue pendant le geste opératoire : les lésions HAGL méconnues sont une cause classique d’échec après réparation labrale. Elle est parfois associée à une rupture de la coiffe, en particulier du tendon du subscapulaire (incidence de 68 à 95 %).\n\nEn imagerie : fuite de produit de contraste le long de la diaphyse humérale, récessus axillaire en « J » au lieu de « U » (arthrographie), signe du « J » en arthroscanner ou IRM. Chez un patient avec une encoche de Hill-Sachs sans lésion labrale décelable, il faut rechercher une HAGL.\n\nLes lésions de Bankart, de Perthes et GLAD sont des lésions labrales ou cartilagineuses, et non des avulsions humérales du LGHI.",
       "correction_figures": [
-        {"file": "02. Instabilité glénohuméral_p74_2.png", "caption": "Fig. 2.39 Lésion de type HAGL. Désinsertion humérale du LGHI (grande flèche), avec suffusion de l’épanchement le long de la diaphyse humérale (J-sign) (petite flèche) (coupe frontale d’IRM pondérée en T2). Notez l’encoche de Hill-Sachs avec œdème osseux (tête de flèche)."},
-        {"file": "02. Instabilité glénohuméral_p67_3.png", "caption": "Fig. 2.25 Lésion HAGL. L’arthrographie révèle une fuite de produit de contraste le long de la diaphyse humérale (flèche), témoignant de la désinsertion du LGHI à ce niveau."}
+        {
+          "file": "02. Instabilité glénohuméral_p74_2.png",
+          "caption": "Fig. 2.39 Lésion de type HAGL. Désinsertion humérale du LGHI (grande flèche), avec suffusion de l’épanchement le long de la diaphyse humérale (J-sign) (petite flèche) (coupe frontale d’IRM pondérée en T2). Notez l’encoche de Hill-Sachs avec œdème osseux (tête de flèche)."
+        },
+        {
+          "file": "02. Instabilité glénohuméral_p67_3.png",
+          "caption": "Fig. 2.25 Lésion HAGL. L’arthrographie révèle une fuite de produit de contraste le long de la diaphyse humérale (flèche), témoignant de la désinsertion du LGHI à ce niveau."
+        }
       ],
-      "source": {"page": 64, "element": "Texte", "refs": "[35, 47, 189, 330]"}
+      "source": {
+        "page": 64,
+        "element": "Texte",
+        "refs": "[35, 47, 189, 330]"
+      }
     },
     {
       "id": "c2-q07",
@@ -129,17 +293,44 @@
       "enonce": "À propos du traitement chirurgical de l’instabilité antérieure, quelles sont les affirmations exactes ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Les butées osseuses ont un meilleur résultat sur la stabilité de l’épaule que les réinsertions labro-capsuloligamentaires", "correct": true},
-        {"id": "B", "texte": "Le principe du triple blocage de l’intervention de Latarjet comprend l’effet hamac du tendon conjoint", "correct": true},
-        {"id": "C", "texte": "Les butées sont préférées en cas de sport de contact ou de perte osseuse glénoïdale antéro-inférieure significative", "correct": true},
-        {"id": "D", "texte": "La récidive de l’instabilité est plus fréquente après une intervention de Latarjet qu’après une intervention de Bankart", "correct": false},
-        {"id": "E", "texte": "Les interventions de butée osseuse ont une morbidité opératoire plus faible que l’intervention de Bankart", "correct": false}
+        {
+          "id": "A",
+          "texte": "Les butées osseuses ont un meilleur résultat sur la stabilité de l’épaule que les réinsertions labro-capsuloligamentaires",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le principe du triple blocage de l’intervention de Latarjet comprend l’effet hamac du tendon conjoint",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Les butées sont préférées en cas de sport de contact ou de perte osseuse glénoïdale antéro-inférieure significative",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La récidive de l’instabilité est plus fréquente après une intervention de Latarjet qu’après une intervention de Bankart",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Les interventions de butée osseuse ont une morbidité opératoire plus faible que l’intervention de Bankart",
+          "correct": false
+        }
       ],
-      "explication": "Deux grandes familles d’interventions : les réinsertions labro-capsuloligamentaires (Bankart) et les butées osseuses antérieures (Bristow-Latarjet, Patte…). L’intervention de Latarjet modifiée par Patte répond au principe du triple blocage : augmentation du diamètre de la glène par la greffe osseuse, effet hamac du tendon conjoint et renforcement capsuloligamentaire par la suture du moignon du ligament acromiocoracoïdien.\n\nLes butées ont un meilleur résultat sur la stabilité mais un résultat moindre sur les douleurs résiduelles, avec une morbidité opératoire et un risque arthrogène plus importants (E est faux). On les choisit de préférence dans les luxations antérieures récidivantes chez les sportifs de contact, ou en cas de perte osseuse glénoïdale significative et de lésions osseuses bipolaires. Les réinsertions sont préférées en cas d’accidents mineurs d’instabilité sans luxation vraie, a fortiori sans lésion osseuse significative.\n\nD est faux : la récidive de l’instabilité est plus fréquente après intervention de Bankart. Un mauvais positionnement de la butée (trop médiale ou trop haute) expose aussi au risque de récidive.",
+      "explication": "Deux grandes familles d’interventions : les réinsertions labro-capsuloligamentaires (Bankart) et les butées osseuses antérieures (Bristow-Latarjet, Patte…). L’intervention de Latarjet modifiée par Patte répond au principe du triple blocage : augmentation du diamètre de la glène par la greffe osseuse, effet hamac du tendon conjoint et renforcement capsuloligamentaire par la suture du moignon du ligament acromiocoracoïdien.\n\nLes butées ont un meilleur résultat sur la stabilité mais un résultat moindre sur les douleurs résiduelles, avec une morbidité opératoire et un risque arthrogène plus importants. On les choisit de préférence dans les luxations antérieures récidivantes chez les sportifs de contact, ou en cas de perte osseuse glénoïdale significative et de lésions osseuses bipolaires. Les réinsertions sont préférées en cas d’accidents mineurs d’instabilité sans luxation vraie, a fortiori sans lésion osseuse significative.\n\nLa récidive de l’instabilité est plus fréquente après intervention de Bankart. Un mauvais positionnement de la butée (trop médiale ou trop haute) expose aussi au risque de récidive.",
       "correction_figures": [
-        {"file": "02. Instabilité glénohuméral_p76_1.png", "caption": "Fig. 2.42 Intervention de type Bankart et butée osseuse. Ancres de fixation labrale antérieure en radiographie (a, flèches) ; butée coracoïdienne avec bonne consolidation (b, flèches blanches, coupe sagittale en scanner)."}
+        {
+          "file": "02. Instabilité glénohuméral_p76_1.png",
+          "caption": "Fig. 2.42 Intervention de type Bankart et butée osseuse. Ancres de fixation labrale antérieure en radiographie (a, flèches) ; butée coracoïdienne avec bonne consolidation (b, flèches blanches, coupe sagittale en scanner)."
+        }
       ],
-      "source": {"page": 76, "element": "Texte", "refs": "[4, 23, 31, 40, 45, 82, 145, 196, 242, 247, 250]"}
+      "source": {
+        "page": 76,
+        "element": "Texte",
+        "refs": "[4, 23, 31, 40, 45, 82, 145, 196, 242, 247, 250]"
+      }
     },
     {
       "id": "c2-q08",
@@ -148,17 +339,44 @@
       "enonce": "Parmi les lésions labrales pouvant s’observer dans l’instabilité glénohumérale postérieure, lesquelles sont décrites dans le texte ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "La lésion POLPSA, lésion la plus fréquente, avec un plan périosté postérieur décollé mais intact", "correct": true},
-        {"id": "B", "texte": "La lésion de Kim, désinsertion incomplète du labrum postéro-inférieur en regard du cartilage", "correct": true},
-        {"id": "C", "texte": "La lésion GLAD postérieure, lésion cartilagineuse du rebord glénoïdal postéro-inférieur avec fissure superficielle du labrum", "correct": true},
-        {"id": "D", "texte": "La lésion de Bankart postérieure, lésion labrale la plus fréquente", "correct": false},
-        {"id": "E", "texte": "La lésion de Kim, désinsertion complète du labrum antéro-inférieur", "correct": false}
+        {
+          "id": "A",
+          "texte": "La lésion POLPSA, lésion la plus fréquente, avec un plan périosté postérieur décollé mais intact",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La lésion de Kim, désinsertion incomplète du labrum postéro-inférieur en regard du cartilage",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La lésion GLAD postérieure, lésion cartilagineuse du rebord glénoïdal postéro-inférieur avec fissure superficielle du labrum",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La lésion de Bankart postérieure, lésion labrale la plus fréquente",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "La lésion de Kim, désinsertion complète du labrum antéro-inférieur",
+          "correct": false
+        }
       ],
-      "explication": "La lésion POLPSA (Posterior Labrocapsular Periosteal Sleeve Avulsion) est la lésion labrale la plus fréquente après luxation postérieure : le plan périosté postérieur est décollé de la scapula mais reste intact et solidaire du labrum postéro-inférieur, lésé ou non. La lésion de Bankart postérieure (lésion du labrum postéro-inférieur avec rupture périostée) est, elle, rare comparativement à la lésion de Bankart antérieure (D est faux).\n\nLa lésion de Kim est une désinsertion incomplète du labrum postéro-inférieur en regard du cartilage, due à la traction exercée par le faisceau postérieur du LGHI ; il faut la reconnaître car c’est l’une des causes de récidive (E est faux : elle est postéro-inférieure et incomplète). La lésion GLAD postérieure associe une lésion cartilagineuse du rebord glénoïdal postéro-inférieur à une fissure superficielle non déplacée du labrum.\n\nOn peut aussi trouver des lésions SLAP 8 et 9 (lésion étendue du labrum postérieur et supérieur) et des kystes labraux. Une lésion labrale postérieure de plus de 15 mm est habituellement associée à une instabilité postérieure.",
+      "explication": "La lésion POLPSA (Posterior Labrocapsular Periosteal Sleeve Avulsion) est la lésion labrale la plus fréquente après luxation postérieure : le plan périosté postérieur est décollé de la scapula mais reste intact et solidaire du labrum postéro-inférieur, lésé ou non. La lésion de Bankart postérieure (lésion du labrum postéro-inférieur avec rupture périostée) est, elle, rare comparativement à la lésion de Bankart antérieure.\n\nLa lésion de Kim est une désinsertion incomplète du labrum postéro-inférieur en regard du cartilage, due à la traction exercée par le faisceau postérieur du LGHI ; il faut la reconnaître car c’est l’une des causes de récidive (elle est postéro-inférieure et incomplète). La lésion GLAD postérieure associe une lésion cartilagineuse du rebord glénoïdal postéro-inférieur à une fissure superficielle non déplacée du labrum.\n\nOn peut aussi trouver des lésions SLAP 8 et 9 (lésion étendue du labrum postérieur et supérieur) et des kystes labraux. Une lésion labrale postérieure de plus de 15 mm est habituellement associée à une instabilité postérieure.",
       "correction_figures": [
-        {"file": "02. Instabilité glénohuméral_p80_1.png", "caption": "Fig. 2.47 Instabilité postérieure de l’épaule : lésions sur le versant glénoïdal. Notez la rupture du périoste en cas de lésions de type reverse Bankart. Le plan périosté postérieur est décollé de la scapula mais il demeure intact et solidaire du labrum postéro-inférieur en cas de POLPSA. La lésion de Kim correspond à une désinsertion incomplète du labrum postéro-inférieur. La lésion GLAD postérieure est une lésion cartilagineuse du rebord glénoïdal postéro-inférieur."}
+        {
+          "file": "02. Instabilité glénohuméral_p80_1.png",
+          "caption": "Fig. 2.47 Instabilité postérieure de l’épaule : lésions sur le versant glénoïdal. Notez la rupture du périoste en cas de lésions de type reverse Bankart. Le plan périosté postérieur est décollé de la scapula mais il demeure intact et solidaire du labrum postéro-inférieur en cas de POLPSA. La lésion de Kim correspond à une désinsertion incomplète du labrum postéro-inférieur. La lésion GLAD postérieure est une lésion cartilagineuse du rebord glénoïdal postéro-inférieur."
+        }
       ],
-      "source": {"page": 80, "element": "Encadré 2.7", "refs": "[119, 150, 286, 318, 337]"}
+      "source": {
+        "page": 80,
+        "element": "Encadré 2.7",
+        "refs": "[119, 150, 286, 318, 337]"
+      }
     },
     {
       "id": "c2-q09",
@@ -167,16 +385,39 @@
       "enonce": "Lors du test du sillon (traction du membre supérieur vers le bas), un sillon cutané présent en rotation neutre qui ne disparaît pas en rotation latérale témoigne de quoi ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "D’une rupture transfixiante de la coiffe des rotateurs", "correct": false},
-        {"id": "B", "texte": "D’une insuffisance de l’intervalle des rotateurs", "correct": true},
-        {"id": "C", "texte": "D’une lésion de Bankart osseuse", "correct": false},
-        {"id": "D", "texte": "D’une instabilité volontaire d’origine psychiatrique", "correct": false}
+        {
+          "id": "A",
+          "texte": "D’une rupture transfixiante de la coiffe des rotateurs",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "D’une insuffisance de l’intervalle des rotateurs",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "D’une lésion de Bankart osseuse",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "D’une instabilité volontaire d’origine psychiatrique",
+          "correct": false
+        }
       ],
       "explication": "Le test du sillon est positif lorsqu’une traction du membre supérieur vers le bas fait apparaître un sillon cutané entre le bord inférieur de l’acromion et la tête humérale. Si ce sillon, présent en rotation neutre, ne disparaît pas en rotation latérale, il témoigne d’une insuffisance de l’intervalle des rotateurs.\n\nLe test du tiroir complète l’examen : translations antérieure et postérieure de la tête humérale, pouvant être réalisées à 20, 45 et 90° d’abduction pour tester respectivement les LGHS, LGHM et LGHI. Le sillon peut parfois être la seule traduction clinique d’une laxité.\n\nDans l’instabilité multidirectionnelle, l’imagerie est peu contributive, faute de lésions osseuses ou labroligamentaires : on observe une hyperlaxité ligamentaire et une distension capsulaire, notamment en regard de l’intervalle des rotateurs. Le traitement repose d’abord sur la rééducation.",
       "correction_figures": [
-        {"file": "02. Instabilité glénohuméral_p87_1.png", "caption": "Fig. 2.59 Instabilité multidirectionnelle (coupe axiale en scanner). Encoche de Hill-Sachs (tête de flèche), encoche de Mc Laughlin (flèche blanche), séquelle de décollement périosté antérieur (flèche noire) et une séquelle de « reverse Bankart » avec ossification de Bennett (étoile)."}
+        {
+          "file": "02. Instabilité glénohuméral_p87_1.png",
+          "caption": "Fig. 2.59 Instabilité multidirectionnelle (coupe axiale en scanner). Encoche de Hill-Sachs (tête de flèche), encoche de Mc Laughlin (flèche blanche), séquelle de décollement périosté antérieur (flèche noire) et une séquelle de « reverse Bankart » avec ossification de Bennett (étoile)."
+        }
       ],
-      "source": {"page": 87, "element": "Texte", "refs": "[193]"}
+      "source": {
+        "page": 87,
+        "element": "Texte",
+        "refs": "[193]"
+      }
     },
     {
       "id": "c2-q10",
@@ -185,16 +426,39 @@
       "enonce": "Dans la classification de Snyder des SLAP lésions, quel type correspond à une fissuration verticale du labrum supérieur libérant une anse de seau déplacée vers le bas, sans atteinte de la portion horizontale du tendon du chef long du biceps ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Le type 1", "correct": false},
-        {"id": "B", "texte": "Le type 2", "correct": false},
-        {"id": "C", "texte": "Le type 3", "correct": true},
-        {"id": "D", "texte": "Le type 4", "correct": false}
+        {
+          "id": "A",
+          "texte": "Le type 1",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le type 2",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le type 3",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le type 4",
+          "correct": false
+        }
       ],
       "explication": "Le type 3 est une fissuration verticale du labrum supérieur avec libération d’une anse de seau déplacée vers le bas dans l’interligne articulaire ; la portion horizontale du tendon du biceps n’est pas affectée. Il siège en général entre 11 h et 1 h et semble secondaire à une chute avec le bras en extension.\n\nType 1 : usure et aspect irrégulier du labrum supérieur sous le tendon du biceps, sans atteinte de celui-ci (banal et dégénératif chez le sujet âgé). Type 2 : désinsertion du complexe bicipitolabral supérieur de son insertion glénoïdale, la SLAP lésion la plus fréquente (environ la moitié des cas), avec des sous-types 2a, 2b et 2c. Type 4 : lésion de type 3 qui emporte une portion du tendon du biceps, disséqué dans sa longueur.\n\nEn arthroscanner ou arthro-IRM, le type 3 se traduit par une anse de seau cerclée par le produit de contraste, bien visible sur les coupes frontales obliques.",
       "correction_figures": [
-        {"file": "02. Instabilité glénohuméral_p89_1.png", "caption": "Fig. 2.62 SLAP lésions 1 à 4. SLAP 1 : aspect irrégulier du labrum supérieur ; SLAP 2 : désinsertion du complexe bicipitolabral supérieur avec sous-types 2a : lésion labrale antérosupérieure et 2b : lésion labrale postérosupérieure ; SLAP 3 : fissuration labrale avec libération d’une anse de seau ; SLAP 4 : lésion de type 3 emportant une portion d’épaisseur variable du tendon du chef long du muscle biceps brachial. D’après [294]."}
+        {
+          "file": "02. Instabilité glénohuméral_p89_1.png",
+          "caption": "Fig. 2.62 SLAP lésions 1 à 4. SLAP 1 : aspect irrégulier du labrum supérieur ; SLAP 2 : désinsertion du complexe bicipitolabral supérieur avec sous-types 2a : lésion labrale antérosupérieure et 2b : lésion labrale postérosupérieure ; SLAP 3 : fissuration labrale avec libération d’une anse de seau ; SLAP 4 : lésion de type 3 emportant une portion d’épaisseur variable du tendon du chef long du muscle biceps brachial. D’après [294]."
+        }
       ],
-      "source": {"page": 90, "element": "Texte", "refs": "[30, 208, 262]"}
+      "source": {
+        "page": 90,
+        "element": "Texte",
+        "refs": "[30, 208, 262]"
+      }
     },
     {
       "id": "c2-q11",
@@ -203,14 +467,34 @@
       "enonce": "Selon la classification des insertions de la capsule articulaire antérieure sur la glène, à quoi correspond le type III ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Une insertion sur le sommet ou le versant capsulaire du labrum antérieur", "correct": false},
-        {"id": "B", "texte": "Une insertion sur la glène à moins de 1 cm de la base du labrum antérieur", "correct": false},
-        {"id": "C", "texte": "Une insertion sur le col de la scapula à plus de 1 cm de la base du labrum antérieur", "correct": true},
-        {"id": "D", "texte": "Une avulsion complète de la capsule avec déchirure du périoste", "correct": false}
+        {
+          "id": "A",
+          "texte": "Une insertion sur le sommet ou le versant capsulaire du labrum antérieur",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une insertion sur la glène à moins de 1 cm de la base du labrum antérieur",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une insertion sur le col de la scapula à plus de 1 cm de la base du labrum antérieur",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une avulsion complète de la capsule avec déchirure du périoste",
+          "correct": false
+        }
       ],
       "explication": "L’insertion capsulaire antérieure de type III correspond à une insertion sur le col de la scapula à plus de 1 cm de la base du labrum antérieur. Ce type est considéré par certains comme une variation congénitale et par d’autres comme une séquelle d’instabilité passée inaperçue.",
       "correction_figures": [],
-      "source": {"page": 53, "element": "Texte", "refs": ""}
+      "source": {
+        "page": 53,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c2-q12",
@@ -219,14 +503,34 @@
       "enonce": "Quelles sont les caractéristiques anatomiques définissant la variante normale appelée « Complexe de Buford » ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Une absence de labrum antérosupérieur", "correct": true},
-        {"id": "B", "texte": "Un ligament glénohuméral moyen (LGHM) fin et atrophique", "correct": false},
-        {"id": "C", "texte": "Un ligament glénohuméral moyen (LGHM) en forme de corde", "correct": true},
-        {"id": "D", "texte": "L’insertion du LGHM sur le labrum supérieur, en avant du tendon du long biceps", "correct": true}
+        {
+          "id": "A",
+          "texte": "Une absence de labrum antérosupérieur",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un ligament glénohuméral moyen (LGHM) fin et atrophique",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Un ligament glénohuméral moyen (LGHM) en forme de corde",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’insertion du LGHM sur le labrum supérieur, en avant du tendon du long biceps",
+          "correct": true
+        }
       ],
       "explication": "Le complexe de Buford associe une absence de labrum antérosupérieur à un LGHM épais, en forme de corde, s’insérant sur le labrum glénoïdal supérieur. Le LGHM n’y est donc pas atrophique, mais au contraire de taille identique ou supérieure au tendon du long biceps.",
       "correction_figures": [],
-      "source": {"page": 60, "element": "Texte", "refs": ""}
+      "source": {
+        "page": 60,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c2-q13",
@@ -235,14 +539,34 @@
       "enonce": "Un patient de 25 ans présente des luxations antérieures récidivantes. Le scanner révèle une encoche de Hill-Sachs dont le « Hill-Sachs interval » (HSI) mesure 22 mm. Le diamètre de la partie inférieure de la glène (D) est mesuré à 28 mm et il n’y a pas de fracture du rebord glénoïdal (perte osseuse d = 0). En appliquant le concept du « glenoid track » (GT), quel est le statut de l’encoche et son risque d’engagement ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "L’encoche est « on track » car le HSI (22 mm) est inférieur au GT (23,24 mm) ; le risque d’engagement est faible.", "correct": true},
-        {"id": "B", "texte": "L’encoche est « off track » car le HSI (22 mm) est inférieur au GT (23,24 mm) ; le risque d’engagement est fort.", "correct": false},
-        {"id": "C", "texte": "L’encoche est « on track » car le HSI (22 mm) est supérieur au GT (18 mm) ; le risque d’engagement est faible.", "correct": false},
-        {"id": "D", "texte": "L’encoche est « off track » car le HSI (22 mm) est supérieur au GT (18 mm) ; le risque d’engagement est fort.", "correct": false}
+        {
+          "id": "A",
+          "texte": "L’encoche est « on track » car le HSI (22 mm) est inférieur au GT (23,24 mm) ; le risque d’engagement est faible.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’encoche est « off track » car le HSI (22 mm) est inférieur au GT (23,24 mm) ; le risque d’engagement est fort.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’encoche est « on track » car le HSI (22 mm) est supérieur au GT (18 mm) ; le risque d’engagement est faible.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’encoche est « off track » car le HSI (22 mm) est supérieur au GT (18 mm) ; le risque d’engagement est fort.",
+          "correct": false
+        }
       ],
       "explication": "Le calcul de la largeur du glenoid track (GT) est : GT = 0,83 × D − d. Ici, GT = 0,83 × 28 − 0 = 23,24 mm. Le « Hill-Sachs interval » (HSI) étant de 22 mm, il est strictement inférieur au GT (HSI < GT). L’encoche est donc non engageante (« on track »).",
       "correction_figures": [],
-      "source": {"page": 69, "element": "Texte (p. 69, 70)", "refs": ""}
+      "source": {
+        "page": 69,
+        "element": "Texte (p. 69, 70)",
+        "refs": ""
+      }
     },
     {
       "id": "c2-q14",
@@ -251,14 +575,34 @@
       "enonce": "Parmi les lésions labrales antérieures décrites dans l’instabilité, lesquelles se caractérisent anatomiquement par une persistance d’un périoste intact (décollé de la scapula mais non rompu) ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Lésion de Bankart osseuse", "correct": false},
-        {"id": "B", "texte": "Lésion de Bankart fibreuse", "correct": false},
-        {"id": "C", "texte": "Lésion de Perthes", "correct": true},
-        {"id": "D", "texte": "Lésion ALPSA", "correct": true}
+        {
+          "id": "A",
+          "texte": "Lésion de Bankart osseuse",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Lésion de Bankart fibreuse",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Lésion de Perthes",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Lésion ALPSA",
+          "correct": true
+        }
       ],
       "explication": "Les lésions ALPSA et de Perthes sont deux variantes lésionnelles caractérisées par un périoste intact qui reste solidaire du complexe labro-capsuloligamentaire inférieur. À l’inverse, les lésions de Bankart (fibreuse ou osseuse) présentent une déchirure du périoste.",
       "correction_figures": [],
-      "source": {"page": 63, "element": "Texte", "refs": ""}
+      "source": {
+        "page": 63,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c2-q15",
@@ -267,14 +611,34 @@
       "enonce": "Dans la classification de Snyder, quelle description correspond à une SLAP lésion de type 2 ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Une usure et un aspect irrégulier du labrum supérieur, sans détachement", "correct": false},
-        {"id": "B", "texte": "Une fissuration verticale du labrum supérieur avec libération d’une anse de seau", "correct": false},
-        {"id": "C", "texte": "Une désinsertion du complexe bicipitolabral supérieur de son insertion glénoïdale", "correct": true},
-        {"id": "D", "texte": "Une lésion en anse de seau emportant une portion du tendon du chef long du biceps", "correct": false}
+        {
+          "id": "A",
+          "texte": "Une usure et un aspect irrégulier du labrum supérieur, sans détachement",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une fissuration verticale du labrum supérieur avec libération d’une anse de seau",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une désinsertion du complexe bicipitolabral supérieur de son insertion glénoïdale",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une lésion en anse de seau emportant une portion du tendon du chef long du biceps",
+          "correct": false
+        }
       ],
       "explication": "Le type 2, qui est la SLAP lésion la plus fréquente, se caractérise par la désinsertion du complexe bicipitolabral supérieur de son insertion glénoïdale. Le type 1 est une usure, le type 3 une anse de seau isolée, et le type 4 une anse de seau atteignant le tendon bicipital.",
       "correction_figures": [],
-      "source": {"page": 90, "element": "Texte", "refs": ""}
+      "source": {
+        "page": 90,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c2-q16",
@@ -283,14 +647,34 @@
       "enonce": "Un homme de 45 ans se présente après un premier épisode de luxation antérieure aiguë. L’imagerie met en évidence une lésion de type HAGL (Humeral Avulsion of the Glenohumeral Ligament) isolée, c’est-à-dire une désinsertion humérale du ligament glénohuméral inférieur sans avulsion osseuse. Quelles autres atteintes associées spécifiques ou caractéristiques en imagerie doit-on attentivement rechercher dans ce contexte ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Une rupture associée des tendons de la coiffe des rotateurs (en particulier le subscapulaire), fréquente après 40 ans", "correct": true},
-        {"id": "B", "texte": "Une lésion labrale postéro-inférieure de type « Reverse Bankart »", "correct": false},
-        {"id": "C", "texte": "Une fuite de produit de contraste le long de la diaphyse humérale avec un récessus axillaire en forme de « J » (en cas d’arthrographie/arthroscanner)", "correct": true},
-        {"id": "D", "texte": "Une encoche de Mc Laughlin au niveau de la tête humérale", "correct": false}
+        {
+          "id": "A",
+          "texte": "Une rupture associée des tendons de la coiffe des rotateurs (en particulier le subscapulaire), fréquente après 40 ans",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une lésion labrale postéro-inférieure de type « Reverse Bankart »",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une fuite de produit de contraste le long de la diaphyse humérale avec un récessus axillaire en forme de « J » (en cas d’arthrographie/arthroscanner)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une encoche de Mc Laughlin au niveau de la tête humérale",
+          "correct": false
+        }
       ],
       "explication": "La lésion HAGL est parfois associée à une rupture de la coiffe des rotateurs (incidence de 68 à 95 % pour le subscapulaire), surtout chez les patients de plus de 40 ans. En arthrographie ou arthroscanner, l’avulsion humérale du ligament glénohuméral inférieur entraîne typiquement une fuite de produit de contraste le long de la diaphyse humérale et un aspect en « J » du récessus axillaire. Les encoches de Mc Laughlin et lésions de type Reverse Bankart sont caractéristiques des luxations postérieures, non antérieures.",
       "correction_figures": [],
-      "source": {"page": 64, "element": "Texte (p. 64, 67)", "refs": ""}
+      "source": {
+        "page": 64,
+        "element": "Texte (p. 64, 67)",
+        "refs": ""
+      }
     },
     {
       "id": "c2-q17",
@@ -299,14 +683,34 @@
       "enonce": "L’encoche de Mc Laughlin (aussi appelée encoche de Hill-Sachs inversée) correspond à une fracture-impaction de la tête humérale. À quel type d’instabilité glénohumérale est-elle exclusivement associée ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "L’instabilité glénohumérale antérieure", "correct": false},
-        {"id": "B", "texte": "L’instabilité glénohumérale postérieure", "correct": true},
-        {"id": "C", "texte": "L’instabilité multidirectionnelle atraumatique", "correct": false},
-        {"id": "D", "texte": "Les SLAP lésions isolées", "correct": false}
+        {
+          "id": "A",
+          "texte": "L’instabilité glénohumérale antérieure",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’instabilité glénohumérale postérieure",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’instabilité multidirectionnelle atraumatique",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Les SLAP lésions isolées",
+          "correct": false
+        }
       ],
       "explication": "L’encoche de Mc Laughlin ne s’observe qu’après une luxation postérieure de la tête humérale (rapportée dans 86 % des cas). Elle correspond à l’impaction de la partie antéro-supéromédiale de la tête humérale contre le rebord glénoïdal postérieur.",
       "correction_figures": [],
-      "source": {"page": 79, "element": "Texte", "refs": ""}
+      "source": {
+        "page": 79,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c2-q18",
@@ -315,14 +719,34 @@
       "enonce": "L’articulation glénohumérale est stabilisée par des facteurs statiques et des facteurs dynamiques. Parmi les propositions suivantes, quels éléments font partie des stabilisateurs dynamiques actifs de l’épaule ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Les ligaments glénohuméraux (LGHS, LGHM, LGHI)", "correct": false},
-        {"id": "B", "texte": "Les muscles de la coiffe des rotateurs", "correct": true},
-        {"id": "C", "texte": "Le tendon du chef long du muscle biceps brachial", "correct": true},
-        {"id": "D", "texte": "Le muscle deltoïde et les muscles périscapulaires", "correct": true}
+        {
+          "id": "A",
+          "texte": "Les ligaments glénohuméraux (LGHS, LGHM, LGHI)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Les muscles de la coiffe des rotateurs",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le tendon du chef long du muscle biceps brachial",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le muscle deltoïde et les muscles périscapulaires",
+          "correct": true
+        }
       ],
       "explication": "Les muscles stabilisateurs actifs (dynamiques) comprennent la coiffe des rotateurs, le tendon du chef long du biceps, le muscle deltoïde, le grand dorsal et les muscles périscapulaires. Les ligaments glénohuméraux sont des stabilisateurs statiques (passifs) qui se mettent en tension en fin de mouvement.",
       "correction_figures": [],
-      "source": {"page": 54, "element": "Texte (p. 54, 61)", "refs": ""}
+      "source": {
+        "page": 54,
+        "element": "Texte (p. 54, 61)",
+        "refs": ""
+      }
     },
     {
       "id": "c2-q19",
@@ -331,14 +755,34 @@
       "enonce": "Lors d’un arthroscanner chez un patient de 22 ans n’ayant pas de notion de luxation, vous observez un produit de contraste s’insinuant sous la base d’implantation du labrum glénoïdal sur sa portion antérosupérieure (entre 1 h et 3 h). Les contours de cette anomalie sont bien réguliers et le labrum antéro-inférieur est parfaitement attaché. Le tendon du subscapulaire est normal et la lésion ne s’étend pas en dessous de ce dernier. Quelle est l’interprétation diagnostique la plus pertinente pour cette image ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Une lésion ALPSA étendue vers le haut", "correct": false},
-        {"id": "B", "texte": "Une authentique lésion de Bankart osseuse aiguë", "correct": false},
-        {"id": "C", "texte": "Un foramen sous-labral, variante anatomique normale", "correct": true},
-        {"id": "D", "texte": "Une SLAP lésion de type 3 complexe", "correct": false}
+        {
+          "id": "A",
+          "texte": "Une lésion ALPSA étendue vers le haut",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une authentique lésion de Bankart osseuse aiguë",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Un foramen sous-labral, variante anatomique normale",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une SLAP lésion de type 3 complexe",
+          "correct": false
+        }
       ],
       "explication": "Le foramen sous-labral correspond à une absence d’adhérence normale entre le labrum antérosupérieur et le rebord glénoïdal (de 1 à 3 h), avec des contours réguliers. Il n’atteint jamais le labrum inférieur et ne s’étend pas au-dessous du tendon du muscle subscapulaire, ce qui permet de le distinguer d’une véritable lésion de Bankart ou d’une lésion ALPSA pathologique.",
       "correction_figures": [],
-      "source": {"page": 58, "element": "Texte (p. 58, 60)", "refs": ""}
+      "source": {
+        "page": 58,
+        "element": "Texte (p. 58, 60)",
+        "refs": ""
+      }
     },
     {
       "id": "c2-q20",
@@ -347,14 +791,34 @@
       "enonce": "Dans le contexte d’une subluxation postérieure récidivante d’origine atraumatique (liée à des microtraumatismes répétés), quels facteurs dysmorphiques favorisants ou lésions secondaires peut-on observer en imagerie ?",
       "enonce_image": null,
       "items": [
-        {"id": "A", "texte": "Un excès de rétroversion glénoïdale supérieur à 10°", "correct": true},
-        {"id": "B", "texte": "Une ossification de Bennett postéro-inférieure", "correct": true},
-        {"id": "C", "texte": "Une dysplasie glénoïdale avec hypoplasie du rebord postéro-inférieur", "correct": true},
-        {"id": "D", "texte": "Une encoche de Hill-Sachs sévère", "correct": false}
+        {
+          "id": "A",
+          "texte": "Un excès de rétroversion glénoïdale supérieur à 10°",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une ossification de Bennett postéro-inférieure",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une dysplasie glénoïdale avec hypoplasie du rebord postéro-inférieur",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une encoche de Hill-Sachs sévère",
+          "correct": false
+        }
       ],
       "explication": "Les facteurs favorisant l’instabilité postérieure incluent un excès de rétroversion glénoïdale (> 10°), l’hypoplasie du rebord postéro-inférieur, ou une dysplasie glénoïdale. L’ossification de Bennett résulte de la traction chronique du faisceau postérieur du LGHI et s’observe souvent dans les subluxations postérieures répétées. L’encoche de Hill-Sachs est une caractéristique de l’instabilité antérieure.",
       "correction_figures": [],
-      "source": {"page": 80, "element": "Texte (p. 80, 81, 84)", "refs": ""}
+      "source": {
+        "page": 80,
+        "element": "Texte (p. 80, 81, 84)",
+        "refs": ""
+      }
     }
   ]
 }

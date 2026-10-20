@@ -14,14 +14,34 @@
       "enonce": "Parmi les structures composant le disque intervertébral, laquelle assure l’amortissement des chocs par compression et occupe 30 à 60 % de son volume chez l’adulte ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’anneau fibreux (annulus fibrosus)", "correct": false },
-        { "id": "B", "texte": "Le noyau pulpeux (nucleus pulposus)", "correct": true },
-        { "id": "C", "texte": "La plaque cartilagineuse", "correct": false },
-        { "id": "D", "texte": "Le listel marginal", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’anneau fibreux (annulus fibrosus)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le noyau pulpeux (nucleus pulposus)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La plaque cartilagineuse",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le listel marginal",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. Le noyau pulpeux est une substance déformable située au centre du disque intervertébral, représentant 30 à 60 % de son volume chez l’adulte, et dont l’architecture en réseau lâche de fibres collagènes et de protéoglycanes hydrophiles permet l’amortissement des chocs par compression.",
+      "explication": "Le noyau pulpeux est une substance déformable située au centre du disque intervertébral, représentant 30 à 60 % de son volume chez l’adulte, et dont l’architecture en réseau lâche de fibres collagènes et de protéoglycanes hydrophiles permet l’amortissement des chocs par compression.",
       "correction_figures": [],
-      "source": { "page": 356, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 356,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c16-q02",
@@ -30,14 +50,34 @@
       "enonce": "La dégénérescence discale s’accompagne de modifications IRM des plateaux vertébraux adjacents (modifications de type Modic). Quelles affirmations caractérisent correctement les remaniements de type Modic 1 ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Ils se traduisent par un hyposignal en pondération T1 et un hypersignal en pondération T2.", "correct": true },
-        { "id": "B", "texte": "Ils correspondent au remplacement de la moelle osseuse par de la graisse.", "correct": false },
-        { "id": "C", "texte": "Ils traduisent la présence d’un tissu de granulation richement vascularisé et un œdème.", "correct": true },
-        { "id": "D", "texte": "Ils sont considérés comme un élément de mauvais pronostic vis-à-vis des douleurs (fortement corrélés aux lombalgies).", "correct": true }
+        {
+          "id": "A",
+          "texte": "Ils se traduisent par un hyposignal en pondération T1 et un hypersignal en pondération T2.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Ils correspondent au remplacement de la moelle osseuse par de la graisse.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Ils traduisent la présence d’un tissu de granulation richement vascularisé et un œdème.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Ils sont considérés comme un élément de mauvais pronostic vis-à-vis des douleurs (fortement corrélés aux lombalgies).",
+          "correct": true
+        }
       ],
-      "explication": "Les réponses correctes sont A, C et D. Le type Modic 1 correspond au remplacement de la moelle osseuse par un tissu de granulation vascularisé et œdémateux, se traduisant par un hyposignal T1 et un hypersignal T2. Ces remaniements sont plus fortement corrélés aux lombalgies (douleur inflammatoire) et considérés comme de mauvais pronostic pour les douleurs que les autres types de Modic. Le type Modic 2 correspond au remplacement par de la graisse (hypersignal T1 et T2).",
+      "explication": "Le type Modic 1 correspond au remplacement de la moelle osseuse par un tissu de granulation vascularisé et œdémateux, se traduisant par un hyposignal T1 et un hypersignal T2. Ces remaniements sont plus fortement corrélés aux lombalgies (douleur inflammatoire) et considérés comme de mauvais pronostic pour les douleurs que les autres types de Modic. Le type Modic 2 correspond au remplacement par de la graisse (hypersignal T1 et T2).",
       "correction_figures": [],
-      "source": { "page": 361, "element": "Texte", "refs": "p. 361-362" }
+      "source": {
+        "page": 361,
+        "element": "Texte",
+        "refs": "p. 361-362"
+      }
     },
     {
       "id": "c16-q03",
@@ -46,14 +86,34 @@
       "enonce": "Un patient de 45 ans se présente pour une lombosciatique S1 droite évoluant depuis 6 semaines, avec déficit moteur récent et franc du triceps sural. L’IRM met en évidence une hernie discale L5-S1. Quel type d’hernie présente la plus forte probabilité de régression spontanée à moyen terme, justifiant souvent un traitement conservateur initial si le déficit n’était pas sévère ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une protrusion discale à large base d’implantation, en hyposignal T2", "correct": false },
-        { "id": "B", "texte": "Une extrusion discale foraminale associée à d’importants ostéophytes (hernie ostéocartilagineuse)", "correct": false },
-        { "id": "C", "texte": "Une hernie exclue (fragment libre), volumineuse, en hypersignal T2 et migrée dans l’espace épidural postérieur", "correct": true },
-        { "id": "D", "texte": "Un bombement discal circonférentiel (bulging) symétrique", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une protrusion discale à large base d’implantation, en hyposignal T2",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une extrusion discale foraminale associée à d’importants ostéophytes (hernie ostéocartilagineuse)",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une hernie exclue (fragment libre), volumineuse, en hypersignal T2 et migrée dans l’espace épidural postérieur",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Un bombement discal circonférentiel (bulging) symétrique",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est C. Les régressions spontanées (qui surviennent dans 66,7 % des cas) sont d’autant plus fréquentes et importantes que la hernie est de grande taille, de type extrusion ou exclusion, avec un hypersignal T2 (signe d’hydratation), et exposée à l’espace épidural (réaction macrophagique « à corps étranger »). Les hernies contenues (protrusions) ou contenant du cartilage/os se résorbent moins bien. Bien sûr, la présence d’un déficit moteur sévère impose ici une évaluation neurochirurgicale rapide.",
+      "explication": "Les régressions spontanées (qui surviennent dans 66,7 % des cas) sont d’autant plus fréquentes et importantes que la hernie est de grande taille, de type extrusion ou exclusion, avec un hypersignal T2 (signe d’hydratation), et exposée à l’espace épidural (réaction macrophagique « à corps étranger »). Les hernies contenues (protrusions) ou contenant du cartilage/os se résorbent moins bien. Bien sûr, la présence d’un déficit moteur sévère impose ici une évaluation neurochirurgicale rapide.",
       "correction_figures": [],
-      "source": { "page": 376, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 376,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c16-q04",
@@ -62,14 +122,34 @@
       "enonce": "L’évaluation d’un spondylolisthésis par lyse isthmique (antélisthésis de L5 sur S1) nécessite d’identifier les facteurs pronostiques péjoratifs associés à un risque élevé d’évolutivité. Parmi les éléments suivants, lesquels sont considérés comme des facteurs péjoratifs ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une dysplasie de L5 avec aspect trapézoïdal du corps vertébral", "correct": true },
-        { "id": "B", "texte": "L’absence de cyphose entre L5 et S1 (angle lombosacré > 90°)", "correct": false },
-        { "id": "C", "texte": "Une dysplasie de S1 caractérisée par un dôme sacré arrondi et résorbé en avant", "correct": true },
-        { "id": "D", "texte": "Un glissement initial modéré évalué à 5 % selon l’indice de Taillard", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une dysplasie de L5 avec aspect trapézoïdal du corps vertébral",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’absence de cyphose entre L5 et S1 (angle lombosacré > 90°)",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une dysplasie de S1 caractérisée par un dôme sacré arrondi et résorbé en avant",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Un glissement initial modéré évalué à 5 % selon l’indice de Taillard",
+          "correct": false
+        }
       ],
-      "explication": "Les réponses correctes sont A et C. L’aspect trapézoïdal de L5 et la dysplasie du dôme sacré de S1 sont des facteurs morphologiques péjoratifs favorisant la progression du glissement. Au contraire, une cyphose entre L5 et S1 (angle < 90°) est un facteur péjoratif (l’absence de cyphose n’en est donc pas un). Un glissement initial important (et non modéré) est également un facteur péjoratif reconnu.",
+      "explication": "L’aspect trapézoïdal de L5 et la dysplasie du dôme sacré de S1 sont des facteurs morphologiques péjoratifs favorisant la progression du glissement. Au contraire, une cyphose entre L5 et S1 (angle < 90°) est un facteur péjoratif (l’absence de cyphose n’en est donc pas un). Un glissement initial important (et non modéré) est également un facteur péjoratif reconnu.",
       "correction_figures": [],
-      "source": { "page": 401, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 401,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c16-q05",
@@ -78,14 +158,34 @@
       "enonce": "Quelle est l’étiologie la plus fréquente de spondylolisthésis dégénératif ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une fracture de fatigue de l’isthme (lyse isthmique)", "correct": false },
-        { "id": "B", "texte": "Une arthrose zygapophysaire avec remodelage sagittal de l’interligne", "correct": true },
-        { "id": "C", "texte": "Une hyperostose vertébrale (maladie de Forestier)", "correct": false },
-        { "id": "D", "texte": "Une agénésie des pédicules lombaires", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une fracture de fatigue de l’isthme (lyse isthmique)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une arthrose zygapophysaire avec remodelage sagittal de l’interligne",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une hyperostose vertébrale (maladie de Forestier)",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une agénésie des pédicules lombaires",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. Le spondylolisthésis dégénératif est secondaire à la faillite des moyens d’union, où l’arthrose zygapophysaire (volontiers érosive et avec sagittalisation de l’interligne) joue un rôle central pour permettre le glissement vertébral vers l’avant.",
+      "explication": "Le spondylolisthésis dégénératif est secondaire à la faillite des moyens d’union, où l’arthrose zygapophysaire (volontiers érosive et avec sagittalisation de l’interligne) joue un rôle central pour permettre le glissement vertébral vers l’avant.",
       "correction_figures": [],
-      "source": { "page": 405, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 405,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c16-q06",
@@ -94,14 +194,34 @@
       "enonce": "L’IRM lombaire d’un patient de 70 ans se plaignant d’une claudication radiculaire intermittente montre un canal lombaire rétréci sévère. Quels critères IRM morphologiques (en coupes axiales) définissent une sténose canalaire centrale de degré « sévère » selon la classification actuelle ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’absence totale de LCS visible autour des racines de la queue de cheval", "correct": true },
-        { "id": "B", "texte": "Une agglutination des racines qui ne peuvent plus être individualisées (signal gris)", "correct": true },
-        { "id": "C", "texte": "La disparition totale de la graisse épidurale postérieure", "correct": false },
-        { "id": "D", "texte": "Un diamètre antéropostérieur du sac dural mesuré strictement à 11 mm", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’absence totale de LCS visible autour des racines de la queue de cheval",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une agglutination des racines qui ne peuvent plus être individualisées (signal gris)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La disparition totale de la graisse épidurale postérieure",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un diamètre antéropostérieur du sac dural mesuré strictement à 11 mm",
+          "correct": false
+        }
       ],
-      "explication": "Les réponses correctes sont A et B. Selon la gradation morphologique de la sténose en IRM (Tableau 16.4 et Fig. 16.60), une sténose est « sévère » lorsqu’il n’y a plus de LCS visible et que les racines ne peuvent plus être individualisées (masse grise), MAIS de la graisse épidurale postérieure reste visible. Si la graisse épidurale postérieure disparaît également, la sténose est qualifiée d’« extrême » (C). La mesure millimétrique absolue (D) est aujourd’hui considérée comme moins fiable que ces critères morphologiques.",
+      "explication": "Selon la gradation morphologique de la sténose en IRM (Tableau 16.4 et Fig. 16.60), une sténose est « sévère » lorsqu’il n’y a plus de LCS visible et que les racines ne peuvent plus être individualisées (masse grise), MAIS de la graisse épidurale postérieure reste visible. Si la graisse épidurale postérieure disparaît également, la sténose est qualifiée d’« extrême ». La mesure millimétrique absolue est aujourd’hui considérée comme moins fiable que ces critères morphologiques.",
       "correction_figures": [],
-      "source": { "page": 395, "element": "Tableau 16.4", "refs": "p. 395-396" }
+      "source": {
+        "page": 395,
+        "element": "Tableau 16.4",
+        "refs": "p. 395-396"
+      }
     },
     {
       "id": "c16-q07",
@@ -110,14 +230,34 @@
       "enonce": "Un patient consulte pour des lombalgies intenses déclenchées par l’hyperextension. Les radiographies de profil montrent un contact répété entre les processus épineux de L4 et L5 avec une ostéocondensation de leurs bords en regard. Quel est le nom de cette affection spécifique lorsqu’elle est symptomatique ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La maladie de Scheuermann", "correct": false },
-        { "id": "B", "texte": "La maladie de Baastrup", "correct": true },
-        { "id": "C", "texte": "Le syndrome de la queue de cheval", "correct": false },
-        { "id": "D", "texte": "L’hyperostose vertébrale ankylosante", "correct": false }
+        {
+          "id": "A",
+          "texte": "La maladie de Scheuermann",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La maladie de Baastrup",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le syndrome de la queue de cheval",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’hyperostose vertébrale ankylosante",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. Le contact répété entre les processus épineux (favorisé par l’hyperlordose et le pincement discal), entraînant une ostéocondensation et parfois une bursite interépineuse douloureuse, définit la maladie de Baastrup (lorsqu’elle est symptomatique).",
+      "explication": "Le contact répété entre les processus épineux (favorisé par l’hyperlordose et le pincement discal), entraînant une ostéocondensation et parfois une bursite interépineuse douloureuse, définit la maladie de Baastrup (lorsqu’elle est symptomatique).",
       "correction_figures": [],
-      "source": { "page": 387, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 387,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c16-q08",
@@ -126,14 +266,34 @@
       "enonce": "Un patient est suivi après une laminectomie lombaire L4-L5 compliquée. L’IRM à 8 mois post-opératoires suspecte une arachnoïdite. Quels aspects IRM sont caractéristiques d’une arachnoïdite lombaire ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un sac dural d’aspect « vide » avec des racines plaquées et engluées contre la dure-mère (type 2)", "correct": true },
-        { "id": "B", "texte": "Des racines de la queue de cheval agglutinées entre elles au centre du sac dural (type 1)", "correct": true },
-        { "id": "C", "texte": "Une collection liquidienne extradurale repoussant le sac dural en avant", "correct": false },
-        { "id": "D", "texte": "Une masse pseudo-tumorale intrathécale formée par l’agglomération des racines (type 3)", "correct": true }
+        {
+          "id": "A",
+          "texte": "Un sac dural d’aspect « vide » avec des racines plaquées et engluées contre la dure-mère (type 2)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Des racines de la queue de cheval agglutinées entre elles au centre du sac dural (type 1)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une collection liquidienne extradurale repoussant le sac dural en avant",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une masse pseudo-tumorale intrathécale formée par l’agglomération des racines (type 3)",
+          "correct": true
+        }
       ],
-      "explication": "Les réponses correctes sont A, B et D. L’arachnoïdite se caractérise par une inflammation où les racines s’agglutinent entre elles au centre (type 1), s’accolent à la dure-mère donnant un aspect de sac vide (type 2), ou forment un amas pseudo-tumoral (type 3). La collection liquidienne extradurale (C) correspond à une pseudo-méningocèle, non à une arachnoïdite.",
+      "explication": "L’arachnoïdite se caractérise par une inflammation où les racines s’agglutinent entre elles au centre (type 1), s’accolent à la dure-mère donnant un aspect de sac vide (type 2), ou forment un amas pseudo-tumoral (type 3). La collection liquidienne extradurale correspond à une pseudo-méningocèle, non à une arachnoïdite.",
       "correction_figures": [],
-      "source": { "page": 382, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 382,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c16-q09",
@@ -142,14 +302,34 @@
       "enonce": "Quel est le mécanisme pathogénique de la dystrophie rachidienne de croissance (maladie de Scheuermann) ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une infection bactérienne des disques intervertébraux chez le jeune enfant", "correct": false },
-        { "id": "B", "texte": "Une dégénérescence primitive des articulations zygapophysaires", "correct": false },
-        { "id": "C", "texte": "Des microtraumatismes répétés sur des plaques cartilagineuses fragilisées par une croissance rapide à l’adolescence", "correct": true },
-        { "id": "D", "texte": "Une hyperostose du ligament longitudinal antérieur d’origine génétique", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une infection bactérienne des disques intervertébraux chez le jeune enfant",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une dégénérescence primitive des articulations zygapophysaires",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Des microtraumatismes répétés sur des plaques cartilagineuses fragilisées par une croissance rapide à l’adolescence",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une hyperostose du ligament longitudinal antérieur d’origine génétique",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est C. La dystrophie rachidienne de croissance est aujourd’hui considérée comme d’origine traumatique, résultant de microtraumatismes répétés sur des plaques cartilagineuses fragilisées par la croissance rapide lors de l’adolescence.",
+      "explication": "La dystrophie rachidienne de croissance est aujourd’hui considérée comme d’origine traumatique, résultant de microtraumatismes répétés sur des plaques cartilagineuses fragilisées par la croissance rapide lors de l’adolescence.",
       "correction_figures": [],
-      "source": { "page": 415, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 415,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c16-q10",
@@ -158,14 +338,34 @@
       "enonce": "Un an après une discectomie L4-L5, un patient présente une récidive de sa sciatique. L’IRM met en évidence une masse tissulaire épidurale antérolatérale au niveau opéré. Quel signe IRM permet de différencier avec la plus grande fiabilité une véritable récidive herniaire d’une cicatrice péridurale fibreuse (fibrose post-opératoire) ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La masse est en franc hypersignal T2 par rapport au disque adjacent.", "correct": false },
-        { "id": "B", "texte": "La masse exerce un effet de masse évident sur le sac dural et la racine émergente.", "correct": false },
-        { "id": "C", "texte": "La masse est mal limitée, de contours flous et irréguliers, et se rehausse intensément et de façon homogène après injection précoce de gadolinium.", "correct": false },
-        { "id": "D", "texte": "La masse présente des contours bien limités, une forme polylobée, et ne se rehausse qu’en périphérie (rehaussement annulaire) après injection de gadolinium.", "correct": true }
+        {
+          "id": "A",
+          "texte": "La masse est en franc hypersignal T2 par rapport au disque adjacent.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La masse exerce un effet de masse évident sur le sac dural et la racine émergente.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La masse est mal limitée, de contours flous et irréguliers, et se rehausse intensément et de façon homogène après injection précoce de gadolinium.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La masse présente des contours bien limités, une forme polylobée, et ne se rehausse qu’en périphérie (rehaussement annulaire) après injection de gadolinium.",
+          "correct": true
+        }
       ],
-      "explication": "La réponse correcte est D. Une véritable récidive herniaire se présente comme un fragment discal avasculaire (donc non rehaussé en son centre), aux contours bien limités. Le rehaussement n’est que périphérique, dû au tissu de granulation inflammatoire (et souvent tardif). À l’inverse, la cicatrice péridurale (fibrose) est mal limitée et se rehausse rapidement, précocement et de façon diffuse (réponse C). L’effet de masse (B) peut être présent dans les deux cas (notamment si la fibrose est hypertrophique).",
+      "explication": "Une véritable récidive herniaire se présente comme un fragment discal avasculaire (donc non rehaussé en son centre), aux contours bien limités. Le rehaussement n’est que périphérique, dû au tissu de granulation inflammatoire (et souvent tardif). À l’inverse, la cicatrice péridurale (fibrose) est mal limitée et se rehausse rapidement, précocement et de façon diffuse. L’effet de masse peut être présent dans les deux cas (notamment si la fibrose est hypertrophique).",
       "correction_figures": [],
-      "source": { "page": 381, "element": "Tableau 16.3", "refs": "" }
+      "source": {
+        "page": 381,
+        "element": "Tableau 16.3",
+        "refs": ""
+      }
     }
   ]
 }

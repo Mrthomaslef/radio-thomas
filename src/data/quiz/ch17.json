@@ -14,14 +14,34 @@
       "enonce": "Lors du bilan d’une fracture vertébrale, la présence d’un « vide intrasomatique » (clarté gazeuse intra-osseuse) en imagerie (radiographie ou scanner) est un signe :",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Pathognomonique d’une origine métastatique.", "correct": false },
-        { "id": "B", "texte": "Quasiment pathognomonique de la nature bénigne (ostéoporotique le plus souvent) de la fracture.", "correct": true },
-        { "id": "C", "texte": "Révélateur d’une spondylodiscite infectieuse à germe anaérobie.", "correct": false },
-        { "id": "D", "texte": "Fréquent dans le myélome multiple (présent dans plus de 50 % des cas).", "correct": false }
+        {
+          "id": "A",
+          "texte": "Pathognomonique d’une origine métastatique.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Quasiment pathognomonique de la nature bénigne (ostéoporotique le plus souvent) de la fracture.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Révélateur d’une spondylodiscite infectieuse à germe anaérobie.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Fréquent dans le myélome multiple (présent dans plus de 50 % des cas).",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. Le phénomène du vide intrasomatique est un signe quasiment pathognomonique de la nature bénigne d’une fracture vertébrale (souvent ostéoporotique). Il n’a été qu’exceptionnellement rapporté dans le myélome ou les métastases, et jamais de façon fréquente.",
+      "explication": "Le phénomène du vide intrasomatique est un signe quasiment pathognomonique de la nature bénigne d’une fracture vertébrale (souvent ostéoporotique). Il n’a été qu’exceptionnellement rapporté dans le myélome ou les métastases, et jamais de façon fréquente.",
       "correction_figures": [],
-      "source": { "page": 421, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 421,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c17-q02",
@@ -30,14 +50,34 @@
       "enonce": "Parmi les caractéristiques suivantes (visibles en radiographie ou en scanner), lesquelles orientent préférentiellement vers une fracture vertébrale d’origine ostéoporotique (bénigne) plutôt que métastatique ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un recul du coin postérosupérieur (ou postéro-inférieur) du corps vertébral.", "correct": true },
-        { "id": "B", "texte": "Un bombement ou une ostéolyse du mur vertébral postérieur.", "correct": false },
-        { "id": "C", "texte": "Une fracture siégeant au-dessus de T4 en l’absence de traumatisme majeur.", "correct": false },
-        { "id": "D", "texte": "Une surface fracturée importante (cunéiforme au rachis thoracique ou angulaire au rachis lombaire).", "correct": true }
+        {
+          "id": "A",
+          "texte": "Un recul du coin postérosupérieur (ou postéro-inférieur) du corps vertébral.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un bombement ou une ostéolyse du mur vertébral postérieur.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une fracture siégeant au-dessus de T4 en l’absence de traumatisme majeur.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une surface fracturée importante (cunéiforme au rachis thoracique ou angulaire au rachis lombaire).",
+          "correct": true
+        }
       ],
-      "explication": "Les réponses correctes sont A et D. Le recul d’un coin postérieur est très évocateur d’une fracture ostéoporotique, de même qu’une surface fracturée importante (diminution globale de la résistance). Au contraire, un bombement ou une ostéolyse du mur postérieur, ainsi qu’une fracture au-dessus de T4, doivent faire suspecter une origine maligne.",
+      "explication": "Le recul d’un coin postérieur est très évocateur d’une fracture ostéoporotique, de même qu’une surface fracturée importante (diminution globale de la résistance). Au contraire, un bombement ou une ostéolyse du mur postérieur, ainsi qu’une fracture au-dessus de T4, doivent faire suspecter une origine maligne.",
       "correction_figures": [],
-      "source": { "page": 419, "element": "Tableau 17.1", "refs": "p. 419-421" }
+      "source": {
+        "page": 419,
+        "element": "Tableau 17.1",
+        "refs": "p. 419-421"
+      }
     },
     {
       "id": "c17-q03",
@@ -46,14 +86,34 @@
       "enonce": "Une patiente de 75 ans, aux antécédents d’ostéoporose, se présente pour des lombo-fessalgies intenses de survenue brutale après un effort mineur. Le scanner pelvien révèle une fracture par insuffisance osseuse du sacrum. Quelle est l’apparence classique de cette fracture sur des reconstructions frontales (et en scintigraphie) lorsqu’elle est bilatérale et complète ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une image en « Y » inversé.", "correct": false },
-        { "id": "B", "texte": "Une image typique en « H ».", "correct": true },
-        { "id": "C", "texte": "Une fracture transversale isolée passant par les foramens sacrés S1 et S2.", "correct": false },
-        { "id": "D", "texte": "Une fracture stellaire (en étoile) centrée sur le promontoire sacré.", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une image en « Y » inversé.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une image typique en « H ».",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une fracture transversale isolée passant par les foramens sacrés S1 et S2.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une fracture stellaire (en étoile) centrée sur le promontoire sacré.",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. La fracture par insuffisance osseuse du sacrum, lorsqu’elle est complète (bilatérale), présente des traits sagittaux sur chaque aileron sacré reliés par une composante transversale, donnant une image typique en « H » visible de face (radiographie, TDM frontale) ou en scintigraphie osseuse.",
+      "explication": "La fracture par insuffisance osseuse du sacrum, lorsqu’elle est complète (bilatérale), présente des traits sagittaux sur chaque aileron sacré reliés par une composante transversale, donnant une image typique en « H » visible de face (radiographie, TDM frontale) ou en scintigraphie osseuse.",
       "correction_figures": [],
-      "source": { "page": 429, "element": "Texte", "refs": "p. 429-430" }
+      "source": {
+        "page": 429,
+        "element": "Texte",
+        "refs": "p. 429-430"
+      }
     },
     {
       "id": "c17-q04",
@@ -62,14 +122,34 @@
       "enonce": "L’IRM permet de différencier les fractures vertébrales ostéoporotiques des fractures métastatiques en analysant le signal osseux. Quels signes IRM sont en faveur d’une origine ostéoporotique (bénigne) en cas de fracture vertébrale aiguë/subaiguë ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Des anomalies de signal en bande sous le plateau vertébral fracturé, respectant le reste du corps vertébral.", "correct": true },
-        { "id": "B", "texte": "La persistance d’un signal hétérogène (hyper- et hypo-intense en T1 et T2) de l’ensemble du corps vertébral après plus de 6 mois.", "correct": false },
-        { "id": "C", "texte": "La présence d’une « fente liquidienne » (hypersignal T2 intense, hyposignal T1) au sein du corps vertébral.", "correct": true },
-        { "id": "D", "texte": "L’absence de chute de signal de la vertèbre sur les séquences en opposition de phase (SIR > 0,8).", "correct": false }
+        {
+          "id": "A",
+          "texte": "Des anomalies de signal en bande sous le plateau vertébral fracturé, respectant le reste du corps vertébral.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La persistance d’un signal hétérogène (hyper- et hypo-intense en T1 et T2) de l’ensemble du corps vertébral après plus de 6 mois.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La présence d’une « fente liquidienne » (hypersignal T2 intense, hyposignal T1) au sein du corps vertébral.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’absence de chute de signal de la vertèbre sur les séquences en opposition de phase (SIR > 0,8).",
+          "correct": false
+        }
       ],
-      "explication": "Les réponses correctes sont A et C. Dans une fracture ostéoporotique récente, l’œdème (hyposignal T1 / hypersignal T2) forme typiquement une bande sous le plateau fracturé, respectant le reste de la vertèbre (souvent le coin postérieur opposé). La fente liquidienne (équivalent IRM du vide intrasomatique) est également un signe fort de bénignité. Un signal persistant après 6 mois n’est pas typique de la bénignité, où la moelle graisseuse « normale » doit réapparaître (en 1 à 3 mois). L’absence de chute de signal en opposition de phase signe un remplacement médullaire, en faveur d’une métastase (et non d’une ostéoporose).",
+      "explication": "Dans une fracture ostéoporotique récente, l’œdème (hyposignal T1 / hypersignal T2) forme typiquement une bande sous le plateau fracturé, respectant le reste de la vertèbre (souvent le coin postérieur opposé). La fente liquidienne (équivalent IRM du vide intrasomatique) est également un signe fort de bénignité. Un signal persistant après 6 mois n’est pas typique de la bénignité, où la moelle graisseuse « normale » doit réapparaître (en 1 à 3 mois). L’absence de chute de signal en opposition de phase signe un remplacement médullaire, en faveur d’une métastase (et non d’une ostéoporose).",
       "correction_figures": [],
-      "source": { "page": 424, "element": "Tableau 17.2", "refs": "p. 424-426" }
+      "source": {
+        "page": 424,
+        "element": "Tableau 17.2",
+        "refs": "p. 424-426"
+      }
     },
     {
       "id": "c17-q05",
@@ -78,14 +158,34 @@
       "enonce": "Le paramètre « incidence pelvienne » est fondamental pour évaluer l’équilibre sagittal de la colonne vertébrale. Comment ce paramètre évolue-t-il chez un individu adulte au fil du temps ou lors de changements de position ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Il augmente significativement en position assise par rapport à la position debout.", "correct": false },
-        { "id": "B", "texte": "Il est constant (immuable) pour un individu donné dès la fin de la croissance, quelle que soit sa position.", "correct": true },
-        { "id": "C", "texte": "Il diminue progressivement avec le vieillissement et l’apparition de l’arthrose.", "correct": false },
-        { "id": "D", "texte": "Il est égal à la différence entre la version pelvienne et la pente sacrée.", "correct": false }
+        {
+          "id": "A",
+          "texte": "Il augmente significativement en position assise par rapport à la position debout.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il est constant (immuable) pour un individu donné dès la fin de la croissance, quelle que soit sa position.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il diminue progressivement avec le vieillissement et l’apparition de l’arthrose.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il est égal à la différence entre la version pelvienne et la pente sacrée.",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. L’incidence pelvienne est un paramètre morphologique intrinsèque à chaque individu, fixé à la fin de la croissance et immuable, indépendamment de la position (debout, assis, etc.). Elle est égale à la somme (et non la différence) de la version pelvienne et de la pente sacrée.",
+      "explication": "L’incidence pelvienne est un paramètre morphologique intrinsèque à chaque individu, fixé à la fin de la croissance et immuable, indépendamment de la position (debout, assis, etc.). Elle est égale à la somme (et non la différence) de la version pelvienne et de la pente sacrée.",
       "correction_figures": [],
-      "source": { "page": 438, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 438,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c17-q06",
@@ -94,14 +194,34 @@
       "enonce": "Lors de l’évaluation du rachis de profil en charge, quels sont les paramètres qui composent l’équilibre sagittal du bassin et quelles sont leurs relations ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’incidence pelvienne = Pente sacrée + Version pelvienne.", "correct": true },
-        { "id": "B", "texte": "La version pelvienne augmente lorsque le bassin se rétroverse (se penche vers l’arrière).", "correct": true },
-        { "id": "C", "texte": "La pente sacrée est l’angle entre la tangente au bord postérosupérieur du sacrum et la verticale.", "correct": false },
-        { "id": "D", "texte": "Une incidence pelvienne élevée est généralement associée à des courbures sagittales rachidiennes (lordose lombaire, cyphose thoracique) faibles.", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’incidence pelvienne = Pente sacrée + Version pelvienne.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La version pelvienne augmente lorsque le bassin se rétroverse (se penche vers l’arrière).",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La pente sacrée est l’angle entre la tangente au bord postérosupérieur du sacrum et la verticale.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une incidence pelvienne élevée est généralement associée à des courbures sagittales rachidiennes (lordose lombaire, cyphose thoracique) faibles.",
+          "correct": false
+        }
       ],
-      "explication": "Les réponses correctes sont A et B. L’équation anatomique fondamentale du bassin est Incidence pelvienne = Version pelvienne + Pente sacrée. La version pelvienne augmente lors de la rétroversion du bassin (mécanisme de compensation). La pente sacrée est l’angle entre le plateau supérieur de S1 et l’horizontale (et non le bord postérosupérieur du sacrum). Enfin, une incidence pelvienne élevée s’accompagne d’une lordose lombaire et d’une cyphose importantes, non pas faibles, pour maintenir l’équilibre.",
+      "explication": "L’équation anatomique fondamentale du bassin est Incidence pelvienne = Version pelvienne + Pente sacrée. La version pelvienne augmente lors de la rétroversion du bassin (mécanisme de compensation). La pente sacrée est l’angle entre le plateau supérieur de S1 et l’horizontale (et non le bord postérosupérieur du sacrum). Enfin, une incidence pelvienne élevée s’accompagne d’une lordose lombaire et d’une cyphose importantes, non pas faibles, pour maintenir l’équilibre.",
       "correction_figures": [],
-      "source": { "page": 438, "element": "Texte", "refs": "p. 438-439" }
+      "source": {
+        "page": 438,
+        "element": "Texte",
+        "refs": "p. 438-439"
+      }
     },
     {
       "id": "c17-q07",
@@ -110,14 +230,34 @@
       "enonce": "Dans le suivi des scolioses idiopathiques de l’adolescent, l’évaluation de la maturité osseuse est cruciale pour déterminer le potentiel évolutif. Le « test de Risser » est couramment utilisé à cette fin. Que permet d’évaluer le test de Risser sur les radiographies ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’ossification des épiphyses des corps vertébraux thoraciques.", "correct": false },
-        { "id": "B", "texte": "L’ossification des points d’ossification accessoires des crêtes iliaques.", "correct": true },
-        { "id": "C", "texte": "La fusion des cartilages de croissance du radius et de l’ulna au poignet.", "correct": false },
-        { "id": "D", "texte": "Le développement des noyaux d’ossification du coude (méthode de Sauvegrain et Nahum).", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’ossification des épiphyses des corps vertébraux thoraciques.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’ossification des points d’ossification accessoires des crêtes iliaques.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La fusion des cartilages de croissance du radius et de l’ulna au poignet.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le développement des noyaux d’ossification du coude (méthode de Sauvegrain et Nahum).",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. Le test de Risser évalue l’état de maturation du squelette en analysant l’apparition et la progression (d’avant en arrière) des points d’ossification secondaires des crêtes iliaques (stades 0 à 5).",
+      "explication": "Le test de Risser évalue l’état de maturation du squelette en analysant l’apparition et la progression (d’avant en arrière) des points d’ossification secondaires des crêtes iliaques (stades 0 à 5).",
       "correction_figures": [],
-      "source": { "page": 439, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 439,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c17-q08",
@@ -126,14 +266,34 @@
       "enonce": "La scoliose dégénérative (de novo) apparaît à l’âge adulte sur un rachis précédemment normo-axé. Quelles sont les caractéristiques radiographiques typiques de la scoliose dégénérative primitive ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une évolution rapide et linéaire.", "correct": true },
-        { "id": "B", "texte": "Une luxation latérale ou antérolatérale des vertèbres (dislocation) souvent présente dès qu’elle atteint un petit angle.", "correct": true },
-        { "id": "C", "texte": "Des courbures siégeant principalement au niveau cervico-thoracique.", "correct": false },
-        { "id": "D", "texte": "Une cyphose souvent significative associée à la courbure latérale lombaire ou thoraco-lombaire.", "correct": true }
+        {
+          "id": "A",
+          "texte": "Une évolution rapide et linéaire.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une luxation latérale ou antérolatérale des vertèbres (dislocation) souvent présente dès qu’elle atteint un petit angle.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Des courbures siégeant principalement au niveau cervico-thoracique.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une cyphose souvent significative associée à la courbure latérale lombaire ou thoraco-lombaire.",
+          "correct": true
+        }
       ],
-      "explication": "Les réponses correctes sont A, B et D. Contrairement à la scoliose dégénérative secondaire, la scoliose dégénérative primitive a une évolution rapide et linéaire, présente une dislocation (glissement latéral/rotatoire) précoce même pour de petits angles, et s’associe souvent à une cyphose significative avec une perte de la lordose lombaire. Les courbures sont principalement lombaires ou thoracolombaires (pas cervico-thoraciques).",
+      "explication": "Contrairement à la scoliose dégénérative secondaire, la scoliose dégénérative primitive a une évolution rapide et linéaire, présente une dislocation (glissement latéral/rotatoire) précoce même pour de petits angles, et s’associe souvent à une cyphose significative avec une perte de la lordose lombaire. Les courbures sont principalement lombaires ou thoracolombaires (pas cervico-thoraciques).",
       "correction_figures": [],
-      "source": { "page": 444, "element": "Tableau 17.6", "refs": "p. 444-445" }
+      "source": {
+        "page": 444,
+        "element": "Tableau 17.6",
+        "refs": "p. 444-445"
+      }
     },
     {
       "id": "c17-q09",
@@ -142,14 +302,34 @@
       "enonce": "Sur un cliché radiographique de face, le diagnostic formel de scoliose est posé lorsque l’angle de Cobb (angle de la courbure dans le plan frontal) est strictement supérieur à une certaine valeur. Quelle est cette valeur seuil ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "5°", "correct": false },
-        { "id": "B", "texte": "10°", "correct": true },
-        { "id": "C", "texte": "15°", "correct": false },
-        { "id": "D", "texte": "20°", "correct": false }
+        {
+          "id": "A",
+          "texte": "5°",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "10°",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "15°",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "20°",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. La scoliose répond à un critère radiographique précis : l’angle de Cobb dans le plan frontal doit être supérieur à 10°.",
+      "explication": "La scoliose répond à un critère radiographique précis : l’angle de Cobb dans le plan frontal doit être supérieur à 10°.",
       "correction_figures": [],
-      "source": { "page": 433, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 433,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c17-q10",
@@ -158,14 +338,34 @@
       "enonce": "Vous interprétez le bilan d’imagerie d’une scoliose. Quelles informations ou « clés diagnostiques » doivent inciter à rechercher une étiologie « secondaire » (non idiopathique) et donc justifier la réalisation d’une IRM médullaire ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une scoliose thoracique à convexité droite chez une adolescente.", "correct": false },
-        { "id": "B", "texte": "Une scoliose thoracique à grande courbure gauche.", "correct": true },
-        { "id": "C", "texte": "L’apparition d’une scoliose douloureuse associée à une raideur rachidienne.", "correct": true },
-        { "id": "D", "texte": "Une courbure mineure compensatrice lombaire sans rotation vertébrale.", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une scoliose thoracique à convexité droite chez une adolescente.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une scoliose thoracique à grande courbure gauche.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’apparition d’une scoliose douloureuse associée à une raideur rachidienne.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une courbure mineure compensatrice lombaire sans rotation vertébrale.",
+          "correct": false
+        }
       ],
-      "explication": "Les réponses correctes sont B et C. La présentation typique et la plus fréquente de la scoliose idiopathique est une courbure thoracique droite. Une scoliose thoracique à convexité gauche est atypique et fortement associée à des anomalies neurologiques comme la syringomyélie (justifiant une IRM). De même, la scoliose idiopathique est classiquement indolore ; une douleur atypique et/ou une raideur doivent faire rechercher une scoliose symptomatique (tumorale, infectieuse).",
+      "explication": "La présentation typique et la plus fréquente de la scoliose idiopathique est une courbure thoracique droite. Une scoliose thoracique à convexité gauche est atypique et fortement associée à des anomalies neurologiques comme la syringomyélie (justifiant une IRM). De même, la scoliose idiopathique est classiquement indolore ; une douleur atypique et/ou une raideur doivent faire rechercher une scoliose symptomatique (tumorale, infectieuse).",
       "correction_figures": [],
-      "source": { "page": 433, "element": "Tableau 17.4", "refs": "p. 433-434, 444" }
+      "source": {
+        "page": 433,
+        "element": "Tableau 17.4",
+        "refs": "p. 433-434, 444"
+      }
     }
   ]
 }

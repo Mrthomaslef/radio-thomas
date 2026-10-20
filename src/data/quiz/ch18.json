@@ -14,14 +14,34 @@
       "enonce": "Parmi les facteurs favorisants d’une ostéonécrose systémique de la tête fémorale (ONTF), lequel n’est pas classiquement retrouvé ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La corticothérapie prolongée", "correct": false },
-        { "id": "B", "texte": "L’éthylisme chronique", "correct": false },
-        { "id": "C", "texte": "L’ostéoporose post-ménopausique", "correct": true },
-        { "id": "D", "texte": "Les accidents barotraumatiques", "correct": false }
+        {
+          "id": "A",
+          "texte": "La corticothérapie prolongée",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’éthylisme chronique",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’ostéoporose post-ménopausique",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Les accidents barotraumatiques",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est C. L’ostéoporose post-ménopausique est un facteur de risque majeur des fractures par insuffisance osseuse du col fémoral ou des fractures sous-chondrales, mais elle n’est pas un facteur favorisant classique de l’ONTF. La corticothérapie, l’éthylisme chronique et la drépanocytose homozygote sont parmi les principaux facteurs favorisants de l’ONTF.",
+      "explication": "L’ostéoporose post-ménopausique est un facteur de risque majeur des fractures par insuffisance osseuse du col fémoral ou des fractures sous-chondrales, mais elle n’est pas un facteur favorisant classique de l’ONTF. La corticothérapie, l’éthylisme chronique et la drépanocytose homozygote sont parmi les principaux facteurs favorisants de l’ONTF.",
       "correction_figures": [],
-      "source": { "page": 451, "element": "Encadré 18.1", "refs": "p. 451, 463" }
+      "source": {
+        "page": 451,
+        "element": "Encadré 18.1",
+        "refs": "p. 451, 463"
+      }
     },
     {
       "id": "c18-q02",
@@ -30,14 +50,34 @@
       "enonce": "Le diagnostic positif d’ostéonécrose systémique de la tête fémorale (ONTF) repose principalement sur l’IRM. Quels sont les signes IRM caractéristiques de l’ONTF à son stade non effondré ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un liseré de démarcation sinueux en hyposignal T1 cernant la nécrose", "correct": true },
-        { "id": "B", "texte": "Un signe du « double contour » en pondération T2, avec un hyposignal périphérique et un hypersignal interne", "correct": true },
-        { "id": "C", "texte": "Un épanchement intra-articulaire toujours très abondant", "correct": false },
-        { "id": "D", "texte": "Une zone nécrotique au centre de la tête fémorale, toujours en hypersignal T1 et T2 quel que soit le stade", "correct": false }
+        {
+          "id": "A",
+          "texte": "Un liseré de démarcation sinueux en hyposignal T1 cernant la nécrose",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un signe du « double contour » en pondération T2, avec un hyposignal périphérique et un hypersignal interne",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un épanchement intra-articulaire toujours très abondant",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une zone nécrotique au centre de la tête fémorale, toujours en hypersignal T1 et T2 quel que soit le stade",
+          "correct": false
+        }
       ],
-      "explication": "Les réponses correctes sont A et B. L’ONTF se caractérise en IRM par un liseré de démarcation en hyposignal T1 (pathognomonique) et un signe du « double contour » en pondération T2 (hyposignal externe et hypersignal interne). La zone nécrosée a un signal variable selon son évolution (graisseux puis hétérogène), et n’est pas toujours en hypersignal T1 et T2. Un épanchement peut être présent mais n’est pas un signe caractéristique du stade non effondré (bien qu’il soit un signe de moins bon pronostic).",
+      "explication": "L’ONTF se caractérise en IRM par un liseré de démarcation en hyposignal T1 (pathognomonique) et un signe du « double contour » en pondération T2 (hyposignal externe et hypersignal interne). La zone nécrosée a un signal variable selon son évolution (graisseux puis hétérogène), et n’est pas toujours en hypersignal T1 et T2. Un épanchement peut être présent mais n’est pas un signe caractéristique du stade non effondré (bien qu’il soit un signe de moins bon pronostic).",
       "correction_figures": [],
-      "source": { "page": 456, "element": "Texte", "refs": "p. 456-457" }
+      "source": {
+        "page": 456,
+        "element": "Texte",
+        "refs": "p. 456-457"
+      }
     },
     {
       "id": "c18-q03",
@@ -46,14 +86,34 @@
       "enonce": "L’évaluation de l’étendue de la nécrose est un élément pronostique majeur dans l’ONTF. Selon l’index de Koo et Kim, à partir de quel seuil le risque de collapsus (effondrement) de la tête fémorale est-il de 100 % ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "15 %", "correct": false },
-        { "id": "B", "texte": "30 %", "correct": false },
-        { "id": "C", "texte": "40 %", "correct": true },
-        { "id": "D", "texte": "50 %", "correct": false }
+        {
+          "id": "A",
+          "texte": "15 %",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "30 %",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "40 %",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "50 %",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est C. L’index de Koo et Kim évalue le risque de collapsus : il est négligeable en deçà de 30 %, atteint 50 % entre 30 et 40 %, et est de 100 % au-delà de 40 %.",
+      "explication": "L’index de Koo et Kim évalue le risque de collapsus : il est négligeable en deçà de 30 %, atteint 50 % entre 30 et 40 %, et est de 100 % au-delà de 40 %.",
       "correction_figures": [],
-      "source": { "page": 458, "element": "Texte", "refs": "p. 458-459" }
+      "source": {
+        "page": 458,
+        "element": "Texte",
+        "refs": "p. 458-459"
+      }
     },
     {
       "id": "c18-q04",
@@ -62,14 +122,34 @@
       "enonce": "Une patiente de 65 ans sous traitement pour ostéoporose consulte pour une douleur aiguë de la hanche droite apparue sans traumatisme majeur. La radiographie initiale est normale. L’IRM montre un trait sous-chondral serpigineux en hyposignal T1 entouré d’un important œdème médullaire hyperintense en T2. Le diagnostic de fracture sous-chondrale par insuffisance osseuse est évoqué. Quelles affirmations concernant cette pathologie sont justes ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Elle survient typiquement chez la femme ostéoporotique de plus de 60 ans.", "correct": true },
-        { "id": "B", "texte": "Contrairement à l’ONTF, l’œdème médullaire périphérique (hyperhémie) est absent.", "correct": false },
-        { "id": "C", "texte": "Elle se traduit en IRM par un trait sous-chondral irrégulier, discontinu, parallèle à la surface articulaire.", "correct": true },
-        { "id": "D", "texte": "L’évolution est systématiquement favorable, sans risque de nécrose mécanique.", "correct": false }
+        {
+          "id": "A",
+          "texte": "Elle survient typiquement chez la femme ostéoporotique de plus de 60 ans.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Contrairement à l’ONTF, l’œdème médullaire périphérique (hyperhémie) est absent.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Elle se traduit en IRM par un trait sous-chondral irrégulier, discontinu, parallèle à la surface articulaire.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’évolution est systématiquement favorable, sans risque de nécrose mécanique.",
+          "correct": false
+        }
       ],
-      "explication": "Les réponses correctes sont A et C. La fracture sous-chondrale par insuffisance osseuse est le diagnostic principal chez la femme âgée ostéoporotique présentant une douleur brutale de hanche. En IRM, elle se présente comme une ligne sous-chondrale irrégulière, parallèle à l’articulation. Contrairement à l’ONTF, elle est typiquement entourée d’un œdème périphérique en hypersignal T2. Son évolution peut être défavorable, avec risque d’effondrement ou de nécrose mécanique (l’os entre la fracture et le cartilage n’étant plus vascularisé).",
+      "explication": "La fracture sous-chondrale par insuffisance osseuse est le diagnostic principal chez la femme âgée ostéoporotique présentant une douleur brutale de hanche. En IRM, elle se présente comme une ligne sous-chondrale irrégulière, parallèle à l’articulation. Contrairement à l’ONTF, elle est typiquement entourée d’un œdème périphérique en hypersignal T2. Son évolution peut être défavorable, avec risque d’effondrement ou de nécrose mécanique (l’os entre la fracture et le cartilage n’étant plus vascularisé).",
       "correction_figures": [],
-      "source": { "page": 463, "element": "Texte", "refs": "p. 463-464" }
+      "source": {
+        "page": 463,
+        "element": "Texte",
+        "refs": "p. 463-464"
+      }
     },
     {
       "id": "c18-q05",
@@ -78,14 +158,34 @@
       "enonce": "Quel est l’aspect IRM le plus caractéristique d’un syndrome douloureux régional complexe de type 1 (SDRC 1) de la hanche à la phase d’état ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un liseré serpigineux d’ostéosclérose cernant une zone de nécrose.", "correct": false },
-        { "id": "B", "texte": "Un œdème intra-osseux global de la tête fémorale s’étendant au col, aux contours mal limités.", "correct": true },
-        { "id": "C", "texte": "Une fracture nette transversale du col fémoral.", "correct": false },
-        { "id": "D", "texte": "Un kyste sous-chondral unique avec sclérose périphérique importante.", "correct": false }
+        {
+          "id": "A",
+          "texte": "Un liseré serpigineux d’ostéosclérose cernant une zone de nécrose.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un œdème intra-osseux global de la tête fémorale s’étendant au col, aux contours mal limités.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une fracture nette transversale du col fémoral.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un kyste sous-chondral unique avec sclérose périphérique importante.",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. Le SDRC 1 (anciennement algodystrophie) se manifeste en IRM par un œdème intra-osseux étendu (hyposignal T1, hypersignal T2), englobant typiquement la tête et le col fémoral, à contours mal limités, sans liseré de démarcation.",
+      "explication": "Le SDRC 1 (anciennement algodystrophie) se manifeste en IRM par un œdème intra-osseux étendu (hyposignal T1, hypersignal T2), englobant typiquement la tête et le col fémoral, à contours mal limités, sans liseré de démarcation.",
       "correction_figures": [],
-      "source": { "page": 470, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 470,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c18-q06",
@@ -94,14 +194,34 @@
       "enonce": "La maladie de Legg-Perthes-Calvé (ostéochondrite primitive de hanche) est une nécrose ischémique du noyau épiphysaire. Laquelle ou lesquelles de ces propositions sont exactes concernant cette maladie ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Elle affecte préférentiellement les garçons de 4 à 8 ans.", "correct": true },
-        { "id": "B", "texte": "La radiographie de profil est moins sensible que la radiographie de face pour détecter le signe de la « coquille d’œuf » (dissection sous-chondrale).", "correct": false },
-        { "id": "C", "texte": "Le stade initial de fragmentation se caractérise par une densification homogène du noyau d’ossification.", "correct": false },
-        { "id": "D", "texte": "La coxa magna (augmentation du volume de la tête fémorale) est un signe séquellaire classique.", "correct": true }
+        {
+          "id": "A",
+          "texte": "Elle affecte préférentiellement les garçons de 4 à 8 ans.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La radiographie de profil est moins sensible que la radiographie de face pour détecter le signe de la « coquille d’œuf » (dissection sous-chondrale).",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le stade initial de fragmentation se caractérise par une densification homogène du noyau d’ossification.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La coxa magna (augmentation du volume de la tête fémorale) est un signe séquellaire classique.",
+          "correct": true
+        }
       ],
-      "explication": "Les réponses correctes sont A et D. La maladie touche principalement les garçons entre 4 et 8 ans. La coxa magna est un signe classique de séquelle (liée à la croissance asymétrique du cartilage lors de l’arrêt de l’ossification). Le profil (incidence de Lauenstein) est très utile pour visualiser la dissection sous-chondrale. Le stade de fragmentation suit le stade de nécrose (condensation) et se caractérise par un noyau morcelé, très hétérogène (et non homogène).",
+      "explication": "La maladie touche principalement les garçons entre 4 et 8 ans. La coxa magna est un signe classique de séquelle (liée à la croissance asymétrique du cartilage lors de l’arrêt de l’ossification). Le profil (incidence de Lauenstein) est très utile pour visualiser la dissection sous-chondrale. Le stade de fragmentation suit le stade de nécrose (condensation) et se caractérise par un noyau morcelé, très hétérogène (et non homogène).",
       "correction_figures": [],
-      "source": { "page": 473, "element": "Texte", "refs": "p. 473, 474, 476" }
+      "source": {
+        "page": 473,
+        "element": "Texte",
+        "refs": "p. 473, 474, 476"
+      }
     },
     {
       "id": "c18-q07",
@@ -110,14 +230,34 @@
       "enonce": "Chez un enfant suivi pour une maladie de Legg-Perthes-Calvé, on s’inquiète du risque d’inégalité de longueur des membres inférieurs et d’une déformation importante de la tête fémorale (coxa plana). Quel facteur radiographique (score de Herring) est le meilleur déterminant pour prédire cette évolution ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La taille du kyste métaphysaire central", "correct": false },
-        { "id": "B", "texte": "L’importance de la perte de hauteur du pilier latéral de l’épiphyse", "correct": true },
-        { "id": "C", "texte": "L’apparition précoce du signe de Gage (raréfaction osseuse en V)", "correct": false },
-        { "id": "D", "texte": "La largeur de la physe (cartilage de croissance)", "correct": false }
+        {
+          "id": "A",
+          "texte": "La taille du kyste métaphysaire central",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’importance de la perte de hauteur du pilier latéral de l’épiphyse",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’apparition précoce du signe de Gage (raréfaction osseuse en V)",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La largeur de la physe (cartilage de croissance)",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. L’élément prédictif majeur de déformation séquellaire (et donc de pronostic fonctionnel) est la perte de hauteur du pilier latéral de l’épiphyse, sur lequel se fonde la classification pronostique de Herring. Les autres signes peuvent être péjoratifs, mais la classification de Herring est la référence.",
+      "explication": "L’élément prédictif majeur de déformation séquellaire (et donc de pronostic fonctionnel) est la perte de hauteur du pilier latéral de l’épiphyse, sur lequel se fonde la classification pronostique de Herring. Les autres signes peuvent être péjoratifs, mais la classification de Herring est la référence.",
       "correction_figures": [],
-      "source": { "page": 476, "element": "Tableau 18.4", "refs": "p. 476-477, 480" }
+      "source": {
+        "page": 476,
+        "element": "Tableau 18.4",
+        "refs": "p. 476-477, 480"
+      }
     },
     {
       "id": "c18-q08",
@@ -126,14 +266,34 @@
       "enonce": "L’épiphysiolyse fémorale correspond au glissement de la métaphyse par rapport à l’épiphyse (ou inversement selon la convention). Quels sont les signes radiographiques caractéristiques, souvent discrets, qu’il faut rechercher de face avant un glissement important ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un metaphyseal blanch sign (opacité métaphysaire en croissant)", "correct": true },
-        { "id": "B", "texte": "Une ligne de Klein coupant le centre de l’épiphyse de façon plus importante que du côté sain", "correct": false },
-        { "id": "C", "texte": "Une augmentation de la flèche basicapitale", "correct": true },
-        { "id": "D", "texte": "Un aspect flou et irrégulier du bord métaphysaire du cartilage de croissance", "correct": true }
+        {
+          "id": "A",
+          "texte": "Un metaphyseal blanch sign (opacité métaphysaire en croissant)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une ligne de Klein coupant le centre de l’épiphyse de façon plus importante que du côté sain",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une augmentation de la flèche basicapitale",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Un aspect flou et irrégulier du bord métaphysaire du cartilage de croissance",
+          "correct": true
+        }
       ],
-      "explication": "Les réponses correctes sont A, C et D. Le metaphyseal blanch sign traduit la superposition de la métaphyse et du bord postérieur de l’épiphyse basculée. La flèche basicapitale est augmentée. Le cartilage de croissance a un aspect flou sur son versant métaphysaire. La ligne de Klein est anormale lorsqu’elle ne coupe PAS l’épiphyse fémorale (ou en coupe un fragment moins important que le côté sain), traduisant un glissement médial de l’épiphyse.",
+      "explication": "Le metaphyseal blanch sign traduit la superposition de la métaphyse et du bord postérieur de l’épiphyse basculée. La flèche basicapitale est augmentée. Le cartilage de croissance a un aspect flou sur son versant métaphysaire. La ligne de Klein est anormale lorsqu’elle ne coupe PAS l’épiphyse fémorale (ou en coupe un fragment moins important que le côté sain), traduisant un glissement médial de l’épiphyse.",
       "correction_figures": [],
-      "source": { "page": 485, "element": "Encadré 18.4", "refs": "p. 485-486" }
+      "source": {
+        "page": 485,
+        "element": "Encadré 18.4",
+        "refs": "p. 485-486"
+      }
     },
     {
       "id": "c18-q09",
@@ -142,14 +302,34 @@
       "enonce": "Une complication tardive de l’épiphysiolyse fémorale non traitée est le conflit fémoro-acétabulaire (CFA). À quel mécanisme ce conflit est-il le plus souvent dû dans ce contexte ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un effet « pince » (pincer) dû à une rétroversion acétabulaire", "correct": false },
-        { "id": "B", "texte": "Un effet « came » (cam) dû à la saillie antérosupérieure du col fémoral (déformation en coxa vara)", "correct": true },
-        { "id": "C", "texte": "Une coxite laminaire destructrice", "correct": false },
-        { "id": "D", "texte": "Une dysplasie développementale de la hanche avec luxation", "correct": false }
+        {
+          "id": "A",
+          "texte": "Un effet « pince » (pincer) dû à une rétroversion acétabulaire",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un effet « came » (cam) dû à la saillie antérosupérieure du col fémoral (déformation en coxa vara)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une coxite laminaire destructrice",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une dysplasie développementale de la hanche avec luxation",
+          "correct": false
+        }
       ],
-      "explication": "La réponse correcte est B. L’épiphysiolyse fémorale guérie en position vicieuse (avec déplacement important) entraîne une déformation du col fémoral (saillie antérosupérieure, coxa vara). Cette saillie va buter contre l’acétabulum, créant un conflit fémoro-acétabulaire par effet came.",
+      "explication": "L’épiphysiolyse fémorale guérie en position vicieuse (avec déplacement important) entraîne une déformation du col fémoral (saillie antérosupérieure, coxa vara). Cette saillie va buter contre l’acétabulum, créant un conflit fémoro-acétabulaire par effet came.",
       "correction_figures": [],
-      "source": { "page": 490, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 490,
+        "element": "Texte",
+        "refs": ""
+      }
     },
     {
       "id": "c18-q10",
@@ -158,14 +338,34 @@
       "enonce": "Lors de l’évaluation IRM d’une nécrose systémique de la tête fémorale (ONTF) sans effondrement de la tête (stade I ou II), l’apparition d’un important œdème périlésionnel (œdème de la moelle osseuse saine adjacente) est une observation clé. Quelles implications cliniques et pronostiques a cet œdème selon la littérature récente ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Il traduit généralement un processus de revascularisation efficace et de guérison (bon pronostic)", "correct": false },
-        { "id": "B", "texte": "Il est étroitement corrélé à l’apparition de douleurs intenses chez le patient", "correct": true },
-        { "id": "C", "texte": "Il pourrait traduire l’apparition de microfractures sous-chondrales non encore visibles et donc un risque accru d’effondrement", "correct": true },
-        { "id": "D", "texte": "Sa disparition après traitement chirurgical (forage ou greffe) est un signe de bonne évolution", "correct": true }
+        {
+          "id": "A",
+          "texte": "Il traduit généralement un processus de revascularisation efficace et de guérison (bon pronostic)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il est étroitement corrélé à l’apparition de douleurs intenses chez le patient",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il pourrait traduire l’apparition de microfractures sous-chondrales non encore visibles et donc un risque accru d’effondrement",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Sa disparition après traitement chirurgical (forage ou greffe) est un signe de bonne évolution",
+          "correct": true
+        }
       ],
-      "explication": "Les réponses correctes sont B, C et D. L’œdème périlésionnel en périphérie d’une zone de nécrose n’est pas un signe anodin de « guérison ». Au contraire, il est très corrélé à la douleur clinique, et il suggère l’apparition de microfractures (l’os subissant des contraintes anormales), augmentant le risque d’évolution vers l’effondrement (certains le considèrent même comme un stade 3 déguisé). Dans le suivi d’un traitement chirurgical (forage), la régression de cet œdème est un signe d’évolution favorable.",
+      "explication": "L’œdème périlésionnel en périphérie d’une zone de nécrose n’est pas un signe anodin de « guérison ». Au contraire, il est très corrélé à la douleur clinique, et il suggère l’apparition de microfractures (l’os subissant des contraintes anormales), augmentant le risque d’évolution vers l’effondrement (certains le considèrent même comme un stade 3 déguisé). Dans le suivi d’un traitement chirurgical (forage), la régression de cet œdème est un signe d’évolution favorable.",
       "correction_figures": [],
-      "source": { "page": 459, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 459,
+        "element": "Texte",
+        "refs": ""
+      }
     }
   ]
 }

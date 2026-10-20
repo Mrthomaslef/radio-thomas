@@ -50,7 +50,34 @@ export const bundledQuestions = CHAPTER_KEYS.flatMap((key) =>
   CHAPTERS[key].questions.map(({ id, ...data }, position) => ({ id, chapter: key, position, data }))
 );
 
-const toQuestion = (row) => ({ id: row.id, ...row.data });
+// Strips hardcoded option-letter references ("La réponse correcte est A.", "(B faux)", etc.)
+// because answer options are shuffled when displayed.
+export function cleanExplication(text) {
+  if (!text || typeof text !== 'string') return text;
+  let s = text;
+  s = s.replace(/^\s*(?:La réponse(?: correcte)? est|Les réponses(?: correctes)? sont)\s+[A-F](?:\s*,\s*[A-F])*(?:\s+et\s+[A-F])?\s*\.\s*/i, '');
+  s = s.replace(/^\s*Toutes ces affirmations sont exactes\.\s*/i, '');
+  s = s.replace(/\s*\((?:(?:la )?(?:réponse|proposition|affirmation|item)s?\s+)?[A-F](?:\s*(?:,|et)\s*[A-F])*\s*(?:(?:est|sont)\s+)?(?:donc\s+)?(?:vrai(?:e|s|es)?|faux|fausse(?:s)?|exact(?:e|s|es)?|incorrect(?:e|s|es)?)?(?:\s*,\s*[A-F]\s*(?:est|sont)?\s*(?:vrai(?:e|s|es)?|faux|fausse(?:s)?))?\)/g, '');
+  s = s.replace(/\b[A-F](?:\s+et\s+[A-F])?\s+(?:est|sont)\s+(?:donc\s+)?(?:faux|fausse|fausses|vrai|vraie|vrais|vraies)\s*:\s*/g, '');
+  s = s.replace(/(\.\s+)([a-zàâäéèêëîïôöùûüçœ])/g, (_, sep, ch) => sep + ch.toUpperCase());
+  s = s
+    .split('\n')
+    .map((line) => {
+      let l = line.replace(/[ \t]+/g, ' ').replace(/ +\./g, '.').replace(/ +,/g, ',').trim();
+      if (l.length > 0) l = l[0].toUpperCase() + l.slice(1);
+      return l;
+    })
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  return s;
+}
+
+const toQuestion = (row) => ({
+  id: row.id,
+  ...row.data,
+  explication: cleanExplication(row.data?.explication),
+});
 
 // Address of an image: an inline dataUrl, an upload from the admin ({upload}) or a bundled figure ({file}).
 export const imageSrc = (chapter, img) =>
