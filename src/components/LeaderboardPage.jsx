@@ -70,7 +70,7 @@ export default function LeaderboardPage() {
         </div>
         <h1><span className="grad">Leaderboard</span></h1>
         <p className="lb-rule">
-          Gagnez <strong>1 point par bonne réponse</strong>. Les points ne sont comptés que lorsque vous <strong>terminez un quiz</strong> jusqu’à la dernière question.
+          Gagnez <strong>1 point par bonne réponse</strong> lorsque vous <strong>terminez et réussissez un quiz</strong> (au moins 60&nbsp;% de bonnes réponses). Les quiz «&nbsp;À revoir&nbsp;» ne rapportent pas de points.
         </p>
 
         {editing ? (

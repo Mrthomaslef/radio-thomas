@@ -21,6 +21,7 @@ begin
     from public.quiz_attempts
     where course not like 'report-%'
       and quiz not in ('aleatoire', 'quiz-aleatoire')
+      and passed = true
       and score >= 0
     group by lower(btrim(participant_name)), quiz
   ),
@@ -35,6 +36,7 @@ begin
     from public.quiz_attempts
     where course not like 'report-%'
       and quiz in ('aleatoire', 'quiz-aleatoire')
+      and passed = true
       and score >= 0
     group by lower(btrim(participant_name))
   ),

@@ -1,8 +1,8 @@
 import { readName, readAllProgress } from './player.js';
 
-const LOCAL_LB_KEY = 'quiz-cotten:leaderboard:v1';
+const LOCAL_LB_KEY = 'quiz-cotten:leaderboard:v2';
 const USER_PREFIX = 'quiz-cotten:user:';
-const SERVER_SHARED_KEY = '__leaderboard__';
+const SERVER_SHARED_KEY = '__leaderboard_v2__';
 
 const cleanName = (s) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ') : '');
 const normKey = (s) => cleanName(s).toLowerCase();
@@ -40,12 +40,12 @@ export function encodeEntryKey(entry) {
   if (!hex) return null;
   const pts = Math.max(0, Math.min(999999, Math.round(Number(entry.points) || 0)));
   const qz = Math.max(0, Math.min(99999, Math.round(Number(entry.quizzes) || 0)));
-  return `lb-${hex}-${pts}-${qz}`;
+  return `lb2-${hex}-${pts}-${qz}`;
 }
 
 export function decodeEntryKey(key) {
   if (typeof key !== 'string') return null;
-  const m = key.match(/^lb-([0-9a-f]{2,24})-(\d{1,6})-(\d{1,5})$/);
+  const m = key.match(/^lb2-([0-9a-f]{2,24})-(\d{1,6})-(\d{1,5})$/);
   if (!m) return null;
   const name = cleanName(fromHex(m[1]));
   if (!name) return null;
@@ -93,8 +93,8 @@ function computeTotals(entry) {
   };
 }
 
-// Scans local user progress profiles so any chapter already completed (all questions answered or sent)
-// is automatically credited (1 point per correct answer in completed quizzes only).
+// Scans local user progress profiles so any chapter already completed AND passed (>= 60%)
+// is automatically credited (1 point per correct answer in completed & passed quizzes only).
 export function syncLocalCompletedChapters(byChapter) {
   if (!byChapter || Object.keys(byChapter).length === 0) return readLocalMap();
   const map = readLocalMap();
@@ -102,7 +102,7 @@ export function syncLocalCompletedChapters(byChapter) {
 
   const inspectUser = (displayName, progressObj) => {
     const name = cleanName(displayName);
-    if (!name || name === SERVER_SHARED_KEY) return;
+    if (!name || name === SERVER_SHARED_KEY || name === '__leaderboard__') return;
     const k = normKey(name);
     const existing = map[k] || { name, chapters: {}, extraPoints: 0, extraQuizzes: 0, points: 0, quizzes: 0 };
     const chapters = { ...(existing.chapters || {}) };
@@ -113,10 +113,11 @@ export function syncLocalCompletedChapters(byChapter) {
       const chProg = progressObj?.[chId];
       const ans = chProg?.answers || {};
       const answered = qs.filter((q) => Array.isArray(ans[q.id]) && ans[q.id].length > 0);
-      // Points are ONLY counted when the user has finished the quiz
+      // Points are ONLY counted when the user has finished the quiz AND passed it (>= 60%)
       if ((chProg?.sent && answered.length > 0) || answered.length === qs.length) {
         const score = answered.filter((q) => isPerfect(q, ans[q.id])).length;
-        if (chapters[chId] === undefined || score > chapters[chId]) {
+        const passed = score / qs.length >= 0.6;
+        if (passed && (chapters[chId] === undefined || score > chapters[chId])) {
           chapters[chId] = score;
           userChanged = true;
         }
@@ -124,7 +125,7 @@ export function syncLocalCompletedChapters(byChapter) {
     }
 
     if (userChanged) {
-      map[k] = computeTotals({ ...existing, name, chapters, updatedAt: new Date().toISOString() });
+      map[k] = computeTotals({ ...existing, name, chapters, points: 0, quizzes: 0, updatedAt: new Date().toISOString() });
       changed = true;
     }
   };
@@ -141,7 +142,7 @@ export function syncLocalCompletedChapters(byChapter) {
       const storageKey = localStorage.key(i);
       if (!storageKey || !storageKey.startsWith(USER_PREFIX)) continue;
       const keySuffix = storageKey.slice(USER_PREFIX.length);
-      if (!keySuffix || keySuffix === SERVER_SHARED_KEY) continue;
+      if (!keySuffix || keySuffix === SERVER_SHARED_KEY || keySuffix === '__leaderboard__') continue;
       const prog = JSON.parse(localStorage.getItem(storageKey) || '{}');
       const existingName = map[keySuffix]?.name || (normKey(current) === keySuffix ? current : keySuffix);
       inspectUser(existingName, prog);
@@ -230,13 +231,18 @@ async function pushAllToServer(mapOrEntry) {
   }
 }
 
-// Called when a player finishes a quiz (1 point per correct answer).
-export async function recordCompletedQuiz({ name, quizKey, score, randomMode = false }) {
+// Called when a player finishes a quiz. Points only count if the quiz is passed (>= 60%).
+export async function recordCompletedQuiz({ name, quizKey, score, total = 0, passed = null, randomMode = false }) {
   const clean = cleanName(name || readName());
-  if (!clean || clean === SERVER_SHARED_KEY) return null;
-  const k = normKey(clean);
+  if (!clean || clean === SERVER_SHARED_KEY || clean === '__leaderboard__') return null;
   const pts = Math.max(0, Math.round(Number(score) || 0));
+  const tot = Math.max(0, Math.round(Number(total) || 0));
+  const isPassed = typeof passed === 'boolean' ? passed : tot > 0 ? pts / tot >= 0.6 : false;
 
+  // Do not count points if the quiz is "À revoir" (not passed)
+  if (!isPassed) return null;
+
+  const k = normKey(clean);
   const map = readLocalMap();
   const prev = map[k] || {
     name: clean,
@@ -254,6 +260,8 @@ export async function recordCompletedQuiz({ name, quizKey, score, randomMode = f
       name: clean,
       extraPoints: (Number(prev.extraPoints) || 0) + pts,
       extraQuizzes: (Number(prev.extraQuizzes) || 0) + 1,
+      points: 0,
+      quizzes: 0,
       updatedAt: new Date().toISOString(),
     });
   } else {
@@ -263,6 +271,8 @@ export async function recordCompletedQuiz({ name, quizKey, score, randomMode = f
       ...prev,
       name: clean,
       chapters,
+      points: 0,
+      quizzes: 0,
       updatedAt: new Date().toISOString(),
     });
   }
@@ -273,22 +283,26 @@ export async function recordCompletedQuiz({ name, quizKey, score, randomMode = f
   return next;
 }
 
-// Syncs historical attempts (e.g. from AdminPage) into the leaderboard.
+// Syncs historical attempts (e.g. from AdminPage) into the leaderboard (only passed quizzes).
 export async function syncLeaderboardFromAttempts(attempts) {
   if (!Array.isArray(attempts) || attempts.length === 0) return;
   const map = readLocalMap();
   const byUser = new Map();
 
   for (const a of attempts) {
-    if (!a || typeof a.course === 'string' && a.course.startsWith('report-')) continue;
+    if (!a || (typeof a.course === 'string' && a.course.startsWith('report-'))) continue;
+    const pts = Math.max(0, Number(a.score) || 0);
+    const tot = Math.max(0, Number(a.total) || 0);
+    const isPassed = typeof a.passed === 'boolean' ? a.passed : tot > 0 && pts / tot >= 0.6;
+    if (!isPassed) continue;
+
     const name = cleanName(a.name || a.participant_name);
-    if (!name || name === SERVER_SHARED_KEY) continue;
+    if (!name || name === SERVER_SHARED_KEY || name === '__leaderboard__') continue;
     const k = normKey(name);
     if (!byUser.has(k)) {
       byUser.set(k, { name, chapters: {}, extraPoints: 0, extraQuizzes: 0 });
     }
     const u = byUser.get(k);
-    const pts = Math.max(0, Number(a.score) || 0);
     if (a.quiz === 'aleatoire' || a.quiz === 'quiz-aleatoire' || a.course === 'mixte') {
       u.extraPoints += pts;
       u.extraQuizzes += 1;
@@ -309,6 +323,8 @@ export async function syncLeaderboardFromAttempts(attempts) {
       chapters: mergedChapters,
       extraPoints: Math.max(Number(prev.extraPoints) || 0, u.extraPoints),
       extraQuizzes: Math.max(Number(prev.extraQuizzes) || 0, u.extraQuizzes),
+      points: 0,
+      quizzes: 0,
       updatedAt: new Date().toISOString(),
     });
   }
@@ -317,7 +333,7 @@ export async function syncLeaderboardFromAttempts(attempts) {
   await pushAllToServer(map);
 }
 
-// Fetches and merges the leaderboard from server + local completed quizzes.
+// Fetches and merges the leaderboard from server + local completed & passed quizzes.
 export async function fetchLeaderboard(byChapter = null) {
   const localMap = syncLocalCompletedChapters(byChapter);
   const merged = new Map();
@@ -325,7 +341,7 @@ export async function fetchLeaderboard(byChapter = null) {
   const mergeOne = (raw) => {
     if (!raw || typeof raw !== 'object') return;
     const name = cleanName(raw.name);
-    if (!name || name === SERVER_SHARED_KEY) return;
+    if (!name || name === SERVER_SHARED_KEY || name === '__leaderboard__') return;
     const k = normKey(name);
     const normalized = computeTotals(raw);
     if (normalized.quizzes <= 0 && normalized.points <= 0) return;
@@ -375,7 +391,7 @@ export async function fetchLeaderboard(byChapter = null) {
     // Ignore network error
   }
 
-  // 2) Also check /api/progress?name=__leaderboard__ (both direct entries and ch99.answers encoded keys)
+  // 2) Also check /api/progress?name=__leaderboard_v2__
   try {
     const r2 = await fetch(`/api/progress?name=${encodeURIComponent(SERVER_SHARED_KEY)}`);
     if (r2.ok) {

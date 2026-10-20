@@ -130,6 +130,137 @@ export function writeQuestionAnswer(chapterKey, questionId, picked, name = readN
   writeChapterProgress(chapterKey, { answers, sent: cur.sent }, name);
 }
 
+const HISTORY_CHAPTER_KEY = 'ch98';
+
+export function encodeAttemptKey({ quiz, score, total, createdAt }) {
+  const tsSec = Math.max(1, Math.floor((createdAt ? new Date(createdAt).getTime() : Date.now()) / 1000));
+  const ts36 = tsSec.toString(36);
+  const qSlug =
+    quiz === 'quiz-aleatoire' || quiz === 'aleatoire'
+      ? 'aleatoire'
+      : String(quiz || 'ch1')
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, '')
+          .slice(0, 10) || 'ch1';
+  const s = Math.max(0, Math.min(999, Math.round(Number(score) || 0)));
+  const t = Math.max(1, Math.min(999, Math.round(Number(total) || 1)));
+  return `h-${ts36}-${qSlug}-${s}-${t}`;
+}
+
+export function decodeAttemptKey(key) {
+  if (typeof key !== 'string') return null;
+  const m = key.match(/^h-([0-9a-z]{1,10})-([a-z0-9]{1,12})-(\d{1,3})-(\d{1,3})$/);
+  if (!m) return null;
+  const tsSec = parseInt(m[1], 36);
+  if (!tsSec || Number.isNaN(tsSec)) return null;
+  const quiz = m[2] === 'aleatoire' ? 'quiz-aleatoire' : m[2];
+  const score = parseInt(m[3], 10) || 0;
+  const total = Math.max(1, parseInt(m[4], 10) || 1);
+  return {
+    id: key,
+    created_at: new Date(tsSec * 1000).toISOString(),
+    quiz,
+    score,
+    total,
+    passed: score / total >= 0.6,
+  };
+}
+
+export function recordQuizAttempt({ quiz, score, total, createdAt }, name = readName()) {
+  if (!name) return;
+  const key = encodeAttemptKey({ quiz, score, total, createdAt });
+  const cur = readChapterProgress(HISTORY_CHAPTER_KEY, name);
+  const answers = { ...(cur.answers || {}), [key]: ['A'] };
+  writeChapterProgress(HISTORY_CHAPTER_KEY, { answers, sent: true }, name);
+}
+
+export function readQuizHistory(name = readName(), byChapter = null) {
+  if (!name) return [];
+  const all = readAllProgress(name);
+  const rawAnswers = all[HISTORY_CHAPTER_KEY]?.answers || {};
+  const list = [];
+  const seenChapters = new Set();
+
+  for (const k of Object.keys(rawAnswers)) {
+    const decoded = decodeAttemptKey(k);
+    if (decoded) {
+      list.push(decoded);
+      seenChapters.add(decoded.quiz);
+    }
+  }
+
+  // Also include any chapter that was already completed before history tracking was added
+  if (byChapter && typeof byChapter === 'object') {
+    for (const [chId, qs] of Object.entries(byChapter)) {
+      if (!Array.isArray(qs) || qs.length === 0 || seenChapters.has(chId)) continue;
+      const chProg = all[chId];
+      const ans = chProg?.answers || {};
+      const answered = qs.filter((q) => Array.isArray(ans[q.id]) && ans[q.id].length > 0);
+      if ((chProg?.sent && answered.length > 0) || answered.length === qs.length) {
+        const isPerfect = (q, picked) => {
+          const good = q.items.filter((i) => i.correct).map((i) => i.id).sort().join();
+          return good === [...picked].sort().join();
+        };
+        const score = answered.filter((q) => isPerfect(q, ans[q.id])).length;
+        const total = qs.length;
+        list.push({
+          id: `completed-${chId}`,
+          created_at: null,
+          quiz: chId,
+          score,
+          total,
+          passed: score / total >= 0.6,
+        });
+      }
+    }
+  }
+
+  return list.sort((a, b) => {
+    if (a.created_at && b.created_at) return b.created_at.localeCompare(a.created_at);
+    if (a.created_at) return -1;
+    if (b.created_at) return 1;
+    return a.quiz.localeCompare(b.quiz);
+  });
+}
+
+export async function syncUsersHistoryFromAttempts(attempts) {
+  if (!Array.isArray(attempts) || attempts.length === 0) return;
+  const byUser = new Map();
+  for (const a of attempts) {
+    if (!a || (typeof a.course === 'string' && a.course.startsWith('report-'))) continue;
+    const name = (a.name || a.participant_name || '').trim().replace(/\s+/g, ' ');
+    if (!name) continue;
+    const k = normKey(name);
+    if (!byUser.has(k)) byUser.set(k, { name, keys: {} });
+    const hKey = encodeAttemptKey({
+      quiz: a.quiz,
+      score: a.score,
+      total: a.total,
+      createdAt: a.created_at,
+    });
+    byUser.get(k).keys[hKey] = ['A'];
+  }
+
+  for (const { name, keys } of byUser.values()) {
+    const all = readRawMap(name);
+    const curAns = all[HISTORY_CHAPTER_KEY]?.answers || {};
+    all[HISTORY_CHAPTER_KEY] = {
+      answers: { ...curAns, ...keys },
+      sent: true,
+    };
+    writeRawMap(name, all);
+    fetch('/api/progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        progress: { [HISTORY_CHAPTER_KEY]: all[HISTORY_CHAPTER_KEY] },
+      }),
+    }).catch(() => {});
+  }
+  notify();
+}
+
 export async function syncProgressFromServer(name = readName()) {
   const clean = (name || '').trim().replace(/\s+/g, ' ');
   if (!clean) return;

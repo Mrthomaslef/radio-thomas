@@ -3,6 +3,7 @@ import QuestionsAdmin from './QuestionsAdmin.jsx';
 import { useQuestions } from '../data/useQuestions.js';
 import { extractAttemptsAndReports, resolveQuestionReport } from '../data/reports.js';
 import { syncLeaderboardFromAttempts } from '../data/leaderboard.js';
+import { syncUsersHistoryFromAttempts } from '../data/player.js';
 
 // Friendly names for course slugs; unknown slugs are shown as-is.
 const COURSE_LABELS = {
@@ -114,6 +115,7 @@ export default function AdminPage() {
       setAttempts(parsed.attempts);
       setReports(parsed.reports);
       syncLeaderboardFromAttempts(parsed.attempts);
+      syncUsersHistoryFromAttempts(parsed.attempts);
     } catch {
       setError('Serveur injoignable, réessayez.');
     } finally {

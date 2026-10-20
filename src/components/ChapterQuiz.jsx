@@ -7,6 +7,7 @@ import {
   writeChapterProgress,
   clearChapterProgress,
   writeQuestionAnswer,
+  recordQuizAttempt,
   subscribePlayer,
   syncProgressFromServer,
 } from '../data/player.js';
@@ -266,14 +267,19 @@ export function QuizPlayer({
     if (preview) return;
     const name = readName();
     if (!name) return;
+    const passed = total > 0 && score / total >= 0.6;
     setSaveState('saving');
-    // Record points on the leaderboard (1 point per correct answer, only when quiz is finished)
-    recordCompletedQuiz({ name, quizKey: key, score, randomMode });
+    // Save attempt in the user's quiz history (shown on Ma progression)
+    recordQuizAttempt({ quiz: key, score, total }, name);
+    // Record points on the leaderboard only when the quiz is finished AND passed (>= 60%)
+    if (passed) {
+      recordCompletedQuiz({ name, quizKey: key, score, total, passed, randomMode });
+    }
     try {
       const r = await fetch('/api/attempts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, course: themeId, quiz: key, score, total, passed: score / total >= 0.6 }),
+        body: JSON.stringify({ name, course: themeId, quiz: key, score, total, passed }),
       });
       if (!r.ok) throw new Error(String(r.status));
       setSent(true); setSaveState('saved');
@@ -282,8 +288,9 @@ export function QuizPlayer({
   useEffect(() => {
     if (answeredAll.length === total && !preview) {
       const name = readName();
-      if (name && !randomMode) {
-        recordCompletedQuiz({ name, quizKey: key, score, randomMode: false });
+      const passed = total > 0 && score / total >= 0.6;
+      if (name && !randomMode && passed) {
+        recordCompletedQuiz({ name, quizKey: key, score, total, passed: true, randomMode: false });
       }
       if (!sent && saveState === 'idle') sendResult();
     }

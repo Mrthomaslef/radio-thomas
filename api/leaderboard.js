@@ -2,7 +2,7 @@
 // - GET  /api/leaderboard         -> returns [{ name, points, quizzes, updatedAt }] sorted by points desc
 // - POST /api/leaderboard         -> updates a player's leaderboard entry
 
-const LEADERBOARD_KEY = '__leaderboard__';
+const LEADERBOARD_KEY = '__leaderboard_v2__';
 const cleanName = (s) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ') : '');
 const normKey = (s) => cleanName(s).toLowerCase();
 
@@ -17,7 +17,7 @@ function fromHex(hex) {
 
 function decodeEntryKey(key) {
   if (typeof key !== 'string') return null;
-  const m = key.match(/^lb-([0-9a-f]{2,24})-(\d{1,6})-(\d{1,5})$/);
+  const m = key.match(/^lb2-([0-9a-f]{2,24})-(\d{1,6})-(\d{1,5})$/);
   if (!m) return null;
   const name = cleanName(fromHex(m[1]));
   if (!name) return null;
