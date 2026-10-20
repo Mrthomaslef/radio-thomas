@@ -4,7 +4,7 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
 const CACHE_FILE = path.join(process.cwd(), 'node_modules', '.cache', 'quiz-cotten-leaderboard-v2.json');
-const CONTRIB_CACHE_FILE = path.join(process.cwd(), 'node_modules', '.cache', 'quiz-cotten-contributors-v1.json');
+const CONTRIB_CACHE_FILE = path.join(process.cwd(), 'node_modules', '.cache', 'quiz-cotten-contributors-v2.json');
 
 function readJsonCache(file) {
   try {
@@ -42,18 +42,23 @@ function localLeaderboardPlugin(target) {
             const remote = await fetch(remoteUrl);
             if (remote.ok) {
               const data = await remote.json();
-              if (Array.isArray(data?.entries)) {
+              const validType = isContribUrl ? data?.type === 'contributors' : data?.type !== 'contributors';
+              if (validType && Array.isArray(data?.entries)) {
                 for (const e of data.entries) {
                   if (!e?.name) continue;
+                  if (isContribUrl && e.kind !== 'contributors' && (typeof e.reports !== 'number' || typeof e.quizzes === 'number')) {
+                    continue;
+                  }
                   const k = e.name.trim().toLowerCase();
                   const prev = map[k];
                   if (!prev || (e.points || 0) >= (prev.points || 0)) {
                     map[k] = {
                       ...prev,
                       ...e,
+                      ...(isContribUrl ? { kind: 'contributors' } : {}),
                       points: Math.max(prev?.points || 0, e.points || 0),
-                      quizzes: Math.max(prev?.quizzes || 0, e.quizzes || 0),
-                      reports: Math.max(prev?.reports || 0, e.reports || e.points || 0),
+                      quizzes: isContribUrl ? 0 : Math.max(prev?.quizzes || 0, e.quizzes || 0),
+                      reports: isContribUrl ? Math.max(prev?.reports || 0, e.reports || e.points || 0) : 0,
                     };
                   }
                 }
@@ -65,13 +70,19 @@ function localLeaderboardPlugin(target) {
           }
 
           const entries = Object.values(map)
-            .filter((e) => e && e.name && (e.points > 0 || e.quizzes > 0 || e.reports > 0))
+            .filter((e) => {
+              if (!e || !e.name) return false;
+              if (isContribUrl) {
+                return e.kind === 'contributors' && (e.reports > 0 || e.points > 0);
+              }
+              return e.points > 0 || e.quizzes > 0;
+            })
             .sort((a, b) => (b.points || 0) - (a.points || 0) || (b.quizzes || 0) - (a.quizzes || 0));
 
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
           res.setHeader('Cache-Control', 'no-store');
-          res.end(JSON.stringify({ entries }));
+          res.end(JSON.stringify({ type: isContribUrl ? 'contributors' : 'quiz', entries }));
           return;
         }
 
@@ -97,10 +108,11 @@ function localLeaderboardPlugin(target) {
               const entry = {
                 ...prev,
                 ...body,
+                ...(isContrib ? { kind: 'contributors' } : {}),
                 name,
                 points: pts,
-                quizzes: Math.max(Number(prev.quizzes) || 0, Number(body.quizzes) || 0),
-                reports: Math.max(Number(prev.reports) || 0, Number(body.reports ?? pts) || 0),
+                quizzes: isContrib ? 0 : Math.max(Number(prev.quizzes) || 0, Number(body.quizzes) || 0),
+                reports: isContrib ? Math.max(Number(prev.reports) || 0, Number(body.reports ?? pts) || 0) : 0,
                 updatedAt: new Date().toISOString(),
               };
               map[k] = entry;
