@@ -81,6 +81,9 @@ export default function Home({ openTheme }) {
               <a href="#/aleatoire" className="btn btn-small">
                 Quiz aléatoire <Icon name="arrow" size={15} />
               </a>
+              <a href="#/proposer" className="btn btn-ghost btn-small">
+                + Proposer une question
+              </a>
               <a href="#/classement" className="btn btn-ghost btn-small">
                 Classement
               </a>

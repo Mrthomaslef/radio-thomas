@@ -39,8 +39,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Requête invalide' });
   }
 
-  // Admin action: mark a report as resolved
-  if (body.action === 'resolve') {
+  // Admin action: mark a report or question submission as resolved
+  if (body.action === 'resolve' || body.action === 'resolve_submission') {
     const password = typeof body.password === 'string' ? body.password : '';
     if (!password || password.length > 200) {
       return res.status(401).json({ error: 'Mot de passe incorrect' });
@@ -72,12 +72,18 @@ export default async function handler(req, res) {
       }
 
       if (typeof body.id === 'string' && REPORT_SLUG.test(body.id)) {
-        const qid = QUESTION_ID.test(body.questionId || '') ? body.questionId : 'c1-q01';
+        const decision = body.decision === 'refused' ? 'refused' : body.decision === 'accepted' ? 'accepted' : null;
+        const markerName = decision === 'refused' ? '__refused__' : decision === 'accepted' ? '__accepted__' : '__resolved__';
+        const qid = decision
+          ? `subm-${decision}`
+          : QUESTION_ID.test(body.questionId || '')
+          ? body.questionId
+          : 'c1-q01';
         const r = await fetch(`${SUPABASE_URL}/rest/v1/quiz_attempts`, {
           method: 'POST',
           headers: { ...headers, Prefer: 'return=minimal' },
           body: JSON.stringify({
-            participant_name: '__resolved__',
+            participant_name: markerName,
             course: body.id,
             quiz: qid,
             score: 1,
@@ -90,6 +96,58 @@ export default async function handler(req, res) {
       }
 
       return res.status(400).json({ error: 'Identifiant de signalement invalide' });
+    } catch {
+      return res.status(502).json({ error: 'Base de données injoignable' });
+    }
+  }
+
+  // Public action: submit a proposed question for admin validation
+  if (body.action === 'submit_question') {
+    const rawName = typeof body.name === 'string' ? body.name.trim().replace(/\s+/g, ' ') : '';
+    const name = rawName.slice(0, 80) || 'Anonyme';
+    const chapter = typeof body.chapter === 'string' ? body.chapter.trim() : '';
+    const q = body.question;
+    if (!CHAPTER.test(chapter)) return res.status(400).json({ error: 'Chapitre invalide' });
+    if (!q || typeof q !== 'object' || (q.type !== 'QCU' && q.type !== 'QRM')) {
+      return res.status(400).json({ error: 'Question proposée invalide' });
+    }
+    try {
+      const subSlug = `report-subm-${Date.now().toString(36)}-${randomBytes(3).toString('hex')}`;
+      const payloadStr = JSON.stringify({
+        u: name,
+        c: chapter,
+        m: JSON.stringify({ kind: 'submission', question: q }),
+      });
+      const b64 = Buffer.from(payloadStr, 'utf8').toString('base64');
+      const chunks = [];
+      for (let i = 0; i < b64.length; i += 76) {
+        chunks.push(b64.slice(i, i + 76));
+      }
+      if (chunks.length > 800) {
+        return res.status(400).json({ error: 'La question proposée (avec ses images) est trop volumineuse.' });
+      }
+      const rows = [];
+      for (let p = 0; p * 100 < chunks.length; p++) {
+        const partChunks = chunks.slice(p * 100, (p + 1) * 100);
+        const courseSlug = p === 0 ? subSlug : `${subSlug}-p${p}`;
+        for (let idx = 0; idx < partChunks.length; idx++) {
+          rows.push({
+            participant_name: partChunks[idx],
+            course: courseSlug,
+            quiz: chapter,
+            score: idx,
+            total: partChunks.length,
+            passed: false,
+          });
+        }
+      }
+      const fb = await fetch(`${SUPABASE_URL}/rest/v1/quiz_attempts`, {
+        method: 'POST',
+        headers: { ...headers, Prefer: 'return=minimal' },
+        body: JSON.stringify(rows),
+      });
+      if (!fb.ok) return res.status(502).json({ error: `Erreur base de données (${fb.status})` });
+      return res.status(200).json({ ok: true, id: subSlug });
     } catch {
       return res.status(502).json({ error: 'Base de données injoignable' });
     }

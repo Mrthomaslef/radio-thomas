@@ -888,6 +888,157 @@ a.cq-dot:hover { transform: scale(1.08); }
   .lb-col-quizzes { display: none; }
 }
 
+/* propose a question (#/proposer) & admin submissions */
+.btn-propose {
+  border-color: rgba(56, 225, 255, 0.45);
+  background: rgba(56, 225, 255, 0.1);
+  color: var(--cyan);
+}
+.btn-propose:hover {
+  background: rgba(56, 225, 255, 0.2);
+}
+
+.propose-page .prog-head { margin-bottom: 18px; }
+.propose-reward-pill {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(74, 222, 128, 0.14);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  color: var(--good);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+.propose-sub {
+  color: var(--muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+}
+
+.propose-privacy-warning {
+  display: grid;
+  gap: 6px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.45);
+}
+.propose-privacy-warning strong {
+  color: #fca5a5;
+  font-size: 0.94rem;
+}
+.propose-privacy-warning p {
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.propose-form-card {
+  padding: 22px;
+}
+
+.propose-consent-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 225, 255, 0.35);
+  background: rgba(56, 225, 255, 0.06);
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.propose-consent-check input[type='checkbox'] {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--cyan);
+  flex: none;
+  cursor: pointer;
+}
+
+.propose-success-card {
+  display: grid;
+  gap: 12px;
+  padding: 28px 24px;
+  text-align: center;
+  justify-items: center;
+}
+.propose-success-badge {
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(74, 222, 128, 0.16);
+  color: var(--good);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.propose-success-reward {
+  color: var(--muted);
+  max-width: 520px;
+  font-size: 0.94rem;
+}
+
+.admin-notif-submission {
+  background: rgba(56, 225, 255, 0.11);
+  border-color: rgba(56, 225, 255, 0.45);
+}
+.admin-notif-submission strong {
+  color: var(--cyan);
+}
+
+.admin-subm-items {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0;
+  display: grid;
+  gap: 6px;
+}
+.admin-subm-items li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.admin-subm-items li.is-correct {
+  border-color: rgba(74, 222, 128, 0.45);
+  background: rgba(74, 222, 128, 0.09);
+  color: var(--text);
+}
+.admin-subm-letter {
+  font-weight: 700;
+  color: var(--cyan);
+  min-width: 20px;
+}
+.admin-subm-good-pill {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(74, 222, 128, 0.2);
+  color: var(--good);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+.admin-subm-exp,
+.admin-subm-src {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.admin-subm-exp strong,
+.admin-subm-src strong {
+  color: var(--text);
+}
+
+
 
 
 

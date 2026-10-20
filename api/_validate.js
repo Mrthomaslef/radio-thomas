@@ -16,8 +16,12 @@ const validFile = (f) =>
 const UPLOAD = /^[a-f0-9]{32}$/;
 const validUpload = (u) => typeof u === 'string' && UPLOAD.test(u);
 
-// An image is either a bundled file ({file}) or an upload ({upload}), plus a text field
-// (`alt` for statement/answer images, `caption` for correction figures).
+// Compressed inline images (from contributor proposals or fallback when quiz_images table is not active).
+const DATA_URL = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/]+={0,2}$/;
+const validDataUrl = (d) => typeof d === 'string' && d.length >= 100 && d.length <= 45000 && DATA_URL.test(d);
+
+// An image is either a bundled file ({file}), an upload ({upload}) or an inline dataUrl ({dataUrl}),
+// plus a text field (`alt` for statement/answer images, `caption` for correction figures).
 // Returns the cleaned image, or null when it is invalid.
 function cleanImage(img, textKey, textMax, textRequired) {
   if (!img || typeof img !== 'object') return null;
@@ -25,6 +29,7 @@ function cleanImage(img, textKey, textMax, textRequired) {
   if (!isStr(text, textRequired ? 1 : 0, textMax)) return null;
   if (validUpload(img.upload)) return { upload: img.upload, [textKey]: clean(text) };
   if (validFile(img.file)) return { file: img.file, [textKey]: clean(text) };
+  if (validDataUrl(img.dataUrl)) return { dataUrl: img.dataUrl, [textKey]: clean(text) };
   return null;
 }
 

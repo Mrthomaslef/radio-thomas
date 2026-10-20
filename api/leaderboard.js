@@ -31,16 +31,19 @@ function decodeEntryKey(key) {
 
 function decodeContribKey(key) {
   if (typeof key !== 'string') return null;
-  const m = key.match(/^cb4-([0-9a-f]{2,24})-(\d{1,6})$/);
+  const m = key.match(/^cb4-([0-9a-f]{2,24})-(\d{1,6})(?:-(\d{1,5})-(\d{1,5}))?$/);
   if (!m) return null;
   const name = cleanName(fromHex(m[1]));
   if (!name) return null;
   const points = parseInt(m[2], 10) || 0;
+  const reports = m[3] !== undefined ? parseInt(m[3], 10) || 0 : points;
+  const submissions = m[4] !== undefined ? parseInt(m[4], 10) || 0 : 0;
   return {
     kind: 'contributors_v4',
     name,
-    points,
-    reports: points,
+    points: Math.max(points, reports + submissions * 10),
+    reports,
+    submissions,
   };
 }
 
@@ -80,27 +83,34 @@ export default async function handler(req, res) {
         const k = normKey(name);
         const points = Math.max(0, Number(raw.points) || 0);
         const quizzes = isContrib ? 0 : Math.max(0, Number(raw.quizzes) || 0);
-        const reports = isContrib ? Math.max(0, Number(raw.reports ?? raw.points) || 0) : 0;
+        const reports = isContrib ? Math.max(0, Number(raw.reports) || 0) : 0;
+        const submissions = isContrib ? Math.max(0, Number(raw.submissions) || 0) : 0;
+        const computedContribPts = Math.max(points, reports + submissions * 10);
         const updatedAt = raw.updatedAt || raw.updated_at || null;
         const prev = merged.get(k);
         if (!prev) {
           merged.set(k, {
             ...(isContrib ? { kind: 'contributors_v4' } : {}),
             name,
-            points: isContrib ? reports : points,
+            points: isContrib ? computedContribPts : points,
             quizzes,
             reports,
+            submissions,
             updatedAt,
           });
         } else {
-          const nextReports = Math.max(prev.reports, reports);
-          const nextPoints = isContrib ? nextReports : Math.max(prev.points, points);
+          const nextReports = Math.max(prev.reports || 0, reports);
+          const nextSubmissions = Math.max(prev.submissions || 0, submissions);
+          const nextPoints = isContrib
+            ? Math.max(prev.points || 0, computedContribPts, nextReports + nextSubmissions * 10)
+            : Math.max(prev.points || 0, points);
           merged.set(k, {
             ...(isContrib ? { kind: 'contributors_v4' } : {}),
             name: updatedAt && (!prev.updatedAt || updatedAt >= prev.updatedAt) ? name : prev.name,
             points: nextPoints,
-            quizzes: Math.max(prev.quizzes, quizzes),
+            quizzes: Math.max(prev.quizzes || 0, quizzes),
             reports: nextReports,
+            submissions: nextSubmissions,
             updatedAt: updatedAt && (!prev.updatedAt || updatedAt > prev.updatedAt) ? updatedAt : prev.updatedAt,
           });
         }
@@ -165,14 +175,16 @@ export default async function handler(req, res) {
       }
       const points = Math.max(0, Math.min(100000, Math.round(Number(body.points) || 0)));
       const quizzes = isContrib ? 0 : Math.max(0, Math.min(10000, Math.round(Number(body.quizzes) || 0)));
-      const reports = isContrib ? Math.max(0, Math.min(10000, Math.round(Number(body.reports ?? points) || 0))) : 0;
+      const reports = isContrib ? Math.max(0, Math.min(10000, Math.round(Number(body.reports) || 0))) : 0;
+      const submissions = isContrib ? Math.max(0, Math.min(10000, Math.round(Number(body.submissions) || 0))) : 0;
       const k = normKey(name);
       const entry = {
         ...(isContrib ? { kind: 'contributors_v4' } : {}),
         name,
-        points: isContrib ? reports : points,
+        points: isContrib ? Math.max(points, reports + submissions * 10) : points,
         quizzes,
         reports,
+        submissions,
         chapters: body.chapters && typeof body.chapters === 'object' ? body.chapters : undefined,
         extraPoints: Number(body.extraPoints) || 0,
         extraQuizzes: Number(body.extraQuizzes) || 0,

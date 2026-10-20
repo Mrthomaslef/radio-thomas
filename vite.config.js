@@ -54,13 +54,16 @@ function localLeaderboardPlugin(target) {
                   const k = e.name.trim().toLowerCase();
                   const prev = map[k];
                   if (!prev || (e.points || 0) >= (prev.points || 0)) {
+                    const nextReps = isContribUrl ? Math.max(prev?.reports || 0, e.reports || 0) : 0;
+                    const nextSubs = isContribUrl ? Math.max(prev?.submissions || 0, e.submissions || 0) : 0;
                     map[k] = {
                       ...prev,
                       ...e,
                       ...(isContribUrl ? { kind: 'contributors_v4' } : {}),
-                      points: Math.max(prev?.points || 0, e.points || 0),
+                      points: Math.max(prev?.points || 0, e.points || 0, nextReps + nextSubs * 10),
                       quizzes: isContribUrl ? 0 : Math.max(prev?.quizzes || 0, e.quizzes || 0),
-                      reports: isContribUrl ? Math.max(prev?.reports || 0, e.reports || e.points || 0) : 0,
+                      reports: nextReps,
+                      submissions: nextSubs,
                     };
                   }
                 }
@@ -106,7 +109,9 @@ function localLeaderboardPlugin(target) {
               const k = name.toLowerCase();
               const map = readJsonCache(targetFile);
               const prev = map[k] || {};
-              const pts = Math.max(Number(prev.points) || 0, Number(body.points) || 0);
+              const nextReps = isContrib ? Math.max(Number(prev.reports) || 0, Number(body.reports) || 0) : 0;
+              const nextSubs = isContrib ? Math.max(Number(prev.submissions) || 0, Number(body.submissions) || 0) : 0;
+              const pts = Math.max(Number(prev.points) || 0, Number(body.points) || 0, nextReps + nextSubs * 10);
               const entry = {
                 ...prev,
                 ...body,
@@ -114,7 +119,8 @@ function localLeaderboardPlugin(target) {
                 name,
                 points: pts,
                 quizzes: isContrib ? 0 : Math.max(Number(prev.quizzes) || 0, Number(body.quizzes) || 0),
-                reports: isContrib ? Math.max(Number(prev.reports) || 0, Number(body.reports ?? pts) || 0) : 0,
+                reports: nextReps,
+                submissions: nextSubs,
                 updatedAt: new Date().toISOString(),
               };
               map[k] = entry;

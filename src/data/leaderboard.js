@@ -61,24 +61,29 @@ export function decodeEntryKey(key) {
 export function encodeContribKey(entry) {
   const name = cleanName(entry?.name);
   if (!name) return null;
-  const hex = toHex(name);
+  const hex = toHex(name).slice(0, 20);
   if (!hex) return null;
-  const pts = Math.max(0, Math.min(999999, Math.round(Number(entry.reports ?? entry.points) || 0)));
-  return `cb4-${hex}-${pts}`;
+  const reps = Math.max(0, Math.min(9999, Math.round(Number(entry.reports) || 0)));
+  const subs = Math.max(0, Math.min(9999, Math.round(Number(entry.submissions) || 0)));
+  const pts = Math.max(0, Math.min(99999, Math.round(Number(entry.points) || reps + subs * 10)));
+  return `cb4-${hex}-${pts}-${reps}-${subs}`;
 }
 
 export function decodeContribKey(key) {
   if (typeof key !== 'string') return null;
-  const m = key.match(/^cb4-([0-9a-f]{2,24})-(\d{1,6})$/);
+  const m = key.match(/^cb4-([0-9a-f]{2,24})-(\d{1,6})(?:-(\d{1,5})-(\d{1,5}))?$/);
   if (!m) return null;
   const name = cleanName(fromHex(m[1]));
   if (!name) return null;
   const points = parseInt(m[2], 10) || 0;
+  const reports = m[3] !== undefined ? parseInt(m[3], 10) || 0 : points;
+  const submissions = m[4] !== undefined ? parseInt(m[4], 10) || 0 : 0;
   return {
     kind: 'contributors_v4',
     name,
-    points,
-    reports: points,
+    points: Math.max(points, reports + submissions * 10),
+    reports,
+    submissions,
   };
 }
 
@@ -482,10 +487,13 @@ async function pushContributorsToServer(mapOrEntry, { replace = false } = {}) {
   const entries =
     mapOrEntry && mapOrEntry.name
       ? [mapOrEntry]
-      : Object.values(mapOrEntry || {}).filter((e) => e && e.name && e.reports > 0);
+      : Object.values(mapOrEntry || {}).filter((e) => e && e.name && (e.points > 0 || e.reports > 0 || e.submissions > 0));
   if (entries.length === 0 && !replace) return;
 
   for (const entry of entries) {
+    const reps = Math.max(0, Number(entry.reports) || 0);
+    const subs = Math.max(0, Number(entry.submissions) || 0);
+    const pts = Math.max(0, Number(entry.points) || reps + subs * 10);
     try {
       await fetch('/api/leaderboard?type=contributors', {
         method: 'POST',
@@ -494,8 +502,9 @@ async function pushContributorsToServer(mapOrEntry, { replace = false } = {}) {
           kind: 'contributors_v4',
           type: 'contributors',
           name: entry.name,
-          points: entry.reports,
-          reports: entry.reports,
+          points: pts,
+          reports: reps,
+          submissions: subs,
         }),
       });
     } catch {
@@ -527,16 +536,16 @@ async function pushContributorsToServer(mapOrEntry, { replace = false } = {}) {
     for (const entry of entries) {
       const k = normKey(entry.name);
       const prev = existingByUser.get(k);
-      const rep = Number(entry.reports) || 0;
-      if (!prev || rep >= prev.reports) {
-        const pts = Math.max(prev?.reports || 0, rep);
-        existingByUser.set(k, {
-          kind: 'contributors_v4',
-          name: entry.name,
-          points: pts,
-          reports: pts,
-        });
-      }
+      const rep = Math.max(prev?.reports || 0, Number(entry.reports) || 0);
+      const sub = Math.max(prev?.submissions || 0, Number(entry.submissions) || 0);
+      const pts = Math.max(prev?.points || 0, Number(entry.points) || 0, rep + sub * 10);
+      existingByUser.set(k, {
+        kind: 'contributors_v4',
+        name: entry.name,
+        points: pts,
+        reports: rep,
+        submissions: sub,
+      });
     }
 
     const answers = {};
@@ -579,13 +588,16 @@ export async function recordContributorReport(name) {
   }
   const k = normKey(clean);
   const map = readLocalContribMap();
-  const prev = map[k] || { kind: 'contributors_v4', name: clean, points: 0, reports: 0 };
-  const pts = (Number(prev.reports) || 0) + 1;
+  const prev = map[k] || { kind: 'contributors_v4', name: clean, points: 0, reports: 0, submissions: 0 };
+  const reps = (Number(prev.reports) || 0) + 1;
+  const subs = Number(prev.submissions) || 0;
+  const pts = Math.max((Number(prev.points) || 0) + 1, reps + subs * 10);
   const next = {
     kind: 'contributors_v4',
     name: clean,
     points: pts,
-    reports: pts,
+    reports: reps,
+    submissions: subs,
     updatedAt: new Date().toISOString(),
   };
   map[k] = next;
@@ -594,8 +606,41 @@ export async function recordContributorReport(name) {
   return next;
 }
 
-// Syncs all historical reports (e.g. from AdminPage) into the Contributors Leaderboard (1 pt per report).
-export async function syncContributorsFromReports(reports) {
+// Called when an admin validates a question proposed by a learner (+10 points).
+export async function recordApprovedSubmission(name) {
+  const clean = cleanName(name);
+  if (
+    !clean ||
+    clean === 'Anonyme' ||
+    clean === '__resolved__' ||
+    clean === SERVER_SHARED_KEY ||
+    clean === SERVER_CONTRIB_KEY ||
+    clean === '__leaderboard__'
+  ) {
+    return null;
+  }
+  const k = normKey(clean);
+  const map = readLocalContribMap();
+  const prev = map[k] || { kind: 'contributors_v4', name: clean, points: 0, reports: 0, submissions: 0 };
+  const reps = Number(prev.reports) || 0;
+  const subs = (Number(prev.submissions) || 0) + 1;
+  const pts = Math.max((Number(prev.points) || 0) + 10, reps + subs * 10);
+  const next = {
+    kind: 'contributors_v4',
+    name: clean,
+    points: pts,
+    reports: reps,
+    submissions: subs,
+    updatedAt: new Date().toISOString(),
+  };
+  map[k] = next;
+  writeLocalContribMap(map);
+  await pushContributorsToServer(next);
+  return next;
+}
+
+// Syncs all historical reports (1 pt each) and accepted question submissions (10 pts each) into the Contributors Leaderboard.
+export async function syncContributorsFromReports(reports, submissions = []) {
   const map = {};
   const counts = new Map();
 
@@ -612,17 +657,38 @@ export async function syncContributorsFromReports(reports) {
       continue;
     }
     const k = normKey(name);
-    const prev = counts.get(k) || { name, count: 0 };
-    prev.count += 1;
+    const prev = counts.get(k) || { name, reports: 0, submissions: 0 };
+    prev.reports += 1;
     counts.set(k, prev);
   }
 
-  for (const [k, { name, count }] of counts.entries()) {
+  for (const s of submissions || []) {
+    if (!s || s.status !== 'accepted') continue;
+    const name = cleanName(s.name || s.participant_name);
+    if (
+      !name ||
+      name === 'Anonyme' ||
+      name === '__resolved__' ||
+      name === SERVER_SHARED_KEY ||
+      name === SERVER_CONTRIB_KEY
+    ) {
+      continue;
+    }
+    const k = normKey(name);
+    const prev = counts.get(k) || { name, reports: 0, submissions: 0 };
+    prev.submissions += 1;
+    counts.set(k, prev);
+  }
+
+  for (const [k, { name, reports: repCount, submissions: subCount }] of counts.entries()) {
+    const pts = repCount + subCount * 10;
+    if (pts <= 0) continue;
     map[k] = {
       kind: 'contributors_v4',
       name,
-      points: count,
-      reports: count,
+      points: pts,
+      reports: repCount,
+      submissions: subCount,
       updatedAt: new Date().toISOString(),
     };
   }
@@ -651,17 +717,22 @@ export async function fetchContributorsLeaderboard() {
     ) {
       return;
     }
-    const pts = Math.max(0, Math.round(Number(raw.reports) || 0));
+    const reps = Math.max(0, Math.round(Number(raw.reports) || 0));
+    const subs = Math.max(0, Math.round(Number(raw.submissions) || 0));
+    const pts = Math.max(0, Math.round(Number(raw.points) || 0), reps + subs * 10);
     if (pts <= 0) return;
     const k = normKey(name);
     const prev = merged.get(k);
-    if (!prev || pts >= prev.reports) {
-      const bestPts = Math.max(prev?.reports || 0, pts);
+    if (!prev || pts >= prev.points) {
+      const bestReps = Math.max(prev?.reports || 0, reps);
+      const bestSubs = Math.max(prev?.submissions || 0, subs);
+      const bestPts = Math.max(prev?.points || 0, pts, bestReps + bestSubs * 10);
       merged.set(k, {
         kind: 'contributors_v4',
-        name: prev && prev.reports > pts ? prev.name : name,
+        name: prev && prev.points > pts ? prev.name : name,
         points: bestPts,
-        reports: bestPts,
+        reports: bestReps,
+        submissions: bestSubs,
         updatedAt: raw.updatedAt || prev?.updatedAt || new Date().toISOString(),
       });
     }

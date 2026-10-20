@@ -453,8 +453,8 @@ export function QuizPlayer({
                     {q.type === 'QRM' && <span className="lg miss">! Oubliée</span>}
                   </p>
                   <p className="cq-expl">{q.explication}</p>
-                  {q.correction_figures?.map((f) => (
-                    <figure key={f.upload || f.file} className="cq-fig" onClick={() => setZoom({ src: imageSrc(qKey, f), caption: f.caption })}>
+                  {q.correction_figures?.map((f, i) => (
+                    <figure key={f.upload || f.file || i} className="cq-fig" onClick={() => setZoom({ src: imageSrc(qKey, f), caption: f.caption })}>
                       <img src={imageSrc(qKey, f)} alt={f.caption} loading="lazy" />
                       <figcaption>{f.caption}<span className="cq-zoom"> · toucher pour agrandir</span></figcaption>
                     </figure>

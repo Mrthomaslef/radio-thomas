@@ -52,9 +52,15 @@ export const bundledQuestions = CHAPTER_KEYS.flatMap((key) =>
 
 const toQuestion = (row) => ({ id: row.id, ...row.data });
 
-// Address of an image: an upload from the admin ({upload}) or a bundled figure ({file}).
+// Address of an image: an inline dataUrl, an upload from the admin ({upload}) or a bundled figure ({file}).
 export const imageSrc = (chapter, img) =>
-  img.upload ? `/api/image?id=${img.upload}` : encodeURI(`/figures/${chapter}/${img.file}`);
+  !img
+    ? ''
+    : img.dataUrl
+    ? img.dataUrl
+    : img.upload
+    ? `/api/image?id=${img.upload}`
+    : encodeURI(`/figures/${chapter}/${img.file}`);
 
 // Group database rows by chapter; keeps only known chapters and includes any new bundled questions not yet in DB.
 function groupByChapter(rows) {

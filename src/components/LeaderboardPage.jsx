@@ -109,7 +109,7 @@ export default function LeaderboardPage() {
           </p>
         ) : (
           <p className="lb-rule">
-            Chaque <strong>retour ou signalement</strong> envoyé sur une question rapporte <strong>1 point</strong>. Merci de contribuer à l’amélioration du quiz&nbsp;!
+            Gagnez <strong>10 points par question proposée et validée</strong> (<a href="#/proposer">Proposer une question</a>) et <strong>1 point par signalement</strong> envoyé sur une question existante. Merci de contribuer à l’amélioration du quiz&nbsp;!
           </p>
         )}
 
@@ -160,12 +160,16 @@ export default function LeaderboardPage() {
             <span>points cumulés</span>
           </div>
           <div className="admin-stat">
-            <strong>{myEntry ? (tab === 'contributors' ? myEntry.reports : myEntry.quizzes) : 0}</strong>
+            <strong>
+              {myEntry
+                ? tab === 'contributors'
+                  ? (myEntry.submissions || 0) + (myEntry.reports || 0)
+                  : myEntry.quizzes
+                : 0}
+            </strong>
             <span>
               {tab === 'contributors'
-                ? myEntry && myEntry.reports > 1
-                  ? 'signalements envoyés'
-                  : 'signalement envoyé'
+                ? 'contributions (questions + retours)'
                 : myEntry && myEntry.quizzes > 1
                 ? 'quiz réussis'
                 : 'quiz réussi'}
@@ -180,11 +184,14 @@ export default function LeaderboardPage() {
         <div className="cq-card lb-empty">
           {tab === 'contributors' ? (
             <>
-              <p>Aucun signalement enregistré pour le moment.</p>
+              <p>Aucune contribution enregistrée pour le moment.</p>
               <p className="lb-empty-sub">
-                Utilisez le bouton «&nbsp;⚑ Signaler une erreur ou faire un retour sur cette question&nbsp;» pendant un quiz pour gagner 1 point par signalement&nbsp;!
+                Proposez une nouvelle question (+10 pts une fois validée) ou signalez une remarque pendant un quiz (+1 pt)&nbsp;!
               </p>
-              <a href="#/" className="btn btn-small">Choisir un quiz</a>
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+                <a href="#/proposer" className="btn btn-small">+ Proposer une question (+10 pts)</a>
+                <a href="#/" className="btn btn-small btn-ghost">Choisir un quiz</a>
+              </div>
             </>
           ) : (
             <>
@@ -203,13 +210,21 @@ export default function LeaderboardPage() {
               <span className="lb-col-rank" role="columnheader">Rang</span>
               <span className="lb-col-name" role="columnheader">Pseudo</span>
               <span className="lb-col-quizzes" role="columnheader">
-                {tab === 'contributors' ? 'Signalements' : 'Quiz réussis'}
+                {tab === 'contributors' ? 'Contributions' : 'Quiz réussis'}
               </span>
               <span className="lb-col-points" role="columnheader">Points</span>
             </div>
             {activeList.map((item, idx) => {
               const isMe = myKey && normKey(item.name) === myKey;
               const topClass = idx < 3 ? `lb-top-${idx + 1}` : '';
+              const subs = item.submissions || 0;
+              const reps = item.reports || 0;
+              const contribDetails = [
+                subs > 0 ? `${subs} ${subs > 1 ? 'questions' : 'question'}` : null,
+                reps > 0 ? `${reps} ${reps > 1 ? 'retours' : 'retour'}` : null,
+              ]
+                .filter(Boolean)
+                .join(' · ') || `${item.points} pt`;
               return (
                 <div
                   key={normKey(item.name)}
@@ -224,9 +239,7 @@ export default function LeaderboardPage() {
                     {isMe && <span className="lb-me-tag">Vous</span>}
                   </span>
                   <span className="lb-col-quizzes" role="cell">
-                    {tab === 'contributors'
-                      ? `${item.reports || item.points} ${item.reports > 1 ? 'retours' : 'retour'}`
-                      : `${item.quizzes} quiz`}
+                    {tab === 'contributors' ? contribDetails : `${item.quizzes} quiz`}
                   </span>
                   <span className="lb-col-points" role="cell">
                     <strong>{item.points}</strong> {item.points > 1 ? 'pts' : 'pt'}

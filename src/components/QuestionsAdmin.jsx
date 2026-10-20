@@ -4,7 +4,7 @@ import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, resetQuestionsCache, imageSrc
 
 const MAX_SIDE = 1400; // images are shrunk before sending: lighter pages, and well under the size limit
 
-// Reads a picture, shrinks it, and returns { mime, data (base64) } ready to upload.
+// Reads a picture, shrinks it, and returns { mime, data (base64), compactDataUrl } ready to upload.
 function prepareImage(file) {
   return new Promise((resolve, reject) => {
     if (!/^image\/(png|jpeg|webp)$/.test(file.type)) {
@@ -24,7 +24,23 @@ function prepareImage(file) {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      resolve({ mime: 'image/jpeg', data: dataUrl.slice(dataUrl.indexOf(',') + 1) });
+
+      // Also build a compact dataUrl (< 42 KB) as a fallback if quiz_images table is not migrated
+      const compactScale = Math.min(1, 720 / Math.max(img.width, img.height));
+      const c2 = document.createElement('canvas');
+      c2.width = Math.max(1, Math.round(img.width * compactScale));
+      c2.height = Math.max(1, Math.round(img.height * compactScale));
+      const ctx2 = c2.getContext('2d');
+      ctx2.fillStyle = '#fff';
+      ctx2.fillRect(0, 0, c2.width, c2.height);
+      ctx2.drawImage(img, 0, 0, c2.width, c2.height);
+      const compactDataUrl = c2.toDataURL('image/jpeg', 0.68);
+
+      resolve({
+        mime: 'image/jpeg',
+        data: dataUrl.slice(dataUrl.indexOf(',') + 1),
+        compactDataUrl,
+      });
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);
@@ -34,7 +50,7 @@ function prepareImage(file) {
   });
 }
 
-// Picks a file, uploads it, and hands back { upload } (plus a text field handled by the caller).
+// Picks a file, uploads it, and hands back { upload } or { dataUrl } (plus a text field handled by the caller).
 function ImagePicker({ password, label, onPicked, disabled }) {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
@@ -44,9 +60,18 @@ function ImagePicker({ password, label, onPicked, disabled }) {
     if (!file) return;
     setBusy(true); setErr('');
     try {
-      const { mime, data } = await prepareImage(file);
-      const out = await call(password, { action: 'upload', mime, data });
-      onPicked(out.id);
+      const { mime, data, compactDataUrl } = await prepareImage(file);
+      try {
+        const out = await call(password, { action: 'upload', mime, data });
+        onPicked({ upload: out.id });
+      } catch {
+        // Fallback to inline compactDataUrl if the quiz_images migration hasn't been applied yet
+        if (compactDataUrl && compactDataUrl.length <= 44000) {
+          onPicked({ dataUrl: compactDataUrl });
+        } else {
+          throw new Error('Impossible d’enregistrer cette image.');
+        }
+      }
     } catch (ex) {
       setErr(ex.message);
     } finally {
@@ -146,16 +171,22 @@ const blankQuestion = () => ({
   reviewed: false,
 });
 
-const newId = (chapter, rows) => {
+export const newId = (chapter, rows) => {
   const used = new Set(rows.map((r) => r.id));
-  for (let n = rows.length + 1; n < 1000; n++) {
+  for (let n = 1; n < 1000; n++) {
     const id = `${chapter.replace('ch', 'c')}-q${String(n).padStart(2, '0')}`;
     if (!used.has(id)) return id;
   }
   return `${chapter}-${Date.now()}`;
 };
 
-export default function QuestionsAdmin({ password, editTarget = null, onClearEditTarget = null, onResolveReport = null }) {
+export default function QuestionsAdmin({
+  password,
+  editTarget = null,
+  onClearEditTarget = null,
+  onResolveReport = null,
+  onResolveSubmission = null,
+}) {
   const [rows, setRows] = useState(null);
   const [localReviewed, setLocalReviewed] = useState(readLocalReviewed);
   const [reviewFilter, setReviewFilter] = useState('all'); // all | todo | done
@@ -222,9 +253,30 @@ export default function QuestionsAdmin({ password, editTarget = null, onClearEdi
     }
   };
 
-  // Open a specific question directly when arriving from a user report
+  // Open a specific question directly when arriving from a user report or user-proposed question
   useEffect(() => {
-    if (!editTarget?.questionId || rows === null) return;
+    if (!editTarget || rows === null) return;
+    if (editTarget.isSubmission && editTarget.question) {
+      const targetChapter = editTarget.chapter || 'ch1';
+      const chapterRows = rows.filter((r) => !r.deleted_at && r.chapter === targetChapter);
+      const position = chapterRows.length ? Math.max(...chapterRows.map((r) => r.position)) + 1 : 0;
+      setChapter(targetChapter);
+      setEditing({
+        id: newId(targetChapter, rows),
+        chapter: targetChapter,
+        position,
+        q: {
+          ...blankQuestion(),
+          ...structuredClone(editTarget.question),
+          reviewed: true,
+        },
+        isNew: true,
+        submissionContext: editTarget,
+      });
+      onClearEditTarget?.();
+      return;
+    }
+    if (!editTarget.questionId) return;
     const found =
       rows.find((r) => r.id === editTarget.questionId) ||
       bundledQuestions.find((b) => b.id === editTarget.questionId);
@@ -309,8 +361,15 @@ export default function QuestionsAdmin({ password, editTarget = null, onClearEdi
       if (editing.reportContext && onResolveReport) {
         await onResolveReport(editing.reportContext);
       }
+      if (editing.submissionContext && onResolveSubmission) {
+        await onResolveSubmission(editing.submissionContext, 'accepted');
+      }
       resetQuestionsCache();
-      setNotice('Question enregistrée. Elle apparaît sur le site d’ici une trentaine de secondes.');
+      setNotice(
+        editing.submissionContext
+          ? `Question publiée et proposition de ${editing.submissionContext.author || 'l’utilisateur'} validée (+10 pts) !`
+          : 'Question enregistrée. Elle apparaît sur le site d’ici une trentaine de secondes.'
+      );
       setEditing(null); setPreview(false);
       await load();
     } catch (e) { setError(e.message); } finally { setBusy(false); }
@@ -546,6 +605,17 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
           <p>« {editing.reportContext.reportMessage} »</p>
         </div>
       )}
+      {editing.submissionContext && (
+        <div className="admin-report-banner admin-submission-banner">
+          <strong>
+            ✦ Proposition de question de {editing.submissionContext.author || 'Anonyme'} · {CHAPTER_LABELS[editing.chapter]}
+          </strong>
+          <p>
+            Vous pouvez modifier cette question avant de l’enregistrer. L’enregistrement publiera la question dans le chapitre et attribuera{' '}
+            <strong>+10 points de contribution</strong> à {editing.submissionContext.author || 'l’auteur'}.
+          </p>
+        </div>
+      )}
       {error && <p className="admin-error" role="alert">{error}</p>}
 
       <div className="qa-grid">
@@ -572,14 +642,14 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
               </label>
               <div className="qa-fig-actions">
                 <ImagePicker password={password} label="Remplacer l’image" disabled={busy}
-                  onPicked={(id) => set({ enonce_image: { upload: id, alt: q.enonce_image.alt || '' } })} />
+                  onPicked={(picked) => set({ enonce_image: { ...picked, alt: q.enonce_image.alt || '' } })} />
                 <button className="link-btn" onClick={() => set({ enonce_image: null })}>Retirer l’image</button>
               </div>
             </div>
           </div>
         ) : (
           <ImagePicker password={password} label="+ Ajouter une image avant la question" disabled={busy}
-            onPicked={(id) => set({ enonce_image: { upload: id, alt: '' } })} />
+            onPicked={(picked) => set({ enonce_image: { ...picked, alt: '' } })} />
         )}
       </fieldset>
 
@@ -614,10 +684,10 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
         <legend>Figures de la correction</legend>
         {q.correction_figures.length === 0 && <p className="admin-empty">Aucune figure.</p>}
         {q.correction_figures.map((f, i) => (
-          <div key={(f.upload || f.file) + i} className="qa-fig">
+          <div key={(f.upload || f.file || 'fig') + i} className="qa-fig">
             <img src={imageSrc(editing.chapter, f)} alt="" loading="lazy" />
             <div className="qa-fig-body">
-              <small>{f.upload ? 'Image envoyée depuis l’admin' : f.file}</small>
+              <small>{f.upload || f.dataUrl ? 'Image envoyée' : f.file}</small>
               <textarea className="admin-input" rows={3} value={f.caption} maxLength={1200} onChange={(e) => setFigure(i, { caption: e.target.value })} />
               <div className="qa-fig-actions">
                 <button className="link-btn" onClick={() => moveFigure(i, -1)} disabled={i === 0}>↑ Monter</button>
@@ -628,7 +698,7 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
           </div>
         ))}
         <ImagePicker password={password} label="+ Ajouter une image à la correction" disabled={busy || q.correction_figures.length >= 6}
-          onPicked={(id) => set({ correction_figures: [...q.correction_figures, { upload: id, caption: '' }] })} />
+          onPicked={(picked) => set({ correction_figures: [...q.correction_figures, { ...picked, caption: '' }] })} />
         <p className="privacy">Les images sont réduites automatiquement (1 400 px maximum) avant l’envoi. N’envoyez que des images que vous avez le droit de publier.</p>
       </fieldset>
 

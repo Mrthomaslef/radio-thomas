@@ -55,21 +55,39 @@ export default async function handler(req, res) {
 
     for (const a of rawAttempts) {
       if (typeof a.course === 'string' && a.course.startsWith('report-')) {
-        if (!reportGroups.has(a.course)) {
-          reportGroups.set(a.course, {
-            id: a.course,
+        const partMatch = a.course.match(/^(report-subm-[a-z0-9]+-[a-z0-9]+)-p([0-9]+)$/);
+        const baseCourse = partMatch ? partMatch[1] : a.course;
+        const partIdx = partMatch ? Number.parseInt(partMatch[2], 10) || 0 : 0;
+
+        if (!reportGroups.has(baseCourse)) {
+          reportGroups.set(baseCourse, {
+            id: baseCourse,
             created_at: a.created_at,
             question_id: a.quiz,
             chunks: new Map(),
             resolved_at: null,
+            decision: null,
           });
         }
-        const g = reportGroups.get(a.course);
+        const g = reportGroups.get(baseCourse);
         if (a.created_at < g.created_at) g.created_at = a.created_at;
-        if (a.passed || a.name === '__resolved__') {
+        if (
+          a.passed ||
+          a.name === '__resolved__' ||
+          a.name === '__accepted__' ||
+          a.name === '__refused__'
+        ) {
           g.resolved_at = a.created_at;
+          if (a.name === '__refused__' || a.quiz === 'subm-refused') {
+            g.decision = 'refused';
+          } else if (a.name === '__accepted__' || a.quiz === 'subm-accepted') {
+            g.decision = 'accepted';
+          }
         } else {
-          g.chunks.set(a.score, a.name);
+          g.chunks.set(partIdx * 100 + a.score, a.name);
+          if (a.quiz && !a.quiz.startsWith('subm-')) {
+            g.question_id = a.quiz;
+          }
         }
       } else {
         attempts.push(a);
@@ -93,6 +111,7 @@ export default async function handler(req, res) {
           question_id: g.question_id,
           message: parsed.m || '',
           resolved_at: g.resolved_at,
+          decision: g.decision,
         });
       } catch {
         // Ignore malformed fallback row

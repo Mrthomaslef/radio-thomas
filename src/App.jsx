@@ -7,11 +7,13 @@ import AdminPage from './components/AdminPage.jsx';
 import ProgressPage from './components/ProgressPage.jsx';
 import LeaderboardPage from './components/LeaderboardPage.jsx';
 import RandomQuiz from './components/RandomQuiz.jsx';
+import ProposeQuestionPage from './components/ProposeQuestionPage.jsx';
 import { CHAPTERS as chapters } from './data/useQuestions.js';
 
 // Tiny hash router:
 // - "#/quiz/<key>" (or "#/quiz/<key>?q=<1-based>") plays a chapter quiz
 // - "#/aleatoire" opens the random quiz builder & player
+// - "#/proposer" opens the user question proposal form
 // - "#/progression" shows the player's progress page
 // - "#/classement" (or "#/leaderboard") shows the leaderboard
 // - "#/admin" opens the password-protected trainer page
@@ -23,6 +25,7 @@ const isLeaderboardRoute = () =>
   window.location.hash === '#/leaderboard' ||
   window.location.hash === '#/contributeurs';
 const isRandomRoute = () => window.location.hash === '#/aleatoire';
+const isProposeRoute = () => window.location.hash === '#/proposer';
 const parseTheme = () => {
   const m = window.location.hash.match(/^#\/([\w-]+)$/);
   if (
@@ -32,7 +35,8 @@ const parseTheme = () => {
     m[1] === 'classement' ||
     m[1] === 'leaderboard' ||
     m[1] === 'contributeurs' ||
-    m[1] === 'aleatoire'
+    m[1] === 'aleatoire' ||
+    m[1] === 'proposer'
   ) {
     return null;
   }
@@ -56,6 +60,7 @@ export default function App() {
   const [progressPage, setProgressPage] = useState(isProgressRoute);
   const [leaderboardPage, setLeaderboardPage] = useState(isLeaderboardRoute);
   const [randomPage, setRandomPage] = useState(isRandomRoute);
+  const [proposePage, setProposePage] = useState(isProposeRoute);
   const [theme, setTheme] = useState(parseTheme);
 
   useEffect(() => {
@@ -65,6 +70,7 @@ export default function App() {
       setProgressPage(isProgressRoute());
       setLeaderboardPage(isLeaderboardRoute());
       setRandomPage(isRandomRoute());
+      setProposePage(isProposeRoute());
       setTheme(parseTheme());
     };
     window.addEventListener('hashchange', onHash);
@@ -73,7 +79,7 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [course, admin, progressPage, leaderboardPage, randomPage, theme]);
+  }, [course, admin, progressPage, leaderboardPage, randomPage, proposePage, theme]);
 
   return (
     <>
@@ -88,6 +94,8 @@ export default function App() {
           <LeaderboardPage />
         ) : randomPage ? (
           <RandomQuiz />
+        ) : proposePage ? (
+          <ProposeQuestionPage />
         ) : course ? (
           <ChapterQuiz key={`${course.key}:${course.initialIdx ?? 'auto'}`} chapter={course} />
         ) : (
