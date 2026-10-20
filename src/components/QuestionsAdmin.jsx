@@ -255,27 +255,33 @@ export default function QuestionsAdmin({
 
   // Open a specific question directly when arriving from a user report or user-proposed question
   useEffect(() => {
-    if (!editTarget || rows === null) return;
-    if (editTarget.isSubmission && editTarget.question) {
+    if (!editTarget) return;
+    const subQ = editTarget.question || editTarget.submissionQuestion;
+    if (editTarget.isSubmission && subQ) {
+      const currentRows = rows || bundledQuestions;
       const targetChapter = editTarget.chapter || 'ch1';
-      const chapterRows = rows.filter((r) => !r.deleted_at && r.chapter === targetChapter);
+      const chapterRows = currentRows.filter((r) => !r.deleted_at && r.chapter === targetChapter);
       const position = chapterRows.length ? Math.max(...chapterRows.map((r) => r.position)) + 1 : 0;
       setChapter(targetChapter);
       setEditing({
-        id: newId(targetChapter, rows),
+        id: newId(targetChapter, currentRows),
         chapter: targetChapter,
         position,
         q: {
           ...blankQuestion(),
-          ...structuredClone(editTarget.question),
+          ...structuredClone(subQ),
           reviewed: true,
         },
         isNew: true,
-        submissionContext: editTarget,
+        submissionContext: {
+          ...editTarget,
+          author: editTarget.author || editTarget.reportAuthor || 'Anonyme',
+        },
       });
       onClearEditTarget?.();
       return;
     }
+    if (rows === null) return;
     if (!editTarget.questionId) return;
     const found =
       rows.find((r) => r.id === editTarget.questionId) ||
@@ -353,11 +359,16 @@ export default function QuestionsAdmin({
     setBusy(true); setError(''); setNotice('');
     const nextReviewed = forceReviewed !== null ? forceReviewed : Boolean(editing.q.reviewed);
     const nextQ = { ...editing.q, reviewed: nextReviewed };
-    const updatedMap = { ...localReviewed, [editing.id]: nextReviewed };
+    const allRows = rows || bundledQuestions;
+    const finalId =
+      editing.isNew && allRows.some((r) => r.id === editing.id)
+        ? newId(editing.chapter, allRows)
+        : editing.id;
+    const updatedMap = { ...localReviewed, [finalId]: nextReviewed };
     setLocalReviewed(updatedMap);
     writeLocalReviewed(updatedMap);
     try {
-      await call(password, { action: 'save', id: editing.id, chapter: editing.chapter, position: editing.position, question: nextQ });
+      await call(password, { action: 'save', id: finalId, chapter: editing.chapter, position: editing.position, question: nextQ });
       if (editing.reportContext && onResolveReport) {
         await onResolveReport(editing.reportContext);
       }
@@ -397,7 +408,7 @@ export default function QuestionsAdmin({
     } catch (e) { setError(e.message); } finally { setBusy(false); }
   };
 
-  if (rows === null) return <p className="admin-empty">Chargement…</p>;
+  if (rows === null && !editing) return <p className="admin-empty">Chargement…</p>;
 
   if (editing) {
     return (
@@ -721,7 +732,13 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
       </fieldset>
 
       <div className="qa-actions">
-        <button className="btn" onClick={onSave} disabled={busy}>{busy ? 'Enregistrement…' : 'Enregistrer'}</button>
+        <button className="btn" onClick={onSave} disabled={busy}>
+          {busy
+            ? 'Enregistrement…'
+            : editing.submissionContext
+            ? '✓ Enregistrer et publier (+10 pts)'
+            : 'Enregistrer'}
+        </button>
         {!q.reviewed && onSaveAndReview && (
           <button className="btn btn-ghost" onClick={onSaveAndReview} disabled={busy}>
             ✓ Enregistrer et valider la relecture

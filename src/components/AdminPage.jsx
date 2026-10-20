@@ -286,9 +286,12 @@ export default function AdminPage() {
   const openQuestionFromSubmission = (s) => {
     setEditTarget({
       isSubmission: true,
+      id: s.id,
       submissionId: s.id,
+      question: s.question,
       submissionQuestion: s.question,
       chapter: s.chapter || 'ch1',
+      author: s.name,
       reportAuthor: s.name,
     });
     setTab('questions');
