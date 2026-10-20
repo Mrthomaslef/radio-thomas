@@ -131,6 +131,28 @@ export function writeQuestionAnswer(chapterKey, questionId, picked, name = readN
 }
 
 const HISTORY_CHAPTER_KEY = 'ch98';
+const HISTORY_STORAGE_PREFIX = 'quiz-cotten:history:v1:';
+
+function readLocalHistoryList(name) {
+  const k = normKey(name);
+  if (!k) return [];
+  try {
+    const raw = JSON.parse(localStorage.getItem(`${HISTORY_STORAGE_PREFIX}${k}`) || '[]');
+    return Array.isArray(raw) ? raw : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeLocalHistoryList(name, list) {
+  const k = normKey(name);
+  if (!k) return;
+  try {
+    localStorage.setItem(`${HISTORY_STORAGE_PREFIX}${k}`, JSON.stringify(list));
+  } catch {
+    // Ignore storage errors in private mode
+  }
+}
 
 export function encodeAttemptKey({ quiz, score, total, createdAt }) {
   const tsSec = Math.max(1, Math.floor((createdAt ? new Date(createdAt).getTime() : Date.now()) / 1000));
@@ -168,7 +190,31 @@ export function decodeAttemptKey(key) {
 
 export function recordQuizAttempt({ quiz, score, total, createdAt }, name = readName()) {
   if (!name) return;
-  const key = encodeAttemptKey({ quiz, score, total, createdAt });
+  const normalizedQuiz =
+    quiz === 'aleatoire' || quiz === 'quiz-aleatoire' ? 'quiz-aleatoire' : String(quiz || 'ch1');
+  const s = Math.max(0, Math.round(Number(score) || 0));
+  const t = Math.max(1, Math.round(Number(total) || 1));
+  const iso = createdAt ? new Date(createdAt).toISOString() : new Date().toISOString();
+  const key = encodeAttemptKey({ quiz: normalizedQuiz, score: s, total: t, createdAt: iso });
+
+  // 1) Save in dedicated local history list
+  const existingList = readLocalHistoryList(name);
+  if (!existingList.some((item) => item.id === key)) {
+    const nextList = [
+      {
+        id: key,
+        created_at: iso,
+        quiz: normalizedQuiz,
+        score: s,
+        total: t,
+        passed: s / t >= 0.6,
+      },
+      ...existingList,
+    ];
+    writeLocalHistoryList(name, nextList);
+  }
+
+  // 2) Also save in ch98.answers so /api/progress syncs it across sessions/devices
   const cur = readChapterProgress(HISTORY_CHAPTER_KEY, name);
   const answers = { ...(cur.answers || {}), [key]: ['A'] };
   writeChapterProgress(HISTORY_CHAPTER_KEY, { answers, sent: true }, name);
@@ -178,18 +224,58 @@ export function readQuizHistory(name = readName(), byChapter = null) {
   if (!name) return [];
   const all = readAllProgress(name);
   const rawAnswers = all[HISTORY_CHAPTER_KEY]?.answers || {};
-  const list = [];
+  const byId = new Map();
   const seenChapters = new Set();
 
+  // 1) Load from dedicated local history list
+  for (const item of readLocalHistoryList(name)) {
+    if (item && item.id) {
+      byId.set(item.id, item);
+      seenChapters.add(item.quiz);
+    }
+  }
+
+  // 2) Merge from ch98.answers (synced via /api/progress)
   for (const k of Object.keys(rawAnswers)) {
     const decoded = decodeAttemptKey(k);
-    if (decoded) {
-      list.push(decoded);
+    if (decoded && !byId.has(decoded.id)) {
+      byId.set(decoded.id, decoded);
       seenChapters.add(decoded.quiz);
     }
   }
 
-  // Also include any chapter that was already completed before history tracking was added
+  // 3) Reconstruct random quizzes completed before history tracking was added (from leaderboard storage)
+  const kUser = normKey(name);
+  const hasRandomInHistory = [...byId.values()].some(
+    (x) => x.quiz === 'quiz-aleatoire' || x.quiz === 'aleatoire'
+  );
+  if (!hasRandomInHistory && kUser) {
+    for (const lbKey of ['quiz-cotten:leaderboard:v2', 'quiz-cotten:leaderboard:v1']) {
+      try {
+        const lbMap = JSON.parse(localStorage.getItem(lbKey) || '{}');
+        const entry = lbMap?.[kUser];
+        if (entry && Number(entry.extraQuizzes) > 0) {
+          const pts = Math.max(0, Number(entry.extraPoints) || 0);
+          const count = Math.max(1, Number(entry.extraQuizzes) || 1);
+          const avgScore = Math.round(pts / count);
+          const totalEst = Math.max(avgScore, 1);
+          byId.set(`lb-random-${lbKey}`, {
+            id: `lb-random-${lbKey}`,
+            created_at: entry.updatedAt || null,
+            quiz: 'quiz-aleatoire',
+            score: pts,
+            total: totalEst,
+            passed: true,
+          });
+          break;
+        }
+      } catch {
+        // Ignore
+      }
+    }
+  }
+
+  // 4) Also include any chapter that was already completed before history tracking was added
   if (byChapter && typeof byChapter === 'object') {
     for (const [chId, qs] of Object.entries(byChapter)) {
       if (!Array.isArray(qs) || qs.length === 0 || seenChapters.has(chId)) continue;
@@ -203,7 +289,7 @@ export function readQuizHistory(name = readName(), byChapter = null) {
         };
         const score = answered.filter((q) => isPerfect(q, ans[q.id])).length;
         const total = qs.length;
-        list.push({
+        byId.set(`completed-${chId}`, {
           id: `completed-${chId}`,
           created_at: null,
           quiz: chId,
@@ -215,7 +301,7 @@ export function readQuizHistory(name = readName(), byChapter = null) {
     }
   }
 
-  return list.sort((a, b) => {
+  return [...byId.values()].sort((a, b) => {
     if (a.created_at && b.created_at) return b.created_at.localeCompare(a.created_at);
     if (a.created_at) return -1;
     if (b.created_at) return 1;
@@ -231,17 +317,37 @@ export async function syncUsersHistoryFromAttempts(attempts) {
     const name = (a.name || a.participant_name || '').trim().replace(/\s+/g, ' ');
     if (!name) continue;
     const k = normKey(name);
-    if (!byUser.has(k)) byUser.set(k, { name, keys: {} });
+    if (!byUser.has(k)) byUser.set(k, { name, keys: {}, items: [] });
+    const normalizedQuiz =
+      a.quiz === 'aleatoire' || a.quiz === 'quiz-aleatoire' || a.course === 'mixte'
+        ? 'quiz-aleatoire'
+        : String(a.quiz || 'ch1');
+    const s = Math.max(0, Math.round(Number(a.score) || 0));
+    const t = Math.max(1, Math.round(Number(a.total) || 1));
     const hKey = encodeAttemptKey({
-      quiz: a.quiz,
-      score: a.score,
-      total: a.total,
+      quiz: normalizedQuiz,
+      score: s,
+      total: t,
       createdAt: a.created_at,
     });
     byUser.get(k).keys[hKey] = ['A'];
+    byUser.get(k).items.push({
+      id: hKey,
+      created_at: a.created_at || new Date().toISOString(),
+      quiz: normalizedQuiz,
+      score: s,
+      total: t,
+      passed: typeof a.passed === 'boolean' ? a.passed : s / t >= 0.6,
+    });
   }
 
-  for (const { name, keys } of byUser.values()) {
+  for (const { name, keys, items } of byUser.values()) {
+    const existingList = readLocalHistoryList(name);
+    const mergedById = new Map();
+    for (const it of existingList) if (it?.id) mergedById.set(it.id, it);
+    for (const it of items) if (it?.id) mergedById.set(it.id, it);
+    writeLocalHistoryList(name, [...mergedById.values()]);
+
     const all = readRawMap(name);
     const curAns = all[HISTORY_CHAPTER_KEY]?.answers || {};
     all[HISTORY_CHAPTER_KEY] = {

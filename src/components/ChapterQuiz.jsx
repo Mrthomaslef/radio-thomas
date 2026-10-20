@@ -138,6 +138,7 @@ export function QuizPlayer({
   const [reportStatus, setReportStatus] = useState('idle'); // idle | sending | sent
   const [reportError, setReportError] = useState('');
   const topRef = useRef(null);
+  const recordedHistoryRef = useRef(false);
 
   const resetReportBox = () => {
     setReportOpen(false);
@@ -213,6 +214,7 @@ export function QuizPlayer({
     }
     setSent(false);
     setSaveState('idle');
+    recordedHistoryRef.current = false;
     setPicked([]);
     setShowCorrection(false);
   };
@@ -235,6 +237,7 @@ export function QuizPlayer({
       return;
     }
     if (!preview && !randomMode) clearChapterProgress(key);
+    recordedHistoryRef.current = false;
     setAnswers({}); setSent(false); setPicked([]); setShowCorrection(false); setIdx(0); setSaveState('idle');
     resetReportBox();
   };
@@ -269,8 +272,10 @@ export function QuizPlayer({
     if (!name) return;
     const passed = total > 0 && score / total >= 0.6;
     setSaveState('saving');
-    // Save attempt in the user's quiz history (shown on Ma progression)
-    recordQuizAttempt({ quiz: key, score, total }, name);
+    if (!recordedHistoryRef.current) {
+      recordedHistoryRef.current = true;
+      recordQuizAttempt({ quiz: randomMode ? 'quiz-aleatoire' : key, score, total }, name);
+    }
     // Record points on the leaderboard only when the quiz is finished AND passed (>= 60%)
     if (passed) {
       recordCompletedQuiz({ name, quizKey: key, score, total, passed, randomMode });
@@ -289,6 +294,10 @@ export function QuizPlayer({
     if (answeredAll.length === total && !preview) {
       const name = readName();
       const passed = total > 0 && score / total >= 0.6;
+      if (name && !recordedHistoryRef.current) {
+        recordedHistoryRef.current = true;
+        recordQuizAttempt({ quiz: randomMode ? 'quiz-aleatoire' : key, score, total }, name);
+      }
       if (name && !randomMode && passed) {
         recordCompletedQuiz({ name, quizKey: key, score, total, passed: true, randomMode: false });
       }
