@@ -1,8 +1,10 @@
 import { readName, readAllProgress } from './player.js';
 
 const LOCAL_LB_KEY = 'quiz-cotten:leaderboard:v2';
+const LOCAL_CONTRIB_KEY = 'quiz-cotten:contributors:v1';
 const USER_PREFIX = 'quiz-cotten:user:';
 const SERVER_SHARED_KEY = '__leaderboard_v2__';
+const SERVER_CONTRIB_KEY = '__contributors_v1__';
 
 const cleanName = (s) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ') : '');
 const normKey = (s) => cleanName(s).toLowerCase();
@@ -53,6 +55,29 @@ export function decodeEntryKey(key) {
     name,
     points: parseInt(m[2], 10) || 0,
     quizzes: parseInt(m[3], 10) || 0,
+  };
+}
+
+export function encodeContribKey(entry) {
+  const name = cleanName(entry?.name);
+  if (!name) return null;
+  const hex = toHex(name);
+  if (!hex) return null;
+  const pts = Math.max(0, Math.min(999999, Math.round(Number(entry.points) || 0)));
+  return `cb1-${hex}-${pts}`;
+}
+
+export function decodeContribKey(key) {
+  if (typeof key !== 'string') return null;
+  const m = key.match(/^cb1-([0-9a-f]{2,24})-(\d{1,6})$/);
+  if (!m) return null;
+  const name = cleanName(fromHex(m[1]));
+  if (!name) return null;
+  const points = parseInt(m[2], 10) || 0;
+  return {
+    name,
+    points,
+    reports: points,
   };
 }
 
@@ -427,5 +452,253 @@ export async function fetchLeaderboard(byChapter = null) {
 
   return [...merged.values()].sort(
     (a, b) => b.points - a.points || b.quizzes - a.quizzes || a.name.localeCompare(b.name, 'fr')
+  );
+}
+
+// ---------- Contributors Leaderboard (1 point per question report / feedback) ----------
+
+function readLocalContribMap() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(LOCAL_CONTRIB_KEY) || '{}');
+    return raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeLocalContribMap(map) {
+  try {
+    localStorage.setItem(LOCAL_CONTRIB_KEY, JSON.stringify(map));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+async function pushContributorsToServer(mapOrEntry) {
+  const entries =
+    mapOrEntry && mapOrEntry.name
+      ? [mapOrEntry]
+      : Object.values(mapOrEntry || {}).filter((e) => e && e.name && e.points > 0);
+  if (entries.length === 0) return;
+
+  for (const entry of entries) {
+    try {
+      await fetch('/api/leaderboard?type=contributors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...entry, type: 'contributors' }),
+      });
+    } catch {
+      // Ignore network errors
+    }
+  }
+
+  // Also sync encoded entries into `/api/progress` under `SERVER_CONTRIB_KEY` -> `ch99.answers`
+  try {
+    const existingByUser = new Map();
+    try {
+      const rGet = await fetch(`/api/progress?name=${encodeURIComponent(SERVER_CONTRIB_KEY)}`);
+      if (rGet.ok) {
+        const dGet = await rGet.json();
+        const ans = dGet?.progress?.ch99?.answers || {};
+        for (const qid of Object.keys(ans)) {
+          const decoded = decodeContribKey(qid);
+          if (decoded) {
+            existingByUser.set(normKey(decoded.name), decoded);
+          }
+        }
+      }
+    } catch {
+      // Ignore
+    }
+
+    for (const entry of entries) {
+      const k = normKey(entry.name);
+      const prev = existingByUser.get(k);
+      if (!prev || entry.points >= prev.points) {
+        const pts = Math.max(prev?.points || 0, entry.points || 0);
+        existingByUser.set(k, {
+          name: entry.name,
+          points: pts,
+          reports: pts,
+        });
+      }
+    }
+
+    const answers = {};
+    for (const item of existingByUser.values()) {
+      const eKey = encodeContribKey(item);
+      if (eKey) answers[eKey] = ['A'];
+    }
+
+    if (Object.keys(answers).length > 0) {
+      await fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: SERVER_CONTRIB_KEY,
+          progress: {
+            ch99: {
+              answers,
+              sent: true,
+            },
+          },
+        }),
+      });
+    }
+  } catch {
+    // Ignore network errors
+  }
+}
+
+// Called when a learner submits a report / feedback on a question (+1 point).
+export async function recordContributorReport(name) {
+  const clean = cleanName(name || readName());
+  if (
+    !clean ||
+    clean === 'Anonyme' ||
+    clean === SERVER_SHARED_KEY ||
+    clean === SERVER_CONTRIB_KEY ||
+    clean === '__leaderboard__'
+  ) {
+    return null;
+  }
+  const k = normKey(clean);
+  const map = readLocalContribMap();
+  const prev = map[k] || { name: clean, points: 0, reports: 0 };
+  const pts = (Number(prev.points) || 0) + 1;
+  const next = {
+    name: clean,
+    points: pts,
+    reports: pts,
+    updatedAt: new Date().toISOString(),
+  };
+  map[k] = next;
+  writeLocalContribMap(map);
+  await pushContributorsToServer(map);
+  return next;
+}
+
+// Syncs all historical reports (e.g. from AdminPage) into the Contributors Leaderboard (1 pt per report).
+export async function syncContributorsFromReports(reports) {
+  if (!Array.isArray(reports) || reports.length === 0) return;
+  const map = readLocalContribMap();
+  const counts = new Map();
+
+  for (const r of reports) {
+    if (!r) continue;
+    const name = cleanName(r.name || r.participant_name);
+    if (
+      !name ||
+      name === 'Anonyme' ||
+      name === '__resolved__' ||
+      name === SERVER_SHARED_KEY ||
+      name === SERVER_CONTRIB_KEY
+    ) {
+      continue;
+    }
+    const k = normKey(name);
+    const prev = counts.get(k) || { name, count: 0 };
+    prev.count += 1;
+    counts.set(k, prev);
+  }
+
+  for (const [k, { name, count }] of counts.entries()) {
+    const prev = map[k] || { name, points: 0, reports: 0 };
+    const pts = Math.max(Number(prev.points) || 0, count);
+    map[k] = {
+      name,
+      points: pts,
+      reports: pts,
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  writeLocalContribMap(map);
+  await pushContributorsToServer(map);
+}
+
+// Fetches and merges the Contributors Leaderboard from server + local storage.
+export async function fetchContributorsLeaderboard() {
+  const localMap = readLocalContribMap();
+  const merged = new Map();
+
+  const mergeOne = (raw) => {
+    if (!raw || typeof raw !== 'object') return;
+    const name = cleanName(raw.name);
+    if (
+      !name ||
+      name === 'Anonyme' ||
+      name === '__resolved__' ||
+      name === SERVER_SHARED_KEY ||
+      name === SERVER_CONTRIB_KEY
+    ) {
+      return;
+    }
+    const pts = Math.max(0, Math.round(Number(raw.points ?? raw.reports) || 0));
+    if (pts <= 0) return;
+    const k = normKey(name);
+    const prev = merged.get(k);
+    if (!prev || pts >= prev.points) {
+      const bestPts = Math.max(prev?.points || 0, pts);
+      merged.set(k, {
+        name: prev && prev.points > pts ? prev.name : name,
+        points: bestPts,
+        reports: bestPts,
+        updatedAt: raw.updatedAt || prev?.updatedAt || new Date().toISOString(),
+      });
+    }
+  };
+
+  Object.values(localMap).forEach(mergeOne);
+
+  // 1) Fetch from /api/leaderboard?type=contributors
+  try {
+    const r = await fetch('/api/leaderboard?type=contributors');
+    if (r.ok) {
+      const data = await r.json();
+      if (Array.isArray(data?.entries)) {
+        data.entries.forEach(mergeOne);
+      }
+    }
+  } catch {
+    // Ignore
+  }
+
+  // 2) Also check /api/progress?name=__contributors_v1__
+  try {
+    const r2 = await fetch(`/api/progress?name=${encodeURIComponent(SERVER_CONTRIB_KEY)}`);
+    if (r2.ok) {
+      const data2 = await r2.json();
+      const prog = data2?.progress;
+      if (prog && typeof prog === 'object') {
+        for (const [k, v] of Object.entries(prog)) {
+          if (k === 'ch99' && v?.answers && typeof v.answers === 'object') {
+            for (const qid of Object.keys(v.answers)) {
+              const decoded = decodeContribKey(qid);
+              if (decoded) mergeOne(decoded);
+            }
+          } else if (v && typeof v === 'object' && v.name) {
+            mergeOne(v);
+          }
+        }
+      }
+    }
+  } catch {
+    // Ignore
+  }
+
+  const finalMap = {};
+  for (const [k, v] of merged.entries()) {
+    finalMap[k] = v;
+  }
+  writeLocalContribMap(finalMap);
+
+  if (Object.keys(localMap).length > 0) {
+    pushContributorsToServer(finalMap);
+  }
+
+  return [...merged.values()].sort(
+    (a, b) => b.points - a.points || a.name.localeCompare(b.name, 'fr')
   );
 }

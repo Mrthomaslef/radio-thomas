@@ -1,5 +1,6 @@
 // Helpers to send and read question feedback reports.
 // Works with /api/reports and gracefully falls back to /api/attempts when running against an older backend proxy.
+import { recordContributorReport } from './leaderboard.js';
 
 function toBase64Utf8(str) {
   const bytes = new TextEncoder().encode(str);
@@ -37,7 +38,10 @@ export async function submitQuestionReport({ name, chapter, questionId, message 
         message: cleanMsg,
       }),
     });
-    if (r.ok) return true;
+    if (r.ok) {
+      recordContributorReport(cleanName);
+      return true;
+    }
     if (r.status !== 404) {
       const d = await r.json().catch(() => ({}));
       throw new Error(d.error || 'Impossible d’envoyer le signalement.');
@@ -74,6 +78,7 @@ export async function submitQuestionReport({ name, chapter, questionId, message 
       throw new Error('Impossible d’envoyer le signalement, réessayez.');
     }
   }
+  recordContributorReport(cleanName);
   return true;
 }
 

@@ -19,7 +19,9 @@ import { CHAPTERS as chapters } from './data/useQuestions.js';
 const isAdminRoute = () => window.location.hash === '#/admin';
 const isProgressRoute = () => window.location.hash === '#/progression';
 const isLeaderboardRoute = () =>
-  window.location.hash === '#/classement' || window.location.hash === '#/leaderboard';
+  window.location.hash === '#/classement' ||
+  window.location.hash === '#/leaderboard' ||
+  window.location.hash === '#/contributeurs';
 const isRandomRoute = () => window.location.hash === '#/aleatoire';
 const parseTheme = () => {
   const m = window.location.hash.match(/^#\/([\w-]+)$/);
@@ -29,6 +31,7 @@ const parseTheme = () => {
     m[1] === 'progression' ||
     m[1] === 'classement' ||
     m[1] === 'leaderboard' ||
+    m[1] === 'contributeurs' ||
     m[1] === 'aleatoire'
   ) {
     return null;

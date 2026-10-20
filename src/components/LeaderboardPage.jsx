@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useQuestions } from '../data/useQuestions.js';
 import { readName, saveName, subscribePlayer, syncProgressFromServer } from '../data/player.js';
-import { fetchLeaderboard } from '../data/leaderboard.js';
+import { fetchLeaderboard, fetchContributorsLeaderboard } from '../data/leaderboard.js';
 import Icon from './Icons.jsx';
 
 const normKey = (s) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ').toLowerCase() : '');
@@ -11,7 +11,11 @@ export default function LeaderboardPage() {
   const [pseudo, setPseudo] = useState(readName);
   const [draft, setDraft] = useState(pseudo);
   const [editing, setEditing] = useState(false);
+  const [tab, setTab] = useState(() =>
+    window.location.hash === '#/contributeurs' ? 'contributors' : 'quiz'
+  );
   const [entries, setEntries] = useState([]);
+  const [contributors, setContributors] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const loadLeaderboard = useCallback(async () => {
@@ -21,8 +25,12 @@ export default function LeaderboardPage() {
       if (current) {
         await syncProgressFromServer(current);
       }
-      const list = await fetchLeaderboard(byChapter);
-      setEntries(list);
+      const [quizList, contribList] = await Promise.all([
+        fetchLeaderboard(byChapter),
+        fetchContributorsLeaderboard(),
+      ]);
+      setEntries(quizList);
+      setContributors(contribList);
     } finally {
       setLoading(false);
     }
@@ -51,8 +59,9 @@ export default function LeaderboardPage() {
   };
 
   const myKey = normKey(pseudo);
-  const myIndex = myKey ? entries.findIndex((e) => normKey(e.name) === myKey) : -1;
-  const myEntry = myIndex >= 0 ? entries[myIndex] : null;
+  const activeList = tab === 'contributors' ? contributors : entries;
+  const myIndex = myKey ? activeList.findIndex((e) => normKey(e.name) === myKey) : -1;
+  const myEntry = myIndex >= 0 ? activeList[myIndex] : null;
 
   const rankBadge = (idx) => {
     if (idx === 0) return '🥇';
@@ -68,10 +77,41 @@ export default function LeaderboardPage() {
           <a href="#/" className="cq-back">← Accueil</a>
           <a href="#/progression" className="cq-back">Ma progression →</a>
         </div>
-        <h1><span className="grad">Leaderboard</span></h1>
-        <p className="lb-rule">
-          Gagnez <strong>1 point par bonne réponse</strong> lorsque vous <strong>terminez et réussissez un quiz</strong> (au moins 60&nbsp;% de bonnes réponses). Les quiz «&nbsp;À revoir&nbsp;» ne rapportent pas de points.
-        </p>
+        <h1>
+          <span className="grad">Leaderboard</span>
+          {tab === 'contributors' ? ' Contributeurs' : ''}
+        </h1>
+
+        <div className="cq-chips admin-tabs" role="tablist" aria-label="Type de classement">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === 'quiz'}
+            className={tab === 'quiz' ? 'on' : ''}
+            onClick={() => setTab('quiz')}
+          >
+            Quiz
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === 'contributors'}
+            className={tab === 'contributors' ? 'on' : ''}
+            onClick={() => setTab('contributors')}
+          >
+            Contributeurs
+          </button>
+        </div>
+
+        {tab === 'quiz' ? (
+          <p className="lb-rule">
+            Gagnez <strong>1 point par bonne réponse</strong> lorsque vous <strong>terminez et réussissez un quiz</strong> (au moins 60&nbsp;% de bonnes réponses). Les quiz «&nbsp;À revoir&nbsp;» ne rapportent pas de points.
+          </p>
+        ) : (
+          <p className="lb-rule">
+            Chaque <strong>retour ou signalement</strong> envoyé sur une question rapporte <strong>1 point</strong>. Merci de contribuer à l’amélioration du quiz&nbsp;!
+          </p>
+        )}
 
         {editing ? (
           <form className="home-panel name-step prog-name-form" onSubmit={submitPseudo}>
@@ -120,21 +160,41 @@ export default function LeaderboardPage() {
             <span>points cumulés</span>
           </div>
           <div className="admin-stat">
-            <strong>{myEntry ? myEntry.quizzes : 0}</strong>
-            <span>{myEntry && myEntry.quizzes > 1 ? 'quiz terminés' : 'quiz terminé'}</span>
+            <strong>{myEntry ? (tab === 'contributors' ? myEntry.reports : myEntry.quizzes) : 0}</strong>
+            <span>
+              {tab === 'contributors'
+                ? myEntry && myEntry.reports > 1
+                  ? 'signalements envoyés'
+                  : 'signalement envoyé'
+                : myEntry && myEntry.quizzes > 1
+                ? 'quiz réussis'
+                : 'quiz réussi'}
+            </span>
           </div>
         </div>
       )}
 
-      {loading && entries.length === 0 ? (
+      {loading && activeList.length === 0 ? (
         <p className="cq-loading" role="status">Chargement du classement…</p>
-      ) : entries.length === 0 ? (
+      ) : activeList.length === 0 ? (
         <div className="cq-card lb-empty">
-          <p>Aucun quiz terminé pour le moment.</p>
-          <p className="lb-empty-sub">
-            Terminez un premier quiz pour apparaître dans le classement et marquer vos premiers points !
-          </p>
-          <a href="#/" className="btn btn-small">Choisir un quiz</a>
+          {tab === 'contributors' ? (
+            <>
+              <p>Aucun signalement enregistré pour le moment.</p>
+              <p className="lb-empty-sub">
+                Utilisez le bouton «&nbsp;⚑ Signaler une erreur ou faire un retour sur cette question&nbsp;» pendant un quiz pour gagner 1 point par signalement&nbsp;!
+              </p>
+              <a href="#/" className="btn btn-small">Choisir un quiz</a>
+            </>
+          ) : (
+            <>
+              <p>Aucun quiz terminé et réussi pour le moment.</p>
+              <p className="lb-empty-sub">
+                Terminez et réussissez un premier quiz pour apparaître dans le classement et marquer vos premiers points&nbsp;!
+              </p>
+              <a href="#/" className="btn btn-small">Choisir un quiz</a>
+            </>
+          )}
         </div>
       ) : (
         <div className="cq-card lb-card">
@@ -142,10 +202,12 @@ export default function LeaderboardPage() {
             <div className="lb-row lb-row-head" role="row">
               <span className="lb-col-rank" role="columnheader">Rang</span>
               <span className="lb-col-name" role="columnheader">Pseudo</span>
-              <span className="lb-col-quizzes" role="columnheader">Quiz terminés</span>
+              <span className="lb-col-quizzes" role="columnheader">
+                {tab === 'contributors' ? 'Signalements' : 'Quiz réussis'}
+              </span>
               <span className="lb-col-points" role="columnheader">Points</span>
             </div>
-            {entries.map((item, idx) => {
+            {activeList.map((item, idx) => {
               const isMe = myKey && normKey(item.name) === myKey;
               const topClass = idx < 3 ? `lb-top-${idx + 1}` : '';
               return (
@@ -162,7 +224,9 @@ export default function LeaderboardPage() {
                     {isMe && <span className="lb-me-tag">Vous</span>}
                   </span>
                   <span className="lb-col-quizzes" role="cell">
-                    {item.quizzes} quiz
+                    {tab === 'contributors'
+                      ? `${item.reports || item.points} ${item.reports > 1 ? 'retours' : 'retour'}`
+                      : `${item.quizzes} quiz`}
                   </span>
                   <span className="lb-col-points" role="cell">
                     <strong>{item.points}</strong> {item.points > 1 ? 'pts' : 'pt'}

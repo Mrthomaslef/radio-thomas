@@ -4,19 +4,20 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
 const CACHE_FILE = path.join(process.cwd(), 'node_modules', '.cache', 'quiz-cotten-leaderboard-v2.json');
+const CONTRIB_CACHE_FILE = path.join(process.cwd(), 'node_modules', '.cache', 'quiz-cotten-contributors-v1.json');
 
-function readDevLeaderboard() {
+function readJsonCache(file) {
   try {
-    return JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8')) || {};
+    return JSON.parse(fs.readFileSync(file, 'utf8')) || {};
   } catch {
     return {};
   }
 }
 
-function writeDevLeaderboard(map) {
+function writeJsonCache(file, map) {
   try {
-    fs.mkdirSync(path.dirname(CACHE_FILE), { recursive: true });
-    fs.writeFileSync(CACHE_FILE, JSON.stringify(map, null, 2), 'utf8');
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, JSON.stringify(map, null, 2), 'utf8');
   } catch {
     // Ignore fs errors
   }
@@ -27,12 +28,18 @@ function localLeaderboardPlugin(target) {
     name: 'local-leaderboard-api',
     configureServer(server) {
       server.middlewares.use('/api/leaderboard', async (req, res, next) => {
+        const isContribUrl = (req.url || '').includes('type=contributors');
+        const cacheFile = isContribUrl ? CONTRIB_CACHE_FILE : CACHE_FILE;
+
         if (req.method === 'GET') {
-          const map = readDevLeaderboard();
+          const map = readJsonCache(cacheFile);
 
           // Also merge from deployed backend if available
           try {
-            const remote = await fetch(`${target}/api/leaderboard`);
+            const remoteUrl = isContribUrl
+              ? `${target}/api/leaderboard?type=contributors`
+              : `${target}/api/leaderboard`;
+            const remote = await fetch(remoteUrl);
             if (remote.ok) {
               const data = await remote.json();
               if (Array.isArray(data?.entries)) {
@@ -46,10 +53,11 @@ function localLeaderboardPlugin(target) {
                       ...e,
                       points: Math.max(prev?.points || 0, e.points || 0),
                       quizzes: Math.max(prev?.quizzes || 0, e.quizzes || 0),
+                      reports: Math.max(prev?.reports || 0, e.reports || e.points || 0),
                     };
                   }
                 }
-                writeDevLeaderboard(map);
+                writeJsonCache(cacheFile, map);
               }
             }
           } catch {
@@ -57,7 +65,7 @@ function localLeaderboardPlugin(target) {
           }
 
           const entries = Object.values(map)
-            .filter((e) => e && e.name && (e.points > 0 || e.quizzes > 0))
+            .filter((e) => e && e.name && (e.points > 0 || e.quizzes > 0 || e.reports > 0))
             .sort((a, b) => (b.points || 0) - (a.points || 0) || (b.quizzes || 0) - (a.quizzes || 0));
 
           res.statusCode = 200;
@@ -73,6 +81,8 @@ function localLeaderboardPlugin(target) {
           req.on('end', async () => {
             try {
               const body = JSON.parse(raw || '{}');
+              const isContrib = isContribUrl || body?.type === 'contributors';
+              const targetFile = isContrib ? CONTRIB_CACHE_FILE : CACHE_FILE;
               const name = typeof body.name === 'string' ? body.name.trim().replace(/\s+/g, ' ') : '';
               if (!name) {
                 res.statusCode = 400;
@@ -81,21 +91,26 @@ function localLeaderboardPlugin(target) {
                 return;
               }
               const k = name.toLowerCase();
-              const map = readDevLeaderboard();
+              const map = readJsonCache(targetFile);
               const prev = map[k] || {};
+              const pts = Math.max(Number(prev.points) || 0, Number(body.points) || 0);
               const entry = {
                 ...prev,
                 ...body,
                 name,
-                points: Math.max(Number(prev.points) || 0, Number(body.points) || 0),
+                points: pts,
                 quizzes: Math.max(Number(prev.quizzes) || 0, Number(body.quizzes) || 0),
+                reports: Math.max(Number(prev.reports) || 0, Number(body.reports ?? pts) || 0),
                 updatedAt: new Date().toISOString(),
               };
               map[k] = entry;
-              writeDevLeaderboard(map);
+              writeJsonCache(targetFile, map);
 
               // Forward to remote if deployed
-              fetch(`${target}/api/leaderboard`, {
+              const remoteUrl = isContrib
+                ? `${target}/api/leaderboard?type=contributors`
+                : `${target}/api/leaderboard`;
+              fetch(remoteUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(entry),

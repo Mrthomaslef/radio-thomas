@@ -1,8 +1,9 @@
 // Public leaderboard endpoint:
-// - GET  /api/leaderboard         -> returns [{ name, points, quizzes, updatedAt }] sorted by points desc
-// - POST /api/leaderboard         -> updates a player's leaderboard entry
+// - GET  /api/leaderboard[?type=contributors] -> returns [{ name, points, quizzes|reports, updatedAt }]
+// - POST /api/leaderboard[?type=contributors] -> updates a player's leaderboard entry
 
 const LEADERBOARD_KEY = '__leaderboard_v2__';
+const CONTRIB_KEY = '__contributors_v1__';
 const cleanName = (s) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ') : '');
 const normKey = (s) => cleanName(s).toLowerCase();
 
@@ -28,6 +29,20 @@ function decodeEntryKey(key) {
   };
 }
 
+function decodeContribKey(key) {
+  if (typeof key !== 'string') return null;
+  const m = key.match(/^cb1-([0-9a-f]{2,24})-(\d{1,6})$/);
+  if (!m) return null;
+  const name = cleanName(fromHex(m[1]));
+  if (!name) return null;
+  const points = parseInt(m[2], 10) || 0;
+  return {
+    name,
+    points,
+    reports: points,
+  };
+}
+
 export default async function handler(req, res) {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_PUBLISHABLE_KEY;
@@ -42,51 +57,64 @@ export default async function handler(req, res) {
   };
 
   try {
+    const body =
+      req.method === 'POST'
+        ? typeof req.body === 'string'
+          ? JSON.parse(req.body || '{}')
+          : req.body || {}
+        : {};
+    const isContrib = req.query?.type === 'contributors' || body?.type === 'contributors';
+    const targetProgressKey = isContrib ? CONTRIB_KEY : LEADERBOARD_KEY;
+
     if (req.method === 'GET') {
       const merged = new Map();
 
       const addEntry = (raw) => {
         if (!raw || typeof raw !== 'object') return;
         const name = cleanName(raw.name);
-        if (!name || name === LEADERBOARD_KEY) return;
+        if (!name || name === LEADERBOARD_KEY || name === CONTRIB_KEY || name === '__leaderboard__') return;
         const k = normKey(name);
         const points = Math.max(0, Number(raw.points) || 0);
         const quizzes = Math.max(0, Number(raw.quizzes) || 0);
+        const reports = Math.max(0, Number(raw.reports ?? raw.points) || 0);
         const updatedAt = raw.updatedAt || raw.updated_at || null;
         const prev = merged.get(k);
         if (!prev) {
-          merged.set(k, { name, points, quizzes, updatedAt });
+          merged.set(k, { name, points, quizzes, reports, updatedAt });
         } else {
           merged.set(k, {
             name: updatedAt && (!prev.updatedAt || updatedAt >= prev.updatedAt) ? name : prev.name,
             points: Math.max(prev.points, points),
             quizzes: Math.max(prev.quizzes, quizzes),
+            reports: Math.max(prev.reports, reports),
             updatedAt: updatedAt && (!prev.updatedAt || updatedAt > prev.updatedAt) ? updatedAt : prev.updatedAt,
           });
         }
       };
 
-      // 1) Try dedicated RPC get_leaderboard()
-      try {
-        const r1 = await fetch(`${url}/rest/v1/rpc/get_leaderboard`, {
-          method: 'POST',
-          headers,
-          body: JSON.stringify({}),
-        });
-        if (r1.ok) {
-          const rows = await r1.json();
-          if (Array.isArray(rows)) rows.forEach(addEntry);
+      // 1) Try dedicated RPC get_leaderboard() for quiz leaderboard
+      if (!isContrib) {
+        try {
+          const r1 = await fetch(`${url}/rest/v1/rpc/get_leaderboard`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({}),
+          });
+          if (r1.ok) {
+            const rows = await r1.json();
+            if (Array.isArray(rows)) rows.forEach(addEntry);
+          }
+        } catch {
+          // Ignore if migration not yet applied
         }
-      } catch {
-        // Ignore if migration not yet applied
       }
 
-      // 2) Also read shared progress entry '__leaderboard__'
+      // 2) Read shared progress entry
       try {
         const r2 = await fetch(`${url}/rest/v1/rpc/get_quiz_progress`, {
           method: 'POST',
           headers,
-          body: JSON.stringify({ p_name: LEADERBOARD_KEY }),
+          body: JSON.stringify({ p_name: targetProgressKey }),
         });
         if (r2.ok) {
           const data = await r2.json();
@@ -95,7 +123,7 @@ export default async function handler(req, res) {
             for (const [k, v] of Object.entries(map)) {
               if (k === 'ch99' && v?.answers && typeof v.answers === 'object') {
                 for (const qid of Object.keys(v.answers)) {
-                  const decoded = decodeEntryKey(qid);
+                  const decoded = isContrib ? decodeContribKey(qid) : decodeEntryKey(qid);
                   if (decoded) addEntry(decoded);
                 }
               } else if (v && typeof v === 'object' && v.name) {
@@ -117,18 +145,19 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-      const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
       const name = cleanName(body.name);
-      if (!name || name.length > 80 || name === LEADERBOARD_KEY) {
+      if (!name || name.length > 80 || name === LEADERBOARD_KEY || name === CONTRIB_KEY) {
         return res.status(400).json({ error: 'Pseudo invalide.' });
       }
       const points = Math.max(0, Math.min(100000, Math.round(Number(body.points) || 0)));
       const quizzes = Math.max(0, Math.min(10000, Math.round(Number(body.quizzes) || 0)));
+      const reports = Math.max(0, Math.min(10000, Math.round(Number(body.reports ?? points) || 0)));
       const k = normKey(name);
       const entry = {
         name,
         points,
         quizzes,
+        reports,
         chapters: body.chapters && typeof body.chapters === 'object' ? body.chapters : undefined,
         extraPoints: Number(body.extraPoints) || 0,
         extraQuizzes: Number(body.extraQuizzes) || 0,
@@ -140,7 +169,7 @@ export default async function handler(req, res) {
           method: 'POST',
           headers,
           body: JSON.stringify({
-            p_name: LEADERBOARD_KEY,
+            p_name: targetProgressKey,
             p_progress: { [k]: entry },
           }),
         });
