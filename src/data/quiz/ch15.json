@@ -6,5 +6,166 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c15-q01",
+      "type": "QCU",
+      "theme": "Charnière cervico-occipitale : arthrose C1-C2",
+      "enonce": "Parmi les pathologies dégénératives cervicales, l’arthrose de la charnière cervico-occipitale est fréquente. Quel nerf est classiquement irrité ou comprimé dans le cadre d’une arthrose atlanto-axoïdienne latérale (C1-C2) ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le nerf d’Arnold (nerf grand occipital)", "correct": true },
+        { "id": "B", "texte": "Le nerf vague", "correct": false },
+        { "id": "C", "texte": "Le nerf phrénique", "correct": false },
+        { "id": "D", "texte": "Le nerf petit occipital", "correct": false }
+      ],
+      "explication": "La réponse correcte est A. L’arthrose atlanto-axoïdienne latérale peut se manifester par une névralgie d’Arnold, liée à l’atteinte du nerf grand occipital (nerf d’Arnold). Ce nerf correspond au rameau dorsal de C2 et contourne l’articulation C1-C2 latérale.",
+      "correction_figures": [],
+      "source": { "page": 337, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c15-q02",
+      "type": "QRM",
+      "theme": "Myélopathie cervicarthrosique",
+      "enonce": "La myélopathie cervicarthrosique est une pathologie médullaire fréquente chez l’adulte. En IRM, quel(s) signe(s) intramédullaire(s) en pondération T2 est (sont) considéré(s) comme un (des) élément(s) péjoratif(s) sur le plan pronostique ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une plage en hypersignal T2 de contours flous et étendue à l’ensemble du cordon médullaire", "correct": false },
+        { "id": "B", "texte": "Une plage en hypersignal T2 aux contours nets", "correct": true },
+        { "id": "C", "texte": "Un hypersignal T2 très intense", "correct": true },
+        { "id": "D", "texte": "Une lésion pluriétagée", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont B, C et D. Dans la myélopathie cervicarthrosique, un hypersignal T2 intramédullaire est un signe de souffrance. Sur le plan pronostique, les éléments péjoratifs incluent un caractère pluriétagé, des contours nets, un signal très hyperintense, et une association avec un hyposignal en pondération T1 (témoignant de phénomènes nécrotiques). Une plage à contours flous (A) traduit plutôt un œdème ou une gliose, considérés comme moins péjoratifs.",
+      "correction_figures": [],
+      "source": { "page": 345, "element": "Texte et Encadré 15.1", "refs": "" }
+    },
+    {
+      "id": "c15-q03",
+      "type": "QCU",
+      "theme": "Névralgie cervicobrachiale : topographie radiculaire",
+      "enonce": "Une patiente présente une névralgie cervicobrachiale caractérisée par une douleur à la face latérale du bras et de l’avant-bras, irradiant vers le pouce et l’index, avec une abolition du réflexe styloradial. Quelle racine nerveuse cervicale est vraisemblablement atteinte ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "C5", "correct": false },
+        { "id": "B", "texte": "C6", "correct": true },
+        { "id": "C", "texte": "C7", "correct": false },
+        { "id": "D", "texte": "C8", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. L’atteinte de la racine C6 se manifeste classiquement par un déficit sensitif à la face latérale de l’avant-bras, du pouce et de l’index, un déficit moteur du biceps et de l’extension du poignet, et une abolition du réflexe styloradial. L’atteinte C5 (A) concerne le deltoïde et la face latérale du bras. L’atteinte C7 (C) concerne le triceps, le majeur et le réflexe tricipital.",
+      "correction_figures": [],
+      "source": { "page": 341, "element": "Tableau 15.1", "refs": "" }
+    },
+    {
+      "id": "c15-q04",
+      "type": "QRM",
+      "theme": "Hyperostose vertébrale (maladie de Forestier)",
+      "enonce": "L’hyperostose vertébrale (ou maladie de Forestier/DISH) au niveau cervical est caractérisée par une ossification du ligament longitudinal antérieur. Quelles sont les caractéristiques radiologiques et les complications potentielles de cette affection ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une coulée osseuse antérieure qui s’accompagne systématiquement d’un pincement discal sévère", "correct": false },
+        { "id": "B", "texte": "Un refoulement de l’axe pharyngo-œsophagien pouvant entraîner une dysphagie", "correct": true },
+        { "id": "C", "texte": "Un risque majoré de fracture transversale spontanée ou après un traumatisme mineur", "correct": true },
+        { "id": "D", "texte": "L’association fréquente à une ossification du ligament longitudinal postérieur", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont B, C et D. L’hyperostose vertébrale se manifeste par une coulée osseuse antérieure (continue ou discontinue) qui, par son épaisseur, peut refouler l’axe pharyngo-œsophagien et causer une dysphagie. Ce rachis ankylosé est très exposé au risque de fracture transversale. Elle est souvent associée à une ossification du ligament longitudinal postérieur (OPLL). Contrairement à l’arthrose, l’hyperostose se développe avec une relative préservation de la hauteur des disques intervertébraux.",
+      "correction_figures": [],
+      "source": { "page": 348, "element": "Texte", "refs": "p. 348-351" }
+    },
+    {
+      "id": "c15-q05",
+      "type": "QCU",
+      "theme": "Maladie d’Hirayama",
+      "enonce": "La maladie d’Hirayama est une myélopathie cervicale rare. Quelle est la théorie physiopathologique la plus couramment admise pour expliquer cette affection ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une compression médullaire par une volumineuse hernie discale médiane", "correct": false },
+        { "id": "B", "texte": "Une myélopathie d’origine vasculaire liée à une sténose de l’artère vertébrale", "correct": false },
+        { "id": "C", "texte": "Une ischémie focale provoquée par des microtraumatismes répétés en flexion cervicale", "correct": true },
+        { "id": "D", "texte": "Une prédisposition génétique entraînant une ossification du ligament longitudinal postérieur", "correct": false }
+      ],
+      "explication": "La réponse correcte est C. La maladie d’Hirayama est une myélopathie ischémique focale dont la théorie la plus probable est d’origine microtraumatique, provoquée par la flexion cervicale. Lors de la flexion, le sac dural, anormalement tendu, se déplace vers l’avant, plaquant la moelle contre les corps vertébraux.",
+      "correction_figures": [],
+      "source": { "page": 347, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c15-q06",
+      "type": "QRM",
+      "theme": "Maladie d’Hirayama",
+      "enonce": "L’IRM dynamique (en flexion) est l’examen de choix pour le diagnostic de la maladie d’Hirayama. Quels signes radiologiques dynamiques (visibles spécifiquement en flexion) confirment ce diagnostic ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Un décollement de la paroi postérieure du sac dural par rapport aux lames adjacentes", "correct": false },
+        { "id": "B", "texte": "Un élargissement de l’espace épidural postérieur", "correct": true },
+        { "id": "C", "texte": "Un engorgement des plexus veineux épiduraux postérieurs", "correct": true },
+        { "id": "D", "texte": "Une atrophie asymétrique de la moelle cervicale basse", "correct": false }
+      ],
+      "explication": "Les réponses correctes sont B et C. En flexion, l’IRM de la maladie d’Hirayama montre un déplacement antérieur de la paroi postérieure du sac dural, ce qui élargit l’espace épidural postérieur, et un engorgement des plexus veineux épiduraux postérieurs (hypersignal T2, prise de contraste). Le décollement dural (A) et l’atrophie asymétrique (D) sont des signes recherchés et visibles en position neutre.",
+      "correction_figures": [],
+      "source": { "page": 348, "element": "Texte et Encadré 15.2", "refs": "" }
+    },
+    {
+      "id": "c15-q07",
+      "type": "QCU",
+      "theme": "Ossification du ligament longitudinal postérieur (OPLL)",
+      "enonce": "L’ossification du ligament longitudinal postérieur (OPLL) est une pathologie dégénérative pouvant causer une myélopathie. En scanner axial, quel aspect morphologique de l’ossification évoque une adhérence ou une ossification de la dure-mère, augmentant le risque chirurgical ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une ossification de type continu s’étendant sur plus de trois segments vertébraux", "correct": false },
+        { "id": "B", "texte": "Une ossification en « double couche »", "correct": true },
+        { "id": "C", "texte": "Une ossification nodulaire focale", "correct": false },
+        { "id": "D", "texte": "Une ossification latéralisée au foramen intervertébral", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. Au scanner, la visibilité en coupe axiale d’une ossification en « double couche » (notamment sur plus de la moitié du corps vertébral) témoigne d’une adhérence ou d’une ossification de la dure-mère. Cette particularité majore le risque de fuite de LCS lors d’une intervention chirurgicale.",
+      "correction_figures": [],
+      "source": { "page": 352, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c15-q08",
+      "type": "QRM",
+      "theme": "Uncodiscarthrose et sténose foraminale",
+      "enonce": "La névralgie cervicobrachiale (NCB) est le plus souvent d’origine dégénérative. Quels sont les éléments anatomiques qui, en s’hypertrophiant (uncodiscarthrose), rétrécissent les foramens intervertébraux et compriment la racine nerveuse ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Les ligaments jaunes", "correct": false },
+        { "id": "B", "texte": "Les uncus (articulations uncovertébrales)", "correct": true },
+        { "id": "C", "texte": "Les massifs articulaires (arthrose zygapophysaire)", "correct": true },
+        { "id": "D", "texte": "Les disques intervertébraux (pincement)", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont B, C et D. L’uncodiscarthrose (cause majeure de NCB) implique une diminution de la hauteur du foramen due au pincement discal, et un rétrécissement de ce foramen par hypertrophie et éversion des uncus (uncarthrose) ainsi que par l’ostéophytose des massifs articulaires (arthrose zygapophysaire). L’hypertrophie des ligaments jaunes rétrécit le canal rachidien (myélopathie) mais n’est pas le facteur principal du rétrécissement foraminal.",
+      "correction_figures": [],
+      "source": { "page": 339, "element": "Texte et Figure 15.6", "refs": "p. 339-340" }
+    },
+    {
+      "id": "c15-q09",
+      "type": "QCU",
+      "theme": "Canal cervical étroit",
+      "enonce": "Parmi ces signes radiographiques classiques de canal cervical étroit (sur un cliché de profil), lequel correspond à l’impossibilité de placer visuellement un corps vertébral dans le canal cervical, ou à une ligne spinolamaire se projetant sur le bord postérieur des massifs articulaires ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "La platyspondylie", "correct": false },
+        { "id": "B", "texte": "Le listhésis dégénératif", "correct": false },
+        { "id": "C", "texte": "La disparition de l’espace de sécurité", "correct": true },
+        { "id": "D", "texte": "La transversalisation des pédicules", "correct": false }
+      ],
+      "explication": "La réponse correcte est C. L’impossibilité de placer un corps vertébral dans le canal et la projection de la ligne spinolamaire sur le bord postérieur des massifs articulaires définissent la diminution ou disparition de « l’espace de sécurité ». C’est un signe radiographique clé de canal cervical étroit lié à l’hypoplasie des lames.",
+      "correction_figures": [],
+      "source": { "page": 345, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c15-q10",
+      "type": "QRM",
+      "theme": "Diagnostic différentiel : spondylolyse et pédicule absent",
+      "enonce": "Un diagnostic différentiel à évoquer devant une fente osseuse bilatérale des massifs articulaires en C6 est le syndrome du pédicule absent. Quels éléments radiographiques permettent de distinguer une vraie spondylolyse d’un syndrome du pédicule absent ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Dans la spondylolyse, le pédicule est toujours absent, alors qu’il est hypoplasique dans le syndrome du pédicule absent.", "correct": false },
+        { "id": "B", "texte": "Dans le syndrome du pédicule absent, la facette articulaire supérieure est hypoplasique ou absente.", "correct": true },
+        { "id": "C", "texte": "Dans la spondylolyse, la fente des massifs articulaires est bien visible.", "correct": true },
+        { "id": "D", "texte": "Dans la spondylolyse, il y a souvent une non-fermeture du processus épineux, contrairement au syndrome du pédicule absent.", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont B, C et D. Le Tableau 15.2 différencie ces deux entités. Dans le syndrome du pédicule absent, le pédicule est absent (et non hypoplasique comme dans la spondylolyse), la facette articulaire supérieure est hypoplasique/absente. La spondylolyse se caractérise par une fente bien articulée des masses latérales, des facettes dysplasiques, et un processus épineux souvent non fermé.",
+      "correction_figures": [],
+      "source": { "page": 354, "element": "Tableau 15.2", "refs": "" }
+    }
+  ]
 }
