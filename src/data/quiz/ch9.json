@@ -6,5 +6,166 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c9-q01",
+      "type": "QCU",
+      "theme": "Raideur du coude : présentation clinique",
+      "enonce": "La raideur du coude est une limitation passive de l’amplitude articulaire. Quelle est la présentation clinique de limitation la plus fréquemment observée ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une limitation isolée de la flexion", "correct": false },
+        { "id": "B", "texte": "Une limitation isolée de l’extension (flessum)", "correct": false },
+        { "id": "C", "texte": "Une limitation combinée de la flexion et de l’extension", "correct": true },
+        { "id": "D", "texte": "Une perte isolée de la pronation-supination", "correct": false }
+      ],
+      "explication": "La limitation combinée de la flexion et de l’extension représente 70 % des cas de raideur du coude. La perte isolée de la flexion représente 20 % des cas, celle de l’extension 10 %, et l’atteinte isolée de la pronation-supination est plus rare.",
+      "correction_figures": [],
+      "source": { "page": 199, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c9-q02",
+      "type": "QRM",
+      "theme": "Ressaut du coude : causes extra-articulaires",
+      "enonce": "Le ressaut du coude correspond à un mouvement brusque d’une structure en conflit avec son voisinage. Quelles sont les causes extra-articulaires classiques de ressaut dans cette région ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "La subluxation du chef médial du muscle triceps brachial", "correct": true },
+        { "id": "B", "texte": "Le ressaut du ligament annulaire", "correct": false },
+        { "id": "C", "texte": "La subluxation du nerf ulnaire", "correct": true },
+        { "id": "D", "texte": "Le pli synovial huméroradial", "correct": false }
+      ],
+      "explication": "Les subluxations du chef médial du triceps brachial et du nerf ulnaire sont les étiologies extra-articulaires principales. Le ligament annulaire et le pli synovial huméroradial sont des causes intra-articulaires.",
+      "correction_figures": [],
+      "source": { "page": 199, "element": "Encadré 9.1", "refs": "" }
+    },
+    {
+      "id": "c9-q03",
+      "type": "QCU",
+      "theme": "Ostéonécrose de la trochlée : déformation en « queue de poisson »",
+      "enonce": "Un adolescent de 14 ans consulte pour des douleurs et une perte d’amplitude de son coude. Il a pour antécédent une fracture supracondylienne de l’humérus survenue à l’âge de 6 ans. La radiographie de face montre une déformation caractéristique de l’extrémité distale de l’humérus, avec une concavité centrale en « V inversé ». Quel diagnostic devez-vous évoquer en priorité ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une ostéochondrite disséquante du capitulum", "correct": false },
+        { "id": "B", "texte": "Une séquelle d’ostéonécrose de la trochlée (déformation en « queue de poisson » ou fishtail)", "correct": true },
+        { "id": "C", "texte": "Une arthrose post-traumatique avec ostéophytose massive", "correct": false },
+        { "id": "D", "texte": "Une pseudarthrose extra-articulaire", "correct": false }
+      ],
+      "explication": "L’ostéonécrose de la trochlée est une complication tardive des fractures distales de l’humérus (principalement supracondyliennes) en pédiatrie. La déformation en « queue de poisson » (fishtail), avec une concavité centrale en « V inversé » sur la radiographie de face, en est le signe tardif caractéristique.",
+      "correction_figures": [],
+      "source": { "page": 202, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c9-q04",
+      "type": "QCU",
+      "theme": "Arthrose primitive du coude : sémiologie clinique",
+      "enonce": "Un patient menuisier de 50 ans développe progressivement une arthrose primitive du coude. Parmi les signes d’enraidissement cliniques suivants, lequel apparaît généralement de manière la plus précoce dans l’évolution de la maladie ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "La perte de la pronation", "correct": false },
+        { "id": "B", "texte": "Un blocage articulaire complet en flexion", "correct": false },
+        { "id": "C", "texte": "La perte de l’extension", "correct": true },
+        { "id": "D", "texte": "Une laxité majeure en valgus", "correct": false }
+      ],
+      "explication": "Dans l’arthrose du coude, la perte de l’extension est le signe clinique le plus précoce et s’accompagne habituellement de douleurs en fin d’amplitude. La limitation de la flexion est fréquente mais n’est réellement gênante qu’à un stade plus évolué.",
+      "correction_figures": [],
+      "source": { "page": 201, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c9-q05",
+      "type": "QRM",
+      "theme": "Raideur du coude : causes intrinsèques",
+      "enonce": "Les étiologies de la raideur du coude sont classifiées en causes intrinsèques (intra-articulaires) et extrinsèques (périarticulaires). Parmi les propositions suivantes, lesquelles correspondent à des causes intrinsèques ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "L’ossification hétérotopique post-traumatique", "correct": false },
+        { "id": "B", "texte": "Les ostéophytes jouant le rôle de butoirs osseux", "correct": true },
+        { "id": "C", "texte": "Les corps étrangers intra-articulaires", "correct": true },
+        { "id": "D", "texte": "La rétraction capsulo-ligamentaire", "correct": false }
+      ],
+      "explication": "Les corps étrangers et les ostéophytes (ainsi que les cals vicieux articulaires, adhérences et chondropathies) sont des causes intrinsèques. L’ossification hétérotopique et la rétraction capsulo-ligamentaire sont des causes extrinsèques.",
+      "correction_figures": [],
+      "source": { "page": 200, "element": "Encadré 9.2", "refs": "" }
+    },
+    {
+      "id": "c9-q06",
+      "type": "QRM",
+      "theme": "Arthrose primitive du coude : imagerie",
+      "enonce": "Lors du bilan d’imagerie (radiographie/scanner) d’une arthrose primitive du coude, quelles sont les constatations lésionnelles classiquement retrouvées ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Un pincement de l’interligne qui débute préférentiellement sur le compartiment huméroradial", "correct": true },
+        { "id": "B", "texte": "Une ostéophytose exubérante qui prédomine au contraire sur le compartiment huméro-ulnaire", "correct": true },
+        { "id": "C", "texte": "Un comblement de la fosse olécrânienne par une véritable ossification ou des corps étrangers", "correct": true },
+        { "id": "D", "texte": "Une lyse osseuse massive et destructrice de l’épicondyle médial", "correct": false }
+      ],
+      "explication": "Dans l’arthrose du coude, le pincement articulaire débute souvent en huméroradial, tandis que la production osseuse (ostéophytose) est exubérante et prédomine en huméro-ulnaire. On observe également de fréquents corps étrangers ou ossifications comblant la fosse olécrânienne. La lyse massive n’est pas caractéristique d’une arthrose primitive.",
+      "correction_figures": [],
+      "source": { "page": 201, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c9-q07",
+      "type": "QCU",
+      "theme": "Prothèse de tête radiale : surdimensionnement",
+      "enonce": "Une patiente est suivie pour une fracture complexe de la tête radiale traitée par arthroplastie de resurfaçage. Lors du suivi radiographique de face, vous observez une asymétrie nette avec un bâillement de l’interligne huméro-ulnaire du côté médial. Sachant que son complexe ligamentaire médial est parfaitement intègre, quelle complication mécanique spécifique de cette prothèse devez-vous suspecter ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Un descellement aseptique précoce de la tige ulnaire", "correct": false },
+        { "id": "B", "texte": "Un surdimensionnement (overlengthening) de la prothèse de tête radiale", "correct": true },
+        { "id": "C", "texte": "Une usure asymétrique du composant en polyéthylène", "correct": false },
+        { "id": "D", "texte": "Une fracture périprothétique de type 3 selon la Mayo Clinic", "correct": false }
+      ],
+      "explication": "Le surdimensionnement est une complication spécifique des prothèses de tête radiale. Il est détectable de face par une asymétrie médiale/latérale de l’interligne huméro-ulnaire (bâillement induit par la prothèse trop longue qui « pousse » l’articulation).",
+      "correction_figures": [],
+      "source": { "page": 203, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c9-q08",
+      "type": "QCU",
+      "theme": "Anatomie : épaisseur de la capsule antérieure",
+      "enonce": "En échographie ou en IRM, lors de la recherche de causes extrinsèques de raideur du coude, on analyse l’épaisseur de la capsule articulaire antérieure. Quelle est l’épaisseur maximale de cette capsule chez un sujet sain ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "1 à 2 mm", "correct": true },
+        { "id": "B", "texte": "3 à 4 mm", "correct": false },
+        { "id": "C", "texte": "5 à 6 mm", "correct": false },
+        { "id": "D", "texte": "7 à 8 mm", "correct": false }
+      ],
+      "explication": "L’épaisseur de la capsule antérieure n’excède pas 1 à 2 mm chez le sujet sain, que ce soit évalué en IRM ou en échographie.",
+      "correction_figures": [],
+      "source": { "page": 200, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c9-q09",
+      "type": "QRM",
+      "theme": "Raideur du coude : bilan par arthroscanner",
+      "enonce": "Avant une intervention pour libération d’un coude enraidi (arthrolyse), un arthroscanner est souvent prescrit. Quelles informations cruciales cet examen permet-il de fournir au chirurgien dans ce contexte ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "L’évaluation de la capacité articulaire, qui est classiquement diminuée en cas de raideur", "correct": true },
+        { "id": "B", "texte": "La topographie exacte et le caractère libre ou fixé des corps étrangers intra-articulaires", "correct": true },
+        { "id": "C", "texte": "L’état du revêtement cartilagineux (détection de chondromes)", "correct": true },
+        { "id": "D", "texte": "La mesure directe de la pression intra-nerveuse du nerf ulnaire", "correct": false }
+      ],
+      "explication": "L’arthroscanner objective les chondromes, précise l’état du revêtement cartilagineux, le caractère libre ou non des corps étrangers intra-articulaires, et la capacité articulaire (qui est typiquement diminuée à 6 ± 3 mL dans les coudes enraidis). Il ne mesure pas la pression intra-nerveuse.",
+      "correction_figures": [],
+      "source": { "page": 200, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c9-q10",
+      "type": "QRM",
+      "theme": "Ostéonécrose du coude de l’adulte",
+      "enonce": "Contrairement à l’enfant où elle est presque toujours post-traumatique, l’ostéonécrose du coude chez l’adulte (affectant le capitulum, la trochlée ou la tête radiale) survient souvent dans des contextes médicaux bien définis. Quels sont les facteurs de risque classiquement pourvoyeurs d’ostéonécrose de l’adulte ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "La corticothérapie", "correct": true },
+        { "id": "B", "texte": "Les traitements par chimiothérapie", "correct": true },
+        { "id": "C", "texte": "La thalassémie", "correct": true },
+        { "id": "D", "texte": "Le diabète de type 1", "correct": false }
+      ],
+      "explication": "À l’âge adulte, l’ostéonécrose du coude survient classiquement dans des contextes de chimiothérapie, de corticothérapie, de thalassémie, ou bien de façon idiopathique. Le diabète n’est pas cité comme facteur de risque direct d’ostéonécrose du coude dans ce contexte.",
+      "correction_figures": [],
+      "source": { "page": 202, "element": "Texte", "refs": "" }
+    }
+  ]
 }
