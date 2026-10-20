@@ -6,5 +6,166 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c21-q01",
+      "type": "QCU",
+      "theme": "Anatomie : plexus lombaire",
+      "enonce": "Parmi les nerfs suivants, lequel est un rameau terminal du plexus lombaire ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le nerf ilio-inguinal", "correct": false },
+        { "id": "B", "texte": "Le nerf fémoral", "correct": true },
+        { "id": "C", "texte": "Le nerf glutéal supérieur", "correct": false },
+        { "id": "D", "texte": "Le nerf pudendal", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. Le plexus lombaire se définit par ses deux rameaux terminaux : le nerf fémoral et le nerf obturateur. Le nerf ilio-inguinal est un rameau collatéral du plexus lombaire. Les nerfs glutéal supérieur et pudendal appartiennent au plexus sacré/pudendal.",
+      "correction_figures": [],
+      "source": { "page": 587, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c21-q02",
+      "type": "QRM",
+      "theme": "Nerf cutané latéral de la cuisse : méralgie paresthésique",
+      "enonce": "Concernant le nerf cutané latéral de la cuisse et la méralgie paresthésique, quelles propositions sont exactes ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le nerf est issu des rameaux ventraux de L2 et L3.", "correct": true },
+        { "id": "B", "texte": "Il s’agit d’un nerf mixte (sensitivo-moteur) innervant le muscle tenseur du fascia lata.", "correct": false },
+        { "id": "C", "texte": "Il passe classiquement sous ou à travers le ligament inguinal, en dehors de l’artère fémorale.", "correct": true },
+        { "id": "D", "texte": "La méralgie paresthésique se traduit par des troubles sensitifs de la face antérolatérale de la cuisse.", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont A, C et D. Le nerf cutané latéral de la cuisse est issu de L2 et L3. Il passe le plus souvent 1 à 2 cm en dedans et en dessous de l’épine iliaque antérosupérieure (donc en dehors de l’artère fémorale). Il s’agit d’un nerf purement sensitif (et non mixte) responsable de l’innervation de la face antérolatérale de la cuisse, dont la compression entraîne la méralgie paresthésique.",
+      "correction_figures": [],
+      "source": { "page": 591, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c21-q03",
+      "type": "QCU",
+      "theme": "Nerf obturateur : signe d’Howship-Romberg",
+      "enonce": "Une patiente âgée, très dénutrie, consulte pour une douleur inguinale irradiant à la face médiale de la cuisse et à la partie postéromédiale du genou. L’examen clinique révèle que la douleur est majorée par l’extension et l’abduction de la hanche, mais soulagée de façon caractéristique par sa flexion (signe d’Howship-Romberg). Quel nerf est le plus probablement comprimé ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le nerf fémoral", "correct": false },
+        { "id": "B", "texte": "Le nerf obturateur", "correct": true },
+        { "id": "C", "texte": "Le nerf ilio-hypogastrique", "correct": false },
+        { "id": "D", "texte": "Le nerf cutané latéral de la cuisse", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. Le signe d’Howship-Romberg (douleur soulagée par la flexion de hanche et majorée par l’extension, l’abduction ou la rotation médiale) est caractéristique d’une névralgie obturatrice. Chez une patiente âgée et dénutrie, la perte de graisse favorise une hernie obturatrice responsable de cette compression.",
+      "correction_figures": [],
+      "source": { "page": 594, "element": "Texte", "refs": "p. 594-595" }
+    },
+    {
+      "id": "c21-q04",
+      "type": "QRM",
+      "theme": "Anatomie : innervation motrice pelvienne et fémorale",
+      "enonce": "Quelles sont les associations correctes concernant l’innervation motrice des muscles pelviens et des membres inférieurs ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Nerf glutéal supérieur – Muscle grand glutéal", "correct": false },
+        { "id": "B", "texte": "Nerf glutéal inférieur – Muscle grand glutéal", "correct": true },
+        { "id": "C", "texte": "Nerf glutéal supérieur – Muscle moyen glutéal et tenseur du fascia lata", "correct": true },
+        { "id": "D", "texte": "Nerf fémoral – Muscle pectiné, sartorius et quadriceps fémoral", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont B, C et D. Le nerf glutéal supérieur innerve les muscles petit et moyen glutéaux, ainsi que le tenseur du fascia lata. Le nerf glutéal inférieur innerve le muscle grand glutéal. Le nerf fémoral innerve les muscles grand psoas, iliaque, quadriceps fémoral, pectiné, sartorius et long adducteur.",
+      "correction_figures": [],
+      "source": { "page": 588, "element": "Texte", "refs": "p. 588, 596" }
+    },
+    {
+      "id": "c21-q05",
+      "type": "QCU",
+      "theme": "Nerf pudendal : trajet anatomique",
+      "enonce": "Quel est le trajet classique du nerf pudendal à sa sortie de la cavité pelvienne ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Il sort par le foramen suprapiriforme, au-dessus du muscle piriforme.", "correct": false },
+        { "id": "B", "texte": "Il traverse la lacune vasculaire, sous le ligament inguinal.", "correct": false },
+        { "id": "C", "texte": "Il sort par le foramen infrapiriforme, passe au-dessus du ligament sacro-épineux, puis regagne le bassin par la petite incisure ischiatique.", "correct": true },
+        { "id": "D", "texte": "Il traverse directement le muscle obturateur externe pour rejoindre le canal d’Alcock.", "correct": false }
+      ],
+      "explication": "La réponse correcte est C. Le nerf pudendal passe devant puis dessous le muscle piriforme, quitte le bassin par la grande incisure ischiatique (foramen infrapiriforme) au-dessus du ligament sacro-épineux, contourne l’épine ischiatique et regagne la fosse ischiorectale par la petite incisure ischiatique avant de rejoindre le canal d’Alcock.",
+      "correction_figures": [],
+      "source": { "page": 605, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c21-q06",
+      "type": "QRM",
+      "theme": "Névralgie pudendale : critères de Nantes",
+      "enonce": "Selon les critères de Nantes, quels éléments cliniques plaident en faveur d’une origine canalaire d’une névralgie pudendale ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une aggravation nette des douleurs par la position assise.", "correct": true },
+        { "id": "B", "texte": "Des réveils nocturnes réguliers causés par les douleurs.", "correct": false },
+        { "id": "C", "texte": "L’absence de déficit sensitif objectif à l’examen clinique.", "correct": true },
+        { "id": "D", "texte": "Une douleur évoluant sur un mode paroxystique (en éclairs) plutôt que continu.", "correct": false }
+      ],
+      "explication": "Les réponses correctes sont A et C. Les critères de Nantes incluent : l’aggravation par la position assise, l’absence de réveil nocturne (la proposition B est fausse) et l’absence de déficit sensitif objectif. Les douleurs évoluent typiquement sur un mode continu et non paroxystique (la proposition D est fausse, un mode paroxystique devant faire évoquer une lésion cordonale ou une tumeur).",
+      "correction_figures": [],
+      "source": { "page": 605, "element": "Texte", "refs": "p. 605-606" }
+    },
+    {
+      "id": "c21-q07",
+      "type": "QCU",
+      "theme": "Syndrome du muscle piriforme : IRM",
+      "enonce": "Le syndrome du muscle piriforme est lié à une souffrance du nerf sciatique dans l’espace infrapiriforme. En IRM, quelle association de signes possède une excellente spécificité (bien qu’une faible sensibilité) pour ce diagnostic ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une atrophie graisseuse bilatérale et asymétrique du muscle piriforme.", "correct": false },
+        { "id": "B", "texte": "Un hypersignal T2 et/ou une tuméfaction du nerf sciatique dans la grande incisure ischiatique, associés à une hypertrophie du muscle piriforme.", "correct": true },
+        { "id": "C", "texte": "Un œdème de dénervation exclusif du muscle grand glutéal.", "correct": false },
+        { "id": "D", "texte": "Une lésion kystique centimétrique au sein du nerf sciatique (kyste intraneural).", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. L’association d’un hypersignal T2 ou d’une tuméfaction du nerf sciatique dans la grande incisure ischiatique avec une hypertrophie du muscle piriforme présente une excellente spécificité pour le syndrome du muscle piriforme, bien que ce signe manque souvent (faible sensibilité).",
+      "correction_figures": [],
+      "source": { "page": 602, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c21-q08",
+      "type": "QRM",
+      "theme": "Nerf fémoral : anatomie et sémiologie",
+      "enonce": "Un patient développe dans les suites d’une chirurgie pelvienne une paralysie de l’extension de la jambe et une abolition du réflexe patellaire. L’atteinte iatrogène du nerf fémoral est confirmée. Quelles sont les caractéristiques anatomiques de ce nerf ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Il est issu des rameaux ventraux de L2, L3 et L4.", "correct": true },
+        { "id": "B", "texte": "Il descend entre les deux chefs du muscle grand psoas puis chemine à la face antérieure du muscle iliaque.", "correct": true },
+        { "id": "C", "texte": "Il quitte le bassin en passant sous le ligament inguinal par la lacune vasculaire, en dedans de l’artère fémorale.", "correct": false },
+        { "id": "D", "texte": "Il donne naissance au nerf saphène, qui innerve la face médiale de la jambe.", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont A, B et D. Le nerf fémoral naît de L2, L3 et L4. Il descend entre les chefs du grand psoas et devant le muscle iliaque. Il passe sous le ligament inguinal mais dans la lacune musculaire (et non vasculaire), en dehors (et non en dedans) de l’artère fémorale. Il donne bien le nerf saphène qui assure l’innervation de la face médiale de la jambe.",
+      "correction_figures": [],
+      "source": { "page": 588, "element": "Texte", "refs": "p. 588, 592" }
+    },
+    {
+      "id": "c21-q09",
+      "type": "QCU",
+      "theme": "Extension périneurale des cancers pelviens",
+      "enonce": "Comment se propage typiquement l’extension périneurale d’un cancer pelvien (comme le cancer de la prostate ou du rectum) en direction du plexus lombosacré ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Exclusivement par voie hématogène via l’artère iliaque interne vers les vaisseaux intraneuraux.", "correct": false },
+        { "id": "B", "texte": "Directement par le liquide cérébro-spinal à la suite d’une infiltration méningée.", "correct": false },
+        { "id": "C", "texte": "Via les nerfs splanchniques du système nerveux autonome innervant les viscères, pour atteindre ensuite le plexus lombosacré.", "correct": true },
+        { "id": "D", "texte": "En remontant le long du nerf cutané latéral de la cuisse à travers la lacune musculaire.", "correct": false }
+      ],
+      "explication": "La réponse correcte est C. L’extension périneurale d’un cancer pelvien affecte initialement les nerfs splanchniques du système nerveux autonome (sympathique ou parasympathique) innervant les viscères pelviens, puis se propage progressivement au plexus lombosacré et au nerf sciatique.",
+      "correction_figures": [],
+      "source": { "page": 603, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c21-q10",
+      "type": "QRM",
+      "theme": "Nerf génitofémoral",
+      "enonce": "Le nerf génitofémoral peut être lésé au cours d’une chirurgie du muscle psoas ou de la région inguinale. Concernant l’anatomie et la clinique de ce nerf, quelles propositions sont vraies ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Il est issu des rameaux ventraux de L1 et L2.", "correct": true },
+        { "id": "B", "texte": "Il traverse le muscle grand psoas et chemine le long de sa face antérieure.", "correct": true },
+        { "id": "C", "texte": "Son rameau fémoral traverse la lacune vasculaire pour innerver la peau de la partie supérieure du triangle fémoral.", "correct": true },
+        { "id": "D", "texte": "L’abolition du réflexe crémastérien chez l’homme est un bon signe clinique d’appel de son atteinte.", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont A, B, C et D. Toutes ces affirmations sont exactes. Le nerf génitofémoral (L1-L2) traverse le grand psoas. Son rameau fémoral traverse le canal fémoral par la lacune vasculaire. Son rameau génital innerve notamment le muscle crémaster, dont l’atteinte entraîne la perte du réflexe crémastérien, signe clinique caractéristique d’une atteinte du nerf génitofémoral.",
+      "correction_figures": [],
+      "source": { "page": 589, "element": "Texte", "refs": "p. 589, 591" }
+    }
+  ]
 }

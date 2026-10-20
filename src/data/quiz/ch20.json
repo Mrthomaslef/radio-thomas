@@ -6,5 +6,166 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c20-q01",
+      "type": "QCU",
+      "theme": "Anatomie : muscle droit fémoral",
+      "enonce": "Parmi les muscles suivants, lequel est biarticulaire (c’est-à-dire qu’il croise deux articulations) et s’insère sur l’épine iliaque antéro-inférieure ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le muscle moyen glutéal", "correct": false },
+        { "id": "B", "texte": "Le muscle iliopsoas", "correct": false },
+        { "id": "C", "texte": "Le muscle tenseur du fascia lata", "correct": false },
+        { "id": "D", "texte": "Le muscle droit fémoral", "correct": true }
+      ],
+      "explication": "La réponse correcte est D. Le muscle droit fémoral est le seul chef du quadriceps à être biarticulaire. Il s’insère sur le bassin (épine iliaque antéro-inférieure par son tendon direct) et se termine avec le quadriceps sur la patella et la tubérosité tibiale.",
+      "correction_figures": [],
+      "source": { "page": 541, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c20-q02",
+      "type": "QRM",
+      "theme": "Muscle droit fémoral : lésion en battant de cloche",
+      "enonce": "Concernant les lésions du muscle droit fémoral, une entité spécifique appelée « lésion en battant de cloche » (ou « en doigt de gant ») peut être observée. Quelles sont les caractéristiques de cette lésion en IRM ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Elle siège à la jonction entre le tendon direct et l’épine iliaque antéro-inférieure.", "correct": false },
+        { "id": "B", "texte": "Elle se traduit par une rétraction proximale de la partie centrale du droit fémoral au sein du muscle.", "correct": true },
+        { "id": "C", "texte": "L’atteinte siège entre la partie centrale bipennée (issue du tendon indirect) et la portion périphérique unipennée (issue du tendon direct).", "correct": true },
+        { "id": "D", "texte": "Elle se présente toujours comme une calcification massive (ostéome) au sein du muscle.", "correct": false }
+      ],
+      "explication": "Les réponses correctes sont B et C. La lésion en battant de cloche est un clivage ou une dissociation entre les deux composantes musculaires du droit fémoral (partie centrale bipennée issue du tendon indirect, et partie périphérique unipennée issue du tendon direct), avec souvent une rétraction proximale de la partie centrale.",
+      "correction_figures": [],
+      "source": { "page": 546, "element": "Texte et Figure 20.13", "refs": "" }
+    },
+    {
+      "id": "c20-q03",
+      "type": "QCU",
+      "theme": "Pubalgie et adducteurs : signe de la seconde fente",
+      "enonce": "Un homme de 55 ans, joueur amateur de tennis, consulte pour des douleurs inguinales à l’effort. L’échographie révèle une tendinopathie avec épaississement hypoéchogène et calcifications au niveau de l’insertion proximale d’un muscle sur le pubis. L’IRM montre également un « signe de la seconde fente » (image liquidienne prolongeant la fente symphysaire vers le bas et le dehors). Quel tendon est le plus probablement lésé ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le tendon du muscle droit fémoral", "correct": false },
+        { "id": "B", "texte": "Le tendon du muscle long adducteur", "correct": true },
+        { "id": "C", "texte": "Le tendon du muscle grand psoas", "correct": false },
+        { "id": "D", "texte": "Le tendon conjoint des ischiojambiers", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. L’insertion sur le pubis et la douleur inguinale à l’effort orientent vers les adducteurs. Le « signe de la seconde fente » en IRM est caractéristique d’une lésion de l’aponévrose médiale du long adducteur (et du droit de l’abdomen).",
+      "correction_figures": [],
+      "source": { "page": 555, "element": "Texte", "refs": "p. 555-558" }
+    },
+    {
+      "id": "c20-q04",
+      "type": "QRM",
+      "theme": "Ressaut du tendon du muscle grand psoas",
+      "enonce": "Le « ressaut du tendon du muscle grand psoas » est une cause de douleur et de claquement antérieur de la hanche, fréquent chez les danseurs. Quelles sont les explications physiopathologiques documentées pour ce ressaut extra-articulaire ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Un enroulement des fibres médiales du muscle iliaque autour du tendon du muscle grand psoas, qui se relâchent brutalement lors du retour à l’extension.", "correct": true },
+        { "id": "B", "texte": "Une friction systématique du ligament iliofémoral sur la tête fémorale.", "correct": false },
+        { "id": "C", "texte": "Une bifidité tendineuse, où un tendon médial se déplace autour d’un tendon latéral.", "correct": true },
+        { "id": "D", "texte": "Une avulsion de l’apophyse du petit trochanter.", "correct": false }
+      ],
+      "explication": "Les réponses correctes sont A et C. Le ressaut du psoas est dû principalement à un conflit entre le tendon du grand psoas et les fibres médiales du muscle iliaque lors des mouvements de flexion/abduction/rotation (elles se coincent puis se relâchent brutalement contre la branche pubienne). Une bifidité tendineuse est une autre cause documentée. L’hypothèse de la friction du ligament iliofémoral a été infirmée. L’avulsion du petit trochanter donne un tableau aigu douloureux (impotence) et non un ressaut chronique.",
+      "correction_figures": [],
+      "source": { "page": 554, "element": "Texte", "refs": "p. 554-555" }
+    },
+    {
+      "id": "c20-q05",
+      "type": "QCU",
+      "theme": "Conflit ischiofémoral",
+      "enonce": "Quel syndrome est défini par la compression du muscle carré fémoral en raison de l’étroitesse de l’espace situé entre le petit trochanter et la tubérosité ischiatique ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le syndrome du piriforme", "correct": false },
+        { "id": "B", "texte": "Le conflit ischiofémoral", "correct": true },
+        { "id": "C", "texte": "Le syndrome du défilé cervico-thoracique", "correct": false },
+        { "id": "D", "texte": "La méralgie paresthésique", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. Le conflit ischiofémoral est lié à l’étroitesse de l’espace entre l’ischion et le petit trochanter, comprimant le muscle carré fémoral qui s’y trouve.",
+      "correction_figures": [],
+      "source": { "page": 582, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c20-q06",
+      "type": "QRM",
+      "theme": "Tendons ischiojambiers proximaux",
+      "enonce": "Un footballeur professionnel se présente après avoir ressenti un claquement brutal à la face postérieure de la fesse gauche lors d’un grand écart (« tackle »). À l’IRM, on suspecte une désinsertion proximale de l’enthèse des muscles ischiojambiers. L’identification précise des tendons avulsés est cruciale pour le chirurgien. Parmi les propositions suivantes concernant l’anatomie et les lésions de cette région, lesquelles sont vraies ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le muscle semi-membraneux s’insère par un tendon isolé, situé un peu plus en avant et en dehors que le tendon conjoint (biceps fémoral et semi-tendineux).", "correct": true },
+        { "id": "B", "texte": "L’insertion proximale des ischiojambiers se fait sur le versant latéral de la tubérosité ischiatique.", "correct": true },
+        { "id": "C", "texte": "L’insertion du tendon du chef postérieur du grand adducteur sur l’ischion peut parfois être prise à tort pour le tendon du semi-membraneux, simulant une rupture incomplète.", "correct": true },
+        { "id": "D", "texte": "En échographie, le « triangle de Cohen » à la racine de la cuisse est formé par le muscle sartorius, le tenseur du fascia lata et le droit fémoral.", "correct": false }
+      ],
+      "explication": "Les réponses correctes sont A, B et C. Le semi-membraneux a un tendon distinct du tendon conjoint (chef long du biceps et semi-tendineux). L’insertion se fait sur le versant latéral de l’ischion. L’insertion ischiatique du grand adducteur (plus médiale et antérieure) peut être source d’erreur diagnostique en cas de rupture des ischiojambiers. Le « triangle de Cohen » est un repère pour les ischiojambiers (semi-membraneux, tendon conjoint, nerf sciatique) et non pour la loge antérieure.",
+      "correction_figures": [],
+      "source": { "page": 572, "element": "Texte", "refs": "p. 572, 574-576" }
+    },
+    {
+      "id": "c20-q07",
+      "type": "QCU",
+      "theme": "Décollement de Morel-Lavallée",
+      "enonce": "Quel diagnostic évoquer devant une masse sous-cutanée de la face latérale de la hanche, d’apparition progressive, contenant une collection séro-hématique à l’interface entre le fascia profond et la graisse hypodermique, survenant classiquement après un traumatisme tangentiel (cisaillement) lors d’un accident de la voie publique ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une bursopathie trochantérienne (bursite du grand glutéal)", "correct": false },
+        { "id": "B", "texte": "Un ostéome musculaire du tenseur du fascia lata", "correct": false },
+        { "id": "C", "texte": "Un décollement de Morel-Lavallée", "correct": true },
+        { "id": "D", "texte": "Une hernie musculaire", "correct": false }
+      ],
+      "explication": "La réponse correcte est C. Le décollement de Morel-Lavallée est une lésion de cisaillement créant une cavité virtuelle remplie de sang et de lymphe entre le fascia superficiel (de recouvrement) et l’hypoderme.",
+      "correction_figures": [],
+      "source": { "page": 570, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c20-q08",
+      "type": "QRM",
+      "theme": "Para-ostéoarthropathies neurogènes (POA)",
+      "enonce": "Les para-ostéoarthropathies neurogènes (POA) sont des ossifications hétérotopiques. Quelles affirmations sont correctes concernant cette pathologie ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Elles surviennent fréquemment chez les patients victimes d’un traumatisme crânien ou médullaire grave avec immobilisation prolongée.", "correct": true },
+        { "id": "B", "texte": "Elles se développent au sein même de la cavité articulaire de la hanche, détruisant rapidement le cartilage (ankylose intra-articulaire).", "correct": false },
+        { "id": "C", "texte": "Au stade de maturation (IRM), l’œdème musculaire et le rehaussement post-gadolinium ont tendance à diminuer, témoignant d’une « stabilisation » de la lésion.", "correct": true },
+        { "id": "D", "texte": "L’exérèse chirurgicale est recommandée très précocement (dès le 1er mois) pour éviter l’ankylose.", "correct": false }
+      ],
+      "explication": "Les réponses correctes sont A et C. Les POA neurogènes surviennent après des lésions du SNC (traumatisme crânien, médullaire). Elles sont extra-articulaires (la capsule est respectée) et englobent les structures périarticulaires. Avec le temps (maturation), l’inflammation (œdème, rehaussement) diminue en IRM. La chirurgie ne doit être envisagée que lorsque l’ossification est mature (après 12 à 18 mois) pour limiter le risque de récidive.",
+      "correction_figures": [],
+      "source": { "page": 583, "element": "Texte", "refs": "p. 583-586" }
+    },
+    {
+      "id": "c20-q09",
+      "type": "QCU",
+      "theme": "Hernie inguinale et manœuvre de Valsalva",
+      "enonce": "La manœuvre de Valsalva, réalisée lors d’une échographie de la région inguinale, a pour but principal de :",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Détecter un ressaut du tendon du grand psoas", "correct": false },
+        { "id": "B", "texte": "Mettre en évidence une protrusion herniaire (directe ou indirecte)", "correct": true },
+        { "id": "C", "texte": "Confirmer une désinsertion myo-aponévrotique du long adducteur", "correct": false },
+        { "id": "D", "texte": "Provoquer une douleur typique du conflit ischiofémoral", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. La manœuvre de Valsalva (augmentation de la pression abdominale) est essentielle en échographie pour démasquer ou préciser une hernie inguinale ou crurale, en observant la protrusion du sac herniaire.",
+      "correction_figures": [],
+      "source": { "page": 561, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c20-q10",
+      "type": "QRM",
+      "theme": "Tendinobursopathies trochantériennes : moyen et petit glutéaux",
+      "enonce": "Une patiente de 65 ans consulte pour des douleurs de la face latérale de la hanche droite irradiant vers la face latérale de la cuisse, déclenchées par le décubitus latéral droit et la montée des escaliers. Le diagnostic de tendinobursopathie trochantérienne (syndrome du grand trochanter) est suspecté. À l’IRM, on cherche à évaluer les muscles abducteurs. Quels muscles s’insèrent sur le grand trochanter et peuvent présenter une tendinopathie dans ce contexte ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le muscle grand glutéal", "correct": false },
+        { "id": "B", "texte": "Le muscle moyen glutéal", "correct": true },
+        { "id": "C", "texte": "Le muscle petit glutéal", "correct": true },
+        { "id": "D", "texte": "Le muscle tenseur du fascia lata", "correct": false }
+      ],
+      "explication": "Les réponses correctes sont B et C. Les tendons des muscles moyen et petit glutéaux s’insèrent respectivement sur les facettes latérale/postérosupérieure et sur la facette antérieure du grand trochanter, et sont les cibles des tendinopathies trochantériennes. Le muscle grand glutéal s’insère sur la tubérosité glutéale du fémur (ligne âpre) et le tractus iliotibial (il ne s’insère pas sur le grand trochanter, bien qu’il le recouvre). Le tenseur du fascia lata s’insère sur le tubercule iliaque et se poursuit par le tractus iliotibial.",
+      "correction_figures": [],
+      "source": { "page": 562, "element": "Texte", "refs": "p. 562, 564, 567" }
+    }
+  ]
 }

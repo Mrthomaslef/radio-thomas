@@ -6,5 +6,166 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c19-q01",
+      "type": "QCU",
+      "theme": "Luxation congénitale de hanche : échographie de dépistage",
+      "enonce": "Lors de l’échographie de dépistage de la luxation congénitale de la hanche (réalisée selon la méthode de la « monocoupe dynamique latérale » de Couture-Tréguier), quel paramètre quantitatif est considéré comme le critère principal pour définir le décentrage de la tête fémorale ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "L’angle alpha de Graf > 60°", "correct": false },
+        { "id": "B", "texte": "Le pourcentage de couverture osseuse < 50 %", "correct": false },
+        { "id": "C", "texte": "La distance de fond de cotyle (FC) ≥ 6 mm et/ou une asymétrie > 1,5 mm", "correct": true },
+        { "id": "D", "texte": "L’angle acétabulaire osseux mesuré en échographie", "correct": false }
+      ],
+      "explication": "La réponse correcte est C. Selon la méthode de Couture-Tréguier (référence en France), la distance de fond de cotyle (FC) est le critère principal de dépistage. Une FC ≥ 6 mm ou une asymétrie > 1,5 mm est anormale et témoigne d’un décentrage de la tête fémorale. La couverture osseuse est un critère secondaire (sujet à la variabilité du plan de coupe).",
+      "correction_figures": [],
+      "source": { "page": 497, "element": "Texte et Encadré 19.3", "refs": "" }
+    },
+    {
+      "id": "c19-q02",
+      "type": "QRM",
+      "theme": "Luxation congénitale de hanche : radiographie",
+      "enonce": "Lors de la lecture d’une radiographie de bassin de face chez un nourrisson de 6 mois, quels signes radiographiques orientent vers une luxation congénitale de la hanche droite ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une projection du noyau épiphysaire droit dans le quadrant inféromédial de la construction d’Ombredanne.", "correct": false },
+        { "id": "B", "texte": "Une rupture de la ligne de Shenton (cintre cervico-obturateur) à droite.", "correct": true },
+        { "id": "C", "texte": "Une distance entre le bord latéral de l’ischion et la métaphyse fémorale droite supérieure à 4 mm.", "correct": true },
+        { "id": "D", "texte": "Une densification marquée et précoce du fond de l’acétabulum droit.", "correct": false }
+      ],
+      "explication": "Les réponses correctes sont B et C. Dans une LCH, la tête fémorale est excentrée, ascensionnée et latéralisée (hors du quadrant inféromédial). Cela se traduit par une rupture de la ligne de Shenton et un éloignement de la métaphyse fémorale par rapport à l’ischion (> 4 mm). La dysplasie acétabulaire associée se manifeste par un fond acétabulaire non densifié (par absence de pression de la tête), un talus émoussé et un angle acétabulaire augmenté. L’affirmation A décrit une hanche normale.",
+      "correction_figures": [],
+      "source": { "page": 499, "element": "Texte et Figure 19.9", "refs": "p. 499-500" }
+    },
+    {
+      "id": "c19-q03",
+      "type": "QCU",
+      "theme": "Conflit fémoro-acétabulaire : effet came et contrecoup",
+      "enonce": "Un homme de 35 ans, joueur de hockey sur glace, consulte pour des douleurs inguinales déclenchées par la position assise basse et les flexions profondes. L’examen clinique montre une limitation douloureuse de la rotation médiale à 90° de flexion de la hanche. Les radiographies révèlent une perte de concavité antérosupérieure du col fémoral (« bump »). Quel diagnostic principal et quelle anomalie (par effet de levier) suspectez-vous à un stade tardif ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Conflit par effet tenaille avec lésions isolées du labrum postéro-inférieur", "correct": false },
+        { "id": "B", "texte": "Conflit par effet came avec développement tardif d’un conflit postéro-inférieur (lésion par contrecoup)", "correct": true },
+        { "id": "C", "texte": "Protrusion acétabulaire globale", "correct": false },
+        { "id": "D", "texte": "Dysplasie de hanche avec insuffisance de couverture (angle VCE < 22°)", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. La présentation clinique (homme jeune sportif, douleur en flexion/rotation médiale) et radiologique (bump, perte de concavité) est typique du conflit par effet came. Dans les conflits antérieurs (came ou tenaille), le mécanisme de pince antérieure force le col contre l’acétabulum en flexion, ce qui, par un effet de levier, décoapte la tête en arrière et crée des lésions par contrecoup à la partie postéro-inférieure de l’acétabulum et de la tête.",
+      "correction_figures": [],
+      "source": { "page": 510, "element": "Texte", "refs": "p. 510, 512, 514" }
+    },
+    {
+      "id": "c19-q04",
+      "type": "QRM",
+      "theme": "Dysplasie de hanche de l’adulte : coxométrie",
+      "enonce": "Lors de l’évaluation d’une dysplasie de hanche chez l’adulte (coxométrie sur cliché de bassin et faux profil), quelles mesures confirment une insuffisance de couverture acétabulaire ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Angle VCE < 22°", "correct": true },
+        { "id": "B", "texte": "Angle HTE > 14°", "correct": true },
+        { "id": "C", "texte": "Angle VCA < 20°", "correct": true },
+        { "id": "D", "texte": "Fosse acétabulaire projetée à 5 mm en dedans de la ligne ilio-ischiatique", "correct": false }
+      ],
+      "explication": "Les réponses correctes sont A, B et C. La dysplasie avec insuffisance de couverture se définit par une insuffisance latérale (VCE < 22°), une insuffisance antérieure (VCA < 20° sur faux profil) et un toit trop oblique (HTE > 14°). La proposition D décrit une protrusion acétabulaire (excès de couverture).",
+      "correction_figures": [],
+      "source": { "page": 503, "element": "Encadré 19.5", "refs": "p. 503-504, 508" }
+    },
+    {
+      "id": "c19-q05",
+      "type": "QCU",
+      "theme": "Coxarthrose destructrice rapide (CDR)",
+      "enonce": "La coxarthrose destructrice rapide (CDR) se distingue de la coxarthrose classique par la vitesse de disparition du cartilage. Quel est le critère radiographique définissant la CDR ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Un pincement de l’interligne d’au moins 0,25 mm / an", "correct": false },
+        { "id": "B", "texte": "Un pincement de l’interligne d’au moins 2 mm / an (ou ≥ 50 % / an)", "correct": true },
+        { "id": "C", "texte": "L’apparition d’ostéophytes volumineux en moins de 6 mois", "correct": false },
+        { "id": "D", "texte": "Une géode sous-chondrale mesurant plus de 2 cm", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. La CDR se définit radiographiquement par un pincement de l’interligne d’au moins 2 mm/an (ou au moins de 50 %/an), conduisant à une chondrolyse complète en moins de 2 ans. La coxarthrose classique progresse d’environ 0,25 mm/an.",
+      "correction_figures": [],
+      "source": { "page": 516, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c19-q06",
+      "type": "QRM",
+      "theme": "Prothèse totale de hanche : ostéo-intégration",
+      "enonce": "Lors du suivi radiographique d’une prothèse totale de hanche (PTH) non cimentée, quels signes sont considérés comme physiologiques et en faveur d’une bonne ostéo-intégration (fixation secondaire) ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "L’apparition de « spotwelds » (ponts osseux denses perpendiculaires à la prothèse).", "correct": true },
+        { "id": "B", "texte": "Un liseré radioclair circonférentiel évolutif de plus de 2 mm.", "correct": false },
+        { "id": "C", "texte": "Une condensation linéaire étendue à toute la surface lisse de l’implant, avec bascule de la tige.", "correct": false },
+        { "id": "D", "texte": "Un piédestal (ossification endostée distale) isolé, sans mobilisation de l’implant.", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont A et D. Les signes d’une bonne fixation pour un implant non cimenté incluent la réhabitation des espaces clairs, les spotwelds et la condensation de l’os spongieux. Un piédestal isolé (sans mobilisation) témoigne simplement d’une fixation distale (zone 4) et n’est pas pathologique en soi. Au contraire, un liseré évolutif > 2 mm et une mobilisation de l’implant signent le descellement.",
+      "correction_figures": [],
+      "source": { "page": 531, "element": "Encadré 19.12", "refs": "p. 531-532" }
+    },
+    {
+      "id": "c19-q07",
+      "type": "QCU",
+      "theme": "Prothèse totale de hanche : conflit iliopsoas / cupule",
+      "enonce": "Un patient porteur d’une prothèse totale de hanche droite consulte pour des douleurs inguinales mécaniques lors de la flexion active de la cuisse (montée d’escaliers), mais sans douleur à la marche sur terrain plat. Le scanner révèle un débord de la cupule acétabulaire de 10 mm en avant de l’os. Quelle est l’origine la plus probable de ses douleurs ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Un descellement septique de la cupule", "correct": false },
+        { "id": "B", "texte": "Un conflit entre la cupule et le tendon du muscle iliopsoas", "correct": true },
+        { "id": "C", "texte": "Une pseudarthrose trochantérienne", "correct": false },
+        { "id": "D", "texte": "Une métallose due au couple de frottement", "correct": false }
+      ],
+      "explication": "La réponse correcte est B. La clinique (douleur à la flexion active, marche sur le plat indolore) et l’imagerie (débord antérieur de la cupule > 8 mm) sont caractéristiques du conflit psoas/cupule (syndrome du muscle iliopsoas). Le tendon frotte contre le bord saillant de l’implant, entraînant douleur et bursite.",
+      "correction_figures": [],
+      "source": { "page": 527, "element": "Texte", "refs": "p. 527, 536" }
+    },
+    {
+      "id": "c19-q08",
+      "type": "QRM",
+      "theme": "Labrum acétabulaire : kystes paralabraux",
+      "enonce": "Concernant les kystes paralabraux de la hanche, quelles propositions sont correctes ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Ils sont le plus souvent situés à la partie antérosupérieure de l’articulation.", "correct": true },
+        { "id": "B", "texte": "Ils se forment toujours suite à l’effondrement d’une géode osseuse sous-chondrale.", "correct": false },
+        { "id": "C", "texte": "En IRM, ils sont classiquement de signal liquidien, mais peuvent présenter un hyposignal T2 s’ils contiennent des débris.", "correct": true },
+        { "id": "D", "texte": "Ils sont considérés comme une lésion sentinelle, car ils sont très souvent associés à une fissure du labrum sous-jacent.", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont A, C et D. Le kyste paralabral est une lésion sentinelle souvent associée à une fissure du labrum par laquelle le liquide synovial s’échappe. Il siège préférentiellement en antérosupérieur. Bien que de signal liquidien, son contenu parfois très gélatineux ou contenant des débris peut faire chuter le signal T2. Il n’est que plus rarement secondaire à l’effondrement d’une géode sous-chondrale.",
+      "correction_figures": [],
+      "source": { "page": 521, "element": "Texte", "refs": "" }
+    },
+    {
+      "id": "c19-q09",
+      "type": "QCU",
+      "theme": "Conflit fémoro-acétabulaire : rétroversion acétabulaire",
+      "enonce": "Quel signe radiographique sur une incidence de bassin de face est évocateur d’une rétroversion acétabulaire dans le cadre d’un conflit fémoro-acétabulaire par effet tenaille ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Le signe du croisement (en « 8 ») entre le mur postérieur et le mur antérieur de l’acétabulum.", "correct": true },
+        { "id": "B", "texte": "La ligne de Putti coupant le centre du noyau épiphysaire.", "correct": false },
+        { "id": "C", "texte": "Une fovea alta (angle delta < 10°).", "correct": false },
+        { "id": "D", "texte": "La disparition du cintre cervico-obturateur de Shenton.", "correct": false }
+      ],
+      "explication": "La réponse correcte est A. La rétroversion acétabulaire (qui entraîne une surcouverture antérieure, effet tenaille) se diagnostique sur le bassin de face par le « signe du croisement » : le mur postérieur de l’acétabulum croise le mur antérieur, réalisant une image en « 8 ». Les autres signes concernent la dysplasie de hanche ou la LCH.",
+      "correction_figures": [],
+      "source": { "page": 511, "element": "Encadré 19.7 et Figure 19.27", "refs": "" }
+    },
+    {
+      "id": "c19-q10",
+      "type": "QRM",
+      "theme": "Prothèse totale de hanche : descellement septique vs aseptique",
+      "enonce": "Une ostéolyse péri-prothétique est identifiée chez un patient porteur d’une prothèse totale de hanche depuis 8 ans. Quels éléments orientent vers une origine infectieuse (ostéite/descellement septique) plutôt qu’un descellement mécanique « aseptique » par réaction aux débris d’usure ?",
+      "enonce_image": null,
+      "items": [
+        { "id": "A", "texte": "Une ostéolyse endostée focale avec aspect en « bulles de savon »", "correct": true },
+        { "id": "B", "texte": "L’absence totale d’épanchement intra-articulaire en IRM", "correct": false },
+        { "id": "C", "texte": "Une atteinte bipolaire (fémorale et acétabulaire)", "correct": true },
+        { "id": "D", "texte": "La présence de réactions périostées (appositions plurilamellaires)", "correct": true }
+      ],
+      "explication": "Les réponses correctes sont A, C et D. Bien qu’aucun signe radiographique ne soit absolument spécifique de l’infection, l’association d’un liseré évolutif bipolaire (fémur et acétabulum), d’une ostéolyse endostée (aspect mité) et de réactions périostées est très évocatrice d’un processus septique. En revanche, l’absence totale d’épanchement intra-articulaire en IRM a une valeur prédictive négative très forte (proche de 100 %) pour l’infection. L’ostéolyse aseptique (maladie de la particule) est typiquement bien limitée, englobant la prothèse, avec expansion corticale mais sans véritable réaction périostée plurilamellaire agressive.",
+      "correction_figures": [],
+      "source": { "page": 533, "element": "Encadré 19.11", "refs": "p. 533-534, 539" }
+    }
+  ]
 }
