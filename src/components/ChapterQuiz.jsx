@@ -13,7 +13,6 @@ import {
 } from '../data/player.js';
 import { useQuestions, imageSrc } from '../data/useQuestions.js';
 import { submitQuestionReport } from '../data/reports.js';
-import { recordCompletedQuiz } from '../data/leaderboard.js';
 
 // ---------- helpers ----------
 const hash = (s) => {
@@ -276,10 +275,6 @@ export function QuizPlayer({
       recordedHistoryRef.current = true;
       recordQuizAttempt({ quiz: randomMode ? 'quiz-aleatoire' : key, score, total }, name);
     }
-    // Record points on the leaderboard only when the quiz is finished AND passed (>= 60%)
-    if (passed) {
-      recordCompletedQuiz({ name, quizKey: key, score, total, passed, randomMode });
-    }
     try {
       const r = await fetch('/api/attempts', {
         method: 'POST',
@@ -297,9 +292,6 @@ export function QuizPlayer({
       if (name && !recordedHistoryRef.current) {
         recordedHistoryRef.current = true;
         recordQuizAttempt({ quiz: randomMode ? 'quiz-aleatoire' : key, score, total }, name);
-      }
-      if (name && !randomMode && passed) {
-        recordCompletedQuiz({ name, quizKey: key, score, total, passed: true, randomMode: false });
       }
       if (!sent && saveState === 'idle') sendResult();
     }

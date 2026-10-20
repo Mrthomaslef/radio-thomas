@@ -1,6 +1,5 @@
 // Helpers to send and read question feedback reports and user-proposed questions.
 // Works with /api/reports and gracefully falls back to /api/attempts when running against an older backend proxy.
-import { recordContributorReport, recordApprovedSubmission } from './leaderboard.js';
 
 const LOCAL_SUBMISSIONS_KEY = 'quiz-cotten:local-submissions:v1';
 const LOCAL_DECISIONS_KEY = 'quiz-cotten:submission-decisions:v1';
@@ -340,11 +339,6 @@ export async function resolveQuestionProposal({ password, id, chapter, decision,
     }).catch(() => {});
   }
 
-  // Award +10 points to the contributor ONLY when the submission is validated ('accepted')
-  if (cleanDecision === 'accepted' && authorName && authorName !== 'Anonyme') {
-    await recordApprovedSubmission(authorName);
-  }
-
   return true;
 }
 
@@ -371,7 +365,6 @@ export async function submitQuestionReport({ name, chapter, questionId, message 
       }),
     });
     if (r.ok) {
-      recordContributorReport(cleanName);
       return true;
     }
     if (r.status !== 404) {
@@ -410,7 +403,6 @@ export async function submitQuestionReport({ name, chapter, questionId, message 
       throw new Error('Impossible d’envoyer le signalement, réessayez.');
     }
   }
-  recordContributorReport(cleanName);
   return true;
 }
 

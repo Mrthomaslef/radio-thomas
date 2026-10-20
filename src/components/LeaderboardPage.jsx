@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useQuestions } from '../data/useQuestions.js';
 import { readName, saveName, subscribePlayer, syncProgressFromServer } from '../data/player.js';
 import { fetchLeaderboard, fetchContributorsLeaderboard } from '../data/leaderboard.js';
 import Icon from './Icons.jsx';
@@ -7,7 +6,6 @@ import Icon from './Icons.jsx';
 const normKey = (s) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ').toLowerCase() : '');
 
 export default function LeaderboardPage() {
-  const { byChapter, loading: questionsLoading } = useQuestions();
   const [pseudo, setPseudo] = useState(readName);
   const [draft, setDraft] = useState(pseudo);
   const [editing, setEditing] = useState(false);
@@ -26,7 +24,7 @@ export default function LeaderboardPage() {
         await syncProgressFromServer(current);
       }
       const [quizList, contribList] = await Promise.all([
-        fetchLeaderboard(byChapter),
+        fetchLeaderboard(),
         fetchContributorsLeaderboard(),
       ]);
       setEntries(quizList);
@@ -34,20 +32,18 @@ export default function LeaderboardPage() {
     } finally {
       setLoading(false);
     }
-  }, [byChapter]);
+  }, []);
 
   useEffect(() => {
-    if (!questionsLoading) {
-      loadLeaderboard();
-    }
-  }, [questionsLoading, loadLeaderboard]);
+    loadLeaderboard();
+  }, [loadLeaderboard]);
 
   useEffect(() => {
     return subscribePlayer(() => {
       setPseudo(readName());
-      if (!questionsLoading) loadLeaderboard();
+      loadLeaderboard();
     });
-  }, [questionsLoading, loadLeaderboard]);
+  }, [loadLeaderboard]);
 
   const submitPseudo = (e) => {
     e.preventDefault();
