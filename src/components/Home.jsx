@@ -84,12 +84,6 @@ export default function Home({ openTheme }) {
               <a href="#/proposer" className="btn btn-ghost btn-small">
                 + Proposer une question
               </a>
-              <a href="#/classement" className="btn btn-ghost btn-small">
-                Classement
-              </a>
-              <a href="#/progression" className="btn btn-ghost btn-small">
-                Voir ma progression <Icon name="arrow" size={15} />
-              </a>
             </div>
           </div>
 
