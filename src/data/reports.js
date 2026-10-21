@@ -41,6 +41,19 @@ export function writeLocalReviewerEdit(rowObj) {
   }
 }
 
+export function removeLocalReviewerEdit(id) {
+  if (!id) return;
+  try {
+    const map = readLocalReviewerEdits();
+    if (map[id]) {
+      delete map[id];
+      localStorage.setItem(LOCAL_REVIEWER_EDITS_KEY, JSON.stringify(map));
+    }
+  } catch {
+    // Ignore storage errors
+  }
+}
+
 export function readLocalReviewNotifications() {
   try {
     const raw = JSON.parse(localStorage.getItem(LOCAL_REVIEW_NOTIFS_KEY) || '[]');

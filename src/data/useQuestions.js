@@ -144,37 +144,24 @@ function readLocallyAcceptedRows() {
 }
 
 export function mergeLocalAndServerRow(id, locRow, srvRow) {
-  if (!locRow?.data) return { row: srvRow, changedLocal: false, shouldSyncToServer: false };
-  if (!srvRow?.data) return { row: locRow, changedLocal: false, shouldSyncToServer: true };
+  if (!locRow?.data) return { row: srvRow, removeLocal: false, shouldSyncToServer: false };
+  if (!srvRow?.data) return { row: locRow, removeLocal: false, shouldSyncToServer: true };
 
   const loc = locRow.data;
   const srv = srvRow.data;
-  const bundled = bundledById.get(id);
+  const locTime = locRow.updated_at ? Date.parse(locRow.updated_at) || 0 : 0;
+  const srvTime = srvRow.updated_at ? Date.parse(srvRow.updated_at) || 0 : 0;
 
-  const isDiffFromBundled = (d) =>
-    !bundled ||
-    d.type !== bundled.type ||
-    resolveDifficulty(id, d.difficulty) !== resolveDifficulty(id, bundled.difficulty) ||
-    d.enonce !== bundled.enonce ||
-    d.theme !== bundled.theme ||
-    JSON.stringify(d.items) !== JSON.stringify(bundled.items) ||
-    cleanExplication(d.explication) !== cleanExplication(bundled.explication);
+  // If the server row is newer or equal, the central database is already up to date (or updated by a colleague).
+  // Remove the local queue entry so the central database remains the single source of truth for everyone.
+  if (srvTime >= locTime) {
+    return { row: srvRow, removeLocal: true, shouldSyncToServer: false };
+  }
 
-  const locDiffers = isDiffFromBundled(loc);
-  const srvDiffers = isDiffFromBundled(srv);
-
-  // Local browser edits always win when they contain customizations compared to the bundled question
-  const preferLocalText =
-    locDiffers ||
-    !srvDiffers ||
-    (locRow.updated_at && (!srvRow.updated_at || locRow.updated_at >= srvRow.updated_at));
-
-  const baseText = preferLocalText ? loc : srv;
-
-  // Upgrade any inline dataUrl images to lossless server { upload } IDs while keeping local captions/order
+  // Otherwise locRow is an unsynced local edit newer than the server: keep it and push it once to the server.
   const srvEnonceImg = srv.enonce_image;
   const locEnonceImg = loc.enonce_image;
-  let mergedEnonceImg = preferLocalText ? locEnonceImg ?? srvEnonceImg ?? null : srvEnonceImg ?? locEnonceImg ?? null;
+  let mergedEnonceImg = locEnonceImg ?? srvEnonceImg ?? null;
   if (mergedEnonceImg?.dataUrl && srvEnonceImg?.upload) {
     mergedEnonceImg = {
       upload: srvEnonceImg.upload,
@@ -184,12 +171,7 @@ export function mergeLocalAndServerRow(id, locRow, srvRow) {
 
   const srvFigs = Array.isArray(srv.correction_figures) ? srv.correction_figures : [];
   const locFigs = Array.isArray(loc.correction_figures) ? loc.correction_figures : [];
-  const locHasCustomFigs =
-    locFigs.some((f) => f?.dataUrl || f?.upload) ||
-    (bundled && JSON.stringify(locFigs) !== JSON.stringify(bundled.correction_figures || []));
-
-  const rawFigs = locHasCustomFigs ? locFigs : srvFigs.length > 0 ? srvFigs : locFigs;
-  const mergedFigs = rawFigs.map((f, idx) => {
+  const mergedFigs = locFigs.map((f, idx) => {
     if (f?.dataUrl && srvFigs[idx]?.upload) {
       return {
         upload: srvFigs[idx].upload,
@@ -201,41 +183,12 @@ export function mergeLocalAndServerRow(id, locRow, srvRow) {
 
   const mergedData = {
     ...srv,
-    ...baseText,
+    ...loc,
     reviewed: Boolean(loc.reviewed || srv.reviewed),
     reviewed_by: loc.reviewed_by || srv.reviewed_by || (loc.reviewed || srv.reviewed ? 'Thomas L.' : null),
     enonce_image: mergedEnonceImg,
     correction_figures: mergedFigs,
   };
-
-  const srvFigsNorm = srvFigs.map((f) => ({
-    upload: f?.upload || null,
-    file: f?.file || null,
-    caption: f?.caption || '',
-  }));
-  const mergedFigsNorm = mergedFigs.map((f) => ({
-    upload: f?.upload || null,
-    file: f?.file || null,
-    caption: f?.caption || '',
-  }));
-
-  const shouldSyncToServer =
-    mergedData.type !== srv.type ||
-    resolveDifficulty(id, mergedData.difficulty) !== resolveDifficulty(id, srv.difficulty) ||
-    mergedData.enonce !== srv.enonce ||
-    mergedData.explication !== srv.explication ||
-    mergedData.theme !== srv.theme ||
-    Boolean(mergedData.reviewed) !== Boolean(srv.reviewed) ||
-    (mergedData.reviewed_by || null) !== (srv.reviewed_by || null) ||
-    JSON.stringify(mergedData.items) !== JSON.stringify(srv.items) ||
-    Boolean(mergedData.enonce_image?.dataUrl) ||
-    (mergedData.enonce_image?.upload || null) !== (srv.enonce_image?.upload || null) ||
-    mergedFigs.some((f) => Boolean(f?.dataUrl)) ||
-    JSON.stringify(mergedFigsNorm) !== JSON.stringify(srvFigsNorm);
-
-  const hadDataUrlUpgraded =
-    (Boolean(locEnonceImg?.dataUrl) && Boolean(mergedEnonceImg?.upload)) ||
-    locFigs.some((f, idx) => Boolean(f?.dataUrl) && Boolean(mergedFigs[idx]?.upload));
 
   const mergedRow = {
     ...srvRow,
@@ -247,8 +200,8 @@ export function mergeLocalAndServerRow(id, locRow, srvRow) {
 
   return {
     row: mergedRow,
-    changedLocal: hadDataUrlUpgraded || (!preferLocalText && srvDiffers),
-    shouldSyncToServer,
+    removeLocal: false,
+    shouldSyncToServer: true,
   };
 }
 
@@ -268,7 +221,7 @@ function groupByChapter(rows) {
   const serverById = new Map(rows.map((r) => [r.id, r]));
   const byId = new Map(rows.map((r) => [r.id, r]));
   const toSync = [];
-  let localMapUpgraded = false;
+  let localMapChanged = false;
 
   for (const [id, revRow] of Object.entries(localReviewerMap)) {
     if (revRow && revRow.id && revRow.chapter && revRow.data) {
@@ -277,18 +230,18 @@ function groupByChapter(rows) {
         continue;
       }
       const srv = serverById.get(id);
-      const { row: mergedRow, changedLocal, shouldSyncToServer } = mergeLocalAndServerRow(id, revRow, srv);
+      const { row: mergedRow, removeLocal, shouldSyncToServer } = mergeLocalAndServerRow(id, revRow, srv);
       byId.set(id, mergedRow);
-      if (changedLocal) {
-        localReviewerMap[id] = mergedRow;
-        localMapUpgraded = true;
+      if (removeLocal) {
+        delete localReviewerMap[id];
+        localMapChanged = true;
       }
       if (shouldSyncToServer) {
         toSync.push(mergedRow);
       }
     }
   }
-  if (localMapUpgraded && typeof window !== 'undefined') {
+  if (localMapChanged && typeof window !== 'undefined') {
     try {
       window.localStorage.setItem('quiz-cotten:reviewer-edits:v1', JSON.stringify(localReviewerMap));
     } catch {
@@ -296,7 +249,7 @@ function groupByChapter(rows) {
     }
   }
 
-  // Auto-sync any local reviewer edits or local 'reviewed' flags from this browser to the live database
+  // Auto-sync any pending offline edits or local 'reviewed' flags from this browser to the live database
   if (typeof window !== 'undefined' && rows !== bundledQuestions) {
     for (const [id, isRev] of Object.entries(localReviewed)) {
       if (!isRev || localReviewerMap[id]) continue;
@@ -329,17 +282,12 @@ function groupByChapter(rows) {
               question: item.data,
             }),
           })
-            .then((r) => (r.ok ? r.json() : null))
-            .then((out) => {
-              if (out?.question) {
+            .then((r) => {
+              if (r.ok) {
                 try {
                   const currMap = JSON.parse(localStorage.getItem('quiz-cotten:reviewer-edits:v1') || '{}') || {};
                   if (currMap[item.id]) {
-                    currMap[item.id] = {
-                      ...currMap[item.id],
-                      data: out.question,
-                      updated_at: new Date().toISOString(),
-                    };
+                    delete currMap[item.id];
                     localStorage.setItem('quiz-cotten:reviewer-edits:v1', JSON.stringify(currMap));
                   }
                 } catch {

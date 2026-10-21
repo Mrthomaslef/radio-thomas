@@ -38,37 +38,8 @@ async function promoteInlineImagesToTable(questionId, rawQuestion, adminPw) {
   const hasFigDataUrl = figs.some((f) => typeof f?.dataUrl === 'string');
   if (!hasEnonceDataUrl && !hasFigDataUrl) return rawQuestion;
 
-  const { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } = process.env;
-  let existingData = null;
-  if (questionId && SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY) {
-    try {
-      const r = await fetch(
-        `${SUPABASE_URL}/rest/v1/quiz_questions?id=eq.${encodeURIComponent(questionId)}&select=data&limit=1`,
-        {
-          headers: {
-            apikey: SUPABASE_PUBLISHABLE_KEY,
-            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-          },
-        }
-      );
-      if (r.ok) {
-        const rows = await r.json();
-        existingData = rows?.[0]?.data || null;
-      }
-    } catch {
-      // Ignore fetch error
-    }
-  }
-
-  const convertOne = async (imgObj, existingImgObj, textKey) => {
+  const convertOne = async (imgObj, textKey) => {
     if (!imgObj || typeof imgObj !== 'object' || typeof imgObj.dataUrl !== 'string') return imgObj;
-    // If the database already holds a lossless uploaded image for this slot, keep its upload ID and update the caption/alt
-    if (existingImgObj?.upload && /^[a-f0-9]{32}$/.test(existingImgObj.upload)) {
-      return {
-        upload: existingImgObj.upload,
-        [textKey]: imgObj[textKey] || existingImgObj[textKey] || '',
-      };
-    }
     const m = imgObj.dataUrl.match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/]+=*)$/);
     if (!m) return imgObj;
     const [, mime, b64] = m;
@@ -95,16 +66,11 @@ async function promoteInlineImagesToTable(questionId, rawQuestion, adminPw) {
 
   const nextQuestion = { ...rawQuestion };
   if (hasEnonceDataUrl) {
-    nextQuestion.enonce_image = await convertOne(
-      rawQuestion.enonce_image,
-      existingData?.enonce_image,
-      'alt'
-    );
+    nextQuestion.enonce_image = await convertOne(rawQuestion.enonce_image, 'alt');
   }
   if (hasFigDataUrl) {
-    const existingFigs = Array.isArray(existingData?.correction_figures) ? existingData.correction_figures : [];
     nextQuestion.correction_figures = await Promise.all(
-      figs.map((f, idx) => convertOne(f, existingFigs[idx] || null, 'caption'))
+      figs.map((f) => convertOne(f, 'caption'))
     );
   }
   return nextQuestion;

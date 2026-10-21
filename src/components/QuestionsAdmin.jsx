@@ -6,6 +6,7 @@ import {
   REVIEWERS,
   readLocalReviewerEdits,
   writeLocalReviewerEdit,
+  removeLocalReviewerEdit,
   submitReviewerQuestionEdit,
   submitQuizReviewNotification,
 } from '../data/reports.js';
@@ -532,10 +533,10 @@ export default function QuestionsAdmin({
       for (const [id, localEd] of Object.entries(localEditsMap)) {
         if (localEd?.id && localEd?.data) {
           const srv = serverById.get(id);
-          const { row: mergedRow, changedLocal, shouldSyncToServer } = mergeLocalAndServerRow(id, localEd, srv);
+          const { row: mergedRow, removeLocal, shouldSyncToServer } = mergeLocalAndServerRow(id, localEd, srv);
           byId.set(id, mergedRow);
-          if (changedLocal) {
-            writeLocalReviewerEdit(mergedRow);
+          if (removeLocal) {
+            removeLocalReviewerEdit(id);
           }
           if (shouldSyncToServer) {
             idsToSync.add(id);
@@ -574,15 +575,8 @@ export default function QuestionsAdmin({
             position: row.position || 0,
             question: mergedData,
           })
-            .then((out) => {
-              if (out?.question) {
-                const promotedRow = {
-                  ...row,
-                  data: out.question,
-                  updated_at: new Date().toISOString(),
-                };
-                writeLocalReviewerEdit(promotedRow);
-              }
+            .then(() => {
+              removeLocalReviewerEdit(row.id);
             })
             .catch(() => {});
         }
@@ -1047,13 +1041,14 @@ export default function QuestionsAdmin({
         position: currentEditing.position,
         question: nextQ,
       });
+      // Once saved in the central Supabase database, remove from local offline queue so colleagues' future edits are never overwritten
+      removeLocalReviewerEdit(finalId);
       if (saveOut?.question) {
         const promotedRow = {
           ...savedRow,
           data: saveOut.question,
           updated_at: new Date().toISOString(),
         };
-        writeLocalReviewerEdit(promotedRow);
         setRows((prev) =>
           (prev || []).map((r) => (r.id === finalId ? promotedRow : r))
         );
