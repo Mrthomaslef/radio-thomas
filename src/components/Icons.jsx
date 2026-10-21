@@ -9,15 +9,16 @@ const paths = {
   cross: 'M6 6l12 12M18 6L6 18',
   arrow: 'M5 12h14M13 6l6 6-6 6',
   play: 'M8 5v14l11-7z',
+  bookmark: 'M6 4h12a1 1 0 0 1 1 1v16l-7-4-7 4V5a1 1 0 0 1 1-1Z',
 };
 
-export default function Icon({ name, size = 22 }) {
+export default function Icon({ name, size = 22, filled = false }) {
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill="none"
+      fill={filled ? 'currentColor' : 'none'}
       stroke="currentColor"
       strokeWidth="1.7"
       strokeLinecap="round"

@@ -111,6 +111,7 @@ export function writeChapterProgress(chapterKey, data, name = readName()) {
       data.historyRecorded !== undefined
         ? Boolean(data.historyRecorded)
         : Boolean(data.sent || prev.historyRecorded),
+    resetAt: data.resetAt !== undefined ? data.resetAt : prev.resetAt || 0,
   };
   writeRawMap(name, all);
   notify();
@@ -120,7 +121,12 @@ export function writeChapterProgress(chapterKey, data, name = readName()) {
 export function clearChapterProgress(chapterKey, name = readName()) {
   if (!name) return;
   const all = readRawMap(name);
-  all[chapterKey] = { answers: {}, sent: false, historyRecorded: false };
+  all[chapterKey] = {
+    answers: {},
+    sent: false,
+    historyRecorded: false,
+    resetAt: Date.now(),
+  };
   writeRawMap(name, all);
   notify();
   schedulePush(name);
@@ -133,6 +139,71 @@ export function writeQuestionAnswer(chapterKey, questionId, picked, name = readN
   if (picked && picked.length) answers[questionId] = picked;
   else delete answers[questionId];
   writeChapterProgress(chapterKey, { answers, sent: cur.sent }, name);
+}
+
+const BOOKMARKS_CHAPTER_KEY = 'ch97';
+const BOOKMARKS_STORAGE_PREFIX = 'quiz-cotten:bookmarks:v1:';
+
+function readLocalBookmarksMap(name) {
+  const k = normKey(name);
+  if (!k) return {};
+  try {
+    const raw = JSON.parse(localStorage.getItem(`${BOOKMARKS_STORAGE_PREFIX}${k}`) || '{}');
+    return raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeLocalBookmarksMap(name, map) {
+  const k = normKey(name);
+  if (!k) return;
+  try {
+    localStorage.setItem(`${BOOKMARKS_STORAGE_PREFIX}${k}`, JSON.stringify(map));
+  } catch {
+    // Ignore storage errors in private mode
+  }
+}
+
+export function readBookmarks(name = readName()) {
+  if (!name) return {};
+  const localMap = readLocalBookmarksMap(name);
+  const all = readAllProgress(name);
+  const remoteAns = all[BOOKMARKS_CHAPTER_KEY]?.answers || {};
+  const out = {};
+
+  for (const [qid, val] of Object.entries(remoteAns)) {
+    if (Array.isArray(val) && val[0] === 'A') {
+      out[qid] = true;
+    }
+  }
+  for (const [qid, isOn] of Object.entries(localMap)) {
+    if (isOn) out[qid] = true;
+    else delete out[qid];
+  }
+  return out;
+}
+
+export function isQuestionBookmarked(questionId, name = readName()) {
+  if (!questionId) return false;
+  const map = readBookmarks(name);
+  return Boolean(map[questionId]);
+}
+
+export function toggleQuestionBookmark(questionId, name = readName()) {
+  if (!name || !questionId) return false;
+  const current = readBookmarks(name);
+  const nextVal = !current[questionId];
+
+  const localMap = readLocalBookmarksMap(name);
+  localMap[questionId] = nextVal;
+  writeLocalBookmarksMap(name, localMap);
+
+  const cur = readChapterProgress(BOOKMARKS_CHAPTER_KEY, name);
+  const answers = { ...(cur.answers || {}) };
+  answers[questionId] = [nextVal ? 'A' : 'B'];
+  writeChapterProgress(BOOKMARKS_CHAPTER_KEY, { answers, sent: true }, name);
+  return nextVal;
 }
 
 const HISTORY_CHAPTER_KEY = 'ch98';
@@ -411,6 +482,31 @@ export async function syncProgressFromServer(name = readName()) {
 
     for (const [ch, locVal] of Object.entries(local)) {
       const remVal = remote[ch] || { answers: {}, sent: false };
+      const locReset = Number(locVal?.resetAt) || 0;
+      const remReset = Number(remVal?.resetAt) || 0;
+
+      // If the user reset this chapter locally more recently than the server copy, keep the local reset state
+      if (locReset > remReset) {
+        merged[ch] = {
+          answers: locVal.answers || {},
+          sent: Boolean(locVal.sent),
+          historyRecorded: Boolean(locVal.historyRecorded || locVal.sent),
+          resetAt: locReset,
+        };
+        localHasNewer = true;
+        continue;
+      }
+
+      if (remReset > locReset) {
+        merged[ch] = {
+          answers: remVal.answers || {},
+          sent: Boolean(remVal.sent),
+          historyRecorded: Boolean(remVal.historyRecorded || remVal.sent),
+          resetAt: remReset,
+        };
+        continue;
+      }
+
       const mergedAnswers = { ...(remVal.answers || {}), ...(locVal.answers || {}) };
       if (Object.keys(mergedAnswers).length > Object.keys(remVal.answers || {}).length) {
         localHasNewer = true;
@@ -421,6 +517,7 @@ export async function syncProgressFromServer(name = readName()) {
         historyRecorded: Boolean(
           remVal.historyRecorded || locVal.historyRecorded || remVal.sent || locVal.sent
         ),
+        resetAt: Math.max(locReset, remReset),
       };
     }
 

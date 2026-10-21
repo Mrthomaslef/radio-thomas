@@ -8,6 +8,8 @@ import {
   clearChapterProgress,
   writeQuestionAnswer,
   recordQuizAttempt,
+  readBookmarks,
+  toggleQuestionBookmark,
   subscribePlayer,
   syncProgressFromServer,
 } from '../data/player.js';
@@ -140,6 +142,7 @@ export function QuizPlayer({
   const [answers, setAnswers] = useState(saved.answers || {}); // qid -> picked item ids
   const [sent, setSent] = useState(Boolean(alreadyCompletedOnMount));
   const [historyRecorded, setHistoryRecorded] = useState(Boolean(alreadyCompletedOnMount));
+  const [bookmarks, setBookmarks] = useState(() => (preview ? {} : readBookmarks()));
   const [picked, setPicked] = useState([]);
   const [showCorrection, setShowCorrection] = useState(false);
   const [zoom, setZoom] = useState(null);
@@ -172,12 +175,21 @@ export function QuizPlayer({
     if (preview || randomMode) return undefined;
     syncProgressFromServer();
     return subscribePlayer(() => {
+      setBookmarks(readBookmarks());
       const latest = readChapterProgress(key);
-      setAnswers((prev) => ({ ...(latest.answers || {}), ...prev }));
-      if (latest.sent || latest.historyRecorded) {
-        setSent(true);
-        setHistoryRecorded(true);
-        recordedHistoryRef.current = true;
+      const latestAns = latest.answers || {};
+      if (Object.keys(latestAns).length === 0 && !latest.sent) {
+        setAnswers({});
+        setSent(false);
+        setHistoryRecorded(false);
+        recordedHistoryRef.current = false;
+      } else {
+        setAnswers((prev) => ({ ...latestAns, ...prev }));
+        if (latest.sent || latest.historyRecorded) {
+          setSent(true);
+          setHistoryRecorded(true);
+          recordedHistoryRef.current = true;
+        }
       }
     });
   }, [key, preview, randomMode]);
@@ -247,15 +259,25 @@ export function QuizPlayer({
   };
 
   const restart = () => {
+    if (randomMode && !preview) {
+      for (const item of questions) {
+        writeQuestionAnswer(item._chapterKey || key, item.id, null);
+      }
+    }
     if (onRestart) {
       onRestart();
       return;
     }
-    if (!preview && !randomMode) clearChapterProgress(key);
     recordedHistoryRef.current = false;
     wasRestartedRef.current = true;
     setHistoryRecorded(false);
-    setAnswers({}); setSent(false); setPicked([]); setShowCorrection(false); setIdx(0); setSaveState('idle');
+    setAnswers({});
+    setSent(false);
+    setPicked([]);
+    setShowCorrection(false);
+    setIdx(0);
+    setSaveState('idle');
+    if (!preview && !randomMode) clearChapterProgress(key);
     resetReportBox();
   };
 
@@ -361,11 +383,6 @@ export function QuizPlayer({
       <header className="cq-head">
         <div className="cq-top-links">
           <a href={backHref} className="cq-back">{backLabel}</a>
-          <div className="cq-top-right">
-            <a href="#/classement" className="cq-back">Classement</a>
-            <span className="cq-sep" aria-hidden="true">·</span>
-            <a href="#/progression" className="cq-back">Ma progression →</a>
-          </div>
         </div>
         <h1>{c.titre}</h1>
         <div className="cq-stats" aria-live="polite">
@@ -397,7 +414,6 @@ export function QuizPlayer({
         <section className="cq-card cq-end">
           <h2>Quiz terminé !</h2>
           <p className="cq-big">{score} / {total}</p>
-          <p>Une question compte juste seulement si toutes les bonnes réponses (et elles seules) sont cochées.</p>
           {answeredAll.length === total && (
             <p className={`cq-save cq-save-${saveState}`} role="status">
               {sent && '✓ Résultat enregistré'}
@@ -409,12 +425,13 @@ export function QuizPlayer({
             <button className="btn btn-ghost" onClick={restart}>
               {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
             </button>
-            <a className="btn btn-ghost" href="#/classement">Classement</a>
-            <a className="btn btn-ghost" href="#/progression">Ma progression</a>
             <a className="btn" href={backHref}>
               {randomMode ? 'Configurer un autre quiz' : 'Autres chapitres'}
             </a>
           </div>
+          <p className="cq-restart-note">
+            Attention : cliquer sur « {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'} » réinitialise vos réponses pour ces questions et les repasse en orange (non faites).
+          </p>
         </section>
       ) : (
         <section className="cq-card" key={q.id}>
@@ -473,6 +490,25 @@ export function QuizPlayer({
                 <button type="button" className="btn btn-small btn-ghost" onClick={retryQuestion}>
                   Réessayer la question
                 </button>
+                {!preview && (
+                  <button
+                    type="button"
+                    className={`btn btn-small btn-ghost cq-bookmark-btn ${bookmarks[q.id] ? 'is-bookmarked' : ''}`}
+                    onClick={() => {
+                      toggleQuestionBookmark(q.id);
+                      setBookmarks(readBookmarks());
+                    }}
+                    aria-pressed={Boolean(bookmarks[q.id])}
+                    title={
+                      bookmarks[q.id]
+                        ? 'Retirer des questions enregistrées'
+                        : 'Enregistrer cette question dans Ma progression'
+                    }
+                  >
+                    <Icon name="bookmark" size={16} filled={Boolean(bookmarks[q.id])} />
+                    {bookmarks[q.id] ? 'Enregistrée' : 'Enregistrer'}
+                  </button>
+                )}
               </div>
 
               {showCorrection && (

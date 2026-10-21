@@ -1260,6 +1260,54 @@ a.cq-dot:hover { transform: scale(1.08); }
   color: var(--good);
 }
 
+.cq-restart-note {
+  margin-top: 4px;
+  font-size: 0.84rem;
+  color: var(--muted);
+  max-width: 480px;
+  line-height: 1.45;
+}
+
+.cq-bookmark-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cq-bookmark-btn.is-bookmarked {
+  border-color: var(--cyan);
+  background: rgba(56, 225, 255, 0.14);
+  color: var(--cyan);
+}
+
+.prog-bookmarks-list {
+  display: grid;
+  gap: 10px;
+  padding: 6px 0;
+}
+.prog-bookmark-card {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+}
+.prog-bookmark-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.prog-bookmark-enonce {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+.prog-bookmark-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
 
 
 

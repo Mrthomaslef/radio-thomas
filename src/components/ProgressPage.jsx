@@ -6,6 +6,8 @@ import {
   saveName,
   readAllProgress,
   readQuizHistory,
+  readBookmarks,
+  toggleQuestionBookmark,
   clearChapterProgress,
   subscribePlayer,
   syncProgressFromServer,
@@ -46,7 +48,9 @@ export default function ProgressPage() {
   const [draft, setDraft] = useState(pseudo);
   const [editing, setEditing] = useState(!pseudo);
   const [progress, setProgress] = useState(() => readAllProgress(readName()));
+  const [bookmarks, setBookmarks] = useState(() => readBookmarks(readName()));
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [openThemes, setOpenThemes] = useState({});
 
   const toggleTheme = (themeId) => {
@@ -58,6 +62,7 @@ export default function ProgressPage() {
       const n = readName();
       setPseudo(n);
       setProgress(readAllProgress(n));
+      setBookmarks(readBookmarks(n));
     };
     if (readName()) syncProgressFromServer(readName());
     return subscribePlayer(refresh);
@@ -70,6 +75,7 @@ export default function ProgressPage() {
     saveName(clean);
     setPseudo(clean);
     setProgress(readAllProgress(clean));
+    setBookmarks(readBookmarks(clean));
     setEditing(false);
   };
 
@@ -102,12 +108,31 @@ export default function ProgressPage() {
 
   const history = readQuizHistory(pseudo, byChapter);
 
+  const bookmarkedList = [];
+  for (const t of themes) {
+    for (const c of t.chapters) {
+      const qs = byChapter[c.id] || [];
+      qs.forEach((q, idx) => {
+        if (bookmarks[q.id]) {
+          bookmarkedList.push({
+            id: q.id,
+            chapterId: c.id,
+            chapterTitle: c.title,
+            themeTitle: t.title,
+            number: idx + 1,
+            enonce: q.enonce,
+            type: q.type,
+          });
+        }
+      });
+    }
+  }
+
   return (
     <section className="prog">
       <header className="prog-head">
         <div className="cq-top-links">
           <a href="#/" className="cq-back">← Accueil</a>
-          <a href="#/classement" className="cq-back">Classement →</a>
         </div>
         <h1>Ma <span className="grad">progression</span></h1>
 
@@ -203,6 +228,62 @@ export default function ProgressPage() {
                         ))}
                       </tbody>
                     </table>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="theme prog-collapse">
+            <button
+              type="button"
+              className={`theme-head prog-collapse-btn ${bookmarksOpen ? 'on' : ''}`}
+              onClick={() => setBookmarksOpen((v) => !v)}
+              aria-expanded={bookmarksOpen}
+            >
+              <span>Questions enregistrées (favoris)</span>
+              <span className="prog-collapse-meta">
+                <span className="theme-count">
+                  {bookmarkedList.length}{' '}
+                  {bookmarkedList.length > 1 ? 'questions enregistrées' : 'question enregistrée'}
+                </span>
+                <span className={`prog-chevron ${bookmarksOpen ? 'open' : ''}`} aria-hidden="true">▾</span>
+              </span>
+            </button>
+
+            {bookmarksOpen && (
+              <div className="prog-collapse-body">
+                {bookmarkedList.length === 0 ? (
+                  <p className="prog-empty">
+                    Aucune question enregistrée pour le moment. Après avoir validé une réponse dans un quiz, cliquez sur le bouton « Enregistrer » pour la retrouver ici.
+                  </p>
+                ) : (
+                  <div className="prog-bookmarks-list">
+                    {bookmarkedList.map((b) => (
+                      <article key={b.id} className="cq-card prog-bookmark-card">
+                        <div className="prog-bookmark-top">
+                          <span className="prog-ch-num">
+                            {b.themeTitle} — {b.chapterTitle} · Question {b.number}
+                          </span>
+                          <button
+                            type="button"
+                            className="link-btn prog-reset"
+                            onClick={() => {
+                              toggleQuestionBookmark(b.id, pseudo);
+                              setBookmarks(readBookmarks(pseudo));
+                            }}
+                          >
+                            Retirer
+                          </button>
+                        </div>
+                        <p className="prog-bookmark-enonce">{b.enonce}</p>
+                        <div className="prog-bookmark-actions">
+                          <a href={`#/quiz/${b.chapterId}?q=${b.number}`} className="btn btn-small">
+                            Revoir la question <Icon name="arrow" size={15} />
+                          </a>
+                        </div>
+                      </article>
+                    ))}
                   </div>
                 )}
               </div>
