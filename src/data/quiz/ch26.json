@@ -6,5 +6,672 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c26-q01",
+      "type": "QRM",
+      "difficulty": 1,
+      "theme": "Anatomie et biomécanique du plan médial",
+      "enonce": "Concernant l’anatomie et la biomécanique du plan ligamentaire médial du genou, quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le plan ligamentaire médial est organisé en trois couches : le fascia crural en superficie, le plan ligamentaire superficiel au milieu et le plan ligamentaire profond en profondeur",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le ligament collatéral médial (LCM) superficiel s’insère en distalité uniquement sur le tubercule de Gerdy, en avant des tendons de la patte d’oie",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le ligament oblique postérieur (LOP) est une composante postérieure et superficielle du LCM composée de trois faisceaux (superficiel, central et capsulaire) qui appartient au point d’angle postéromédial (PAPM)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le faisceau superficiel du LCM protège le genou de la laxité en valgus en flexion, tandis que le LOP le protège du valgus en extension",
+          "correct": true
+        }
+      ],
+      "explication": "Le plan médial comporte trois couches (fascia crural, plan superficiel, plan profond). Le plan superficiel comprend le LCM superficiel et le ligament oblique postérieur (LOP, subdivisé en faisceaux superficiel, central — le plus important — et capsulaire), ce dernier faisant partie intégrante du PAPM. Sur le plan biomécanique, le LCM superficiel lutte contre le valgus en flexion et le LOP contre le valgus en extension. En revanche, le LCM superficiel présente deux insertions tibiales (l’une proximale recouvrant le tendon antérieur du semi-membraneux, l’autre distale sur le versant postéromédial du tibia en profondeur des tendons de la patte d’oie ; le tubercule de Gerdy est latéral).",
+      "correction_figures": [],
+      "source": {
+        "page": 707,
+        "element": "Pages 707 et 708",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q02",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "Lésion Stener-like du LCM",
+      "enonce": "Un footballeur consulte après un traumatisme en valgus forcé du genou. Bien que la majorité des entorses graves (grade 3) isolées du ligament collatéral médial (LCM) cicatrisent sous traitement orthopédique par attelle, l’IRM de ce patient met en évidence une désinsertion tibiale distale complète du faisceau superficiel du LCM dont l’extrémité rompue est venue se loger superficiellement au-dessus des tendons de la patte d’oie. Comment nomme-t-on cette entité et quelle en est la conséquence thérapeutique directe ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il s’agit d’un syndrome de Palmer et Trillat, nécessitant uniquement une infiltration de corticoïdes à la 4e semaine",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il s’agit d’une lésion à « effet Stener-like » du LCM, qui empêche la cicatrisation spontanée par interposition des tendons de la patte d’oie, laissant persister une laxité en valgus et justifiant une réinsertion chirurgicale anatomique sous ces tendons",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il s’agit d’une fracture de Segond inversée, imposant une méniscectomie totale en urgence",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il s’agit d’une maladie de Pellegrini-Stieda aiguë, traitée par résection arthroscopique de la patte d’oie",
+          "correct": false
+        }
+      ],
+      "explication": "Normalement, l’insertion tibiale distale du LCM superficiel se situe en profondeur des tendons de la patte d’oie (sartorius, gracile, semi-tendineux). Lors d’une rupture distale, le passage du moignon ligamentaire au-dessus des tendons de la patte d’oie réalise un « effet Stener-like » (par analogie avec le pouce) : cette interposition anatomique empêche la cicatrisation ligamentaire sur l’os et entretient une laxité en valgus, ce qui constitue une indication de réinsertion chirurgicale du LCM sous les tendons de la patte d’oie. Le syndrome de Palmer et Trillat correspond à une rétraction cicatricielle tardive du LCM limitant la flexion/extension, et la fracture de Segond inversée est l’avulsion osseuse tibiale du faisceau profond méniscotibial du LCM, souvent associée à une lésion du LCP et du ménisque médial.",
+      "correction_figures": [],
+      "source": {
+        "page": 708,
+        "element": "Pages 708 à 712",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q03",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Point d’angle postéromédial (PAPM)",
+      "enonce": "Quelles structures anatomiques font partie des cinq composants majeurs du point d’angle postéromédial (PAPM) et quelles sont les particularités des insertions distales du muscle semi-membraneux ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le PAPM est composé du ligament oblique postérieur (LOP), des expansions tendineuses distales du muscle semi-membraneux, du ligament poplité oblique (LPO), de la capsule postéromédiale et de la corne postérieure du ménisque médial",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Les faisceaux superficiel et profond du ligament collatéral médial (LCM) constituent les deux éléments centraux du PAPM",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle semi-membraneux est le principal stabilisateur dynamique du PAPM ; sa contraction met en tension le PAPM et exerce une traction postérieure sur la corne postérieure du ménisque médial, évitant son écrasement fémorotibial",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le faisceau récurrent du semi-membraneux s’unit au faisceau capsulaire du LOP pour former le ligament poplité oblique (LPO), structure transversale appartenant à la fois au PAPM et au point d’angle postérolatéral (PAPL)",
+          "correct": true
+        }
+      ],
+      "explication": "Le PAPM regroupe les structures situées entre le bord postérieur du LCM superficiel et le LCP : LOP, expansions du semi-membraneux (tendons antérieur/réfléchi, direct, inférieur/poplité, expansion capsulaire et faisceau récurrent), LPO, capsule postéromédiale et corne postérieure du ménisque médial. Bien qu’en contact étroit avec le PAPM, les faisceaux superficiel et profond du LCM n’en font pas partie. Le semi-membraneux stabilise dynamiquement le PAPM (frein au valgus en extension et à la rotation latérale en flexion) et tracte la corne postérieure méniscale. Son faisceau récurrent forme avec le LOP le ligament poplité oblique (LPO), qui relie le PAPM au PAPL.",
+      "correction_figures": [],
+      "source": {
+        "page": 712,
+        "element": "Pages 712, 713 et 722",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q04",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Bursopathie du semi-membraneux",
+      "enonce": "Un patient d’âge moyen présentant une gonarthrose médiale consulte pour une douleur postéromédiale insidieuse du genou. L’IRM met en évidence une collection liquidienne postéromédiale entourant les tendons direct et antérieur du muscle semi-membraneux, dessinant une forme caractéristique en « U inversé » dans le plan axial et en « J » dans le plan sagittal. De quelle entité s’agit-il et comment se situe-t-elle topographiquement par rapport au kyste poplité et à la bursopathie de la patte d’oie ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il s’agit d’un kyste poplité typique de Baker, situé entre le tendon du gastrocnémien médial et le semi-membraneux",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il s’agit d’une bursopathie du muscle semi-membraneux, qui est située plus médialement qu’un kyste poplité et plus proximalement qu’une bursopathie des tendons de la patte d’oie",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il s’agit d’une bursopathie ansérine (de la patte d’oie), située 5 cm sous l’interligne articulaire en avant du LCM",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il s’agit d’un kyste adventiciel de l’artère poplitée",
+          "correct": false
+        }
+      ],
+      "explication": "La bursopathie du muscle semi-membraneux entoure les tendons antérieur et direct de ce muscle en les séparant du plateau tibial médial, ce qui lui confère un aspect caractéristique en « U inversé » sur les coupes axiales et en « J » sur les coupes sagittales. Topographiquement, elle est plus médiale qu’un kyste poplité (qui naît plus en arrière et en dedans entre le semi-membraneux et le chef médial du gastrocnémien) et plus proximale qu’une bursopathie de la patte d’oie (qui siège environ 5 cm sous l’interligne articulaire, sous l’insertion des muscles sartorius, gracile et semi-tendineux). Elle peut en revanche communiquer avec la bourse du LCM (située entre les faisceaux superficiel et profond du LCM en regard du segment moyen du ménisque médial).",
+      "correction_figures": [],
+      "source": {
+        "page": 716,
+        "element": "Pages 716 à 718",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q05",
+      "type": "QRM",
+      "difficulty": 1,
+      "theme": "Patte d’oie et nerf saphène",
+      "enonce": "Concernant l’anatomie des tendons de la patte d’oie, leur pathologie bursotendineuse et le nerf saphène, quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "D’avant en arrière et de haut en bas à leur insertion tibiale (située 5 cm sous l’interligne, en avant du LCM distal), on trouve successivement les tendons des muscles sartorius, gracile et semi-tendineux",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La bourse ansérine (de la patte d’oie) communique constamment et largement avec la cavité articulaire fémorotibiale médiale",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une bursopathie volumineuse de la patte d’oie ou un prélèvement chirurgical des tendons ischiojambiers (reconstruction du LCA) peuvent comprimer ou léser le nerf saphène (ou son rameau infrapatellaire), entraînant des douleurs et paresthésies de la face médiale du genou et de la jambe",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le syndrome de friction de la crête tibiale (conflit entre le LCM et le condyle tibial médial) est un diagnostic différentiel qui donne des douleurs plus proximales (environ 2,5 cm sous l’interligne) chez le sujet jeune et sportif",
+          "correct": true
+        }
+      ],
+      "explication": "Les trois tendons de la patte d’oie s’insèrent d’avant en arrière et de haut en bas dans l’ordre suivant : sartorius (épine iliaque antérosupérieure), gracile (pubis) et semi-tendineux (tubérosité ischiatique). La bourse ansérine sous-jacente ne communique jamais avec l’articulation fémorotibiale. Le nerf saphène (branche sensitive du nerf fémoral sortant du canal des adducteurs puis passant entre sartorius et gracile avant de donner son rameau infrapatellaire et son rameau jambier) peut être comprimé par une bursite ansérine ou lésé lors de voies d’abord antéromédiales / prélèvement de la patte d’oie (DIDT). Enfin, le syndrome de friction de la crête tibiale siège à 2,5 cm sous l’interligne contre 5 cm pour la patte d’oie.",
+      "correction_figures": [],
+      "source": {
+        "page": 718,
+        "element": "Pages 718 et 719",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q06",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Point d’angle postérolatéral (PAPL)",
+      "enonce": "Quels sont les trois stabilisateurs principaux du point d’angle postérolatéral (PAPL) et quelles sont leurs insertions et fonctions biomécaniques respectives ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Les trois éléments principaux du PAPL sont le ligament collatéral latéral (LCL), le tendon du muscle poplité et le ligament poplitéo-fibulaire (LPF)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le LCL est le premier frein au varus (surtout à 30° de flexion) ; sur le fémur, il s’insère en haut et en arrière de l’épicondyle latéral, donc au-dessus et en arrière de l’insertion du tendon poplité (qui s’insère dans la fossette poplitée, en avant et en dessous du LCL)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle poplité est le plus puissant stabilisateur dynamique latéral du genou, prévenant l’excès de rotation tibiale latérale ; son tendon peut contenir un os sésamoïde accessoire (la cyamella)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le ligament poplitéo-fibulaire (LPF), quasi constant (94-98 %), s’étend de la jonction myotendineuse du poplité à l’apex de la tête de la fibula et constitue le deuxième frein au varus ainsi qu’un frein à la rotation latérale et à la translation tibiale postérieure",
+          "correct": true
+        }
+      ],
+      "explication": "Le PAPL agit comme frein primaire au varus et à la rotation tibiale latérale, et comme frein secondaire à la translation tibiale postérieure. Ses trois stabilisateurs majeurs sont le LCL (1er frein statique au varus à 30° de flexion, inséré en haut et en arrière de l’épicondyle latéral et sur le versant antérolatéral de la tête fibulaire entre les chefs court et long du biceps fémoral), le tendon poplité (stabilisateur dynamique majeur contre la rotation tibiale latérale, inséré dans la fossette poplitée en avant et sous le LCL, relié au ménisque latéral par les fascicules méniscopoplités) et le ligament poplitéo-fibulaire (2e frein au varus, inséré sur l’apex fibulaire).",
+      "correction_figures": [],
+      "source": {
+        "page": 720,
+        "element": "Pages 720 à 722",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q07",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "Dial test et lésions combinées PAPL + LCP",
+      "enonce": "Vous examinez un patient victime d’un traumatisme du genou en hyperextension et varus. Vous suspectez une atteinte du point d’angle postérolatéral (PAPL) et cherchez à savoir si le ligament croisé postérieur (LCP) est également rompu (association fréquente dans 62 % des cas). Lors de la réalisation comparative du « dial test » (mesure de la rotation tibiale latérale passive par rapport au côté sain) et des clichés radiographiques en contrainte, quel profil sémiologique permet de différencier une lésion isolée du PAPL d’une lésion combinée du PAPL et du LCP ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une majoration de la rotation tibiale latérale (> 10°) uniquement à 90° de flexion signe une lésion isolée du PAPL, alors qu’une majoration uniquement à 30° signe une lésion combinée PAPL + LCP",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Au dial test, une majoration de la rotation tibiale latérale (> 10°) à 30° de flexion qui disparaît à 90° témoigne d’une lésion isolée du PAPL, tandis qu’une majoration présente à la fois à 30° et à 90° de flexion (ainsi qu’une translation tibiale postérieure > 10 mm sur le cliché en tiroir postérieur et une ouverture en varus en extension) témoigne d’une lésion combinée du PAPL et du LCP",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un bâillement radiographique en varus forcé de 2,5 mm suffit à affirmer une rupture complète combinée du LCL, du PAPL et du LCP",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le dial test évalue la rotation tibiale médiale et n’est positif que dans les ruptures isolées du ligament antérolatéral (LAL)",
+          "correct": false
+        }
+      ],
+      "explication": "Le dial test compare la rotation tibiale latérale à 30° et à 90° de flexion : une augmentation > 10° à 30° de flexion indique une lésion isolée du PAPL, tandis qu’une augmentation persistant à 90° de flexion (ou présente à tout degré de flexion avec tiroir postérieur et varus) démontre une lésion associée du LCP. Sur les radiographies en contrainte à distance, un bâillement latéral en varus forcé de 2,1-2,7 à 4 mm signe une rupture isolée du LCL, alors qu’un bâillement > 4 mm signe une rupture combinée du LCL et du PAPL ; enfin, sur le cliché de profil en tiroir postérieur, une translation tibiale postérieure > 10 mm signe l’atteinte conjointe du PAPL et du LCP.",
+      "correction_figures": [],
+      "source": {
+        "page": 723,
+        "element": "Pages 723 et 724",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q08",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "Fracture-avulsion de la fibula (Arcuate sign)",
+      "enonce": "Sur la radiographie de face d’un genou traumatique, vous observez une fracture-avulsion de la tête de la fibula (« arcuate sign »). Comment la taille et la topographie exacte du fragment osseux avulsé vous permettent-elles de déduire précisément quelles structures anatomiques du PAPL sont désinsérées ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Un petit fragment (0,8 à 1 cm) peu déplacé à trait transversal détachant l’apex (styloïde) postérosupérieur de la fibula correspond à l’insertion des ligaments poplitéo-fibulaire, fabellofibulaire et poplité arqué ; tandis qu’un fragment plus volumineux (1,5 à 2,5 cm), plus latéral et déplacé vers le haut correspond à l’insertion conjointe du LCL et du tendon du muscle biceps fémoral",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un petit fragment de l’apex fibulaire correspond à l’insertion du tractus iliotibial, et un gros fragment latéral correspond à l’insertion du tendon poplité",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Tout fragment fibulaire, quelle que soit sa taille, correspond exclusivement à l’avulsion du nerf fibulaire commun",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un petit fragment de l’apex correspond au LCL et au biceps fémoral, tandis qu’un gros fragment déplacé correspond uniquement au ligament méniscofibulaire",
+          "correct": false
+        }
+      ],
+      "explication": "L’analyse anatomique de la tête de la fibula permet de distinguer deux types d’avulsions osseuses dans le cadre de l’arcuate sign : 1) L’avulsion de l’apex (processus styloïde) de la fibula détache un petit fragment transversal (0,8 à 1 cm) peu déplacé où s’insèrent les ligaments poplitéo-fibulaire, poplité arqué et fabellofibulaire (son équivalent IRM sans fracture déplacée est l’œdème osseux isolé de l’apex fibulaire). 2) L’avulsion de la partie latérale de la tête fibulaire détache un fragment beaucoup plus volumineux (1,5 à 2,5 cm) et volontiers ascensionné par la traction puissante du muscle biceps fémoral et du LCL qui s’y insèrent.",
+      "correction_figures": [],
+      "source": {
+        "page": 721,
+        "element": "Pages 721, 723, 725 et 726",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q09",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Lésions du muscle poplité et prise en charge du PAPL",
+      "enonce": "Concernant les lésions traumatiques du muscle poplité et la prise en charge globale des lésions du PAPL en IRM, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Les lésions du muscle poplité siègent le plus souvent à sa jonction myotendineuse (bien plus fréquemment qu’à son insertion fémorale proximale) et sont rarement isolées (8 % des cas)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’identification IRM des lésions myotendineuses du poplité est cruciale car cette région extra-articulaire est inaccessible lors d’une arthroscopie standard",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Dans les lésions combinées du PAPL et du LCA, on observe fréquemment en IRM des contusions osseuses de la partie antéromédiale du condyle fémoral médial et/ou du plateau tibial médial (par mécanisme d’hyperextension-varus)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "En cas de lésion aiguë de grade 3 du PAPL (atteinte d’au moins deux structures majeures comme le LCL, le poplité ou la capsule), la chirurgie (reconstruction ou réparation sur avulsion) doit être réalisée rapidement dans les 3 semaines suivant le traumatisme pour éviter l’instabilité chronique et l’échec d’une ligamentoplastie croisée",
+          "correct": true
+        }
+      ],
+      "explication": "Les lésions du poplité touchent majoritairement la jonction myotendineuse (grades 1 à 3) et échappent à l’arthroscopie, d’où le rôle majeur de l’IRM. Les contusions osseuses antéromédiales fémorotibiales constituent un signe indirect classique de traumatisme en hyperextension-varus associant lésion du PAPL et du pivot central. Enfin, contrairement au plan médial, les lésions de grade 3 du PAPL cicatrisent mal spontanément et doivent être opérées à la phase aiguë (dans les 3 semaines), en privilégiant les reconstructions anatomiques (ou le réancrage d’une avulsion osseuse).",
+      "correction_figures": [],
+      "source": {
+        "page": 725,
+        "element": "Pages 725 à 728",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q10",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Ligament antérolatéral (LAL) et fracture de Segond",
+      "enonce": "Quelles sont les caractéristiques anatomiques, cliniques et radiologiques du ligament antérolatéral (LAL) et de ses lésions ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le LAL appartient à la 3e couche latérale ; il naît près de l’épicondyle fémoral latéral, a un trajet oblique en bas et en avant, s’attache en passant au ménisque latéral (jonction corne antérieure - tiers moyen) et s’insère sur le tibia à mi-chemin entre le tubercule de Gerdy et la tête de la fibula",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Il agit en synergie avec le LCA pour contrôler la rotation tibiale médiale et le phénomène de ressaut rotatoire en flexion",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La fracture de Segond correspond à l’avulsion osseuse corticale de l’insertion tibiale distale du LAL (et parfois des fibres postérieures de la bandelette iliotibiale) lors d’un traumatisme en flexion-varus-rotation médiale ; elle est très sensible (95 %) mais peu spécifique (10 %) d’une rupture du LCA",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Devant une lésion du LAL ou une fracture de Segond en IRM, il faut systématiquement rechercher une désinsertion périphérique du ménisque latéral en raison des fibres d’attache méniscale du LAL",
+          "correct": true
+        }
+      ],
+      "explication": "Le LAL s’étend de la région épicondylienne latérale à la face antérolatérale du tibia (6,5 mm sous l’interligne, à mi-distance entre le tubercule de Gerdy et la tête de la fibula), en envoyant des fibres au ménisque latéral qui forment un pont au-dessus de l’artère géniculée inférolatérale. Il contrôle la rotation médiale du tibia en synergie avec le LCA. En revanche, la fracture de Segond est très spécifique d’une rupture associée du LCA (> 75 %), mais elle est très peu sensible (observée dans seulement 1,25 % des ruptures du LCA).",
+      "correction_figures": [],
+      "source": {
+        "page": 728,
+        "element": "Pages 728 et 729",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q11",
+      "type": "QCU",
+      "difficulty": 1,
+      "theme": "Syndrome de la bandelette iliotibiale",
+      "enonce": "Chez un coureur de fond ou un cycliste présentant des douleurs antérolatérales du genou reproduites à la pression du condyle fémoral latéral à 30° de flexion, vous évoquez un syndrome de la bandelette iliotibiale (« syndrome de l’essuie-glace »). Quels éléments devez-vous connaître lors de l’interprétation de l’échographie ou de l’IRM de cette région ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’anomalie siège exclusivement sur l’enthèse distale du tubercule de Gerdy, sans jamais d’atteinte en regard du condyle fémoral",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’imagerie montre une infiltration œdémateuse (hyperintense en T2 / hypoéchogène) ou une bursite dans le tissu graisseux situé entre la partie postérieure du tractus iliotibial et le condyle fémoral latéral ; toutefois, cette anomalie doit toujours être corrélée à la clinique car elle s’observe fréquemment chez les sportifs asymptomatiques, et ne doit pas être confondue avec le prolongement normal du récessus articulaire fémoral latéral plus antérieur",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Ce syndrome est favorisé par un genu valgum sévère et une hypertonie des muscles abducteurs de la hanche",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le traitement chirurgical par résection complète du tractus iliotibial est indiqué dès la première semaine de douleur",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome de la bandelette iliotibiale résulte de la friction/compression de la graisse située entre le tractus iliotibial et le condyle fémoral latéral lors des flexions-extensions répétées (favorisé par la course en descente, le genu varum, l’excès de pronation de l’arrière-pied et la faiblesse des abducteurs de hanche / moyen glutéal). En IRM/échographie, l’infiltration ou la bursite siège en arrière du récessus articulaire fémoral latéral (qui ne doit pas être pris pour une bursite), et une infiltration liquidienne similaire pouvant exister chez le sportif asymptomatique, la corrélation clinique est impérative. Le traitement est avant tout médical et rééducatif.",
+      "correction_figures": [],
+      "source": {
+        "page": 729,
+        "element": "Pages 729 à 731",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q12",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "Ressaut du biceps fémoral et conflit avec le LCL",
+      "enonce": "Un sportif consulte pour un ressaut postérolatéral douloureux et audible du genou survenant vers 100-120° de flexion, majoré par la rotation médiale, que vous parvenez à réduire à l’examen en comprimant fermement la partie distale du tendon du muscle biceps fémoral. Un second patient consulte quant à lui pour des douleurs latérales d’effort en regard de la tête fibulaire sans aucun ressaut palpable ni dynamique, avec en IRM un œdème focal entre le ligament collatéral latéral (LCL) et une bande tendineuse antérieure épaisse. Quelle variante anatomique commune explique ces deux tableaux cliniques (ressaut du biceps fémoral et conflit avec le LCL) et quel examen permet de les départager dynamiquement ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une agénésie complète du muscle poplité ; départagée par l’arthroscanner",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une variante d’insertion distale du chef long du muscle biceps fémoral (notamment un bras antérieur épais et prédominant s’insérant anormalement sur le tibia en passant en dehors du LCL, ou l’absence de bras direct fibulaire) ; départagée par l’échographie dynamique en flexion-extension",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une luxation supérieure de type 4 de l’articulation tibiofibulaire proximale",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une hypertrophie de la cyamella au sein du tendon du biceps fémoral",
+          "correct": false
+        }
+      ],
+      "explication": "Normalement, le LCL s’insère sur la tête de la fibula entre les chefs court et long du biceps fémoral. L’existence d’une variante d’insertion distale du chef long du biceps fémoral — en particulier un bras antérieur épais prédominant s’insérant sur le tibia (ou une absence d’attache fibulaire directe) — peut provoquer soit un véritable « ressaut du biceps fémoral » (passage brutal du tendon sur le relief de la tête fibulaire à 100-120° de flexion), soit un syndrome de « conflit avec le LCL » sans ressaut (infiltration inflammatoire/bursite entre ce bras antérieur épais et le LCL sous-jacent). L’échographie est l’examen de choix car elle objective à la fois la variante d’insertion tibiale et la présence ou l’absence du ressaut lors des manœuvres dynamiques de flexion-extension.",
+      "correction_figures": [],
+      "source": {
+        "page": 721,
+        "element": "Pages 721, 731 et 732",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q13",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Articulation tibiofibulaire proximale et luxations",
+      "enonce": "Concernant l’articulation tibiofibulaire proximale et ses luxations traumatiques, quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Cette articulation synoviale communique avec l’articulation fémorotibiale (via le récessus subpoplité) dans environ 10 % des cas et sert notamment à dissiper les contraintes rotatoires provenant de la cheville",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La luxation antérolatérale (type 2) est de loin la plus fréquente (85 % des cas) ; elle survient lors d’une chute genou fléchi avec le pied en inversion et flexion plantaire, entraînant une rupture du complexe ligamentaire postérieur (moins résistant que l’antérieur)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Sur des radiographies normales du genou, l’axe prolongeant la tête de la fibula vers le haut doit pointer vers l’épicondyle fémoral latéral de face, et couper la partie postérieure de la ligne de Blumensaat de profil",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "En cas d’instabilité chronique douloureuse chez un jeune sportif, l’arthrodèse tibiofibulaire proximale est le traitement de première intention recommandé car elle n’a aucun retentissement sur la cheville",
+          "correct": false
+        }
+      ],
+      "explication": "L’articulation tibiofibulaire proximale communique dans 10 % des cas avec le genou et dissipe les forces de torsion de la cheville (les mouvements de la cheville majorent d’ailleurs la douleur en cas de luxation, tandis qu’il n’y a pas d’épanchement intra-articulaire du genou dans les formes isolées). La luxation antérolatérale (type 2, 85 %) déplace la tête fibulaire en dehors de face et en avant de profil, faisant perdre les repères normaux (axe fibulaire pointant vers l’épicondyle latéral de face et coupant l’arrière de la ligne de Blumensaat de profil). En revanche, l’arthrodèse (ou la résection de la tête fibulaire) est déconseillée chez le sujet jeune/sportif car elle rigidifie le cadre tibiofibulaire et entraîne des douleurs mécaniques secondaires à la cheville ; on lui préfère une ligamentoplastie anatomique.",
+      "correction_figures": [],
+      "source": {
+        "page": 732,
+        "element": "Pages 732 à 735",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q14",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "Kystes mucoïdes intraneuraux fibulaires",
+      "enonce": "Un patient consulte pour un déficit moteur de la flexion dorsale du pied (steppage) et des paresthésies de la face antérolatérale de la jambe. L’IRM révèle une formation kystique tubulée d’allure intraneurale disséquant le nerf fibulaire commun et remontant vers la terminaison du nerf sciatique. Par quel chemin anatomique précis ce kyste mucoïde intraneural s’est-il formé et quel élément est indispensable à préciser au chirurgien sur le compte rendu d’imagerie pour éviter une récidive postopératoire ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il provient d’une fissure du ménisque médial et migre le long du nerf saphène",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il est issu de la partie antérieure de l’articulation tibiofibulaire proximale et dissèque de façon rétrograde le rameau nerveux articulaire provenant du nerf fibulaire profond (juste après la division du nerf fibulaire commun) ; il est fondamental de rechercher et préciser le collet de communication avec l’articulation tibiofibulaire proximale dont la ligature/exérèse chirurgicale est indispensable pour prévenir les récidives",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il naît de la bourse du gastrocnémien médial et dissèque le nerf sural ; seule une résection complète du nerf fibulaire commun permet d’éviter la récidive",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il s’agit d’une tumeur schwannomateuse kystisée sans aucun rapport avec l’articulation tibiofibulaire proximale",
+          "correct": false
+        }
+      ],
+      "explication": "Les kystes mucoïdes de l’articulation tibiofibulaire proximale (favorisés par une hyperpression articulaire du genou lorsqu’il existe une communication entre les deux cavités, présente chez 10 % des sujets) peuvent être extraneuraux (comprimant le nerf) ou intraneuraux. Les kystes intraneuraux fibulaires naissent de la face antérieure de l’articulation tibiofibulaire proximale et dissèquent le rameau nerveux articulaire issu du nerf fibulaire profond pour remonter dans le tronc du nerf fibulaire commun, voire du nerf sciatique (ceux nés de la face postérieure de l’articulation peuvent disséquer le nerf tibial). Il est impératif d’identifier le collet de communication articulaire afin que le chirurgien le résèque, faute de quoi le kyste récidivera.",
+      "correction_figures": [],
+      "source": {
+        "page": 735,
+        "element": "Page 735",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q15",
+      "type": "QRM",
+      "difficulty": 1,
+      "theme": "Kyste poplité (kyste de Baker)",
+      "enonce": "Concernant le kyste poplité (kyste de Baker), quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il correspond à la distension de la bourse commune située entre le tendon du muscle semi-membraneux et le tendon du chef médial du muscle gastrocnémien ; la visualisation de ce collet intertendineux est indispensable pour affirmer le diagnostic en imagerie",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Chez l’adulte, il est dans plus de 90 % des cas secondaire à une pathologie intra-articulaire (lésion méniscale médiale, rupture du LCA, arthrose, arthrite) avec laquelle il communique par un système de valve, ce qui explique qu’une cystectomie isolée sans traitement de la lésion articulaire expose à un fort taux de récidive",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Chez l’enfant, il est dans 95 % des cas secondaire à une déchirure dégénérative de la corne postérieure du ménisque latéral et doit être opéré en urgence",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Sa rupture aiguë diffuse le long des fascias du mollet et simule cliniquement une thrombophlébite (« pseudo-thrombophlébite ») ; une anticoagulation prescrite à tort dans ce contexte expose au risque d’hémorragie intrakystique et de syndrome de loge",
+          "correct": true
+        }
+      ],
+      "explication": "Le kyste poplité est la lésion kystique la plus fréquente du genou, caractérisée par son collet entre les tendons du semi-membraneux et du gastrocnémien médial. Chez l’adulte, il communique avec l’articulation et complique dans > 90 % des cas une lésion intra-articulaire qu’il faut traiter en priorité. En revanche, chez l’enfant, il est le plus souvent primitif (95 % des cas), ne communique pas avec l’articulation, et relève de l’abstention thérapeutique. Enfin, sa rupture donne un tableau de pseudo-thrombophlébite où un traitement anticoagulant abusif peut provoquer un saignement grave avec syndrome de loge.",
+      "correction_figures": [],
+      "source": {
+        "page": 736,
+        "element": "Pages 736 à 738",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q16",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "Artère poplitée piégée et kyste adventiciel",
+      "enonce": "Deux patients sportifs sans aucun facteur de risque cardiovasculaire consultent pour une claudication artérielle intermittente d’effort du mollet. Le premier est un cycliste de 24 ans chez qui l’angioscanner/IRM dynamique montre une occlusion de l’artère poplitée apparaissant lors de la flexion plantaire active contrariée, liée à une languette musculaire accessoire issue du chef médial du gastrocnémien s’interposant autour de l’artère (qui garde une position normale). Le second est un homme de 48 ans présentant un début aigu des douleurs à l’effort avec récupération lente, une abolition des pouls pédieux lors de la flexion passive du genou (signe d’Ishikawa) et, en IRM, une formation multiloculée en hypersignal T2 développée au sein même de la paroi artérielle poplitée, donnant une sténose luminale en « cimeterre » sans anomalie musculaire. Quels sont les diagnostics précis de ces deux patients ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Patient 1 : Syndrome de l’artère poplitée piégée (SAPP) de type I ; Patient 2 : Anévrisme athéromateux partiellement thrombosé",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Patient 1 : Syndrome de l’artère poplitée piégée (SAPP) de type III (le plus fréquent des pièges anatomiques) ; Patient 2 : Kyste adventiciel de l’artère poplitée (dont la théorie pathogénique actuellement retenue est la migration synoviale articulaire le long des branches géniculées)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Patient 1 : SAPP fonctionnel de type VI ; Patient 2 : Rupture d’un kyste de Baker",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Patient 1 : Endofibrose iliaque externe ; Patient 2 : Maladie de Buerger",
+          "correct": false
+        }
+      ],
+      "explication": "Le premier patient (homme jeune < 30 ans, sportif) présente un syndrome de l’artère poplitée piégée (SAPP) de type III, qui est la forme anatomique la plus fréquente : l’artère est en position normale mais est comprimée par une expansion/bandelette musculaire anormale du chef médial du muscle gastrocnémien (le type I correspond à un trajet aberrant de l’artère en dedans du chef médial, le type II à une insertion trop latérale du chef médial, le type IV à un piège par le muscle poplité, le type V associe la veine, et le type VI est fonctionnel par hypertrophie musculaire sans anomalie anatomique). Le second patient (homme de 40-60 ans sans athérome, signe d’Ishikawa positif à la flexion du genou) présente un kyste adventiciel de l’artère poplitée : kyste mucoïde intrapariétal (adventice) donnant un aspect angiographique en « cimeterre » (si excentré) ou en « sablier » (si concentrique), relié à l’articulation par un fin pédicule suivant les artères géniculées qu’il faut fermer chirurgicalement lors de l’exérèse-pontage pour éviter la récidive.",
+      "correction_figures": [],
+      "source": {
+        "page": 738,
+        "element": "Pages 738 à 742",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q17",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Anévrismes et variantes vasculaires poplitées",
+      "enonce": "Concernant les anévrismes de l’artère poplitée et les variantes anatomiques vasculaires de la fosse poplitée en imagerie, quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "En clinique, on parle d’anévrisme poplité lorsque le diamètre artériel dépasse 2 cm (ou augmente d’au moins 50 % par rapport au segment d’amont) ; lorsqu’il est d’origine athéromateuse, il est bilatéral dans 50 % des cas et associé à un anévrisme de l’aorte abdominale dans deux tiers des cas",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Près de 50 % des luxations traumatiques du genou se compliquent de lésions vasculaires pouvant générer un faux anévrisme poplité",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "À l’état normal, l’artère poplitée chemine à la face profonde (antérieure) du muscle poplité, directement contre la corticale tibiale postérieure",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Dans 2 % de la population, l’artère tibiale antérieure présente une naissance haute (au-dessus du muscle poplité) et chemine entre le bord postérieur du tibia et la face profonde du muscle poplité, ce qu’il faut impérativement signaler avant une ostéotomie tibiale haute, une arthroplastie, une plastie du LCP ou une suture méniscale pour éviter une plaie artérielle peropératoire",
+          "correct": true
+        }
+      ],
+      "explication": "L’anévrisme poplité vrai (> 2 cm) est le plus souvent athéromateux, fréquemment bilatéral (50 %) et associé à un anévrisme aortique (2/3 des cas), et son risque majeur est thromboembolique (et non la rupture). Les faux anévrismes sont surtout post-traumatiques (luxation du genou) ou iatrogènes. Normalement, l’artère poplitée longe la face superficielle (postérieure) du muscle poplité et bifurque à son bord inférieur. En revanche, la variante de naissance haute de l’artère tibiale antérieure (2 % des sujets) la fait passer en profondeur du muscle poplité directement au contact de la corticale postérieure du plateau tibial, constituant un danger chirurgical majeur lors des gestes orthopédiques postérieurs.",
+      "correction_figures": [],
+      "source": {
+        "page": 742,
+        "element": "Pages 742 et 743",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c26-q18",
+      "type": "QCU",
+      "difficulty": 1,
+      "theme": "Pathologies de la fabella",
+      "enonce": "Où se situe anatomiquement la fabella et quelles pathologies peuvent lui être rattachées ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Elle est située dans le tendon du muscle poplité et ne donne jamais de symptomatologie douloureuse",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Elle est située au sein du tendon du chef médial du muscle gastrocnémien et provoque fréquemment une compression du nerf saphène",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Elle est située au sein du tendon du chef latéral du muscle gastrocnémien (s’articulant souvent avec la face postérieure du condyle fémoral latéral) et peut être responsable d’un syndrome douloureux fabellaire, d’une chondromalacie, d’une fracture (traumatique ou de contrainte après prothèse totale de genou) ou d’un conflit avec le nerf fibulaire commun en extension",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Elle correspond toujours à une avulsion osseuse ancienne du ligament poplité arqué sur l’apex de la fibula",
+          "correct": false
+        }
+      ],
+      "explication": "La fabella est un os sésamoïde (parfois purement cartilagineux) présent chez 20 à 87 % des sujets, généralement bilatéral, logé dans le tendon du chef latéral du muscle gastrocnémien en arrière du condyle fémoral latéral (tandis que le sésamoïde du tendon poplité se nomme la cyamella). Bien que souvent asymptomatique, la fabella peut être le siège d’un syndrome douloureux mécanique, d’une chondromalacie, d’une fracture traumatique ou de fatigue (notamment après arthroplastie totale de genou), ou encore comprimer le nerf fibulaire commun adjacent (en particulier en extension en cas d’hypertrophie fabellaire ou d’amyotrophie).",
+      "correction_figures": [],
+      "source": {
+        "page": 721,
+        "element": "Pages 721 et 744",
+        "refs": ""
+      }
+    }
+  ]
 }

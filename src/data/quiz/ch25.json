@@ -6,5 +6,487 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c25-q01",
+      "type": "QRM",
+      "difficulty": 1,
+      "theme": "Anatomie et biomécanique du LCA",
+      "enonce": "Concernant l’anatomie et la biomécanique des deux faisceaux du ligament croisé antérieur (LCA), quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le LCA est une structure intra-articulaire et strictement intrasynoviale, baignant directement dans le liquide articulaire",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le faisceau antéromédial est le plus long et le plus volumineux ; il est dit « isométrique » (tendu en extension comme en flexion, avec une tension maximale vers 60-90°) et est le plus souvent lésé dans les ruptures partielles",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le faisceau postérolatéral est plus court, tendu en extension et détendu en flexion ; son obliquité lui confère un rôle dans le contrôle de la rotation médiale du tibia",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Sur le fémur, l’insertion du faisceau antéromédial est plus postérieure et plus haute que celle du faisceau postérolatéral ; en flexion, les deux faisceaux s’enroulent en hélice",
+          "correct": true
+        }
+      ],
+      "explication": "Le LCA est intra-articulaire mais extrasynovial (recouvert en avant et sur les côtés par la membrane synoviale qui le sépare du liquide articulaire), richement innervé par le nerf tibial et vascularisé par les artères géniculées moyennes et inférieures. Le faisceau antéromédial (AM), le plus volumineux, s’insère plus en avant et en dedans sur le tibia et plus haut et en arrière sur le fémur ; il est isométrique et est le plus souvent touché dans les ruptures partielles. Le faisceau postérolatéral (PL), plus court et vertical, est tendu en extension (se détend en flexion), contrôle la rotation médiale du tibia et est plus souvent épargné dans les ruptures partielles. Parallèles dans le plan frontal en extension, ils s’enroulent en hélice lors de la flexion.",
+      "correction_figures": [],
+      "source": {
+        "page": 685,
+        "element": "Pages 685 et 686",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q02",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Examen clinique du LCA",
+      "enonce": "Lors de l’examen clinique d’un genou traumatique suspect de rupture du LCA, qu’est-ce qui différencie la manœuvre de Lachman du test de ressaut rotatoire (« lateral pivot shift »), et quelles situations peuvent rendre ces tests faussement négatifs ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La manœuvre de Lachman se réalise à 90° de flexion et le pivot shift en hyperextension stricte",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La manœuvre de Lachman évalue la translation tibiale antérieure à 10-20° de flexion (arrêt mou en cas de rupture complète, arrêt dur avec laxité différentielle < 5 mm en cas de rupture partielle) et peut être négative en cas d’anse de seau méniscale bloquée ; le lateral pivot shift (appliquant rotation médiale et valgus en fléchissant le genou jusqu’à réduction brutale vers 20-30°) est pathognomonique mais peu sensible",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le lateral pivot shift reste toujours positif même en cas de rupture complète associée du ligament collatéral médial (LCM) ou d’incarcération d’un fragment méniscal",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un tiroir antérieur positif à 60-80° de flexion traduit toujours une rupture isolée du faisceau postérolatéral du LCA sans atteinte périphérique",
+          "correct": false
+        }
+      ],
+      "explication": "La manœuvre de Lachman recherche une translation tibiale antérieure à 10-20° de flexion (position où les formations capsuloligamentaires postérieures et collatérales sont détendues) : un arrêt mou signe la rupture complète, tandis qu’un arrêt dur avec petite laxité différentielle (< 5 mm) évoque une rupture partielle ; une anse de seau bloquant la translation peut négativer le test. Le lateral pivot shift est très spécifique (pathognomonique) d’une rupture du LCA mais peu sensible, pouvant être faussement négatif en cas d’incarcération méniscale ou du moignon du LCA, de lésion partielle, de gros épanchement, de rupture associée du plan médial (LCM), de gonarthrose ou d’antécédent de méniscectomie médiale. Enfin, un tiroir antérieur à 60-80° témoigne d’une rupture complète du LCA associée à des lésions capsuloligamentaires périphériques (LCM ou corne postérieure du ménisque médial).",
+      "correction_figures": [],
+      "source": {
+        "page": 686,
+        "element": "Pages 686 et 687",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q03",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Signes radiographiques de rupture du LCA",
+      "enonce": "Sur une radiographie standard du genou réalisée après un traumatisme aigu, quels signes osseux spécifiques permettent de suspecter indirectement une rupture du LCA ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une fracture-séparation de la surface intercondylaire antérieure du tibia (classée en 4 types selon Meyers et McKeever), observée surtout chez l’enfant et l’adolescent chez qui l’os cède avant le ligament",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une fracture de Segond (fin fragment cortical vertical centimétrique du bord latéral du tibia), très spécifique (> 75 %) mais peu sensible (1,25 % des ruptures du LCA), traduisant un mécanisme en varus-rotation médiale",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une encoche d’impaction du tiers moyen du condyle fémoral latéral de profil d’une profondeur de 0,4 mm, régulière et symétrique",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une fracture-impaction du condyle fémoral latéral se traduisant sur le cliché de profil par une encoche asymétrique et anguleuse d’une profondeur supérieure à 1,5 mm (parfois double), secondaire à son impaction contre le rebord postérieur du plateau tibial latéral",
+          "correct": true
+        }
+      ],
+      "explication": "En radiographie, outre l’hémarthrose, la rupture du LCA peut s’accompagner d’une fracture-séparation de l’éminence intercondylaire antérieure (type I : non déplacée ; type II : soulèvement antérieur en bec ; type IIIa/b : séparation complète ; type IV : comminutive ou retournée) surtout chez l’enfant/adolescent, et d’une fracture de Segond à l’insertion tibiale du ligament antérolatéral. Au condyle fémoral latéral, il existe à l’état normal un sillon condylotrochléen physiologique d’environ 0,45 mm de profondeur ; ce n’est que lorsque l’encoche dépasse 1,5 mm de profondeur, avec un aspect asymétrique et anguleux, que l’on retient le diagnostic de fracture-impaction (« deep lateral femoral notch sign »), signe spécifique de rupture du LCA.",
+      "correction_figures": [],
+      "source": {
+        "page": 687,
+        "element": "Pages 687 et 688",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q04",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "LCA en nourrice et signes IRM",
+      "enonce": "Un patient consulte à distance d’une entorse du genou négligée. L’examen clinique par laximétrie instrumentale (arthromètre KT-1000 / Telos) ne retrouve qu’une laxité différentielle minime et l’aspect général des fibres dans l’échancrure en IRM semble continu au premier regard sur une coupe sagittale standard. Cependant, vous tracez sur la coupe sagittale l’axe vertical du tibia passant par le point le plus antérieur de l’insertion tibiale du LCA, puis une droite passant par ce même point et faisant un angle de 45° avec la verticale : vous constatez que la tangence au bord antéro-inférieur du LCA franchit largement cette ligne en bombant vers l’avant, et que l’extrémité proximale du LCA s’accole à la face antérieure du LCP. Que pouvez-vous en déduire ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le LCA est strictement normal, car tout ligament croisé antérieur sain croise la ligne à 45° en avant",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il s’agit d’une rupture du LCA avec cicatrisation spontanée ectopique « en nourrice » sur le LCP, ce qui explique à la fois le signe du bombement antérieur de la partie distale du LCA (franchissant la ligne à 45°) et la mise en défaut possible de la laximétrie instrumentale qui est partiellement limitée par cette réinsertion sur le LCP",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il s’agit d’une agénésie congénitale bilatérale des deux ligaments croisés",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il s’agit d’une avulsion osseuse aiguë de type IV de Meyers et McKeever",
+          "correct": false
+        }
+      ],
+      "explication": "Lorsqu’un LCA rompu se réinsère et cicatrise spontanément sur le LCP (« mise en nourrice du LCA sur le LCP »), il limite partiellement la laxité antérieure, ce qui explique les mauvaises performances des arthromètres (Telos, KT-1000, GNRB) dans cette configuration ainsi que dans les ruptures partielles. En IRM, outre la visualisation de l’accolement du moignon proximal sur le LCP, le signe du « bombement antérieur de la partie distale du LCA » est très utile dans ces cas équivoques : normalement, la tangence antéro-inférieure du LCA ne doit jamais croiser la droite tracée à 45° par rapport à l’axe vertical du tibia depuis le bord antérieur de l’insertion tibiale du LCA ; son franchissement traduit une rupture (partielle ou LCA en nourrice).",
+      "correction_figures": [],
+      "source": {
+        "page": 688,
+        "element": "Pages 688, 690 et 691",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q05",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Signes indirects et contusions osseuses",
+      "enonce": "Quels signes indirects observés en IRM traduisent l’existence d’un tiroir tibial antérieur spontané ou d’une instabilité rotatoire lors d’une rupture complète du LCA, et quelle est la signification des contusions osseuses du compartiment médial ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Un décalage antérieur du bord postérieur du plateau tibial latéral de plus de 5 mm par rapport au bord postérieur du condyle fémoral latéral, associé à une découverture de la corne postérieure du ménisque latéral (débordant de plus de 3,5 mm en arrière du tibia)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une verticalisation du LCP (prenant une forme en « S » en sagittal) et du ligament collatéral latéral (devenant visible en totalité sur une seule coupe frontale), ainsi qu’un angle fémorotibial rotatoire > 4,9° sur les coupes axiales",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La présence d’une contusion du rebord postérieur du plateau tibial médial s’explique le plus souvent par un mécanisme de « contrecoup » lors du repositionnement du tibia et impose de rechercher, outre la rupture du LCA, une avulsion du tendon direct du muscle semi-membraneux et/ou une lésion de la corne postérieure du ménisque médial",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Les contusions osseuses du compartiment latéral ont une spécificité de 100 % chez l’enfant avant la soudure du cartilage de croissance, supérieure à celle de l’adulte",
+          "correct": false
+        }
+      ],
+      "explication": "Le tiroir tibial antérieur spontané en IRM se traduit au compartiment latéral par un recul du condyle fémoral latéral (décalage fémorotibial postérieur > 5 mm, très spécifique), une découverture de la corne postérieure du ménisque latéral (> 3,5 mm), une verticalisation en « S » du LCP et une visibilité complète du LCL sur une seule coupe frontale. Un angle de rotation fémorotibiale > 4,9° en axial a une sensibilité de 95 % et une spécificité de 80 % pour la rupture aiguë complète du LCA. Au compartiment médial, la contusion du rebord tibial postérieur (lésion de contrecoup) doit faire rechercher une lésion méniscale postéromédiale et une avulsion du tendon direct du semi-membraneux. En revanche, la spécificité des contusions osseuses est plus faible chez l’enfant/adolescent à physis ouverte (72 %) que chez l’adulte (97-100 %) du fait d’une plus grande laxité ligamentaire physiologique.",
+      "correction_figures": [],
+      "source": {
+        "page": 690,
+        "element": "Pages 690 à 693",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q06",
+      "type": "QRM",
+      "difficulty": 3,
+      "theme": "Ruptures partielles du LCA",
+      "enonce": "Vous suspectez une rupture partielle du LCA en IRM (qui représente 10 à 28 % des lésions du LCA). Quels signes sémiologiques permettent de distinguer une rupture isolée du faisceau antéromédial (AM) d’une rupture isolée du faisceau postérolatéral (PL) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La bascule antérieure de la partie distale des fibres rompues en « battant de cloche » (formant un « cyclope préopératoire » responsable d’un flessum ou de blocages) s’observe dans 14 % des ruptures partielles affectant le faisceau antéromédial, contre moins de 2 % dans les ruptures complètes",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La rupture isolée du faisceau postérolatéral peut paraître trompeusement continue sur les coupes sagittales, mais se révèle sur les coupes frontales et axiales par un écart anormal entre la face médiale du condyle fémoral latéral et le bord latéral du LCA, ainsi que par une couverture incomplète de la partie latérale de l’éminence intercondylaire tibiale",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Dans les ruptures partielles du LCA, on observe systématiquement un tiroir tibial antérieur spontané supérieur à 10 mm et une rupture grave du point d’angle postérolatéral",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’utilisation de coupes axiales obliques perpendiculaires au plan du LCA (en densité de protons sans saturation de graisse) ou de séquences 3D isotropes à 3 T facilite la différenciation des deux faisceaux",
+          "correct": true
+        }
+      ],
+      "explication": "Les ruptures partielles touchent plus souvent le faisceau AM (traumatisme en flexion) et se compliquent dans 14 % des cas d’un retournement antérieur du moignon en « battant de cloche » (cyclope préopératoire). Lorsque c’est le faisceau PL qui est rompu (traumatisme en extension et rotation médiale), le faisceau AM restant peut donner un aspect faussement rassurant en sagittal ; ce sont les coupes frontales et axiales qui montrent l’absence du contingent latéral : écart anormal entre la paroi médiale du condyle latéral et le LCA, et amputation latérale de l’insertion sur l’éminence intercondylaire. Enfin, l’absence de tiroir antérieur, d’instabilité rotatoire et de lésion marquée du PAPL constitue justement un argument négatif en faveur d’une rupture partielle plutôt que complète.",
+      "correction_figures": [],
+      "source": {
+        "page": 689,
+        "element": "Pages 689, 690, 694 et 695",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q07",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Kyste mucoïde du LCA et variantes",
+      "enonce": "Un patient de 38 ans sans antécédent traumatique majeur consulte pour de vagues douleurs poplitées et une limitation douloureuse de la flexion maximale du genou. L’IRM met en évidence un LCA globalement élargi et ballonné, d’orientation normale, dont les fibres restent continues mais sont dissociées par un hypersignal T2 liquidien longitudinal (« aspect en branche de céleri »), associé à de petites extensions kystiques intra-osseuses aux insertions tibiale et fémorale. Quel est ce diagnostic et quelles autres entités anatomiques peuvent constituer des pièges diagnostiques dans l’échancrure intercondylaire ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il s’agit d’une rupture aiguë complète du LCA nécessitant une ligamentoplastie en urgence",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il s’agit d’un kyste mucoïde du LCA (prévalence de 1,3 % en IRM, gênant l’extension s’il est antérieur et la flexion s’il est postérieur) ; par ailleurs, en cas de vraie rupture du LCA, une plica infrapatellaire ou un rare ligament méniscofémoral antéromédial (reliant la corne antérieure du ménisque médial à l’échancrure chez 2 % des sujets) peuvent simuler un LCA intact",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il s’agit d’une agénésie congénitale du LCA avec déformation en dôme du tibia et hypoplasie des épines tibiales",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il s’agit d’un nodule de cyclope calcifié postopératoire",
+          "correct": false
+        }
+      ],
+      "explication": "Le kyste mucoïde du LCA (1,3 % des IRM) élargit et ballonne le ligament en dissociant ses fibres qui demeurent continues et normalement orientées (souvent associé à des géodes d’insertion ou une extension vers la corne antérieure du ménisque latéral) ; il limite l’extension s’il prédomine en avant et la flexion s’il est postérieur, et peut être traité par ponction-aspiration-infiltration guidée par TDM ou échographie. Par ailleurs, l’analyse de l’échancrure doit connaître deux pièges de « faux négatifs » de rupture du LCA : la plica infrapatellaire (qui file dans la graisse de Hoffa) et le ligament méniscofémoral antéromédial (variante présente dans 2 % des cas, tendue de la corne antérieure du ménisque médial au toit de l’échancrure, parfois associée à un ménisque médial discoïde). L’agénésie congénitale du LCA s’accompagne quant à elle d’une dysplasie osseuse (tibia en dôme, hypoplasie des tubercules intercondylaires, échancrure étroite).",
+      "correction_figures": [],
+      "source": {
+        "page": 689,
+        "element": "Pages 689, 695 et 696",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q08",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Indications de prise en charge précoce",
+      "enonce": "Dans la prise en charge d’une rupture récente du LCA, l’IRM et la chirurgie sont généralement différées de 6 à 8 semaines pour opérer sur un « genou sec et froid » (afin de réduire le risque d’arthrofibrose et de SDRC 1). Dans quelles situations particulières un bilan IRM exhaustif rapide et/ou une intervention chirurgicale précoce dès les deux premières semaines sont-ils néanmoins indiqués ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "En cas de blocage articulaire par une anse de seau méniscale, afin de réaliser une réduction et une suture méniscale précoce avant que le ménisque ne se détériore",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "En présence d’une lésion grave associée du point d’angle postérolatéral (PAPL), qui nécessite une réparation/reconstruction chirurgicale dans les 15 premiers jours car il ne cicatrise pas spontanément",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Chez l’enfant présentant une fracture-avulsion déplacée de l’éminence intercondylaire antérieure qui ne se réduit pas en extension complète, afin de réinsérer le fragment osseux précocement",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Chez toute personne âgée sédentaire présentant une rupture isolée du LCA sans instabilité ni lésion méniscale",
+          "correct": false
+        }
+      ],
+      "explication": "Si le traitement chirurgical d’une rupture isolée du LCA se fait classiquement à froid après 4 à 8 semaines de rééducation (et que le traitement peut rester purement orthopédique chez le sujet âgé ou sédentaire stable), cinq situations justifient un bilan rapide et/ou un geste précoce : 1) l’anse de seau méniscale bloquée suturable ; 2) l’atteinte associée du PAPL à opérer dans les 15 jours ; 3) l’avulsion osseuse tibiale déplacée de l’enfant à réinsérer (ou de l’adulte pour dépister une fracture du plateau tibial associée nécessitant une décharge) ; 4) le sportif de haut niveau (doute sur une rupture partielle ou chirurgie combinée LCA + LCM chez le sportif) ; et 5) le contexte médico-légal.",
+      "correction_figures": [],
+      "source": {
+        "page": 689,
+        "element": "Pages 689, 696 et 697",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q09",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "Imagerie postopératoire : tunnels osseux",
+      "enonce": "Deux tiers des échecs de ligamentoplastie du LCA sont liés à un mauvais positionnement des tunnels osseux. Sur les radiographies postopératoires de contrôle (face et profil en extension complète), quels sont les repères normaux de positionnement des tunnels fémoral et tibial, et quelle est la conséquence biomécanique respective d’un tunnel tibial trop antérieur versus trop postérieur ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "De profil, le tunnel tibial doit s’ouvrir dans le 1er quart antérieur du plateau tibial en avant de la ligne de Blumensaat ; s’il est trop postérieur, il provoque un conflit avec le toit de l’échancrure en extension",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "De profil, le tunnel fémoral doit être le plus postérieur possible sans rompre la corticale postérieure (à 1-2 mm d’elle, et incliné à ~ 40° de face, à 11h-12h sur un genou droit) et le tunnel tibial doit être parallèle mais légèrement postérieur à la ligne de Blumensaat en s’ouvrant dans le 2e quart antérieur du plateau tibial ; un tunnel tibial trop antérieur entraîne un flessum et un conflit du greffon contre le toit de l’échancrure en extension, tandis qu’un tunnel tibial trop postérieur verticalise le transplant (plastie inefficace) et crée un risque de conflit avec le LCP",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La malposition la plus fréquente du tunnel fémoral est un positionnement trop postérieur, qui détend la plastie en flexion",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un tunnel fémoral très vertical (0° par rapport à la diaphyse de face) assure le meilleur contrôle de la stabilité rotatoire",
+          "correct": false
+        }
+      ],
+      "explication": "Pour respecter l’isométrie et éviter les conflits : 1) Le tunnel fémoral doit faire un angle d’environ 40° avec la diaphyse de face (11h-12h à droite ; trop vertical, il contrôle mal l’instabilité rotatoire) et être très postérieur de profil (1-2 mm devant la corticale postérieure ; sa malposition la plus fréquente est d’être trop antérieur, ce qui tend excessivement le greffon en flexion et le détend en extension). 2) Le tunnel tibial doit s’ouvrir dans le 2e quart antérieur du plateau tibial, juste en arrière et parallèlement à la ligne de Blumensaat. S’il est trop antérieur (en avant de la ligne de Blumensaat), la plastie bute et se cisaille contre la partie basse du toit de la fosse intercondylaire en extension ; s’il est trop postérieur, la plastie est verticalisée, biomécaniquement inefficace, trop tendue avec raideur et risque de conflit avec le LCP.",
+      "correction_figures": [],
+      "source": {
+        "page": 697,
+        "element": "Pages 697 à 700",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q10",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Ligamentisation et suivi IRM du greffon",
+      "enonce": "Un patient ayant bénéficié d’une ligamentoplastie du LCA par autogreffe (type DT4) il y a 6 mois passe une IRM de contrôle alors qu’il va bien cliniquement. Vous observez une augmentation diffuse et modérée du signal du greffon en pondération T1, densité de protons et T2 (sans signal liquidien franc ni interruption des fibres continues), avec une prise de contraste du greffon après injection de gadolinium. Quelle est l’interprétation exacte de cet aspect ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il s’agit d’une rupture complète précoce du greffon imposant une reprise chirurgicale",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il s’agit d’une évolution physiologique normale correspondant à la phase de « ligamentisation / maturation » du greffon (néovascularisation synoviale et endostéale débutant au 2e mois, maximale entre 3 et 6 mois avant de régresser vers un hyposignal de maturité vers 18-24 mois)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il s’agit d’une arthrite septique postopératoire aiguë",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une autogreffe de LCA reste strictement avasculaire et en hyposignal T2 absolu du 1er jour jusqu’à la 10e année postopératoire",
+          "correct": false
+        }
+      ],
+      "explication": "Le signal IRM d’une ligamentoplastie évolue de façon physiologique en trois phases sur 2 ans : 1) Phase initiale (0 à 2 mois) : greffon avasculaire hypo-intense sur toutes les séquences. 2) Phase de ligamentisation/maturation (à partir du 2e mois) : néovascularisation périphérique puis centrale entraînant une hausse du signal T1/DP/T2 (non liquidien) et un rehaussement au gadolinium, culminant à 3-6 mois (jusqu’à 1 an pour une allogreffe). 3) Phase de maturité (vers 18-24 mois) : retour à un hyposignal T1 et T2 grâce à la synthèse de collagène (avec parfois persistance physiologique de fines stries hyperintenses entre les faisceaux). Une vraie rupture du greffon se traduit en revanche par une solution de continuité de signal liquidien franc en pondération T2.",
+      "correction_figures": [],
+      "source": {
+        "page": 699,
+        "element": "Pages 699 et 700",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q11",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Complications des ligamentoplasties du LCA",
+      "enonce": "Concernant les complications postopératoires des ligamentoplasties du LCA (arthrofibrose, lésion du cyclope, anomalies des tunnels et du site donneur), quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La lésion du « cyclope » est un nodule d’arthrofibrose focale (≥ 5 mm, rehaussé par le gadolinium) situé à la partie antérieure de l’échancrure juste en avant de la plastie (souvent développé autour du moignon distal du LCA natif), qui représente après le conflit mécanique la deuxième cause de perte d’extension maximale du genou",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’observation en IRM d’une petite lame de liquide dans le tunnel tibial ou d’un élargissement régulier de 1 à 2 mm du tunnel à bords parallèles au cours de la première année postopératoire est fréquente et non pathologique (le diamètre normal étant < 14 mm pour un Kenneth-Jones et < 20 mm pour un DIDT), tandis que la perte du parallélisme des bords du tunnel doit faire craindre une dégénérescence kystique ou un mouvement anormal du greffon",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Après prélèvement du tiers central du tendon patellaire (technique de Kenneth-Jones), l’épaississement diffus et l’hypersignal du tendon patellaire en IRM persistent physiologiquement pendant 12 à 18 mois et ne doivent pas être interprétés à tort comme une tendinopathie pathologique",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le prélèvement des tendons ischiojambiers (DIDT) entraîne fréquemment une patella infera et des fractures de fatigue de la patella, mais ne comporte aucun risque pour le rameau infrapatellaire du nerf saphène",
+          "correct": false
+        }
+      ],
+      "explication": "L’arthrofibrose est favorisée par une chirurgie trop précoce (< 4 semaines) sur genou inflammatoire ; sa forme focale antérieure est la lésion du cyclope (nodule fibreux mou ou fibrocartilagineux/osseux dur bloquant l’extension terminale). Un discret élargissement cylindrique (1-2 mm) et un peu de liquide intracanalaire dans les 18 premiers mois sont banals, contrairement à un élargissement fusiforme perdant le parallélisme des parois qui évoque un kyste du tunnel (par nécrose/infiltration synoviale ou réaction aux vis résorbables, pouvant pointer en sous-cutané prétibial). Le site donneur patellaire (Kenneth-Jones) reste remanié en IRM pendant 12 à 18 mois et expose aux douleurs antérieures, patella infera, adhérences au Hoffa et fractures patellaires, tandis que le prélèvement du DIDT expose spécifiquement à la lésion ou au névrome du rameau infrapatellaire du nerf saphène.",
+      "correction_figures": [],
+      "source": {
+        "page": 697,
+        "element": "Pages 697 et 700 à 702",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q12",
+      "type": "QRM",
+      "difficulty": 1,
+      "theme": "Anatomie et clinique du LCP",
+      "enonce": "Quelles sont les caractéristiques anatomiques, cliniques et lésionnelles du ligament croisé postérieur (LCP) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le LCP est plus long (38 mm) et 1,5 à 2 fois plus épais que le LCA (diamètre antéropostérieur normal ≤ 6 mm en IRM) ; il comporte un volumineux faisceau antérolatéral et un faisceau postéromédial et s’insère sur la face intercondylaire du condyle fémoral médial et sur l’aire intercondylaire postérieure du tibia",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Contrairement aux ruptures du LCA, le patient victime d’une rupture du LCP ne ressent habituellement pas de craquement lors du traumatisme, et la lésion survient dans plus de trois quarts des cas dans un contexte d’atteinte pluriligamentaire (choc antéropostérieur « du tableau de bord » sur genou fléchi, ou hyperextension appuyée)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le LCP est le seul élément stabilisateur s’opposant à la subluxation postérieure du tibia lorsque le genou est en extension complète à 0°",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "À long terme (10-15 ans), une rupture chronique du LCP non compensée se complique volontiers d’une arthrose fémorotibiale médiale et fémoropatellaire (liée notamment à la surcharge quadricipitale réactionnelle luttant contre le tiroir postérieur)",
+          "correct": true
+        }
+      ],
+      "explication": "Le LCP est plus épais et résistant que le LCA (≤ 6 mm d’épaisseur normale), tendu du condyle fémoral médial au tibia postérieur, encadré par les ligaments méniscofémoraux de Humphrey (en avant) et de Wrisberg (en arrière). Ses ruptures sont plus rares, violentes (tableau de bord, hyperextension), sans craquement perçu, associées dans > 75 % des cas à d’autres lésions (en premier lieu le point d’angle postérolatéral, puis le LCA et le LCM), et évoluent tardivement vers l’arthrose fémorotibiale médiale et fémoropatellaire. En revanche, c’est à 90° de flexion que le LCP est le seul élément s’opposant au recul tibial, tandis qu’en extension ce sont les éléments périphériques postérieurs (coques, points d’angle) qui s’y opposent en premier.",
+      "correction_figures": [],
+      "source": {
+        "page": 685,
+        "element": "Pages 685 et 702 à 705",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c25-q13",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "Imagerie des ruptures aiguës et chroniques du LCP",
+      "enonce": "Un rugbyman est victime d’un plaquage violent appuyé à la face antérieure du genou entraînant une hyperextension brutale, suivi d’une douleur postérieure avec avalement de la tubérosité tibiale antérieure. Quels signes radiographiques et IRM spécifiques caractérisent une rupture du LCP selon qu’elle est vue au stade aigu ou au stade chronique ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "En IRM au stade aigu, le LCP se rompt presque toujours à son insertion fémorale avec un amincissement < 2 mm ; au stade chronique, il disparaît systématiquement en laissant une échancrure vide dans 100 % des cas",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Au stade aigu, l’IRM montre le plus souvent (plus de 2/3 des cas) une atteinte du tiers moyen du LCP se traduisant par un épaississement segmentaire ou global ≥ 7 mm (spécificité > 90 %) en hypersignal T1/DP/T2 plutôt qu’une discontinuité franche, associée en cas d’hyperextension à des contusions osseuses antérieures en miroir fémorotibiales (« kissing injury ») et un tiroir postérieur spontané du compartiment médial ≥ 3 mm ; au stade chronique, le LCP peut paraître trompeusement continu et intact en IRM dans 30 à 50 % des cas par fibrose cicatricielle, d’où l’intérêt des radiographies dynamiques de profil agenouillé à 90° (positives si asymétrie de recul tibial ≥ 8 mm pour une rupture complète)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un épaississement du LCP > 7 mm avec un aspect « en rail » continu et bien limité chez un sujet sans traumatisme correspond toujours à une rupture complète aiguë et jamais à un kyste mucoïde du LCP",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La fracture de Segond inversée siège sur le bord latéral du tibia et signe une rupture isolée bénigne du LCP",
+          "correct": false
+        }
+      ],
+      "explication": "Contrairement au LCA, le LCP rompu présente rarement une solution de continuité complète franche en IRM : il se rompt dans plus des deux tiers des cas à son tiers moyen en prenant un aspect épaissi ≥ 7 mm (spécificité > 90 % ; normal ≤ 6 mm) à contours flous et signal élevé. Le mécanisme d’hyperextension laisse des contusions antérieures en miroir (« kissing injury ») du fémur et du tibia. Autre piège majeur : à la phase chronique, la fibrose cicatricielle redonne au LCP un aspect continu d’allure « intacte » en IRM dans 30 à 50 % des cas ; le diagnostic de laxité chronique repose alors sur les radiographies dynamiques comparatives de profil à 90° (asymétrie ≥ 8 mm dans les ruptures complètes, une ligamentoplastie se discutant si le tiroir spontané est ≥ 5 mm avec gêne fonctionnelle). Enfin, l’aspect épaissi « en rail » avec centre kystique sans traumatisme caractérise le rare kyste mucoïde du LCP (0,1 % des IRM), et la fracture de Segond inversée est médiale (avulsion du LCM profond méniscotibial dans les traumatismes graves).",
+      "correction_figures": [],
+      "source": {
+        "page": 703,
+        "element": "Pages 703 à 705",
+        "refs": ""
+      }
+    }
+  ]
 }
