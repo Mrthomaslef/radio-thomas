@@ -1214,17 +1214,6 @@ export default function QuestionsAdmin({
           >
             Ch. {Math.min(CHAPTER_KEYS.length, chapterNumber(chapter) + 1)} →
           </button>
-          {live.length > 0 && (
-            <button
-              type="button"
-              className="btn btn-ghost btn-small qa-mark-chapter-btn"
-              onClick={markWholeChapterReviewed}
-              disabled={busy}
-              title={`Marquer toutes les questions de ce chapitre comme relues par ${reviewerName} et notifier l’administrateur`}
-            >
-              ✓ Valider tout le chapitre ({reviewerName})
-            </button>
-          )}
           <button
             type="button"
             className="btn btn-small qa-ai-btn"
