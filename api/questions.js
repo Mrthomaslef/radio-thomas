@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   try {
     const r = await fetch(
-      `${SUPABASE_URL}/rest/v1/quiz_questions?select=id,chapter,position,data&deleted_at=is.null&order=chapter.asc,position.asc&limit=500`,
+      `${SUPABASE_URL}/rest/v1/quiz_questions?select=id,chapter,position,data&deleted_at=is.null&order=chapter.asc,position.asc&limit=2000`,
       {
         headers: {
           apikey: SUPABASE_PUBLISHABLE_KEY,

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { QuizPlayer } from './ChapterQuiz.jsx';
-import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, resetQuestionsCache, imageSrc, resolveDifficulty } from '../data/useQuestions.js';
+import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, bundledById, resetQuestionsCache, imageSrc, resolveDifficulty } from '../data/useQuestions.js';
+import { themes } from '../data/themes.js';
 
 const MAX_SIDE = 1400; // images are shrunk before sending: lighter pages, and well under the size limit
 
@@ -127,6 +128,8 @@ const CHAPTER_LABELS = {
   ch35: 'Dysostose : membre inférieur',
   ch36: 'Dysostose : pied du nourrisson',
 };
+const chapterNumber = (k) => Number.parseInt(String(k || '').replace(/^ch/i, ''), 10) || 1;
+const chapterFullLabel = (k) => `Chapitre ${chapterNumber(k)} — ${CHAPTER_LABELS[k] || k}`;
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 async function call(password, payload) {
@@ -172,9 +175,16 @@ const blankQuestion = () => ({
   reviewed: false,
 });
 
-export const newId = (chapter, rows) => {
-  const used = new Set(rows.map((r) => r.id));
-  for (let n = 1; n < 1000; n++) {
+export const newId = (chapter, rows = []) => {
+  const list = Array.isArray(rows) ? rows : [];
+  const used = new Set([
+    ...list.map((r) => r.id),
+    ...bundledQuestions.map((b) => b.id),
+  ]);
+  const bundledInChapter = CHAPTERS[chapter]?.questions?.length || 0;
+  // Start after bundled questions (or at 51 if the chapter has no bundled questions yet, to avoid future collisions)
+  const startN = bundledInChapter > 0 ? bundledInChapter + 1 : 51;
+  for (let n = startN; n < 1000; n++) {
     const id = `${chapter.replace('ch', 'c')}-q${String(n).padStart(2, '0')}`;
     if (!used.has(id)) return id;
   }
@@ -187,6 +197,7 @@ export default function QuestionsAdmin({
   onClearEditTarget = null,
   onResolveReport = null,
   onResolveSubmission = null,
+  acceptedSubmissions = [],
 }) {
   const [rows, setRows] = useState(null);
   const [localReviewed, setLocalReviewed] = useState(readLocalReviewed);
@@ -202,17 +213,111 @@ export default function QuestionsAdmin({
     setError('');
     try {
       let data = await call(password, { action: 'list' });
-      if (data.questions.length > 0) {
-        const known = new Set(data.questions.map((r) => r.id));
-        const missing = bundledQuestions.filter((b) => !known.has(b.id));
-        if (missing.length > 0) {
-          await call(password, { action: 'import', items: missing });
-          resetQuestionsCache();
-          data = await call(password, { action: 'list' });
+      let dbList = data.questions || [];
+      let changed = false;
+
+      // 1. If a user-proposed question in DB collided with a newly added bundled question ID (e.g. c5-q01),
+      // move the user-proposed question to a fresh non-colliding ID and restore the bundled question.
+      for (const r of [...dbList]) {
+        const bundled = bundledById.get(r.id);
+        if (
+          bundled &&
+          r.data?.source?.element === 'Proposition utilisateur' &&
+          r.data?.enonce?.trim() !== bundled.enonce?.trim()
+        ) {
+          try {
+            const chRows = [...dbList, ...bundledQuestions].filter((x) => x.chapter === r.chapter);
+            const nextPos = chRows.length ? Math.max(...chRows.map((x) => x.position || 0)) + 1 : 50;
+            const freshId = newId(r.chapter, [...dbList, ...bundledQuestions]);
+            await call(password, {
+              action: 'save',
+              id: freshId,
+              chapter: r.chapter,
+              position: nextPos,
+              question: r.data,
+            });
+            const bRow = bundledQuestions.find((b) => b.id === r.id);
+            if (bRow) {
+              await call(password, {
+                action: 'save',
+                id: bRow.id,
+                chapter: bRow.chapter,
+                position: bRow.position,
+                question: bRow.data,
+              });
+            }
+            changed = true;
+          } catch {
+            // Keep existing row if migration fails
+          }
         }
       }
-      // Merge with bundledQuestions if DB is still empty so all bundled questions are visible
-      const dbList = data.questions || [];
+
+      // 2. Auto-import any new bundled questions in chunks of 100 (so we never exceed the 200-item API cap).
+      if (dbList.length > 0) {
+        const known = new Set(dbList.map((r) => r.id));
+        const missing = bundledQuestions.filter((b) => !known.has(b.id));
+        if (missing.length > 0) {
+          try {
+            for (let i = 0; i < missing.length; i += 100) {
+              await call(password, { action: 'import', items: missing.slice(i, i + 100) });
+            }
+            changed = true;
+          } catch {
+            // Do not discard dbList if an import batch fails
+          }
+        }
+      }
+
+      // 3. Ensure any accepted user-proposed question (from Propositions) is present in quiz_questions.
+      if (Array.isArray(acceptedSubmissions) && acceptedSubmissions.length > 0) {
+        const existingEnonces = new Set(
+          dbList
+            .filter((r) => !r.deleted_at)
+            .map((r) => `${r.chapter}::${(r.data?.enonce || '').trim().toLowerCase()}`)
+        );
+        for (const sub of acceptedSubmissions) {
+          if (!sub?.question?.enonce || !sub?.chapter) continue;
+          const key = `${sub.chapter}::${sub.question.enonce.trim().toLowerCase()}`;
+          if (!existingEnonces.has(key)) {
+            try {
+              const allKnown = [...dbList, ...bundledQuestions];
+              const chRows = allKnown.filter((x) => x.chapter === sub.chapter);
+              const nextPos = chRows.length ? Math.max(...chRows.map((x) => x.position || 0)) + 1 : 50;
+              const freshId = newId(sub.chapter, allKnown);
+              await call(password, {
+                action: 'save',
+                id: freshId,
+                chapter: sub.chapter,
+                position: nextPos,
+                question: { ...sub.question, reviewed: true },
+              });
+              existingEnonces.add(key);
+              dbList.push({
+                id: freshId,
+                chapter: sub.chapter,
+                position: nextPos,
+                data: { ...sub.question, reviewed: true },
+              });
+              changed = true;
+            } catch {
+              // Ignore individual save error
+            }
+          }
+        }
+      }
+
+      if (changed) {
+        resetQuestionsCache();
+        try {
+          data = await call(password, { action: 'list' });
+          dbList = data.questions || dbList;
+        } catch {
+          // Keep updated dbList
+        }
+      }
+
+      // Merge with bundledQuestions if some bundled questions are not in DB yet
       const seen = new Set(dbList.map((r) => r.id));
       const merged = [...dbList, ...bundledQuestions.filter((b) => !seen.has(b.id))];
       setRows(merged);
@@ -220,7 +325,7 @@ export default function QuestionsAdmin({
       setError(e.message);
       setRows(bundledQuestions);
     }
-  }, [password]);
+  }, [password, acceptedSubmissions]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -340,9 +445,13 @@ export default function QuestionsAdmin({
   const importBundled = async () => {
     setBusy(true); setError(''); setNotice('');
     try {
-      const out = await call(password, { action: 'import', items: bundledQuestions });
+      let totalImported = 0;
+      for (let i = 0; i < bundledQuestions.length; i += 100) {
+        const out = await call(password, { action: 'import', items: bundledQuestions.slice(i, i + 100) });
+        totalImported += Number(out.imported) || 0;
+      }
       resetQuestionsCache();
-      setNotice(`${out.imported} question(s) importée(s).`);
+      setNotice(`${totalImported} nouvelle(s) question(s) importée(s) dans la base en ligne.`);
       await load();
     } catch (e) { setError(e.message); } finally { setBusy(false); }
   };
@@ -479,28 +588,160 @@ export default function QuestionsAdmin({
         </div>
       </div>
 
-      <div className="cq-chips" role="tablist" aria-label="Chapitres">
-        {CHAPTER_KEYS.map((k) => {
-          const st = chapterCounts[k] || { total: 0, reviewed: 0 };
-          const allDone = st.total > 0 && st.reviewed === st.total;
-          return (
-            <button key={k} className={chapter === k ? 'on' : ''} onClick={() => setChapter(k)}>
-              {CHAPTER_LABELS[k]}
-              {st.total > 0 && (
-                <span className={`qa-chip-count ${allDone ? 'is-done' : ''}`}>
-                  {allDone ? `✓ ${st.reviewed}/${st.total}` : `${st.reviewed}/${st.total}`}
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </div>
+      {(() => {
+        const currentTheme = themes.find((t) => t.chapters.some((c) => c.id === chapter)) || themes[0];
+
+        return (
+          <div className="qa-nav" aria-label="Navigation par thème et chapitre">
+            <div className="qa-nav-top">
+              <div className="qa-theme-tabs" role="tablist" aria-label="Thèmes">
+                {themes.map((t) => {
+                  const isActiveTheme = t.id === currentTheme.id;
+                  const firstNum = chapterNumber(t.chapters[0]?.id);
+                  const lastNum = chapterNumber(t.chapters[t.chapters.length - 1]?.id);
+                  const themeStats = t.chapters.reduce(
+                    (acc, c) => {
+                      const st = chapterCounts[c.id] || { total: 0, reviewed: 0 };
+                      acc.total += st.total;
+                      acc.reviewed += st.reviewed;
+                      return acc;
+                    },
+                    { total: 0, reviewed: 0 }
+                  );
+                  const themeDone = themeStats.total > 0 && themeStats.reviewed === themeStats.total;
+                  return (
+                    <button
+                      key={t.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActiveTheme}
+                      className={`qa-theme-tab ${isActiveTheme ? 'on' : ''}`}
+                      onClick={() => {
+                        if (!t.chapters.some((c) => c.id === chapter) && t.chapters[0]) {
+                          setChapter(t.chapters[0].id);
+                        }
+                      }}
+                    >
+                      <span className="qa-theme-tab-title">{t.title}</span>
+                      <span className="qa-theme-tab-meta">
+                        Ch. {firstNum}–{lastNum}
+                        {themeStats.total > 0 && (
+                          <em className={themeDone ? 'is-done' : ''}>
+                            {themeDone ? `✓ ${themeStats.reviewed}/${themeStats.total}` : `${themeStats.reviewed}/${themeStats.total}`}
+                          </em>
+                        )}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <label className="qa-quick-jump">
+                <span>Accès direct :</span>
+                <select
+                  className="admin-input qa-chapter-select"
+                  value={chapter}
+                  onChange={(e) => setChapter(e.target.value)}
+                  aria-label="Choisir directement un chapitre"
+                >
+                  {themes.map((t) => {
+                    const firstNum = chapterNumber(t.chapters[0]?.id);
+                    const lastNum = chapterNumber(t.chapters[t.chapters.length - 1]?.id);
+                    return (
+                      <optgroup key={t.id} label={`${t.title} (Ch. ${firstNum}–${lastNum})`}>
+                        {t.chapters.map((c) => {
+                          const st = chapterCounts[c.id] || { total: 0, reviewed: 0 };
+                          const num = chapterNumber(c.id);
+                          return (
+                            <option key={c.id} value={c.id}>
+                              Ch. {num} — { c.title } ({st.reviewed}/{st.total})
+                            </option>
+                          );
+                        })}
+                      </optgroup>
+                    );
+                  })}
+                </select>
+              </label>
+            </div>
+
+            <div className="qa-chapter-grid" role="tablist" aria-label={`Chapitres de ${currentTheme.title}`}>
+              {currentTheme.chapters.map((c) => {
+                const k = c.id;
+                const num = chapterNumber(k);
+                const st = chapterCounts[k] || { total: 0, reviewed: 0 };
+                const allDone = st.total > 0 && st.reviewed === st.total;
+                const isSelected = chapter === k;
+                return (
+                  <button
+                    key={k}
+                    type="button"
+                    role="tab"
+                    aria-selected={isSelected}
+                    className={`qa-chapter-card ${isSelected ? 'on' : ''}`}
+                    onClick={() => setChapter(k)}
+                  >
+                    <div className="qa-chapter-card-top">
+                      <span className="qa-chapter-num">Chapitre {num}</span>
+                      <span className={`qa-chip-count ${allDone ? 'is-done' : ''}`}>
+                        {st.total > 0
+                          ? allDone
+                            ? `✓ ${st.reviewed}/${st.total}`
+                            : `${st.reviewed}/${st.total}`
+                          : '0 question'}
+                      </span>
+                    </div>
+                    <div className="qa-chapter-card-title">{c.title}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
 
       <div className="qa-bar">
-        <span>
-          {live.length} question(s) dans « {CHAPTER_LABELS[chapter]} » · <b>{chapterReviewedCount}</b> relue(s) sur {live.length}
-        </span>
-        <button className="btn btn-small" onClick={create}>+ Nouvelle question</button>
+        <div className="qa-bar-info">
+          <strong className="qa-bar-chapter">{chapterFullLabel(chapter)}</strong>
+          <span>
+            {live.length} question(s) · <b>{chapterReviewedCount}</b> relue(s) sur {live.length}
+          </span>
+        </div>
+        <div className="qa-bar-actions">
+          <button
+            type="button"
+            className="btn btn-ghost btn-small"
+            disabled={CHAPTER_KEYS.indexOf(chapter) <= 0}
+            onClick={() => {
+              const idx = CHAPTER_KEYS.indexOf(chapter);
+              if (idx > 0) setChapter(CHAPTER_KEYS[idx - 1]);
+            }}
+            title={
+              CHAPTER_KEYS.indexOf(chapter) > 0
+                ? chapterFullLabel(CHAPTER_KEYS[CHAPTER_KEYS.indexOf(chapter) - 1])
+                : undefined
+            }
+          >
+            ← Ch. {Math.max(1, chapterNumber(chapter) - 1)}
+          </button>
+          <button
+            type="button"
+            className="btn btn-ghost btn-small"
+            disabled={CHAPTER_KEYS.indexOf(chapter) >= CHAPTER_KEYS.length - 1}
+            onClick={() => {
+              const idx = CHAPTER_KEYS.indexOf(chapter);
+              if (idx >= 0 && idx < CHAPTER_KEYS.length - 1) setChapter(CHAPTER_KEYS[idx + 1]);
+            }}
+            title={
+              CHAPTER_KEYS.indexOf(chapter) < CHAPTER_KEYS.length - 1
+                ? chapterFullLabel(CHAPTER_KEYS[CHAPTER_KEYS.indexOf(chapter) + 1])
+                : undefined
+            }
+          >
+            Ch. {Math.min(CHAPTER_KEYS.length, chapterNumber(chapter) + 1)} →
+          </button>
+          <button className="btn btn-small" onClick={create}>+ Nouvelle question</button>
+        </div>
       </div>
 
       {filteredLive.length === 0 ? (
@@ -612,7 +853,7 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
   return (
     <div className="qa qa-editor">
       <div className="qa-bar">
-        <span>{editing.isNew ? 'Nouvelle question' : `Question ${editing.id}`} · {CHAPTER_LABELS[editing.chapter]}</span>
+        <span>{editing.isNew ? 'Nouvelle question' : `Question ${editing.id}`} · {chapterFullLabel(editing.chapter)}</span>
         <label className={`qa-review-check ${q.reviewed ? 'on' : ''}`}>
           <input
             type="checkbox"
@@ -631,7 +872,7 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
       {editing.submissionContext && (
         <div className="admin-report-banner admin-submission-banner">
           <strong>
-            ✦ Proposition de question de {editing.submissionContext.author || 'Anonyme'} · {CHAPTER_LABELS[editing.chapter]}
+            ✦ Proposition de question de {editing.submissionContext.author || 'Anonyme'} · {chapterFullLabel(editing.chapter)}
           </strong>
           <p>
             Vous pouvez modifier cette question avant de l’enregistrer. L’enregistrement publiera la question dans le chapitre et attribuera{' '}

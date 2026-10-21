@@ -72,8 +72,8 @@ export default async function handler(req, res) {
       break;
     case 'import': {
       const items = body.items;
-      if (!Array.isArray(items) || items.length < 1 || items.length > 200) {
-        return res.status(400).json({ error: 'Import invalide (1 à 200 questions)' });
+      if (!Array.isArray(items) || items.length < 1 || items.length > 1000) {
+        return res.status(400).json({ error: 'Import invalide (1 à 1 000 questions)' });
       }
       const rows = [];
       for (const it of items) {

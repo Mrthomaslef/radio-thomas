@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import QuestionsAdmin, { newId } from './QuestionsAdmin.jsx';
-import { imageSrc, resetQuestionsCache, useQuestions } from '../data/useQuestions.js';
+import { bundledQuestions, imageSrc, resetQuestionsCache, useQuestions } from '../data/useQuestions.js';
 import { extractAttemptsAndReports, resolveQuestionReport, resolveQuestionProposal } from '../data/reports.js';
 import { syncUsersHistoryFromAttempts } from '../data/player.js';
 
@@ -117,6 +117,83 @@ export default function AdminPage() {
       setReports(parsed.reports);
       setSubmissions(parsed.submissions || []);
       syncUsersHistoryFromAttempts(parsed.attempts);
+
+      // Background sync: ensure all bundled questions and accepted user proposals are in quiz_questions
+      (async () => {
+        try {
+          const qRes = await fetch('/api/admin-questions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password, action: 'list' }),
+          });
+          if (!qRes.ok) return;
+          const qData = await qRes.json().catch(() => ({}));
+          const dbList = Array.isArray(qData.questions) ? qData.questions : [];
+          let synced = false;
+
+          if (dbList.length > 0) {
+            const known = new Set(dbList.map((row) => row.id));
+            const missing = bundledQuestions.filter((b) => !known.has(b.id));
+            for (let i = 0; i < missing.length; i += 100) {
+              const impRes = await fetch('/api/admin-questions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password, action: 'import', items: missing.slice(i, i + 100) }),
+              });
+              if (impRes.ok) synced = true;
+            }
+          }
+
+          const accepted = (parsed.submissions || []).filter(
+            (s) => s.resolved_at && s.decision !== 'refused' && s.status !== 'refused' && s.question?.enonce
+          );
+          if (accepted.length > 0) {
+            const existingEnonces = new Set(
+              dbList
+                .filter((row) => !row.deleted_at)
+                .map((row) => `${row.chapter}::${(row.data?.enonce || '').trim().toLowerCase()}`)
+            );
+            for (const sub of accepted) {
+              const chKey = sub.chapter || 'ch1';
+              const key = `${chKey}::${sub.question.enonce.trim().toLowerCase()}`;
+              if (!existingEnonces.has(key)) {
+                const allKnown = [...dbList, ...bundledQuestions];
+                const chRows = allKnown.filter((x) => x.chapter === chKey);
+                const nextPos = chRows.length ? Math.max(...chRows.map((x) => x.position || 0)) + 1 : 50;
+                const freshId = newId(chKey, allKnown);
+                const saveRes = await fetch('/api/admin-questions', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    password,
+                    action: 'save',
+                    id: freshId,
+                    chapter: chKey,
+                    position: nextPos,
+                    question: { ...sub.question, reviewed: true },
+                  }),
+                });
+                if (saveRes.ok) {
+                  existingEnonces.add(key);
+                  dbList.push({
+                    id: freshId,
+                    chapter: chKey,
+                    position: nextPos,
+                    data: { ...sub.question, reviewed: true },
+                  });
+                  synced = true;
+                }
+              }
+            }
+          }
+
+          if (synced) {
+            resetQuestionsCache();
+          }
+        } catch {
+          // Ignore background sync errors
+        }
+      })();
     } catch {
       setError('Serveur injoignable, réessayez.');
     } finally {
@@ -215,7 +292,22 @@ export default function AdminPage() {
     setResolvingId(s.id);
     try {
       const chKey = s.chapter || 'ch1';
-      const existingList = (byChapter && byChapter[chKey]) || [];
+      let existingList = (byChapter && byChapter[chKey]) || [];
+      try {
+        const listRes = await fetch('/api/admin-questions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password, action: 'list' }),
+        });
+        if (listRes.ok) {
+          const listData = await listRes.json().catch(() => ({}));
+          if (Array.isArray(listData.questions)) {
+            existingList = listData.questions.filter((qRow) => qRow.chapter === chKey);
+          }
+        }
+      } catch {
+        // Fallback to byChapter
+      }
       const cleanId = newId(chKey, existingList);
 
       const enonce_image = s.question.enonce_image
@@ -313,6 +405,10 @@ export default function AdminPage() {
 
   const openSubmissions = useMemo(() => submissions.filter((s) => !s.resolved_at), [submissions]);
   const resolvedSubmissions = useMemo(() => submissions.filter((s) => s.resolved_at), [submissions]);
+  const acceptedSubmissions = useMemo(
+    () => resolvedSubmissions.filter((s) => s.decision !== 'refused' && s.status !== 'refused'),
+    [resolvedSubmissions]
+  );
 
   const courses = useMemo(() => [...new Set((attempts || []).map((a) => a.course))].sort(), [attempts]);
 
@@ -424,6 +520,7 @@ export default function AdminPage() {
           onClearEditTarget={clearEditTarget}
           onResolveReport={handleResolveReport}
           onResolveSubmission={handleResolveSubmission}
+          acceptedSubmissions={acceptedSubmissions}
         />
       ) : tab === 'submissions' ? (
         <div className="admin-reports">

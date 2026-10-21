@@ -559,6 +559,7 @@ export function extractAttemptsAndReports(data) {
         chapter: item.chapter || item.question_id || 'ch1',
         question: subQuestion,
         status,
+        decision: status === 'refused' ? 'refused' : status === 'accepted' ? 'accepted' : null,
         resolved_at: resolvedAt,
       });
     } else if (!isSub) {
@@ -576,6 +577,7 @@ export function extractAttemptsAndReports(data) {
     submissionsMap.set(String(localSub.id), {
       ...localSub,
       status,
+      decision: status === 'refused' ? 'refused' : status === 'accepted' ? 'accepted' : null,
       resolved_at: resolvedAt,
     });
   }

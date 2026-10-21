@@ -97,10 +97,80 @@ export const imageSrc = (chapter, img) =>
     ? `/api/image?id=${img.upload}`
     : encodeURI(`/figures/${chapter}/${img.file}`);
 
+// Read any locally accepted question proposals so they appear immediately even before cache expiry.
+function readLocallyAcceptedRows() {
+  try {
+    const subs = JSON.parse(localStorage.getItem('quiz-cotten:local-submissions:v1') || '[]');
+    const decisions = JSON.parse(localStorage.getItem('quiz-cotten:submission-decisions:v1') || '{}');
+    if (!Array.isArray(subs)) return [];
+    const out = [];
+    for (const s of subs) {
+      if (!s || !s.question || !s.chapter) continue;
+      const dec = decisions[s.id]?.decision || s.decision || s.status;
+      const isResolved = Boolean(s.resolved_at || decisions[s.id]?.resolved_at);
+      if (dec === 'accepted' || (isResolved && dec !== 'refused')) {
+        out.push({
+          id: `local-${s.id}`,
+          chapter: s.chapter,
+          position: 900,
+          data: { ...s.question, reviewed: true },
+        });
+      }
+    }
+    return out;
+  } catch {
+    return [];
+  }
+}
+
 // Group database rows by chapter; keeps only known chapters and includes any new bundled questions not yet in DB.
 function groupByChapter(rows) {
-  const seen = new Set(rows.map((r) => r.id));
-  const merged = [...rows, ...bundledQuestions.filter((b) => !seen.has(b.id))];
+  const byId = new Map(rows.map((r) => [r.id, r]));
+  const merged = [];
+
+  for (const r of rows) {
+    const bundled = bundledById.get(r.id);
+    // If a user-proposed question was saved when a chapter was empty, its ID (e.g. c5-q01)
+    // may collide with a bundled book question added later. Keep both!
+    if (
+      bundled &&
+      r.data?.source?.element === 'Proposition utilisateur' &&
+      r.data?.enonce?.trim() !== bundled.enonce?.trim()
+    ) {
+      merged.push({
+        ...r,
+        id: `${r.id}-prop`,
+        position: Math.max(r.position || 0, 500),
+      });
+      merged.push({
+        id: r.id,
+        chapter: r.chapter,
+        position: r.position,
+        data: bundled,
+      });
+    } else {
+      merged.push(r);
+    }
+  }
+
+  for (const b of bundledQuestions) {
+    if (!byId.has(b.id)) {
+      merged.push(b);
+    }
+  }
+
+  // Also include any locally accepted proposals not yet present in merged
+  const existingEnonces = new Set(
+    merged.map((m) => `${m.chapter}::${(m.data?.enonce || '').trim().toLowerCase()}`)
+  );
+  for (const localRow of readLocallyAcceptedRows()) {
+    const key = `${localRow.chapter}::${(localRow.data?.enonce || '').trim().toLowerCase()}`;
+    if (!existingEnonces.has(key)) {
+      existingEnonces.add(key);
+      merged.push(localRow);
+    }
+  }
+
   const out = {};
   for (const key of CHAPTER_KEYS) out[key] = [];
   for (const row of merged) if (out[row.chapter]) out[row.chapter].push(row);
@@ -114,6 +184,24 @@ function groupByChapter(rows) {
 const fallback = () => groupByChapter(bundledQuestions);
 
 let cache = null; // one request per page load, shared by the home page and the quiz
+const listeners = new Set();
+
+function fetchLiveQuestions() {
+  return fetch(`/api/questions?t=${Date.now()}`, { cache: 'no-store' })
+    .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+    .then((json) => {
+      if (!Array.isArray(json.questions) || json.questions.length === 0) throw new Error('empty');
+      cache = groupByChapter(json.questions);
+      const nextState = { byChapter: cache, loading: false, live: true };
+      for (const fn of listeners) fn(nextState);
+      return nextState;
+    })
+    .catch(() => {
+      const nextState = { byChapter: fallback(), loading: false, live: false };
+      for (const fn of listeners) fn(nextState);
+      return nextState;
+    });
+}
 
 export function useQuestions() {
   const [state, setState] = useState(() => ({
@@ -123,28 +211,25 @@ export function useQuestions() {
   }));
 
   useEffect(() => {
-    if (cache) return undefined;
-    let cancelled = false;
-    fetch('/api/questions')
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-      .then((json) => {
-        // An empty database (before the first import) keeps the bundled questions.
-        if (!Array.isArray(json.questions) || json.questions.length === 0) throw new Error('empty');
-        cache = groupByChapter(json.questions);
-        if (!cancelled) setState({ byChapter: cache, loading: false, live: true });
-      })
-      .catch(() => {
-        if (!cancelled) setState({ byChapter: fallback(), loading: false, live: false });
-      });
+    listeners.add(setState);
+    if (!cache) {
+      fetchLiveQuestions();
+    }
     return () => {
-      cancelled = true;
+      listeners.delete(setState);
     };
   }, []);
 
-  return state;
+  return {
+    ...state,
+    reload: fetchLiveQuestions,
+  };
 }
 
 // Used by the admin page after a save/delete/import so the public pages refetch.
 export function resetQuestionsCache() {
   cache = null;
+  if (listeners.size > 0) {
+    fetchLiveQuestions();
+  }
 }
