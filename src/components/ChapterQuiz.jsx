@@ -462,6 +462,11 @@ export function QuizPlayer({
                     </figure>
                   ))}
                   <p className="cq-ref"><strong>Référence</strong>{ref(q.source)}</p>
+                  {q.reviewed_by && (
+                    <p className="cq-reviewed-by">
+                      ✓ Relu par <strong>{q.reviewed_by}</strong>
+                    </p>
+                  )}
                 </>
               )}
             </div>

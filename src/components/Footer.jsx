@@ -19,7 +19,8 @@ export default function Footer() {
         <span className={`status status-${status}`}>
           <span className="dot" /> Serveur {labels[status]}
         </span>
-        <a href="#/admin" className="admin-link">Espace formateur</a>
+        <a href="#/correcteur" className="admin-link">Espace correcteur</a>
+        <a href="#/admin" className="admin-link">Espace admin</a>
         <span className="muted">© {new Date().getFullYear()} QUIZ Cotten. À but pédagogique uniquement.</span>
       </footer>
     </>

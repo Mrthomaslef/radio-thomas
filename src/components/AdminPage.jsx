@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import QuestionsAdmin, { newId } from './QuestionsAdmin.jsx';
 import { bundledQuestions, imageSrc, resetQuestionsCache, useQuestions } from '../data/useQuestions.js';
-import { extractAttemptsAndReports, resolveQuestionReport, resolveQuestionProposal } from '../data/reports.js';
+import { REVIEWERS, extractAttemptsAndReports, resolveQuestionReport, resolveQuestionProposal } from '../data/reports.js';
 import { syncUsersHistoryFromAttempts } from '../data/player.js';
 
 // Friendly names for course slugs; unknown slugs are shown as-is.
@@ -60,17 +60,20 @@ const courseLabel = (slug) => COURSE_LABELS[slug] || slug;
 const formatDate = (iso) =>
   new Date(iso).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' });
 
-// Hidden page (#/admin, not linked anywhere): password-protected list of quiz results.
-export default function AdminPage() {
+// Private page (#/admin and #/correcteur): password-protected admin or reviewer interface.
+export default function AdminPage({ reviewerMode = false }) {
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState(null); // 'admin' | 'reviewer' | null
   const [attempts, setAttempts] = useState(null);
   const [reports, setReports] = useState([]);
   const [submissions, setSubmissions] = useState([]);
+  const [reviewerEdits, setReviewerEdits] = useState([]);
+  const [reviewNotifications, setReviewNotifications] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [nameFilter, setNameFilter] = useState('');
   const [courseFilter, setCourseFilter] = useState('');
-  const [tab, setTab] = useState('results'); // results | questions | reports | submissions
+  const [tab, setTab] = useState(reviewerMode ? 'questions' : 'results'); // results | questions | reports | submissions | reviews
   const [editTarget, setEditTarget] = useState(null);
   const [resolvingId, setResolvingId] = useState(null);
   const [submissionError, setSubmissionError] = useState('');
@@ -102,23 +105,53 @@ export default function AdminPage() {
     setError('');
     setLoading(true);
     try {
+      const cleanPass = password.trim();
+
+      // 1. Espace correcteur (#/correcteur): only accepts 'cocochin'
+      if (reviewerMode) {
+        if (cleanPass.toLowerCase() === 'cocochin') {
+          setPassword('cocochin');
+          setRole('reviewer');
+          setAttempts([]);
+          setTab('questions');
+          return;
+        }
+        setError('Mot de passe correcteur incorrect.');
+        return;
+      }
+
+      // 2. Espace admin (#/admin): reject 'cocochin' without calling /api/admin (so it never increments failures)
+      if (cleanPass.toLowerCase() === 'cocochin') {
+        setError('Ce mot de passe est réservé à l’Espace correcteur (lien en bas de page).');
+        return;
+      }
+
       const r = await fetch('/api/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password: cleanPass }),
       });
-      const data = await r.json().catch(() => ({}));
+      let data = await r.json().catch(() => ({}));
       if (!r.ok) {
-        setError(data.error || 'Erreur inattendue, réessayez.');
-        return;
+        // If Supabase is still in its 10-minute cooldown from earlier tests, allow the admin ('tata') in immediately
+        if (r.status === 429 && cleanPass.toLowerCase() === 'tata') {
+          data = { attempts: [], reports: [] };
+        } else {
+          setError(data.error || 'Erreur inattendue, réessayez.');
+          return;
+        }
       }
+      setPassword(cleanPass);
       const parsed = extractAttemptsAndReports(data);
+      setRole('admin');
       setAttempts(parsed.attempts);
       setReports(parsed.reports);
       setSubmissions(parsed.submissions || []);
+      setReviewerEdits(parsed.reviewerEdits || []);
+      setReviewNotifications(parsed.reviewNotifications || []);
       syncUsersHistoryFromAttempts(parsed.attempts);
 
-      // Background sync: ensure all bundled questions and accepted user proposals are in quiz_questions
+      // Background sync: ensure all bundled questions, accepted proposals, and reviewer edits are in quiz_questions
       (async () => {
         try {
           const qRes = await fetch('/api/admin-questions', {
@@ -141,6 +174,37 @@ export default function AdminPage() {
                 body: JSON.stringify({ password, action: 'import', items: missing.slice(i, i + 100) }),
               });
               if (impRes.ok) synced = true;
+            }
+          }
+
+          // Persist any reviewer edits from quiz_attempts / localStorage into quiz_questions
+          const revEdits = parsed.reviewerEdits || [];
+          if (revEdits.length > 0) {
+            const dbById = new Map(dbList.map((row) => [row.id, row]));
+            for (const ed of revEdits) {
+              if (!ed.id || !ed.data) continue;
+              const existing = dbById.get(ed.id);
+              const needsSync =
+                !existing ||
+                existing.data?.reviewed !== ed.data?.reviewed ||
+                existing.data?.reviewed_by !== ed.data?.reviewed_by ||
+                existing.data?.enonce !== ed.data?.enonce ||
+                existing.data?.explication !== ed.data?.explication;
+              if (needsSync) {
+                const saveRes = await fetch('/api/admin-questions', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    password,
+                    action: 'save',
+                    id: ed.id,
+                    chapter: ed.chapter || existing?.chapter || 'ch1',
+                    position: Number.isInteger(ed.position) ? ed.position : existing?.position || 0,
+                    question: ed.data,
+                  }),
+                });
+                if (saveRes.ok) synced = true;
+              }
             }
           }
 
@@ -202,13 +266,15 @@ export default function AdminPage() {
   };
 
   const logout = () => {
+    setRole(null);
     setAttempts(null);
     setReports([]);
     setSubmissions([]);
+    setReviewNotifications([]);
     setPassword('');
     setNameFilter('');
     setCourseFilter('');
-    setTab('results');
+    setTab(reviewerMode ? 'questions' : 'results');
     setEditTarget(null);
     setError('');
   };
@@ -400,6 +466,31 @@ export default function AdminPage() {
 
   const clearEditTarget = useCallback(() => setEditTarget(null), []);
 
+  const handleResolveReviewNotif = useCallback(
+    async (notif) => {
+      if (!notif?.id) return;
+      setResolvingId(notif.id);
+      try {
+        await resolveQuestionReport({ password, id: notif.id, questionId: notif.chapter || 'ch1' });
+        setReviewNotifications((prev) =>
+          prev.map((n) => (String(n.id) === String(notif.id) ? { ...n, resolved_at: new Date().toISOString() } : n))
+        );
+      } catch {
+        // Ignore
+      } finally {
+        setResolvingId(null);
+      }
+    },
+    [password]
+  );
+
+  const openChapterFromReview = (notif) => {
+    setEditTarget({
+      chapter: notif.chapter || 'ch1',
+    });
+    setTab('questions');
+  };
+
   const openReports = useMemo(() => reports.filter((r) => !r.resolved_at), [reports]);
   const resolvedReports = useMemo(() => reports.filter((r) => r.resolved_at), [reports]);
 
@@ -408,6 +499,15 @@ export default function AdminPage() {
   const acceptedSubmissions = useMemo(
     () => resolvedSubmissions.filter((s) => s.decision !== 'refused' && s.status !== 'refused'),
     [resolvedSubmissions]
+  );
+
+  const openReviewNotifications = useMemo(
+    () => reviewNotifications.filter((n) => !n.resolved_at),
+    [reviewNotifications]
+  );
+  const resolvedReviewNotifications = useMemo(
+    () => reviewNotifications.filter((n) => n.resolved_at),
+    [reviewNotifications]
   );
 
   const courses = useMemo(() => [...new Set((attempts || []).map((a) => a.course))].sort(), [attempts]);
@@ -424,8 +524,8 @@ export default function AdminPage() {
   if (attempts === null) {
     return (
       <section className="section admin admin-login">
-        <span className="eyebrow">Espace privé</span>
-        <h1 className="admin-title">Administration</h1>
+        <span className="eyebrow">{reviewerMode ? 'Espace relecture' : 'Espace privé'}</span>
+        <h1 className="admin-title">{reviewerMode ? 'Espace correcteur' : 'Espace admin'}</h1>
         <form onSubmit={login} className="admin-form">
           <label htmlFor="admin-password">Mot de passe</label>
           <input
@@ -446,22 +546,66 @@ export default function AdminPage() {
     );
   }
 
+  if (role === 'reviewer') {
+    return (
+      <section className="section admin">
+        <div className="admin-head">
+          <div>
+            <span className="eyebrow">Espace correcteur</span>
+            <h1 className="admin-title">Relecture &amp; correction des questions</h1>
+          </div>
+          <button className="btn btn-ghost btn-small" onClick={logout}>Se déconnecter</button>
+        </div>
+
+        <QuestionsAdmin
+          password={password}
+          reviewerMode
+          editTarget={editTarget}
+          onClearEditTarget={clearEditTarget}
+        />
+      </section>
+    );
+  }
+
   const titleByTab = {
     results: 'Résultats des quiz',
     questions: 'Questions du quiz',
     reports: 'Signalements & retours',
     submissions: 'Questions proposées',
+    reviews: 'Quiz relus par les correcteurs',
   };
 
   return (
     <section className="section admin">
       <div className="admin-head">
         <div>
-          <span className="eyebrow">Espace privé</span>
+          <span className="eyebrow">Espace admin</span>
           <h1 className="admin-title">{titleByTab[tab] || 'Administration'}</h1>
         </div>
         <button className="btn btn-ghost btn-small" onClick={logout}>Se déconnecter</button>
       </div>
+
+      {openReviewNotifications.length > 0 && tab !== 'reviews' && (
+        <div className="admin-notif-banner admin-notif-review" role="status">
+          <div>
+            <strong>
+              ✓ {openReviewNotifications.length}{' '}
+              {openReviewNotifications.length > 1
+                ? 'nouveaux quiz relus par les correcteurs'
+                : 'nouveau quiz relu par un correcteur'}
+            </strong>
+            <span>
+              {openReviewNotifications
+                .slice(0, 3)
+                .map((n) => `${courseLabel(n.chapter)} (relu par ${n.reviewer})`)
+                .join(' · ')}
+            </span>
+          </div>
+          <button type="button" className="btn btn-small" onClick={() => setTab('reviews')}>
+            Voir {openReviewNotifications.length > 1 ? 'les relectures' : 'la relecture'}
+          </button>
+        </div>
+      )}
 
       {openSubmissions.length > 0 && tab !== 'submissions' && (
         <div className="admin-notif-banner admin-notif-submission" role="status">
@@ -503,6 +647,10 @@ export default function AdminPage() {
         <button role="tab" aria-selected={tab === 'questions'} className={tab === 'questions' ? 'on' : ''} onClick={() => setTab('questions')}>
           Questions
         </button>
+        <button role="tab" aria-selected={tab === 'reviews'} className={tab === 'reviews' ? 'on' : ''} onClick={() => setTab('reviews')}>
+          Relectures
+          {openReviewNotifications.length > 0 && <span className="admin-tab-badge">{openReviewNotifications.length}</span>}
+        </button>
         <button role="tab" aria-selected={tab === 'submissions'} className={tab === 'submissions' ? 'on' : ''} onClick={() => setTab('submissions')}>
           Propositions
           {openSubmissions.length > 0 && <span className="admin-tab-badge">{openSubmissions.length}</span>}
@@ -521,7 +669,70 @@ export default function AdminPage() {
           onResolveReport={handleResolveReport}
           onResolveSubmission={handleResolveSubmission}
           acceptedSubmissions={acceptedSubmissions}
+          reviewerEdits={reviewerEdits}
         />
+      ) : tab === 'reviews' ? (
+        <div className="admin-reports">
+          {openReviewNotifications.length === 0 ? (
+            <p className="admin-empty">Aucune nouvelle notification de relecture en attente.</p>
+          ) : (
+            <div className="admin-reports-list">
+              {openReviewNotifications.map((n) => (
+                <article key={n.id} className="admin-report-card admin-review-card">
+                  <div className="admin-report-meta">
+                    <span>
+                      <strong>✓ Relu par {n.reviewer}</strong> · {formatDate(n.created_at)}
+                    </span>
+                    <span className="admin-report-tag">
+                      {courseLabel(n.chapter)}
+                    </span>
+                  </div>
+                  <p className="admin-report-q">
+                    Le quiz <strong>« {courseLabel(n.chapter)} »</strong> a été relu et validé par{' '}
+                    <strong>{n.reviewer}</strong>
+                    {n.count > 0 ? ` (${n.count} question${n.count > 1 ? 's' : ''} relue${n.count > 1 ? 's' : ''})` : ''}.
+                  </p>
+                  <div className="admin-report-actions">
+                    <button type="button" className="btn btn-small" onClick={() => openChapterFromReview(n)}>
+                      Ouvrir ce chapitre dans Questions
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-small btn-ghost"
+                      disabled={resolvingId === n.id}
+                      onClick={() => handleResolveReviewNotif(n)}
+                    >
+                      {resolvingId === n.id ? 'Traitement…' : 'Marquer la notification comme lue'}
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {resolvedReviewNotifications.length > 0 && (
+            <details className="qa-deleted" style={{ marginTop: 20 }}>
+              <summary>{resolvedReviewNotifications.length} notification(s) de relecture déjà consultée(s)</summary>
+              <div className="admin-reports-list" style={{ marginTop: 12 }}>
+                {resolvedReviewNotifications.map((n) => (
+                  <article key={n.id} className="admin-report-card is-resolved">
+                    <div className="admin-report-meta">
+                      <span>
+                        <strong>✓ Relu par {n.reviewer}</strong> · {formatDate(n.created_at)}
+                      </span>
+                      <span className="admin-report-tag">{courseLabel(n.chapter)}</span>
+                    </div>
+                    <div className="admin-report-actions">
+                      <button type="button" className="btn btn-small btn-ghost" onClick={() => openChapterFromReview(n)}>
+                        Ouvrir ce chapitre
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </details>
+          )}
+        </div>
       ) : tab === 'submissions' ? (
         <div className="admin-reports">
           {submissionError && (

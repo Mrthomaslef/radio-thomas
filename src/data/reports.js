@@ -3,6 +3,63 @@
 
 const LOCAL_SUBMISSIONS_KEY = 'quiz-cotten:local-submissions:v1';
 const LOCAL_DECISIONS_KEY = 'quiz-cotten:submission-decisions:v1';
+const LOCAL_REVIEWER_EDITS_KEY = 'quiz-cotten:reviewer-edits:v1';
+const LOCAL_REVIEW_NOTIFS_KEY = 'quiz-cotten:review-notifications:v1';
+
+export const REVIEWERS = [
+  'Hippolyte M.',
+  'Macil H.',
+  'Marie-Pauline T.',
+  'Stephano L.',
+  'Thomas L.',
+  'Yazid A.',
+];
+
+export function readLocalReviewerEdits() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(LOCAL_REVIEWER_EDITS_KEY) || '{}');
+    return raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+  } catch {
+    return {};
+  }
+}
+
+export function writeLocalReviewerEdit(rowObj) {
+  if (!rowObj || !rowObj.id) return;
+  try {
+    const map = readLocalReviewerEdits();
+    map[rowObj.id] = {
+      id: rowObj.id,
+      chapter: rowObj.chapter,
+      position: rowObj.position ?? 0,
+      data: rowObj.data || rowObj.question,
+      updated_at: rowObj.updated_at || new Date().toISOString(),
+    };
+    localStorage.setItem(LOCAL_REVIEWER_EDITS_KEY, JSON.stringify(map));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+export function readLocalReviewNotifications() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(LOCAL_REVIEW_NOTIFS_KEY) || '[]');
+    return Array.isArray(raw) ? raw : [];
+  } catch {
+    return [];
+  }
+}
+
+export function writeLocalReviewNotification(notif) {
+  if (!notif || !notif.id) return;
+  try {
+    const list = readLocalReviewNotifications().filter((n) => String(n.id) !== String(notif.id));
+    list.unshift(notif);
+    localStorage.setItem(LOCAL_REVIEW_NOTIFS_KEY, JSON.stringify(list.slice(0, 200)));
+  } catch {
+    // Ignore storage errors
+  }
+}
 
 // Patterns that may indicate personal patient information (dates of birth, NIR/SSN, patient name labels, etc.)
 const PERSONAL_DATA_PATTERN =
@@ -407,6 +464,10 @@ export async function submitQuestionReport({ name, chapter, questionId, message 
 }
 
 export async function resolveQuestionReport({ password, id, questionId }) {
+  writeLocalDecision(id, 'resolved');
+  if (typeof id === 'string' && id.startsWith('synth-rev-')) {
+    return true;
+  }
   try {
     const r = await fetch('/api/reports', {
       method: 'POST',
@@ -442,17 +503,111 @@ export async function resolveQuestionReport({ password, id, questionId }) {
   return true;
 }
 
-function tryParseSubmissionMessage(msg) {
+export async function submitReviewerQuestionEdit({ id, chapter, position, question }) {
+  if (!id || !question) return false;
+  const reviewer = question.reviewed_by || 'Correcteur';
+  const rand = Math.random().toString(16).slice(2, 8);
+  const editSlug = `report-revedit-${Date.now().toString(36)}-${rand}`;
+
+  const b64 = toBase64Utf8(
+    JSON.stringify({
+      u: reviewer,
+      c: chapter || 'ch1',
+      m: JSON.stringify({
+        kind: 'reviewer_edit',
+        id,
+        chapter: chapter || 'ch1',
+        position: Number.isInteger(position) ? position : 0,
+        question,
+        reviewed_by: question.reviewed_by || null,
+      }),
+    })
+  );
+  const chunks = [];
+  for (let i = 0; i < b64.length; i += 76) {
+    chunks.push(b64.slice(i, i + 76));
+  }
+  if (chunks.length > 800) return false;
+
+  for (let p = 0; p * 100 < chunks.length; p++) {
+    const partChunks = chunks.slice(p * 100, (p + 1) * 100);
+    const courseSlug = p === 0 ? editSlug : `${editSlug}-p${p}`;
+    for (let idx = 0; idx < partChunks.length; idx++) {
+      await fetch('/api/attempts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: partChunks[idx],
+          course: courseSlug,
+          quiz: id,
+          score: idx,
+          total: partChunks.length,
+          passed: false,
+        }),
+      }).catch(() => {});
+    }
+  }
+  return true;
+}
+
+export async function submitQuizReviewNotification({ chapter, reviewer, count, total }) {
+  const cleanReviewer = (reviewer || '').trim() || 'Correcteur';
+  const rand = Math.random().toString(16).slice(2, 8);
+  const notifSlug = `report-revquiz-${Date.now().toString(36)}-${rand}`;
+
+  writeLocalReviewNotification({
+    id: notifSlug,
+    created_at: new Date().toISOString(),
+    reviewer: cleanReviewer,
+    chapter,
+    count: Number(count) || 0,
+    total: Number(total) || 0,
+    resolved_at: null,
+  });
+
+  // Store via /api/attempts chunks (public insert, never triggers admin_login_failures)
+  const b64 = toBase64Utf8(
+    JSON.stringify({
+      u: cleanReviewer,
+      c: chapter,
+      m: JSON.stringify({
+        kind: 'quiz_reviewed',
+        chapter,
+        reviewer: cleanReviewer,
+        count: Number(count) || 0,
+        total: Number(total) || 0,
+      }),
+    })
+  );
+  const chunks = [];
+  for (let i = 0; i < b64.length; i += 76) {
+    chunks.push(b64.slice(i, i + 76));
+  }
+  for (let idx = 0; idx < chunks.length; idx++) {
+    await fetch('/api/attempts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: chunks[idx],
+        course: notifSlug,
+        quiz: chapter || 'ch1',
+        score: idx,
+        total: chunks.length,
+        passed: false,
+      }),
+    }).catch(() => {});
+  }
+  return true;
+}
+
+function tryParseJsonMessage(msg) {
   if (typeof msg !== 'string' || !msg.trim().startsWith('{')) return null;
   try {
     const obj = JSON.parse(msg);
-    if (obj && obj.kind === 'submission' && obj.question && typeof obj.question === 'object') {
-      return obj.question;
-    }
+    return obj && typeof obj === 'object' ? obj : null;
   } catch {
-    // Not a JSON submission
+    return null;
   }
-  return null;
 }
 
 export function extractAttemptsAndReports(data) {
@@ -465,7 +620,7 @@ export function extractAttemptsAndReports(data) {
 
   for (const a of rawAttempts) {
     if (typeof a.course === 'string' && a.course.startsWith('report-')) {
-      const partMatch = a.course.match(/^(report-subm-[a-z0-9]+-[a-z0-9]+)-p([0-9]+)$/);
+      const partMatch = a.course.match(/^(report-(?:subm|revedit|revquiz)-[a-z0-9]+-[a-z0-9]+)-p([0-9]+)$/);
       const baseCourse = partMatch ? partMatch[1] : a.course;
       const partIdx = partMatch ? Number.parseInt(partMatch[2], 10) || 0 : 0;
 
@@ -536,12 +691,119 @@ export function extractAttemptsAndReports(data) {
 
   const reports = [];
   const submissionsMap = new Map();
+  const reviewerEditsMap = new Map();
+  const reviewNotifsMap = new Map();
+
+  // Process oldest to newest for reviewerEdits so the latest edit for a question ID wins
+  const chronological = [...allCombined].sort(
+    (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+  );
+
+  for (const item of chronological) {
+    const jsonMsg = tryParseJsonMessage(item.message);
+    if (
+      (jsonMsg?.kind === 'reviewer_edit' || String(item.id || '').startsWith('report-revedit-')) &&
+      jsonMsg?.id &&
+      jsonMsg?.question
+    ) {
+      reviewerEditsMap.set(String(jsonMsg.id), {
+        id: String(jsonMsg.id),
+        chapter: jsonMsg.chapter || item.chapter || 'ch1',
+        position: Number.isInteger(jsonMsg.position) ? jsonMsg.position : 0,
+        data: jsonMsg.question,
+        reviewed_by: jsonMsg.reviewed_by || jsonMsg.question?.reviewed_by || item.name || null,
+        updated_at: item.created_at,
+      });
+      continue;
+    }
+
+    if (jsonMsg?.kind === 'quiz_reviewed' || String(item.id || '').startsWith('report-revquiz-')) {
+      const loc = localDecisions[item.id];
+      const resolvedAt = item.resolved_at || loc?.resolved_at || null;
+      reviewNotifsMap.set(String(item.id), {
+        id: item.id,
+        created_at: item.created_at,
+        reviewer: jsonMsg?.reviewer || item.name || 'Correcteur',
+        chapter: jsonMsg?.chapter || item.chapter || 'ch1',
+        count: Number(jsonMsg?.count) || 0,
+        total: Number(jsonMsg?.total) || 0,
+        resolved_at: resolvedAt,
+      });
+    }
+  }
+
+  // Merge local reviewer edits
+  for (const [qid, localEdit] of Object.entries(readLocalReviewerEdits())) {
+    if (!localEdit?.id || !localEdit?.data) continue;
+    const prev = reviewerEditsMap.get(qid);
+    if (!prev || (localEdit.updated_at && localEdit.updated_at >= prev.updated_at)) {
+      reviewerEditsMap.set(qid, localEdit);
+    }
+  }
+
+  // Merge local review notifications
+  for (const localNotif of readLocalReviewNotifications()) {
+    if (!localNotif?.id || reviewNotifsMap.has(String(localNotif.id))) continue;
+    const loc = localDecisions[localNotif.id];
+    reviewNotifsMap.set(String(localNotif.id), {
+      ...localNotif,
+      resolved_at: localNotif.resolved_at || loc?.resolved_at || null,
+    });
+  }
+
+  // Also synthesize a chapter review notification if reviewerEdits has reviewed questions for a chapter
+  const chapterReviewsByReviewer = new Map();
+  for (const ed of reviewerEditsMap.values()) {
+    if (ed.data?.reviewed && (ed.data?.reviewed_by || ed.reviewed_by)) {
+      const rev = ed.data?.reviewed_by || ed.reviewed_by;
+      const ck = `${ed.chapter}::${rev}`;
+      const curr = chapterReviewsByReviewer.get(ck) || {
+        chapter: ed.chapter,
+        reviewer: rev,
+        count: 0,
+        created_at: ed.updated_at,
+      };
+      curr.count += 1;
+      if (ed.updated_at > curr.created_at) curr.created_at = ed.updated_at;
+      chapterReviewsByReviewer.set(ck, curr);
+    }
+  }
+  for (const [ck, info] of chapterReviewsByReviewer.entries()) {
+    const hasExplicit = [...reviewNotifsMap.values()].some(
+      (n) => n.chapter === info.chapter && n.reviewer === info.reviewer
+    );
+    if (!hasExplicit) {
+      const synthId = `synth-rev-${ck}`;
+      const loc = localDecisions[synthId];
+      reviewNotifsMap.set(synthId, {
+        id: synthId,
+        created_at: info.created_at,
+        reviewer: info.reviewer,
+        chapter: info.chapter,
+        count: info.count,
+        total: 0,
+        resolved_at: loc?.resolved_at || null,
+      });
+    }
+  }
 
   for (const item of allCombined) {
+    const jsonMsg = tryParseJsonMessage(item.message);
+    if (
+      jsonMsg?.kind === 'reviewer_edit' ||
+      jsonMsg?.kind === 'quiz_reviewed' ||
+      String(item.id || '').startsWith('report-revedit-') ||
+      String(item.id || '').startsWith('report-revquiz-')
+    ) {
+      continue;
+    }
+
     const subQuestion =
       item.question && typeof item.question === 'object'
         ? item.question
-        : tryParseSubmissionMessage(item.message);
+        : jsonMsg?.kind === 'submission' && jsonMsg?.question
+        ? jsonMsg.question
+        : null;
     const isSub = Boolean(subQuestion) || String(item.id || '').startsWith('report-subm-');
 
     if (isSub && subQuestion) {
@@ -585,6 +847,10 @@ export function extractAttemptsAndReports(data) {
   const submissions = [...submissionsMap.values()].sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
+  const reviewerEdits = [...reviewerEditsMap.values()];
+  const reviewNotifications = [...reviewNotifsMap.values()].sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
 
-  return { attempts, reports, submissions };
+  return { attempts, reports, submissions, reviewerEdits, reviewNotifications };
 }

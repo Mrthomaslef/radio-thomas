@@ -80,12 +80,32 @@ export function cleanExplication(text) {
   return s;
 }
 
-const toQuestion = (row) => ({
-  id: row.id,
-  ...row.data,
-  difficulty: resolveDifficulty(row.id, row.data?.difficulty),
-  explication: cleanExplication(row.data?.explication),
-});
+const toQuestion = (row) => {
+  let localReviewed = {};
+  let localReviewedBy = {};
+  try {
+    localReviewed = JSON.parse(localStorage.getItem('radio-thomas:reviewed-questions') || '{}') || {};
+    localReviewedBy = JSON.parse(localStorage.getItem('radio-thomas:reviewed-by-questions') || '{}') || {};
+  } catch {
+    // Ignore storage errors
+  }
+  const isReviewed =
+    localReviewed[row.id] !== undefined
+      ? Boolean(localReviewed[row.id])
+      : Boolean(row.data?.reviewed || row.data?.reviewed_by);
+  const reviewedBy = isReviewed
+    ? row.data?.reviewed_by || localReviewedBy[row.id] || 'Thomas L.'
+    : null;
+
+  return {
+    id: row.id,
+    ...row.data,
+    reviewed: isReviewed,
+    reviewed_by: reviewedBy,
+    difficulty: resolveDifficulty(row.id, row.data?.difficulty),
+    explication: cleanExplication(row.data?.explication),
+  };
+};
 
 // Address of an image: an inline dataUrl, an upload from the admin ({upload}) or a bundled figure ({file}).
 export const imageSrc = (chapter, img) =>
@@ -125,10 +145,25 @@ function readLocallyAcceptedRows() {
 
 // Group database rows by chapter; keeps only known chapters and includes any new bundled questions not yet in DB.
 function groupByChapter(rows) {
+  let localReviewerMap = {};
+  try {
+    localReviewerMap = JSON.parse(localStorage.getItem('quiz-cotten:reviewer-edits:v1') || '{}') || {};
+  } catch {
+    localReviewerMap = {};
+  }
+
   const byId = new Map(rows.map((r) => [r.id, r]));
+  for (const [id, revRow] of Object.entries(localReviewerMap)) {
+    if (revRow && revRow.id && revRow.chapter && revRow.data) {
+      const existing = byId.get(id);
+      if (!existing || !existing.updated_at || (revRow.updated_at && revRow.updated_at >= existing.updated_at)) {
+        byId.set(id, revRow);
+      }
+    }
+  }
   const merged = [];
 
-  for (const r of rows) {
+  for (const r of byId.values()) {
     const bundled = bundledById.get(r.id);
     // If a user-proposed question was saved when a chapter was empty, its ID (e.g. c5-q01)
     // may collide with a bundled book question added later. Keep both!

@@ -2,6 +2,13 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { QuizPlayer } from './ChapterQuiz.jsx';
 import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, bundledById, resetQuestionsCache, imageSrc, resolveDifficulty } from '../data/useQuestions.js';
 import { themes } from '../data/themes.js';
+import {
+  REVIEWERS,
+  readLocalReviewerEdits,
+  writeLocalReviewerEdit,
+  submitReviewerQuestionEdit,
+  submitQuizReviewNotification,
+} from '../data/reports.js';
 
 const MAX_SIDE = 1400; // images are shrunk before sending: lighter pages, and well under the size limit
 
@@ -132,18 +139,58 @@ const chapterNumber = (k) => Number.parseInt(String(k || '').replace(/^ch/i, '')
 const chapterFullLabel = (k) => `Chapitre ${chapterNumber(k)} — ${CHAPTER_LABELS[k] || k}`;
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
+const isReviewerPass = (pw) => String(pw || '').trim().toLowerCase() === 'cocochin';
+
 async function call(password, payload) {
+  if (isReviewerPass(password)) {
+    if (payload.action === 'list') {
+      const r = await fetch('/api/questions');
+      const data = await r.json().catch(() => ({}));
+      return { questions: Array.isArray(data.questions) ? data.questions : [] };
+    }
+    if (payload.action === 'save') {
+      await submitReviewerQuestionEdit({
+        id: payload.id,
+        chapter: payload.chapter,
+        position: payload.position,
+        question: payload.question,
+      });
+      return { ok: true };
+    }
+    if (payload.action === 'import') {
+      return { imported: 0 };
+    }
+  }
+
   const r = await fetch('/api/admin-questions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ password, ...payload }),
   });
   const data = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(data.error || 'Erreur inattendue, réessayez.');
+  if (!r.ok) {
+    if (r.status === 429 && payload.action === 'list') {
+      const qRes = await fetch('/api/questions');
+      const qData = await qRes.json().catch(() => ({}));
+      return { questions: Array.isArray(qData.questions) ? qData.questions : [] };
+    }
+    if (r.status === 429 && payload.action === 'save') {
+      await submitReviewerQuestionEdit({
+        id: payload.id,
+        chapter: payload.chapter,
+        position: payload.position,
+        question: payload.question,
+      });
+      return { ok: true };
+    }
+    throw new Error(data.error || 'Erreur inattendue, réessayez.');
+  }
   return data;
 }
 
 const REVIEW_STORAGE_KEY = 'radio-thomas:reviewed-questions';
+const REVIEWED_BY_STORAGE_KEY = 'radio-thomas:reviewed-by-questions';
+const ACTIVE_REVIEWER_KEY = 'radio-thomas:reviewer-name';
 
 function readLocalReviewed() {
   try {
@@ -162,7 +209,41 @@ function writeLocalReviewed(map) {
   }
 }
 
-const blankQuestion = () => ({
+function readLocalReviewedBy() {
+  try {
+    const raw = localStorage.getItem(REVIEWED_BY_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeLocalReviewedBy(map) {
+  try {
+    localStorage.setItem(REVIEWED_BY_STORAGE_KEY, JSON.stringify(map));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+export function readSavedReviewerName() {
+  try {
+    const saved = localStorage.getItem(ACTIVE_REVIEWER_KEY);
+    return saved && REVIEWERS.includes(saved) ? saved : REVIEWERS[0];
+  } catch {
+    return REVIEWERS[0];
+  }
+}
+
+export function saveReviewerName(name) {
+  try {
+    localStorage.setItem(ACTIVE_REVIEWER_KEY, name);
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+const blankQuestion = (reviewerName = '') => ({
   type: 'QCU',
   difficulty: 2,
   theme: '',
@@ -172,7 +253,8 @@ const blankQuestion = () => ({
   explication: '',
   correction_figures: [],
   source: { page: 1, element: 'Texte', refs: '' },
-  reviewed: false,
+  reviewed: Boolean(reviewerName),
+  reviewed_by: reviewerName || '',
 });
 
 export const newId = (chapter, rows = []) => {
@@ -198,9 +280,21 @@ export default function QuestionsAdmin({
   onResolveReport = null,
   onResolveSubmission = null,
   acceptedSubmissions = [],
+  reviewerEdits = [],
+  activeReviewer = null,
+  onChangeReviewer = null,
+  reviewerMode = false,
 }) {
   const [rows, setRows] = useState(null);
   const [localReviewed, setLocalReviewed] = useState(readLocalReviewed);
+  const [localReviewedBy, setLocalReviewedBy] = useState(readLocalReviewedBy);
+  const [internalReviewer, setInternalReviewer] = useState(readSavedReviewerName);
+  const reviewerName = activeReviewer !== null ? activeReviewer : internalReviewer;
+  const setReviewerName = (name) => {
+    saveReviewerName(name);
+    setInternalReviewer(name);
+    onChangeReviewer?.(name);
+  };
   const [reviewFilter, setReviewFilter] = useState('all'); // all | todo | done
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
@@ -218,43 +312,45 @@ export default function QuestionsAdmin({
 
       // 1. If a user-proposed question in DB collided with a newly added bundled question ID (e.g. c5-q01),
       // move the user-proposed question to a fresh non-colliding ID and restore the bundled question.
-      for (const r of [...dbList]) {
-        const bundled = bundledById.get(r.id);
-        if (
-          bundled &&
-          r.data?.source?.element === 'Proposition utilisateur' &&
-          r.data?.enonce?.trim() !== bundled.enonce?.trim()
-        ) {
-          try {
-            const chRows = [...dbList, ...bundledQuestions].filter((x) => x.chapter === r.chapter);
-            const nextPos = chRows.length ? Math.max(...chRows.map((x) => x.position || 0)) + 1 : 50;
-            const freshId = newId(r.chapter, [...dbList, ...bundledQuestions]);
-            await call(password, {
-              action: 'save',
-              id: freshId,
-              chapter: r.chapter,
-              position: nextPos,
-              question: r.data,
-            });
-            const bRow = bundledQuestions.find((b) => b.id === r.id);
-            if (bRow) {
+      if (!reviewerMode) {
+        for (const r of [...dbList]) {
+          const bundled = bundledById.get(r.id);
+          if (
+            bundled &&
+            r.data?.source?.element === 'Proposition utilisateur' &&
+            r.data?.enonce?.trim() !== bundled.enonce?.trim()
+          ) {
+            try {
+              const chRows = [...dbList, ...bundledQuestions].filter((x) => x.chapter === r.chapter);
+              const nextPos = chRows.length ? Math.max(...chRows.map((x) => x.position || 0)) + 1 : 50;
+              const freshId = newId(r.chapter, [...dbList, ...bundledQuestions]);
               await call(password, {
                 action: 'save',
-                id: bRow.id,
-                chapter: bRow.chapter,
-                position: bRow.position,
-                question: bRow.data,
+                id: freshId,
+                chapter: r.chapter,
+                position: nextPos,
+                question: r.data,
               });
+              const bRow = bundledQuestions.find((b) => b.id === r.id);
+              if (bRow) {
+                await call(password, {
+                  action: 'save',
+                  id: bRow.id,
+                  chapter: bRow.chapter,
+                  position: bRow.position,
+                  question: bRow.data,
+                });
+              }
+              changed = true;
+            } catch {
+              // Keep existing row if migration fails
             }
-            changed = true;
-          } catch {
-            // Keep existing row if migration fails
           }
         }
       }
 
       // 2. Auto-import any new bundled questions in chunks of 100 (so we never exceed the 200-item API cap).
-      if (dbList.length > 0) {
+      if (!reviewerMode && dbList.length > 0) {
         const known = new Set(dbList.map((r) => r.id));
         const missing = bundledQuestions.filter((b) => !known.has(b.id));
         if (missing.length > 0) {
@@ -270,7 +366,7 @@ export default function QuestionsAdmin({
       }
 
       // 3. Ensure any accepted user-proposed question (from Propositions) is present in quiz_questions.
-      if (Array.isArray(acceptedSubmissions) && acceptedSubmissions.length > 0) {
+      if (!reviewerMode && Array.isArray(acceptedSubmissions) && acceptedSubmissions.length > 0) {
         const existingEnonces = new Set(
           dbList
             .filter((r) => !r.deleted_at)
@@ -307,6 +403,42 @@ export default function QuestionsAdmin({
         }
       }
 
+      // Backfill any already-reviewed questions that don't have a reviewer name yet to "Thomas L."
+      const locRev = readLocalReviewed();
+      const locRevBy = readLocalReviewedBy();
+      let locByChanged = false;
+      for (const [qid, val] of Object.entries(locRev)) {
+        if (val && !locRevBy[qid]) {
+          locRevBy[qid] = 'Thomas L.';
+          locByChanged = true;
+        }
+      }
+      if (locByChanged) {
+        writeLocalReviewedBy(locRevBy);
+        setLocalReviewedBy(locRevBy);
+      }
+
+      if (!reviewerMode && !isReviewerPass(password)) {
+        for (let idx = 0; idx < dbList.length; idx++) {
+          const r = dbList[idx];
+          if (r && !r.deleted_at && (r.data?.reviewed || locRev[r.id]) && !r.data?.reviewed_by) {
+            const nextData = {
+              ...r.data,
+              reviewed: true,
+              reviewed_by: locRevBy[r.id] || 'Thomas L.',
+            };
+            dbList[idx] = { ...r, data: nextData };
+            call(password, {
+              action: 'save',
+              id: r.id,
+              chapter: r.chapter,
+              position: r.position,
+              question: nextData,
+            }).catch(() => {});
+          }
+        }
+      }
+
       if (changed) {
         resetQuestionsCache();
         try {
@@ -317,15 +449,33 @@ export default function QuestionsAdmin({
         }
       }
 
-      // Merge with bundledQuestions if some bundled questions are not in DB yet
-      const seen = new Set(dbList.map((r) => r.id));
-      const merged = [...dbList, ...bundledQuestions.filter((b) => !seen.has(b.id))];
-      setRows(merged);
+      // Merge with bundledQuestions and any reviewer edits (remote or local)
+      const byId = new Map(dbList.map((r) => [r.id, r]));
+      for (const b of bundledQuestions) {
+        if (!byId.has(b.id)) byId.set(b.id, b);
+      }
+      for (const revEd of reviewerEdits || []) {
+        if (revEd?.id && revEd?.data) {
+          const curr = byId.get(revEd.id);
+          if (!curr || !curr.updated_at || (revEd.updated_at && revEd.updated_at >= curr.updated_at)) {
+            byId.set(revEd.id, revEd);
+          }
+        }
+      }
+      for (const [id, localEd] of Object.entries(readLocalReviewerEdits())) {
+        if (localEd?.id && localEd?.data) {
+          const curr = byId.get(id);
+          if (!curr || !curr.updated_at || (localEd.updated_at && localEd.updated_at >= curr.updated_at)) {
+            byId.set(id, localEd);
+          }
+        }
+      }
+      setRows([...byId.values()]);
     } catch (e) {
       setError(e.message);
       setRows(bundledQuestions);
     }
-  }, [password, acceptedSubmissions]);
+  }, [password, acceptedSubmissions, reviewerEdits, reviewerMode]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -333,17 +483,49 @@ export default function QuestionsAdmin({
     (row) => {
       if (!row) return false;
       if (localReviewed[row.id] !== undefined) return Boolean(localReviewed[row.id]);
-      return Boolean(row.data?.reviewed);
+      return Boolean(row.data?.reviewed || row.data?.reviewed_by);
     },
     [localReviewed]
   );
 
+  const getRowReviewer = useCallback(
+    (row) => {
+      if (!row) return '';
+      if (localReviewedBy[row.id]) return localReviewedBy[row.id];
+      if (row.data?.reviewed_by) return row.data.reviewed_by;
+      if (isRowReviewed(row)) return 'Thomas L.';
+      return '';
+    },
+    [localReviewedBy, isRowReviewed]
+  );
+
   const toggleReviewed = async (row, nextVal = !isRowReviewed(row)) => {
+    const chosenReviewer = nextVal ? reviewerName || row.data?.reviewed_by || REVIEWERS[0] : '';
     const updatedMap = { ...localReviewed, [row.id]: nextVal };
+    const updatedByMap = { ...localReviewedBy, [row.id]: chosenReviewer };
     setLocalReviewed(updatedMap);
     writeLocalReviewed(updatedMap);
+    setLocalReviewedBy(updatedByMap);
+    writeLocalReviewedBy(updatedByMap);
+
+    const nextData = {
+      ...row.data,
+      reviewed: nextVal,
+      reviewed_by: chosenReviewer || null,
+    };
+
+    writeLocalReviewerEdit({
+      id: row.id,
+      chapter: row.chapter,
+      position: row.position,
+      data: nextData,
+    });
+
+    const otherReviewedInChapter = live.filter((r) => r.id !== row.id && isRowReviewed(r)).length;
+    const newChapterReviewedCount = otherReviewedInChapter + (nextVal ? 1 : 0);
+
     setRows((prev) =>
-      (prev || []).map((r) => (r.id === row.id ? { ...r, data: { ...r.data, reviewed: nextVal } } : r))
+      (prev || []).map((r) => (r.id === row.id ? { ...r, data: nextData } : r))
     );
     try {
       await call(password, {
@@ -351,11 +533,94 @@ export default function QuestionsAdmin({
         id: row.id,
         chapter: row.chapter,
         position: row.position,
-        question: { ...row.data, reviewed: nextVal },
+        question: nextData,
       });
+      if (nextVal && live.length > 0 && newChapterReviewedCount === live.length) {
+        await submitQuizReviewNotification({
+          password,
+          chapter: row.chapter,
+          reviewer: chosenReviewer,
+          count: live.length,
+          total: live.length,
+        });
+        setNotice(
+          `✓ Toutes les questions de « ${chapterFullLabel(row.chapter)} » sont relues par ${chosenReviewer} ! L’administrateur a reçu une notification.`
+        );
+      }
       resetQuestionsCache();
     } catch {
       // Kept in localStorage even if offline or before backend deploy
+    }
+  };
+
+  const markWholeChapterReviewed = async () => {
+    if (live.length === 0) return;
+    const chosenReviewer = reviewerName || REVIEWERS[0];
+    setBusy(true);
+    setError('');
+    setNotice('');
+    try {
+      const updatedMap = { ...localReviewed };
+      const updatedByMap = { ...localReviewedBy };
+      const toUpdate = live.filter((r) => !isRowReviewed(r) || !getRowReviewer(r));
+
+      for (const r of live) {
+        updatedMap[r.id] = true;
+        if (!updatedByMap[r.id]) updatedByMap[r.id] = r.data?.reviewed_by || chosenReviewer;
+      }
+      setLocalReviewed(updatedMap);
+      writeLocalReviewed(updatedMap);
+      setLocalReviewedBy(updatedByMap);
+      writeLocalReviewedBy(updatedByMap);
+
+      setRows((prev) =>
+        (prev || []).map((r) => {
+          if (r.chapter !== chapter || r.deleted_at) return r;
+          const nextData = {
+            ...r.data,
+            reviewed: true,
+            reviewed_by: r.data?.reviewed_by || chosenReviewer,
+          };
+          writeLocalReviewerEdit({
+            id: r.id,
+            chapter: r.chapter,
+            position: r.position,
+            data: nextData,
+          });
+          return { ...r, data: nextData };
+        })
+      );
+
+      for (const r of toUpdate) {
+        const nextData = {
+          ...r.data,
+          reviewed: true,
+          reviewed_by: r.data?.reviewed_by || chosenReviewer,
+        };
+        await call(password, {
+          action: 'save',
+          id: r.id,
+          chapter: r.chapter,
+          position: r.position,
+          question: nextData,
+        }).catch(() => {});
+      }
+
+      await submitQuizReviewNotification({
+        password,
+        chapter,
+        reviewer: chosenReviewer,
+        count: live.length,
+        total: live.length,
+      });
+      resetQuestionsCache();
+      setNotice(
+        `✓ Le chapitre « ${chapterFullLabel(chapter)} » est marqué comme relu par ${chosenReviewer}. L’administrateur a été notifié !`
+      );
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -465,26 +730,55 @@ export default function QuestionsAdmin({
         ...structuredClone(row.data),
         difficulty: resolveDifficulty(row.id, row.data?.difficulty),
         reviewed: isRowReviewed(row),
+        reviewed_by: getRowReviewer(row) || reviewerName || '',
       },
       isNew: false,
     });
   const create = () => {
     const position = live.length ? Math.max(...live.map((r) => r.position)) + 1 : 0;
-    setEditing({ id: newId(chapter, rows || []), chapter, position, q: blankQuestion(), isNew: true });
+    setEditing({
+      id: newId(chapter, rows || []),
+      chapter,
+      position,
+      q: { ...blankQuestion(), reviewed_by: reviewerName || '' },
+      isNew: true,
+    });
   };
 
   const save = async (forceReviewed = null) => {
     setBusy(true); setError(''); setNotice('');
     const nextReviewed = forceReviewed !== null ? forceReviewed : Boolean(editing.q.reviewed);
-    const nextQ = { ...editing.q, reviewed: nextReviewed };
+    const chosenReviewer = nextReviewed
+      ? editing.q.reviewed_by || reviewerName || REVIEWERS[0]
+      : editing.q.reviewed_by || '';
+    const nextQ = {
+      ...editing.q,
+      reviewed: nextReviewed,
+      reviewed_by: chosenReviewer || null,
+    };
     const allRows = rows || bundledQuestions;
     const finalId =
       editing.isNew && allRows.some((r) => r.id === editing.id)
         ? newId(editing.chapter, allRows)
         : editing.id;
     const updatedMap = { ...localReviewed, [finalId]: nextReviewed };
+    const updatedByMap = { ...localReviewedBy, [finalId]: chosenReviewer };
     setLocalReviewed(updatedMap);
     writeLocalReviewed(updatedMap);
+    setLocalReviewedBy(updatedByMap);
+    writeLocalReviewedBy(updatedByMap);
+
+    writeLocalReviewerEdit({
+      id: finalId,
+      chapter: editing.chapter,
+      position: editing.position,
+      data: nextQ,
+    });
+
+    const otherReviewedInChapter = live.filter((r) => r.id !== finalId && isRowReviewed(r)).length;
+    const newChapterReviewedCount = otherReviewedInChapter + (nextReviewed ? 1 : 0);
+    const totalInChapter = editing.isNew ? live.length + 1 : live.length;
+
     try {
       await call(password, { action: 'save', id: finalId, chapter: editing.chapter, position: editing.position, question: nextQ });
       if (editing.reportContext && onResolveReport) {
@@ -493,10 +787,25 @@ export default function QuestionsAdmin({
       if (editing.submissionContext && onResolveSubmission) {
         await onResolveSubmission(editing.submissionContext, 'accepted');
       }
+      let chapterNotified = false;
+      if (nextReviewed && totalInChapter > 0 && newChapterReviewedCount === totalInChapter) {
+        await submitQuizReviewNotification({
+          password,
+          chapter: editing.chapter,
+          reviewer: chosenReviewer || reviewerName || REVIEWERS[0],
+          count: totalInChapter,
+          total: totalInChapter,
+        });
+        chapterNotified = true;
+      }
       resetQuestionsCache();
       setNotice(
         editing.submissionContext
           ? `Question publiée et proposition de ${editing.submissionContext.author || 'l’utilisateur'} validée (+10 pts) !`
+          : chapterNotified
+          ? `Question enregistrée et chapitre « ${chapterFullLabel(editing.chapter)} » entièrement relu par ${chosenReviewer} (administrateur notifié) !`
+          : nextReviewed && chosenReviewer
+          ? `Question enregistrée et marquée « Relu par ${chosenReviewer} ».`
           : 'Question enregistrée. Elle apparaît sur le site d’ici une trentaine de secondes.'
       );
       setEditing(null); setPreview(false);
@@ -535,13 +844,15 @@ export default function QuestionsAdmin({
         setEditing={setEditing}
         busy={busy}
         error={error}
-        onSave={() => save( null )}
+        onSave={() => save(null)}
         onSaveAndReview={() => save(true)}
         onCancel={() => { setEditing(null); setPreview(false); setError(''); }}
         onDelete={editing.isNew ? null : () => remove(editing)}
         preview={preview}
         setPreview={setPreview}
         password={password}
+        reviewerName={reviewerName}
+        setReviewerName={setReviewerName}
       />
     );
   }
@@ -552,35 +863,28 @@ export default function QuestionsAdmin({
       {notice && <p className="qa-notice" role="status">{notice}</p>}
 
       <div className="qa-review-summary">
+        <div className="qa-reviewer-bar">
+          <span className="qa-reviewer-label">Correcteur actif (« Relu par… ») :</span>
+          <div className="qa-reviewer-pills" role="group" aria-label="Sélectionner le nom du correcteur">
+            {REVIEWERS.map((rev) => (
+              <button
+                key={rev}
+                type="button"
+                className={`qa-reviewer-pill ${reviewerName === rev ? 'on' : ''}`}
+                onClick={() => setReviewerName(rev)}
+              >
+                {reviewerName === rev ? `✓ ${rev}` : rev}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="qa-review-head">
           <div>
             <strong>Suivi de relecture des questions</strong>
             <span>
               <b>{reviewedTotal}</b> / {allLive.length} questions relues et validées ({globalPct} %)
             </span>
-          </div>
-          <div className="qa-review-filters" role="group" aria-label="Filtrer par état de relecture">
-            <button
-              type="button"
-              className={`qa-filter-pill ${reviewFilter === 'all' ? 'on' : ''}`}
-              onClick={() => setReviewFilter('all')}
-            >
-              Toutes ({live.length})
-            </button>
-            <button
-              type="button"
-              className={`qa-filter-pill ${reviewFilter === 'todo' ? 'on' : ''}`}
-              onClick={() => setReviewFilter('todo')}
-            >
-              À relire ({live.length - chapterReviewedCount})
-            </button>
-            <button
-              type="button"
-              className={`qa-filter-pill ${reviewFilter === 'done' ? 'on' : ''}`}
-              onClick={() => setReviewFilter('done')}
-            >
-              Relues ({chapterReviewedCount})
-            </button>
           </div>
         </div>
         <div className="cq-bar qa-review-bar">
@@ -593,7 +897,8 @@ export default function QuestionsAdmin({
 
         return (
           <div className="qa-nav" aria-label="Navigation par thème et chapitre">
-            <div className="qa-nav-top">
+            <div className="qa-nav-section">
+              <div className="qa-nav-label">1. Choisir une région anatomique</div>
               <div className="qa-theme-tabs" role="tablist" aria-label="Thèmes">
                 {themes.map((t) => {
                   const isActiveTheme = t.id === currentTheme.id;
@@ -624,7 +929,7 @@ export default function QuestionsAdmin({
                     >
                       <span className="qa-theme-tab-title">{t.title}</span>
                       <span className="qa-theme-tab-meta">
-                        Ch. {firstNum}–{lastNum}
+                        <span>Ch. {firstNum}–{lastNum}</span>
                         {themeStats.total > 0 && (
                           <em className={themeDone ? 'is-done' : ''}>
                             {themeDone ? `✓ ${themeStats.reviewed}/${themeStats.total}` : `${themeStats.reviewed}/${themeStats.total}`}
@@ -635,66 +940,43 @@ export default function QuestionsAdmin({
                   );
                 })}
               </div>
-
-              <label className="qa-quick-jump">
-                <span>Accès direct :</span>
-                <select
-                  className="admin-input qa-chapter-select"
-                  value={chapter}
-                  onChange={(e) => setChapter(e.target.value)}
-                  aria-label="Choisir directement un chapitre"
-                >
-                  {themes.map((t) => {
-                    const firstNum = chapterNumber(t.chapters[0]?.id);
-                    const lastNum = chapterNumber(t.chapters[t.chapters.length - 1]?.id);
-                    return (
-                      <optgroup key={t.id} label={`${t.title} (Ch. ${firstNum}–${lastNum})`}>
-                        {t.chapters.map((c) => {
-                          const st = chapterCounts[c.id] || { total: 0, reviewed: 0 };
-                          const num = chapterNumber(c.id);
-                          return (
-                            <option key={c.id} value={c.id}>
-                              Ch. {num} — { c.title } ({st.reviewed}/{st.total})
-                            </option>
-                          );
-                        })}
-                      </optgroup>
-                    );
-                  })}
-                </select>
-              </label>
             </div>
 
-            <div className="qa-chapter-grid" role="tablist" aria-label={`Chapitres de ${currentTheme.title}`}>
-              {currentTheme.chapters.map((c) => {
-                const k = c.id;
-                const num = chapterNumber(k);
-                const st = chapterCounts[k] || { total: 0, reviewed: 0 };
-                const allDone = st.total > 0 && st.reviewed === st.total;
-                const isSelected = chapter === k;
-                return (
-                  <button
-                    key={k}
-                    type="button"
-                    role="tab"
-                    aria-selected={isSelected}
-                    className={`qa-chapter-card ${isSelected ? 'on' : ''}`}
-                    onClick={() => setChapter(k)}
-                  >
-                    <div className="qa-chapter-card-top">
-                      <span className="qa-chapter-num">Chapitre {num}</span>
-                      <span className={`qa-chip-count ${allDone ? 'is-done' : ''}`}>
-                        {st.total > 0
-                          ? allDone
-                            ? `✓ ${st.reviewed}/${st.total}`
-                            : `${st.reviewed}/${st.total}`
-                          : '0 question'}
-                      </span>
-                    </div>
-                    <div className="qa-chapter-card-title">{c.title}</div>
-                  </button>
-                );
-              })}
+            <div className="qa-nav-section">
+              <div className="qa-nav-label">
+                2. Chapitres — <strong>{currentTheme.title}</strong>
+              </div>
+              <div className="qa-chapter-grid" role="tablist" aria-label={`Chapitres de ${currentTheme.title}`}>
+                {currentTheme.chapters.map((c) => {
+                  const k = c.id;
+                  const num = chapterNumber(k);
+                  const st = chapterCounts[k] || { total: 0, reviewed: 0 };
+                  const allDone = st.total > 0 && st.reviewed === st.total;
+                  const isSelected = chapter === k;
+                  return (
+                    <button
+                      key={k}
+                      type="button"
+                      role="tab"
+                      aria-selected={isSelected}
+                      className={`qa-chapter-card ${isSelected ? 'on' : ''}`}
+                      onClick={() => setChapter(k)}
+                    >
+                      <div className="qa-chapter-card-top">
+                        <span className="qa-chapter-num">Chapitre {num}</span>
+                        <span className={`qa-chip-count ${allDone ? 'is-done' : ''}`}>
+                          {st.total > 0
+                            ? allDone
+                              ? `✓ ${st.reviewed}/${st.total}`
+                              : `${st.reviewed}/${st.total}`
+                            : '0 question'}
+                        </span>
+                      </div>
+                      <div className="qa-chapter-card-title">{c.title}</div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         );
@@ -740,6 +1022,17 @@ export default function QuestionsAdmin({
           >
             Ch. {Math.min(CHAPTER_KEYS.length, chapterNumber(chapter) + 1)} →
           </button>
+          {live.length > 0 && (
+            <button
+              type="button"
+              className="btn btn-ghost btn-small qa-mark-chapter-btn"
+              onClick={markWholeChapterReviewed}
+              disabled={busy}
+              title={`Marquer toutes les questions de ce chapitre comme relues par ${reviewerName} et notifier l’administrateur`}
+            >
+              ✓ Valider tout le chapitre ({reviewerName})
+            </button>
+          )}
           <button className="btn btn-small" onClick={create}>+ Nouvelle question</button>
         </div>
       </div>
@@ -757,6 +1050,7 @@ export default function QuestionsAdmin({
           {filteredLive.map((r) => {
             const idxInChapter = live.findIndex((x) => x.id === r.id);
             const checked = isRowReviewed(r);
+            const rReviewer = getRowReviewer(r);
             return (
               <li key={r.id} className={`qa-list-item ${checked ? 'is-reviewed' : ''}`}>
                 <label className={`qa-review-check ${checked ? 'on' : ''}`} title="Marquer comme relue et validée">
@@ -765,7 +1059,9 @@ export default function QuestionsAdmin({
                     checked={checked}
                     onChange={(e) => toggleReviewed(r, e.target.checked)}
                   />
-                  <span>{checked ? '✓ Relue' : 'À relire'}</span>
+                  <span>
+                    {checked ? (rReviewer ? `✓ Relue · ${rReviewer}` : '✓ Relue') : 'À relire'}
+                  </span>
                 </label>
                 <button className="qa-row" onClick={() => edit(r)}>
                   <b>{idxInChapter + 1}</b>
@@ -798,7 +1094,7 @@ export default function QuestionsAdmin({
   );
 }
 
-function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onCancel, onDelete, preview, setPreview, password }) {
+function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onCancel, onDelete, preview, setPreview, password, reviewerName, setReviewerName }) {
   const q = editing.q;
   const set = (patch) => setEditing((e) => ({ ...e, q: { ...e.q, ...patch } }));
   const setItem = (i, patch) => set({ items: q.items.map((it, k) => (k === i ? { ...it, ...patch } : it)) });
@@ -854,14 +1150,41 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
     <div className="qa qa-editor">
       <div className="qa-bar">
         <span>{editing.isNew ? 'Nouvelle question' : `Question ${editing.id}`} · {chapterFullLabel(editing.chapter)}</span>
-        <label className={`qa-review-check ${q.reviewed ? 'on' : ''}`}>
-          <input
-            type="checkbox"
-            checked={Boolean(q.reviewed)}
-            onChange={(e) => set({ reviewed: e.target.checked })}
-          />
-          <span>{q.reviewed ? '✓ Question relue et validée' : 'Marquer comme relue et validée'}</span>
-        </label>
+        <div className="qa-editor-review-controls">
+          <label className="qa-editor-reviewer-select">
+            <span>Relu par :</span>
+            <select
+              className="admin-input"
+              value={q.reviewed_by || reviewerName || REVIEWERS[0]}
+              onChange={(e) => {
+                const val = e.target.value;
+                setReviewerName?.(val);
+                set({ reviewed_by: val, reviewed: true });
+              }}
+            >
+              {REVIEWERS.map((rev) => (
+                <option key={rev} value={rev}>
+                  {rev}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className={`qa-review-check ${q.reviewed ? 'on' : ''}`}>
+            <input
+              type="checkbox"
+              checked={Boolean(q.reviewed)}
+              onChange={(e) =>
+                set({
+                  reviewed: e.target.checked,
+                  reviewed_by: e.target.checked
+                    ? q.reviewed_by || reviewerName || REVIEWERS[0]
+                    : q.reviewed_by,
+                })
+              }
+            />
+            <span>{q.reviewed ? `✓ Relu par ${q.reviewed_by || reviewerName}` : 'Marquer comme relue'}</span>
+          </label>
+        </div>
       </div>
       {editing.reportContext?.reportMessage && (
         <div className="admin-report-banner">

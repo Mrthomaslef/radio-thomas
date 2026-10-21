@@ -55,7 +55,7 @@ export default async function handler(req, res) {
 
     for (const a of rawAttempts) {
       if (typeof a.course === 'string' && a.course.startsWith('report-')) {
-        const partMatch = a.course.match(/^(report-subm-[a-z0-9]+-[a-z0-9]+)-p([0-9]+)$/);
+        const partMatch = a.course.match(/^(report-(?:subm|revedit|revquiz)-[a-z0-9]+-[a-z0-9]+)-p([0-9]+)$/);
         const baseCourse = partMatch ? partMatch[1] : a.course;
         const partIdx = partMatch ? Number.parseInt(partMatch[2], 10) || 0 : 0;
 

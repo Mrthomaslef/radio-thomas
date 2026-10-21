@@ -19,6 +19,7 @@ import { CHAPTERS as chapters } from './data/useQuestions.js';
 // - "#/admin" opens the password-protected trainer page
 // - "#/<theme>" opens a theme on the home page
 const isAdminRoute = () => window.location.hash === '#/admin';
+const isReviewerRoute = () => window.location.hash === '#/correcteur';
 const isProgressRoute = () => window.location.hash === '#/progression';
 const isLeaderboardRoute = () =>
   window.location.hash === '#/classement' ||
@@ -31,6 +32,7 @@ const parseTheme = () => {
   if (
     !m ||
     m[1] === 'admin' ||
+    m[1] === 'correcteur' ||
     m[1] === 'progression' ||
     m[1] === 'classement' ||
     m[1] === 'leaderboard' ||
@@ -57,6 +59,7 @@ function parseRoute() {
 export default function App() {
   const [course, setCourse] = useState(parseRoute);
   const [admin, setAdmin] = useState(isAdminRoute);
+  const [reviewer, setReviewer] = useState(isReviewerRoute);
   const [progressPage, setProgressPage] = useState(isProgressRoute);
   const [leaderboardPage, setLeaderboardPage] = useState(isLeaderboardRoute);
   const [randomPage, setRandomPage] = useState(isRandomRoute);
@@ -67,6 +70,7 @@ export default function App() {
     const onHash = () => {
       setCourse(parseRoute());
       setAdmin(isAdminRoute());
+      setReviewer(isReviewerRoute());
       setProgressPage(isProgressRoute());
       setLeaderboardPage(isLeaderboardRoute());
       setRandomPage(isRandomRoute());
@@ -79,7 +83,7 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [course, admin, progressPage, leaderboardPage, randomPage, proposePage, theme]);
+  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage, theme]);
 
   return (
     <>
@@ -87,7 +91,9 @@ export default function App() {
       <Navbar />
       <main>
         {admin ? (
-          <AdminPage />
+          <AdminPage key="admin" />
+        ) : reviewer ? (
+          <AdminPage key="correcteur" reviewerMode />
         ) : progressPage ? (
           <ProgressPage />
         ) : leaderboardPage ? (

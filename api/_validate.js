@@ -98,6 +98,14 @@ export function validateQuestion(q) {
     return { error: 'Le niveau de difficulté doit être 1, 2 ou 3' };
   }
 
+  const isReviewed = Boolean(q.reviewed || (typeof q.reviewed_by === 'string' && q.reviewed_by.trim()));
+  const reviewedBy =
+    typeof q.reviewed_by === 'string' && q.reviewed_by.trim().length > 0
+      ? clean(q.reviewed_by).slice(0, 80)
+      : isReviewed
+      ? 'Thomas L.'
+      : null;
+
   return {
     data: {
       type: q.type,
@@ -109,7 +117,8 @@ export function validateQuestion(q) {
       explication: clean(q.explication),
       correction_figures,
       source: { page: s.page, element: clean(s.element), refs: clean(s.refs ?? '') },
-      reviewed: Boolean(q.reviewed),
+      reviewed: isReviewed,
+      ...(reviewedBy ? { reviewed_by: reviewedBy } : {}),
     },
   };
 }
