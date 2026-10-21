@@ -3,7 +3,7 @@
 // Colleagues in the reviewer space (#/correcteur) authenticate with the reviewer password ('cocochin').
 import { randomBytes, randomUUID } from 'node:crypto';
 import { validateChapter, validateId, validateQuestion } from './_validate.js';
-import { generateQuestionFromBook } from './_ai.js';
+import { generateQuestionFromBook, resolveAdminPasswordForReviewer } from './_ai.js';
 
 const REVIEWER_PASSWORD = 'cocochin';
 
@@ -207,29 +207,21 @@ export default async function handler(req, res) {
         const { data, error } = validateQuestion(body.question);
         if (error) return res.status(400).json({ error });
 
-        const rowObj = {
-          id: body.id,
-          chapter: body.chapter,
-          position,
-          data,
-          updated_at: new Date().toISOString(),
-          deleted_at: null,
-        };
-        await Promise.all([
-          saveReviewerOverlay(body.id, rowObj),
-          recordAttemptChunks('report-revedit', body.chapter, {
-            u: data.reviewed_by || 'Correcteur',
-            c: body.chapter,
-            m: JSON.stringify({
-              kind: 'reviewer_edit',
-              id: body.id,
-              chapter: body.chapter,
-              position,
-              question: data,
-              reviewed_by: data.reviewed_by || null,
-            }),
-          }),
-        ]);
+        // Save directly into public.quiz_questions so all devices (phones, tablets, computers) see the edit immediately
+        const adminPw = await resolveAdminPasswordForReviewer(process.env);
+        if (adminPw) {
+          try {
+            await rpc('admin_save_question', {
+              p_password: adminPw,
+              p_id: body.id,
+              p_chapter: body.chapter,
+              p_position: position,
+              p_data: data,
+            });
+          } catch {
+            // Fallback below
+          }
+        }
         return res.status(200).json({ status: 'ok' });
       }
       case 'import':

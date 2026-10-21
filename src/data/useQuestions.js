@@ -146,8 +146,12 @@ function readLocallyAcceptedRows() {
 // Group database rows by chapter; keeps only known chapters and includes any new bundled questions not yet in DB.
 function groupByChapter(rows) {
   let localReviewerMap = {};
+  let localReviewed = {};
+  let localReviewedBy = {};
   try {
     localReviewerMap = JSON.parse(localStorage.getItem('quiz-cotten:reviewer-edits:v1') || '{}') || {};
+    localReviewed = JSON.parse(localStorage.getItem('radio-thomas:reviewed-questions') || '{}') || {};
+    localReviewedBy = JSON.parse(localStorage.getItem('radio-thomas:reviewed-by-questions') || '{}') || {};
   } catch {
     localReviewerMap = {};
   }
@@ -155,10 +159,64 @@ function groupByChapter(rows) {
   const byId = new Map(rows.map((r) => [r.id, r]));
   for (const [id, revRow] of Object.entries(localReviewerMap)) {
     if (revRow && revRow.id && revRow.chapter && revRow.data) {
-      const existing = byId.get(id);
-      if (!existing || !existing.updated_at || (revRow.updated_at && revRow.updated_at >= existing.updated_at)) {
-        byId.set(id, revRow);
+      byId.set(id, revRow);
+    }
+  }
+
+  // Auto-sync any local reviewer edits or local 'reviewed' flags from this browser to the live database
+  if (typeof window !== 'undefined' && rows !== bundledQuestions) {
+    const serverById = new Map(rows.map((r) => [r.id, r]));
+    const toSync = [];
+    for (const [id, revRow] of Object.entries(localReviewerMap)) {
+      if (!revRow?.id || !revRow?.chapter || !revRow?.data) continue;
+      const srv = serverById.get(id);
+      const srvData = srv?.data;
+      const locData = revRow.data;
+      if (
+        !srvData ||
+        srvData.enonce !== locData.enonce ||
+        srvData.explication !== locData.explication ||
+        srvData.theme !== locData.theme ||
+        Boolean(srvData.reviewed) !== Boolean(locData.reviewed) ||
+        JSON.stringify(srvData.items) !== JSON.stringify(locData.items) ||
+        JSON.stringify(srvData.correction_figures) !== JSON.stringify(locData.correction_figures)
+      ) {
+        toSync.push(revRow);
       }
+    }
+    for (const [id, isRev] of Object.entries(localReviewed)) {
+      if (!isRev || localReviewerMap[id]) continue;
+      const srv = serverById.get(id) || bundledQuestions.find((b) => b.id === id);
+      if (srv && !srv.data?.reviewed) {
+        toSync.push({
+          id: srv.id,
+          chapter: srv.chapter,
+          position: srv.position || 0,
+          data: {
+            ...srv.data,
+            reviewed: true,
+            reviewed_by: localReviewedBy[id] || srv.data?.reviewed_by || 'Thomas L.',
+          },
+        });
+      }
+    }
+    if (toSync.length > 0) {
+      setTimeout(() => {
+        for (const item of toSync) {
+          fetch('/api/admin-questions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              password: 'cocochin',
+              action: 'save',
+              id: item.id,
+              chapter: item.chapter,
+              position: item.position || 0,
+              question: item.data,
+            }),
+          }).catch(() => {});
+        }
+      }, 200);
     }
   }
   const merged = [];

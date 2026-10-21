@@ -53,8 +53,8 @@ export default async function handler(req, res) {
         }
         return q;
       });
-    // Short cache: a correction made in the admin shows up within ~30 s.
-    res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=60');
+    // Always serve fresh questions so edits made on a computer appear immediately on phones/tablets.
+    res.setHeader('Cache-Control', 'no-store');
     return res.status(200).json({ questions });
   } catch {
     return res.status(502).json({ error: 'Base de données injoignable' });

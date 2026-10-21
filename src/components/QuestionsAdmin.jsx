@@ -459,6 +459,7 @@ export default function QuestionsAdmin({
       // Backfill any already-reviewed questions that don't have a reviewer name yet to "Thomas L."
       const locRev = readLocalReviewed();
       const locRevBy = readLocalReviewedBy();
+      const localEditsMap = readLocalReviewerEdits();
       let locByChanged = false;
       for (const [qid, val] of Object.entries(locRev)) {
         if (val && !locRevBy[qid]) {
@@ -469,27 +470,6 @@ export default function QuestionsAdmin({
       if (locByChanged) {
         writeLocalReviewedBy(locRevBy);
         setLocalReviewedBy(locRevBy);
-      }
-
-      if (!reviewerMode && !isReviewerPass(password)) {
-        for (let idx = 0; idx < dbList.length; idx++) {
-          const r = dbList[idx];
-          if (r && !r.deleted_at && (r.data?.reviewed || locRev[r.id]) && !r.data?.reviewed_by) {
-            const nextData = {
-              ...r.data,
-              reviewed: true,
-              reviewed_by: locRevBy[r.id] || 'Thomas L.',
-            };
-            dbList[idx] = { ...r, data: nextData };
-            call(password, {
-              action: 'save',
-              id: r.id,
-              chapter: r.chapter,
-              position: r.position,
-              question: nextData,
-            }).catch(() => {});
-          }
-        }
       }
 
       if (changed) {
@@ -503,6 +483,7 @@ export default function QuestionsAdmin({
       }
 
       // Merge with bundledQuestions and any reviewer edits (remote or local)
+      const serverById = new Map(dbList.map((r) => [r.id, r]));
       const byId = new Map(dbList.map((r) => [r.id, r]));
       for (const b of bundledQuestions) {
         if (!byId.has(b.id)) byId.set(b.id, b);
@@ -515,14 +496,52 @@ export default function QuestionsAdmin({
           }
         }
       }
-      for (const [id, localEd] of Object.entries(readLocalReviewerEdits())) {
+      for (const [id, localEd] of Object.entries(localEditsMap)) {
         if (localEd?.id && localEd?.data) {
-          const curr = byId.get(id);
-          if (!curr || !curr.updated_at || (localEd.updated_at && localEd.updated_at >= curr.updated_at)) {
-            byId.set(id, localEd);
-          }
+          byId.set(id, localEd);
         }
       }
+
+      // Auto-sync any local edits or local 'reviewed' statuses to the database so phones/other devices see them
+      for (const [id, row] of byId.entries()) {
+        if (!row || row.deleted_at) continue;
+        const srv = serverById.get(id);
+        const srvData = srv?.data;
+        const hasLocalRev = Boolean(locRev[id]);
+        const shouldBeReviewed = Boolean(row.data?.reviewed || hasLocalRev);
+        const chosenRevBy = shouldBeReviewed
+          ? row.data?.reviewed_by || locRevBy[id] || 'Thomas L.'
+          : null;
+        const mergedData = {
+          ...row.data,
+          reviewed: shouldBeReviewed,
+          ...(chosenRevBy ? { reviewed_by: chosenRevBy } : {}),
+        };
+        if (shouldBeReviewed !== Boolean(row.data?.reviewed) || chosenRevBy !== (row.data?.reviewed_by || null)) {
+          byId.set(id, { ...row, data: mergedData });
+        }
+
+        const isOutOfSync =
+          (localEditsMap[id] &&
+            (!srvData ||
+              srvData.enonce !== mergedData.enonce ||
+              srvData.explication !== mergedData.explication ||
+              srvData.theme !== mergedData.theme ||
+              JSON.stringify(srvData.items) !== JSON.stringify(mergedData.items) ||
+              JSON.stringify(srvData.correction_figures) !== JSON.stringify(mergedData.correction_figures))) ||
+          (shouldBeReviewed && (!srvData?.reviewed || !srvData?.reviewed_by));
+
+        if (isOutOfSync) {
+          call(password, {
+            action: 'save',
+            id: row.id,
+            chapter: row.chapter,
+            position: row.position || 0,
+            question: mergedData,
+          }).catch(() => {});
+        }
+      }
+
       setRows([...byId.values()]);
     } catch (e) {
       setError(e.message);

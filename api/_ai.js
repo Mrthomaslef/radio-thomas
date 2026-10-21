@@ -45,6 +45,7 @@ const CHAPTER_TITLES = {
 };
 
 let cachedApiKey = null;
+let cachedAdminPw = null;
 
 function decryptToken(token) {
   try {
@@ -59,6 +60,35 @@ function decryptToken(token) {
   } catch {
     return null;
   }
+}
+
+export async function resolveAdminPasswordForReviewer(env = process.env) {
+  if (cachedAdminPw) return cachedAdminPw;
+  const { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } = env;
+  if (SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY) {
+    try {
+      const r = await fetch(
+        `${SUPABASE_URL}/rest/v1/quiz_questions?id=eq.cfg-ai-key&select=data&limit=1`,
+        {
+          headers: {
+            apikey: SUPABASE_PUBLISHABLE_KEY,
+            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+          },
+        }
+      );
+      if (r.ok) {
+        const rows = await r.json();
+        const pw = decryptToken(rows?.[0]?.data?.explication);
+        if (pw) {
+          cachedAdminPw = pw;
+          return pw;
+        }
+      }
+    } catch {
+      // Ignore fetch error
+    }
+  }
+  return null;
 }
 
 export async function resolveGeminiApiKey(env = process.env) {
