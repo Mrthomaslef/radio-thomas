@@ -22,7 +22,7 @@ export default function Navbar() {
       <div className="nav-right">
         {pseudo && <span className="nav-user" title="Session active">{pseudo}</span>}
         <a href="#/classement" className="btn btn-ghost btn-small nav-lb">
-          Classement
+          Leaderboard
         </a>
         <a href="#/progression" className="btn btn-ghost btn-small nav-prog">
           Ma progression

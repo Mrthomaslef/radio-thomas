@@ -11,7 +11,7 @@ import {
   subscribePlayer,
   syncProgressFromServer,
 } from '../data/player.js';
-import { useQuestions, imageSrc } from '../data/useQuestions.js';
+import { useQuestions, imageSrc, resolveDifficulty } from '../data/useQuestions.js';
 import { submitQuestionReport } from '../data/reports.js';
 
 // ---------- helpers ----------
@@ -395,7 +395,17 @@ export function QuizPlayer({
               Question {idx + 1} / {questions.length}
               {randomMode && qMeta?.titre ? ` · ${qMeta.titre}` : ''}
             </span>
-            <span className={`cq-type cq-${q.type}`}>{q.type === 'QCU' ? 'Une seule réponse' : 'Plusieurs réponses possibles'}</span>
+            <div className="cq-meta-badges">
+              {(() => {
+                const diff = resolveDifficulty(q.id, q.difficulty);
+                return (
+                  <span className={`cq-diff cq-diff-${diff}`} title={`Niveau de difficulté ${diff} sur 3`}>
+                    Difficulté : {diff}
+                  </span>
+                );
+              })()}
+              <span className={`cq-type cq-${q.type}`}>{q.type === 'QCU' ? 'Une seule réponse' : 'Plusieurs réponses possibles'}</span>
+            </div>
           </div>
           {q.enonce_image && (
             <figure className="cq-fig cq-fig-top" onClick={() => setZoom({ src: imageSrc(qKey, q.enonce_image), caption: q.enonce_image.alt })}>

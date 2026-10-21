@@ -14,14 +14,35 @@
       "enonce": "Pour explorer radiologiquement la rhizarthrose (arthrose trapézo-métacarpienne), quelles incidences spécifiques permettent de dégager au mieux cette articulation en évitant les superpositions osseuses ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Les incidences de face et de profil stricts du poignet", "correct": false },
-        { "id": "B", "texte": "Les incidences spécifiques de Kapandji (face et profil)", "correct": true },
-        { "id": "C", "texte": "L’incidence de Garth", "correct": false },
-        { "id": "D", "texte": "L’incidence axiale du canal carpien", "correct": false }
+        {
+          "id": "A",
+          "texte": "Les incidences de face et de profil stricts du poignet",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Les incidences spécifiques de Kapandji (face et profil)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’incidence de Garth",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’incidence axiale du canal carpien",
+          "correct": false
+        }
       ],
       "explication": "L’orientation particulière de l’articulation trapézo-métacarpienne explique que les incidences classiques de face et de profil la dégagent mal. Les incidences de Kapandji, avec un rayon incliné de 30° pour la face et un profil en légère extension/abduction, sont spécifiquement conçues pour parfaitement visualiser l’interligne et les éventuels ostéophytes.",
       "correction_figures": [],
-      "source": { "page": 208, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 208,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c10-q02",
@@ -30,14 +51,35 @@
       "enonce": "Concernant les ostéonécroses idiopathiques des os du carpe, quelles affirmations sont vraies ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La maladie de Kienböck affecte classiquement l’adulte jeune de sexe masculin, souvent travailleur manuel", "correct": true },
-        { "id": "B", "texte": "La maladie de Preiser correspond à l’ostéonécrose idiopathique du lunatum", "correct": false },
-        { "id": "C", "texte": "La maladie de Kienböck est très fréquemment bilatérale (présente chez plus de 50 % des patients)", "correct": false },
-        { "id": "D", "texte": "Dans la maladie de Kienböck, le développement de l’instabilité intracarpienne (stade III) sert de frontière pour les interventions chirurgicales non conservatrices", "correct": true }
+        {
+          "id": "A",
+          "texte": "La maladie de Kienböck affecte classiquement l’adulte jeune de sexe masculin, souvent travailleur manuel",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La maladie de Preiser correspond à l’ostéonécrose idiopathique du lunatum",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La maladie de Kienböck est très fréquemment bilatérale (présente chez plus de 50 % des patients)",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Dans la maladie de Kienböck, le développement de l’instabilité intracarpienne (stade III) sert de frontière pour les interventions chirurgicales non conservatrices",
+          "correct": true
+        }
       ],
       "explication": "La maladie de Kienböck touche classiquement l’adulte jeune (20–40 ans) masculin et manuel. L’instabilité intracarpienne, qui apparaît au stade III de Lichtman, représente un tournant évolutif capital modifiant les indications chirurgicales. La maladie de Preiser correspond à l’ostéonécrose idiopathique du scaphoïde, et non du lunatum. Enfin, la maladie de Kienböck est bilatérale dans seulement 4 % des cas environ.",
       "correction_figures": [],
-      "source": { "page": 227, "element": "Texte (p. 227–230)", "refs": "" }
+      "source": {
+        "page": 227,
+        "element": "Texte (p. 227–230)",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c10-q03",
@@ -46,14 +88,35 @@
       "enonce": "Un patient présente des douleurs chroniques du versant ulnaire du poignet exacerbées par la déviation ulnaire. L’IRM montre un œdème osseux strictement localisé sur le processus styloïde ulnaire et le versant ulnaire du triquétrum. Le disque articulaire radio-ulnaire distal (TFCC) et le lunatum sont parfaitement intacts. Quel est le diagnostic le plus probable ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un conflit ulnocarpien lié à une variance ulnaire positive", "correct": false },
-        { "id": "B", "texte": "Un conflit styloïdo-triquétral lié à un processus styloïde ulnaire trop long", "correct": true },
-        { "id": "C", "texte": "Un conflit radio-ulnaire distal", "correct": false },
-        { "id": "D", "texte": "Un conflit hamato-lunaire", "correct": false }
+        {
+          "id": "A",
+          "texte": "Un conflit ulnocarpien lié à une variance ulnaire positive",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un conflit styloïdo-triquétral lié à un processus styloïde ulnaire trop long",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un conflit radio-ulnaire distal",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un conflit hamato-lunaire",
+          "correct": false
+        }
       ],
       "explication": "L’impaction répétée du processus styloïde ulnaire contre le pôle proximal du triquétrum définit le conflit styloïdo-triquétral, qui entraîne un œdème et une chondromalacie limités à ces deux structures. Le conflit ulnocarpien impliquerait la tête ulnaire et le versant ulnaire du lunatum avec de fréquentes lésions du disque articulaire.",
       "correction_figures": [],
-      "source": { "page": 215, "element": "Texte (p. 215 et 218)", "refs": "" }
+      "source": {
+        "page": 215,
+        "element": "Texte (p. 215 et 218)",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c10-q04",
@@ -62,14 +125,35 @@
       "enonce": "L’arthrose radiocarpienne peut évoluer selon le modèle de « SLAC wrist » (Scaphoid Lunate Advanced Collapse) ou « SNAC wrist » (Scaphoid Non Union Advanced Collapse). Selon cette classification, quelles sont les caractéristiques de l’évolution arthrosique ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le stade 1 correspond à une arthrose stylo-scaphoïdienne", "correct": true },
-        { "id": "B", "texte": "Le stade 2 correspond à une arthrose affectant l’articulation radio-ulnaire distale", "correct": false },
-        { "id": "C", "texte": "Le stade 3 associe une arthrose radio-scaphoïdienne et lunocapitale", "correct": true },
-        { "id": "D", "texte": "L’interligne radiolunaire est typiquement préservé, permettant certaines chirurgies palliatives (ex. : arthrodèse des 4 os)", "correct": true }
+        {
+          "id": "A",
+          "texte": "Le stade 1 correspond à une arthrose stylo-scaphoïdienne",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le stade 2 correspond à une arthrose affectant l’articulation radio-ulnaire distale",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le stade 3 associe une arthrose radio-scaphoïdienne et lunocapitale",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’interligne radiolunaire est typiquement préservé, permettant certaines chirurgies palliatives (ex. : arthrodèse des 4 os)",
+          "correct": true
+        }
       ],
       "explication": "Dans la classification des SLAC/SNAC wrists, le stade 1 est une arthrose stylo-scaphoïdienne, le stade 2 étend l’arthrose à l’articulation radio-scaphoïdienne, et le stade 3 y ajoute l’atteinte lunocapitale. L’interligne radiolunaire est classiquement préservé, ce qui autorise des interventions comme la scaphoïdectomie avec arthrodèse des quatre os. L’arthrose radio-ulnaire distale ne fait pas partie de cette classification séquentielle.",
       "correction_figures": [],
-      "source": { "page": 212, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 212,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c10-q05",
@@ -78,14 +162,35 @@
       "enonce": "Le « carpe bossu » correspond à une protubérance osseuse dure située à la face dorsale du poignet. À quelle variante anatomique ou os accessoire cette tuméfaction correspond-elle le plus souvent ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’os carpi centrale", "correct": false },
-        { "id": "B", "texte": "L’os styloïdeum", "correct": true },
-        { "id": "C", "texte": "L’os triangulare", "correct": false },
-        { "id": "D", "texte": "L’os vesalianum manus", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’os carpi centrale",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’os styloïdeum",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’os triangulare",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’os vesalianum manus",
+          "correct": false
+        }
       ],
       "explication": "Le carpe bossu est une protubérance localisée en regard des articulations carpométacarpiennes des 2e et 3e rayons, le plus souvent liée à la présence d’un os styloïdeum (ou 9e os du carpe), fusionné ou non avec les métacarpiens.",
       "correction_figures": [],
-      "source": { "page": 222, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 222,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c10-q06",
@@ -94,14 +199,35 @@
       "enonce": "Vous évaluez les radiographies d’un patient suspect de maladie de Kienböck. Vous observez un aplatissement de la totalité du lunatum. La hauteur du carpe est diminuée. Sur le profil, vous mesurez l’angle radio-scaphoïdien et trouvez une valeur de 75°. Selon la classification de Lichtman, quelle est votre interprétation ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le patient est au stade II de Lichtman", "correct": false },
-        { "id": "B", "texte": "Le patient est au stade IIIa de Lichtman", "correct": false },
-        { "id": "C", "texte": "Le patient est au stade IIIb de Lichtman", "correct": true },
-        { "id": "D", "texte": "Cette mesure d’angle témoigne d’une flexion fixée du scaphoïde", "correct": true }
+        {
+          "id": "A",
+          "texte": "Le patient est au stade II de Lichtman",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le patient est au stade IIIa de Lichtman",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le patient est au stade IIIb de Lichtman",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Cette mesure d’angle témoigne d’une flexion fixée du scaphoïde",
+          "correct": true
+        }
       ],
       "explication": "Le stade III de Lichtman se caractérise par l’aplatissement complet du lunatum. La différenciation entre les stades IIIa et IIIb repose sur l’instabilité carpienne : l’existence d’une flexion fixée du scaphoïde (matérialisée par un angle radioscaphoïdien supérieur à 60°) classe la maladie en stade IIIb.",
       "correction_figures": [],
-      "source": { "page": 228, "element": "Texte (p. 228 et 230)", "refs": "" }
+      "source": {
+        "page": 228,
+        "element": "Texte (p. 228 et 230)",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c10-q07",
@@ -110,14 +236,35 @@
       "enonce": "Le conflit hamato-lunaire est source de douleurs ulnaires et d’arthrose. Il est directement favorisé par une particularité anatomique. Laquelle ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un lunatum de type I", "correct": false },
-        { "id": "B", "texte": "La présence d’une facette articulaire accessoire sur le pôle distal du lunatum (lunatum de type II)", "correct": true },
-        { "id": "C", "texte": "Une variance ulnaire fortement négative", "correct": false },
-        { "id": "D", "texte": "Une coalition (synostose) lunotriquétrale", "correct": false }
+        {
+          "id": "A",
+          "texte": "Un lunatum de type I",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La présence d’une facette articulaire accessoire sur le pôle distal du lunatum (lunatum de type II)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une variance ulnaire fortement négative",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une coalition (synostose) lunotriquétrale",
+          "correct": false
+        }
       ],
       "explication": "Le conflit survient en présence d’un lunatum de type II, qui possède une facette hamatale (articulaire accessoire) sur le bord médial de son pôle distal. L’impaction répétée de cette facette contre le pôle proximal de l’hamatum conduit aux lésions ostéochondrales et à l’arthrose.",
       "correction_figures": [],
-      "source": { "page": 220, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 220,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c10-q08",
@@ -126,14 +273,35 @@
       "enonce": "Concernant la variance ulnaire (ou index radio-ulnaire distal), quelles affirmations physiologiques et techniques sont exactes ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Elle est normalement légèrement négative (1 à 2 mm)", "correct": true },
-        { "id": "B", "texte": "Sa mesure radiographique est totalement indépendante de la position du poignet en pronation ou supination", "correct": false },
-        { "id": "C", "texte": "Elle est plus importante en pronation et en préhension forcée", "correct": true },
-        { "id": "D", "texte": "Elle correspond à la longueur du processus styloïde ulnaire", "correct": false }
+        {
+          "id": "A",
+          "texte": "Elle est normalement légèrement négative (1 à 2 mm)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Sa mesure radiographique est totalement indépendante de la position du poignet en pronation ou supination",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Elle est plus importante en pronation et en préhension forcée",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Elle correspond à la longueur du processus styloïde ulnaire",
+          "correct": false
+        }
       ],
       "explication": "La variance ulnaire correspond à la différence de longueur entre le radius et l’ulna, et est physiologiquement légèrement négative. Elle n’est pas fixe : elle est influencée par la position du poignet, augmentant en pronation et en préhension forcée. Elle est totalement indépendante de la longueur du processus styloïde ulnaire, qui varie pour son propre compte.",
       "correction_figures": [],
-      "source": { "page": 215, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 215,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c10-q09",
@@ -142,14 +310,35 @@
       "enonce": "Parmi les défauts de segmentation osseuse durant la vie embryonnaire, quelle est la synostose carpienne congénitale la plus fréquemment rencontrée dans la population ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La synostose scapho-lunaire", "correct": false },
-        { "id": "B", "texte": "La synostose luno-triquétrale", "correct": true },
-        { "id": "C", "texte": "La synostose capito-hamatale", "correct": false },
-        { "id": "D", "texte": "La synostose piso-triquétrale", "correct": false }
+        {
+          "id": "A",
+          "texte": "La synostose scapho-lunaire",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La synostose luno-triquétrale",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La synostose capito-hamatale",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La synostose piso-triquétrale",
+          "correct": false
+        }
       ],
       "explication": "Bien que n’importe quel os puisse être affecté, la synostose entre le lunatum et le triquétrum est de loin la plus fréquente des synostoses carpiennes, rencontrée notamment chez certaines populations d’Afrique de l’Ouest.",
       "correction_figures": [],
-      "source": { "page": 231, "element": "Texte (p. 231–232)", "refs": "" }
+      "source": {
+        "page": 231,
+        "element": "Texte (p. 231–232)",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c10-q10",
@@ -158,14 +347,35 @@
       "enonce": "Lors de la physiopathologie de la rhizarthrose, la subluxation de l’articulation trapézo-métacarpienne est une étape majeure favorisée par l’anatomie locale. Parmi les structures ligamentaires suivantes, laquelle est considérée actuellement par les études IRM et biomécaniques comme le principal stabilisateur s’opposant à cette subluxation ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le ligament intermétacarpien", "correct": false },
-        { "id": "B", "texte": "Le ligament oblique antérieur superficiel", "correct": false },
-        { "id": "C", "texte": "Le ligament dorsoradial", "correct": true },
-        { "id": "D", "texte": "Le ligament collatéral ulnaire", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le ligament intermétacarpien",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le ligament oblique antérieur superficiel",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le ligament dorsoradial",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le ligament collatéral ulnaire",
+          "correct": false
+        }
       ],
       "explication": "Les structures capsuloligamentaires de l’articulation trapézométacarpienne sont globalement faibles, mais le ligament dorsoradial paraît être le ligament stabilisateur le plus important pour s’opposer à la subluxation postérolatérale de la base du premier métacarpien.",
       "correction_figures": [],
-      "source": { "page": 207, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 207,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 3
     }
   ]
 }

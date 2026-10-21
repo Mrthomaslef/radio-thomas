@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { themes } from '../data/themes.js';
-import { CHAPTERS, useQuestions } from '../data/useQuestions.js';
+import { CHAPTERS, useQuestions, resolveDifficulty } from '../data/useQuestions.js';
 import { readName, saveName, subscribePlayer } from '../data/player.js';
 import { QuizPlayer } from './ChapterQuiz.jsx';
 import Icon from './Icons.jsx';
@@ -28,6 +28,7 @@ export default function RandomQuiz() {
   }, [byChapter]);
 
   const [selected, setSelected] = useState([]);
+  const [difficulties, setDifficulties] = useState([1, 2, 3]);
   const [count, setCount] = useState(10);
   const [session, setSession] = useState(null); // { id, questions }
 
@@ -41,17 +42,46 @@ export default function RandomQuiz() {
 
   useEffect(() => subscribePlayer(() => setPseudo(readName())), []);
 
-  const pool = useMemo(() => {
+  const chapterPool = useMemo(() => {
     const out = [];
     for (const chKey of selected) {
       const qs = byChapter[chKey] || [];
       const meta = CHAPTERS[chKey]?.chapitre;
       for (const q of qs) {
-        out.push({ ...q, _chapterKey: chKey, _meta: meta });
+        const diff = resolveDifficulty(q.id, q.difficulty);
+        out.push({ ...q, difficulty: diff, _chapterKey: chKey, _meta: meta });
       }
     }
     return out;
   }, [byChapter, selected]);
+
+  const diffCounts = useMemo(() => {
+    const counts = { 1: 0, 2: 0, 3: 0 };
+    for (const q of chapterPool) {
+      counts[q.difficulty] = (counts[q.difficulty] || 0) + 1;
+    }
+    return counts;
+  }, [chapterPool]);
+
+  const pool = useMemo(
+    () => chapterPool.filter((q) => difficulties.includes(q.difficulty)),
+    [chapterPool, difficulties]
+  );
+
+  const toggleDifficulty = (lvl) => {
+    setDifficulties((prev) => {
+      if (prev.includes(lvl)) {
+        // Keep at least one level selected if the user unchecks the last one, or allow unchecking
+        return prev.filter((x) => x !== lvl);
+      }
+      return [...prev, lvl].sort();
+    });
+  };
+
+  const selectAllDifficulties = () => {
+    if (difficulties.length === 3) setDifficulties([]);
+    else setDifficulties([1, 2, 3]);
+  };
 
   const effectiveCount = pool.length > 0 ? Math.max(1, Math.min(count, pool.length)) : 0;
 
@@ -212,7 +242,40 @@ export default function RandomQuiz() {
 
       <div className="cq-card rnd-box">
         <div className="rnd-sec-head">
-          <h2>2. Nombre de questions</h2>
+          <h2>2. Niveau de difficulté</h2>
+          <button type="button" className="link-btn" onClick={selectAllDifficulties}>
+            {difficulties.length === 3 ? 'Tout désélectionner' : 'Tous les niveaux (1, 2 et 3)'}
+          </button>
+        </div>
+        <p className="rnd-diff-help">
+          Tu peux choisir un seul niveau, en combiner deux ou sélectionner les trois :
+        </p>
+        <div className="rnd-diff-grid" role="group" aria-label="Filtrer par niveau de difficulté">
+          {[1, 2, 3].map((lvl) => {
+            const on = difficulties.includes(lvl);
+            const c = diffCounts[lvl] || 0;
+            return (
+              <button
+                key={lvl}
+                type="button"
+                className={`rnd-diff-card rnd-diff-${lvl} ${on ? 'on' : ''}`}
+                onClick={() => toggleDifficulty(lvl)}
+                aria-pressed={on}
+              >
+                <span className="rnd-diff-check" aria-hidden="true">{on ? '✓' : ''}</span>
+                <span className="rnd-diff-title">Difficulté {lvl}</span>
+                <span className="rnd-diff-count">
+                  {c} question{c > 1 ? 's' : ''}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="cq-card rnd-box">
+        <div className="rnd-sec-head">
+          <h2>3. Nombre de questions</h2>
           <span className="rnd-pool-info">
             {pool.length} question{pool.length > 1 ? 's' : ''} disponible{pool.length > 1 ? 's' : ''} dans la sélection
           </span>

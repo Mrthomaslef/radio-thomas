@@ -14,14 +14,35 @@
       "enonce": "Quel est le territoire sensitif classique du rameau superficiel du nerf radial à la main ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La face palmaire des 3 premiers doigts et de la moitié radiale du 4e", "correct": false },
-        { "id": "B", "texte": "La face palmaire de la main et des 4e et 5e doigts", "correct": false },
-        { "id": "C", "texte": "La moitié latérale du dos de la main, du pouce, de la phalange proximale de l’index et de la moitié du majeur", "correct": true },
-        { "id": "D", "texte": "Le versant ulnaire de la face dorsale de la main et le 5e doigt", "correct": false }
+        {
+          "id": "A",
+          "texte": "La face palmaire des 3 premiers doigts et de la moitié radiale du 4e",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La face palmaire de la main et des 4e et 5e doigts",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La moitié latérale du dos de la main, du pouce, de la phalange proximale de l’index et de la moitié du majeur",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le versant ulnaire de la face dorsale de la main et le 5e doigt",
+          "correct": false
+        }
       ],
       "explication": "Le rameau superficiel du nerf radial innerve la moitié latérale du dos de la main, du pouce, de la phalange proximale de l’index et de la moitié du majeur (et une petite partie de l’éminence thénar). La face palmaire des 3 premiers doigts correspond au nerf médian, la face palmaire des 4e et 5e doigts au rameau superficiel du nerf ulnaire, et le versant ulnaire dorsal au rameau dorsal du nerf ulnaire.",
       "correction_figures": [],
-      "source": { "page": 304, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 304,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c13-q02",
@@ -30,14 +51,35 @@
       "enonce": "Concernant le syndrome du canal carpien, le diagnostic repose principalement sur la clinique, mais l’échographie est très performante. Quels signes échographiques sont en faveur d’un syndrome du canal carpien ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une diminution de la surface de section transverse (SST) du nerf en amont du canal", "correct": false },
-        { "id": "B", "texte": "Une augmentation de la surface de section transverse (SST) du nerf médian, généralement > 11–12 mm²", "correct": true },
-        { "id": "C", "texte": "Une hyperhémie intraneurale visible en mode Doppler", "correct": true },
-        { "id": "D", "texte": "Une hypoéchogénicité avec perte de l’aspect « folliculaire » du nerf", "correct": true }
+        {
+          "id": "A",
+          "texte": "Une diminution de la surface de section transverse (SST) du nerf en amont du canal",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une augmentation de la surface de section transverse (SST) du nerf médian, généralement > 11–12 mm²",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une hyperhémie intraneurale visible en mode Doppler",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une hypoéchogénicité avec perte de l’aspect « folliculaire » du nerf",
+          "correct": true
+        }
       ],
       "explication": "En échographie, le syndrome du canal carpien se traduit par un épaississement nerveux (SST > 11–12 mm² en amont ou à la partie proximale du canal), une hypoéchogénicité avec perte de l’aspect folliculaire, un bombement palmaire du rétinaculum, et souvent une hyperhémie intraneurale en mode Doppler.",
       "correction_figures": [],
-      "source": { "page": 291, "element": "Encadré 13.1", "refs": "" }
+      "source": {
+        "page": 291,
+        "element": "Encadré 13.1",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c13-q03",
@@ -46,14 +88,35 @@
       "enonce": "Un cycliste de haut niveau se plaint d’une perte de force et d’une maladresse des doigts de la main droite sans aucun trouble sensitif associé. La sensibilité de l’éminence hypothénar, de la face palmaire et dorsale des 4e et 5e doigts est parfaitement normale. L’EMG montre une atteinte motrice des muscles interosseux. Quel est le site de compression le plus probable du nerf ulnaire ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Zone 1 (compression proximale avant la division du nerf ulnaire)", "correct": false },
-        { "id": "B", "texte": "Zone 2 (compression distale du rameau profond dans la loge profonde du canal de Guyon)", "correct": true },
-        { "id": "C", "texte": "Zone 3 (compression distale du rameau superficiel dans la loge superficielle du canal de Guyon)", "correct": false },
-        { "id": "D", "texte": "Sillon rétro-épicondylien médial au coude", "correct": false }
+        {
+          "id": "A",
+          "texte": "Zone 1 (compression proximale avant la division du nerf ulnaire)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Zone 2 (compression distale du rameau profond dans la loge profonde du canal de Guyon)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Zone 3 (compression distale du rameau superficiel dans la loge superficielle du canal de Guyon)",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Sillon rétro-épicondylien médial au coude",
+          "correct": false
+        }
       ],
       "explication": "L’absence totale de troubles sensitifs avec une atteinte motrice isole le site de compression à la zone 2 (rameau profond du nerf ulnaire, purement moteur, dans le hiatus piso-hamatal). C’est une pathologie classique chez le cycliste (pression sur le guidon). La zone 1 donnerait des troubles mixtes, la zone 3 des troubles purement sensitifs.",
       "correction_figures": [],
-      "source": { "page": 298, "element": "Texte (p. 298) et Tableau 13.2 (p. 300)", "refs": "" }
+      "source": {
+        "page": 298,
+        "element": "Texte (p. 298) et Tableau 13.2 (p. 300)",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c13-q04",
@@ -62,14 +125,35 @@
       "enonce": "Le syndrome du marteau hypothénarien est une lésion d’origine microtraumatique de l’artère ulnaire. Quelles professions ou activités sportives sont particulièrement à risque de développer ce syndrome ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Bûcherons et charpentiers", "correct": true },
-        { "id": "B", "texte": "Opérateurs de marteau-piqueur", "correct": true },
-        { "id": "C", "texte": "Joueurs de jeux vidéo (e-sport) de manière intensive", "correct": false },
-        { "id": "D", "texte": "Joueurs de golf et gardiens de but de football", "correct": true }
+        {
+          "id": "A",
+          "texte": "Bûcherons et charpentiers",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Opérateurs de marteau-piqueur",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Joueurs de jeux vidéo (e-sport) de manière intensive",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Joueurs de golf et gardiens de but de football",
+          "correct": true
+        }
       ],
       "explication": "Le syndrome du marteau hypothénarien s’observe chez les travailleurs utilisant leur main comme marteau (charpentiers, maçons) ou exposés aux vibrations (marteau-piqueur, bûcherons). Les sports à risque incluent le golf, le volley-ball, les arts martiaux, et les gardiens de but. L’utilisation de jeux vidéo est un facteur de risque rapporté pour la ténosynovite de De Quervain, pas pour le marteau hypothénarien.",
       "correction_figures": [],
-      "source": { "page": 307, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 307,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c13-q05",
@@ -78,14 +162,35 @@
       "enonce": "Le canal carpien est un tunnel ostéofibreux. Quel ligament en forme le toit (limite superficielle) et est sectionné lors du traitement chirurgical du syndrome du canal carpien ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le ligament collatéral ulnaire", "correct": false },
-        { "id": "B", "texte": "Le ligament radio-scapho-lunaire", "correct": false },
-        { "id": "C", "texte": "Le rétinaculum des fléchisseurs (ou ligament annulaire antérieur du carpe)", "correct": true },
-        { "id": "D", "texte": "Le lacertus fibrosus", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le ligament collatéral ulnaire",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le ligament radio-scapho-lunaire",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le rétinaculum des fléchisseurs (ou ligament annulaire antérieur du carpe)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le lacertus fibrosus",
+          "correct": false
+        }
       ],
       "explication": "Le canal carpien est limité en superficie par le rétinaculum des fléchisseurs (ou ligament annulaire antérieur du carpe). Le traitement chirurgical repose sur la section de ce rétinaculum pour décomprimer le nerf médian.",
       "correction_figures": [],
-      "source": { "page": 287, "element": "Texte (p. 287 et 293)", "refs": "" }
+      "source": {
+        "page": 287,
+        "element": "Texte (p. 287 et 293)",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c13-q06",
@@ -94,14 +199,35 @@
       "enonce": "Le rameau thénarien (récurrent) du nerf médian peut être lésé ou comprimé, entraînant une atrophie et un déficit moteur thénariens purs. Quelles sont les causes classiques d’atteinte de ce rameau ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Les microtraumatismes par massages appuyés (massage « shiatsu »)", "correct": true },
-        { "id": "B", "texte": "Une compression intrinsèque par une lipomatose du nerf", "correct": false },
-        { "id": "C", "texte": "Une compression par un kyste mucoïde ou synovial", "correct": true },
-        { "id": "D", "texte": "Une compression fibreuse par le rétinaculum des fléchisseurs en cas de trajet transligamentaire", "correct": true }
+        {
+          "id": "A",
+          "texte": "Les microtraumatismes par massages appuyés (massage « shiatsu »)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une compression intrinsèque par une lipomatose du nerf",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une compression par un kyste mucoïde ou synovial",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une compression fibreuse par le rétinaculum des fléchisseurs en cas de trajet transligamentaire",
+          "correct": true
+        }
       ],
       "explication": "Le rameau thénarien peut être affecté par une compression extrinsèque (kyste mucoïde), des microtraumatismes (massage shiatsu), une compression fibreuse par le rétinaculum des fléchisseurs (notamment s’il a un trajet transligamentaire) ou une lésion iatrogène lors de la chirurgie du canal carpien.",
       "correction_figures": [],
-      "source": { "page": 296, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 296,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c13-q07",
@@ -110,14 +236,35 @@
       "enonce": "Un homme de 55 ans est opéré pour un syndrome du canal carpien récalcitrant. Malgré l’intervention, la symptomatologie persiste sans aucun intervalle libre. L’échographie de contrôle à 6 semaines postopératoires montre que le nerf médian et les tendons fléchisseurs n’ont pas translaté en direction palmaire et restent situés en profondeur de la ligne reliant l’hamulus de l’hamatum au trapèze. Quel est le diagnostic le plus probable expliquant cet échec ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La formation d’un névrome du nerf médian secondaire à une section partielle", "correct": false },
-        { "id": "B", "texte": "Une libération insuffisante du rétinaculum des fléchisseurs", "correct": true },
-        { "id": "C", "texte": "Une fibrose cicatricielle périneurale postopératoire massive", "correct": false },
-        { "id": "D", "texte": "Un hématome du canal carpien non résorbé", "correct": false }
+        {
+          "id": "A",
+          "texte": "La formation d’un névrome du nerf médian secondaire à une section partielle",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une libération insuffisante du rétinaculum des fléchisseurs",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une fibrose cicatricielle périneurale postopératoire massive",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un hématome du canal carpien non résorbé",
+          "correct": false
+        }
       ],
       "explication": "L’absence d’amélioration postopératoire immédiate (pas d’intervalle libre) couplée, à l’échographie, à l’absence de translation palmaire du contenu du canal carpien (le nerf et les tendons restant en profondeur de la ligne repère) est le signe diagnostique d’une libération chirurgicale insuffisante du rétinaculum des fléchisseurs.",
       "correction_figures": [],
-      "source": { "page": 294, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 294,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c13-q08",
@@ -126,14 +273,35 @@
       "enonce": "Le syndrome de Wartenberg correspond à une compression du rameau superficiel du nerf radial. Quels facteurs locaux peuvent être à l’origine de cette lésion à la face latérale de l’avant-bras et du poignet ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le port de menottes trop serrées", "correct": true },
-        { "id": "B", "texte": "Une compression par l’arcade de Fröhse", "correct": false },
-        { "id": "C", "texte": "Une lésion iatrogène lors d’un cathétérisme de la veine céphalique", "correct": true },
-        { "id": "D", "texte": "L’irritation du nerf par une ténosynovite de De Quervain", "correct": true }
+        {
+          "id": "A",
+          "texte": "Le port de menottes trop serrées",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une compression par l’arcade de Fröhse",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une lésion iatrogène lors d’un cathétérisme de la veine céphalique",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’irritation du nerf par une ténosynovite de De Quervain",
+          "correct": true
+        }
       ],
       "explication": "Le rameau superficiel du nerf radial, de par sa position sous-cutanée, est vulnérable aux compressions externes (menottes, bracelets), aux traumatismes iatrogènes (cathétérisme de la veine céphalique adjacente, chirurgie) et à l’irritation inflammatoire de voisinage (ténosynovite de De Quervain, présente dans 50 % des cas). L’arcade de Fröhse est le site de compression du rameau profond du nerf radial.",
       "correction_figures": [],
-      "source": { "page": 304, "element": "Encadré 13.3", "refs": "" }
+      "source": {
+        "page": 304,
+        "element": "Encadré 13.3",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c13-q09",
@@ -142,14 +310,35 @@
       "enonce": "Le syndrome du marteau thénarien est très rare et s’apparente cliniquement au syndrome du marteau hypothénarien, mais concerne une autre artère. Quelle structure vasculaire est impliquée dans le syndrome du marteau thénarien ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le rameau profond de l’artère ulnaire", "correct": false },
-        { "id": "B", "texte": "L’artère interosseuse antérieure", "correct": false },
-        { "id": "C", "texte": "L’artère radiale et l’origine radiale de l’arcade palmaire superficielle", "correct": true },
-        { "id": "D", "texte": "La veine céphalique", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le rameau profond de l’artère ulnaire",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’artère interosseuse antérieure",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’artère radiale et l’origine radiale de l’arcade palmaire superficielle",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La veine céphalique",
+          "correct": false
+        }
       ],
       "explication": "Le syndrome du marteau thénarien concerne l’artère radiale et l’origine radiale de l’arcade palmaire superficielle. Il résulte de la compression du rameau superficiel de l’artère radiale par le muscle court fléchisseur du pouce contre le tubercule du trapèze, suite à des microtraumatismes répétés de l’éminence thénar.",
       "correction_figures": [],
-      "source": { "page": 308, "element": "Texte (p. 308–309)", "refs": "" }
+      "source": {
+        "page": 308,
+        "element": "Texte (p. 308–309)",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c13-q10",
@@ -158,14 +347,35 @@
       "enonce": "L’échographie du poignet d’un patient suspecté d’un syndrome du canal de Guyon révèle la présence bilatérale d’un muscle surnuméraire formant le toit du canal à sa partie proximale, en superficie de l’artère et du nerf ulnaires, s’insérant sur le pisiforme. Quelle est cette variante musculaire (la plus fréquemment impliquée) qui peut, lorsqu’elle est hypertrophiée, causer un syndrome compressif ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le muscle court palmaire (palmaris brevis)", "correct": false },
-        { "id": "B", "texte": "Le muscle abducteur accessoire du 5e doigt", "correct": true },
-        { "id": "C", "texte": "Le muscle long palmaire accessoire", "correct": false },
-        { "id": "D", "texte": "Le muscle épitrochléo-anconéen", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le muscle court palmaire (palmaris brevis)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le muscle abducteur accessoire du 5e doigt",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle long palmaire accessoire",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le muscle épitrochléo-anconéen",
+          "correct": false
+        }
       ],
       "explication": "La variante musculaire la plus fréquemment impliquée dans la compression du nerf ulnaire au canal de Guyon est le muscle abducteur accessoire du 5e doigt. Présent chez environ 25 % de la population, il est volontiers bilatéral et peut s’insérer sur le fascia antébrachial, le rétinaculum ou le pisiforme. Son caractère symptomatique est souvent lié à son hypertrophie par hypersollicitation. Le muscle épitrochléo-anconéen se trouve au coude (gouttière rétro-épicondylienne).",
       "correction_figures": [],
-      "source": { "page": 299, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 299,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 3
     }
   ]
 }

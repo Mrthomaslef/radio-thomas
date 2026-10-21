@@ -6,5 +6,677 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c24-q01",
+      "type": "QRM",
+      "theme": "Anatomie méniscale et attaches",
+      "enonce": "Concernant l’anatomie morphologique des ménisques et de leurs attaches, quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le ménisque médial a une forme en « C » avec une corne postérieure nettement plus large (11-12 mm) que sa corne antérieure (7-8 mm)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le ménisque latéral a une forme en « O » et ses cornes antérieure et postérieure sont de largeur semblable (9-10 mm)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le ligament méniscofémoral antérieur (de Humphrey) passe en arrière du ligament croisé postérieur (LCP), tandis que le ligament de Wrisberg passe en avant du LCP",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le frein de la corne postérieure du ménisque latéral possède souvent, en plus de sa racine courte insérée en arrière de l’épine tibiale latérale, une racine longue qui traverse la fosse intercondylaire pour s’insérer sur l’épine tibiale médiale",
+          "correct": true
+        }
+      ],
+      "explication": "Le ménisque médial (en « C ») possède une corne postérieure plus large que l’antérieure, tandis que le ménisque latéral (en « O », à plus petit rayon de courbure) a deux cornes de taille similaire. Le frein postérolatéral possède une racine courte (en éventail derrière l’épine tibiale latérale) et, dans la majorité des cas, une racine longue qui croise la fosse intercondylaire jusqu’à l’épine tibiale médiale. En revanche, le ligament méniscofémoral antérieur (de Humphrey) longe le bord antérieur du LCP, tandis que le ligament postérieur (de Wrisberg) passe en situation postérolatérale par rapport au LCP.",
+      "correction_figures": [],
+      "source": {
+        "page": 661,
+        "element": "Pages 661 et 662",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c24-q02",
+      "type": "QCU",
+      "theme": "Histologie et biomécanique",
+      "enonce": "Comment l’organisation histologique et architecturale des fibres de collagène intraméniscales explique-t-elle le comportement biomécanique du ménisque et la topographie préférentielle de certaines fissures ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Les fibres radiaires sont majoritaires en périphérie et expliquent la survenue préférentielle des fissures horizontales chez le sujet jeune",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Les fibres longitudinales (circonférentielles), disposées selon le grand axe dans le tiers périphérique, permettent de résister aux forces de traction et expliquent la localisation préférentielle des fissures longitudinales à la jonction tiers périphérique - deux tiers centraux",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La vascularisation méniscale chez l’adulte couvre les deux tiers centraux (« zone rouge »), permettant la cicatrisation spontanée des fissures du bord libre",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le tiers périphérique est exclusivement composé de cellules chondroblastiques et de collagène de type 2 avasculaire",
+          "correct": false
+        }
+      ],
+      "explication": "Les fibres de collagène (plus de 90 % de type 1) comportent des fibres longitudinales (circonférentielles) prédominant dans le tiers périphérique qui absorbent les contraintes axiales en les convertissant en forces de traction circonférentielles, expliquant la localisation préférentielle des fissures longitudinales à la jonction 1/3 périphérique - 2/3 centraux. Les fibres radiaires sont perpendiculaires aux longitudinales et luttent contre la compression (avec un faisceau perforant plus dense à l’équateur). Chez l’adulte, seuls les 10 à 33 % périphériques sont vascularisés (« zone rouge », fibroblastique, collagène de type 1), tandis que les deux tiers centraux sont avasculaires (« zone blanche », chondroblastique, collagène 1 et 2, riches en glycosaminoglycanes).",
+      "correction_figures": [],
+      "source": {
+        "page": 663,
+        "element": "Pages 663 et 664",
+        "refs": ""
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c24-q03",
+      "type": "QCU",
+      "theme": "Classification de Crues",
+      "enonce": "En IRM, selon la classification de Crues, à quelle condition un hypersignal intraméniscal linéaire (grade 3) permet-il d’affirmer une fissure méniscale avec une valeur prédictive positive supérieure à 90 % ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Lorsqu’il reste strictement central sans atteindre la base ni les faces articulaires sur trois coupes consécutives",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Lorsqu’il atteint la base méniscale périphérique sans toucher les faces articulaires supérieure ou inférieure (grade 2b)",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Lorsqu’il communique de façon nette avec la cavité articulaire par au moins l’une des deux surfaces méniscales sur une seule coupe isolée",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Lorsqu’il communique de façon nette avec la cavité articulaire par au moins l’une des deux surfaces méniscales sur au moins deux coupes contiguës ou deux coupes orthogonales",
+          "correct": true
+        }
+      ],
+      "explication": "Une fissure méniscale correspond à un hypersignal de grade 3 de Crues, c’est-à-dire atteignant au moins une surface articulaire (supérieure ou inférieure) du ménisque. Sa valeur prédictive positive dépasse 90 % si cette communication est visible sur au moins deux coupes contiguës ou deux coupes orthogonales, mais chute à moins de 60 % si elle n’est visible que sur une seule coupe. Les grades 1 (punctiforme/nodulaire) et 2 (linéaire n’atteignant pas les surfaces articulaires) ne sont pas des fissures.",
+      "correction_figures": [],
+      "source": {
+        "page": 665,
+        "element": "Pages 665, 666 et 676",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c24-q04",
+      "type": "QCU",
+      "theme": "Lésions méniscales et LCA",
+      "enonce": "Vous interprétez l’IRM du genou d’un footballeur victime d’une rupture aiguë du ligament croisé antérieur (LCA). Sur les coupes sagittales passant par la corne postérieure du ménisque latéral, vous observez une image linéaire hyperintense oblique située entre le ménisque et l’insertion d’un ligament méniscofémoral. Quel critère sémiologique précis vous permet de conclure qu’il ne s’agit pas d’une simple pseudo-fissure physiologique liée à l’insertion du ligament méniscofémoral, mais bien d’une véritable fissure longitudinale prolongeant cette insertion (« signe de la braguette ») ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’image linéaire est uniquement visible en dedans du hiatus poplité sur 2 coupes sagittales",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’interface d’insertion ligamentaire reste visible sur au moins 4 à 5 coupes sagittales contiguës (de 3 mm) en dehors du LCP, et se prolonge notamment en avant du hiatus poplité",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’image présente une orientation oblique en bas et en arrière sur une seule coupe juxta-médiale",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La présence simultanée d’un ménisque en drapeau (flounce meniscus) sur le ménisque médial",
+          "correct": false
+        }
+      ],
+      "explication": "Lors d’une rupture du LCA, la translation tibiale et l’impaction postérieure tirent sur l’insertion des ligaments méniscofémoraux, créant une fissure longitudinale de la corne postérieure du ménisque latéral (« signe de la braguette » en coupe axiale). Alors qu’une pseudo-fissure normale liée à l’insertion du ligament méniscofémoral s’arrête en dedans du hiatus poplité et n’est visible que sur quelques coupes, la visibilité de ce « ligament » et de son interface sur au moins 4 à 5 coupes sagittales de 3 mm en dehors du LCP, et en particulier son extension en avant du hiatus poplité, signe la présence d’une véritable fissure longitudinale associée.",
+      "correction_figures": [],
+      "source": {
+        "page": 667,
+        "element": "Pages 667, 668, 677 et 678",
+        "refs": ""
+      },
+      "difficulty": 3
+    },
+    {
+      "id": "c24-q05",
+      "type": "QRM",
+      "theme": "Désinsertions capsuloméniscales",
+      "enonce": "Quels signes IRM directs ou indirects permettent de suspecter une désinsertion capsuloméniscale (ou séparation méniscocapsulaire) dans le contexte d’une rupture du LCA ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Au ménisque médial, un hypersignal T2 vertical entre la base de la corne postérieure et la capsule, parfois associé à un déplacement antérieur (central) du ménisque ou à une contusion du rebord postérieur du plateau tibial médial",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "À la corne postérieure du ménisque latéral, l’interruption ou l’absence des fascicules méniscopoplités (postérosupérieur et/ou antéro-inférieur) associée à un œdème péricapsulaire postérieur",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un aspect de « ménisque flottant » entouré de liquide articulaire abondant, notamment sous sa face inférieure, traduisant une rupture de l’attache méniscotibiale",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une disparition complète de la corne antérieure du ménisque latéral avec signe de la double corne postérieure",
+          "correct": false
+        }
+      ],
+      "explication": "Les désinsertions capsuloméniscales sont fréquentes dans les ruptures du LCA mais difficiles à voir car l’extension du genou rapproche les berges. Elles touchent surtout la corne postérieure du ménisque médial (hypersignal T2 vertical ou infiltration hématique entre base et capsule, fissure du coin méniscal, contusion du rebord tibial postéromédial). À la corne postérieure du ménisque latéral, on recherche l’interruption des fascicules méniscopoplités et l’œdème péricapsulaire postérieur. Enfin, la rupture des attaches méniscotibiales (plan profond du LCM en médial) donne l’aspect de « ménisque flottant » dans l’interligne.",
+      "correction_figures": [],
+      "source": {
+        "page": 667,
+        "element": "Pages 667 à 669",
+        "refs": ""
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c24-q06",
+      "type": "QCU",
+      "theme": "Lésions des freins méniscaux",
+      "enonce": "Une patiente de 58 ans, en surpoids et sédentaire, ressent une douleur postérieure brutale du genou à la suite d’un mouvement banal de flexion. L’IRM réalisée quelques semaines plus tard montre sur les coupes frontales une extrusion (subluxation) de 4 mm du segment moyen du ménisque médial en dehors de l’interligne, ainsi qu’une fracture sous-chondrale du condyle fémoral médial avec œdème osseux majeur. Quelle lésion méniscale spécifique est la cause la plus probable de cette cascade biomécanique ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une petite fissure radiaire de 2 mm du bord libre du segment moyen du ménisque latéral",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une rupture (fissure radiaire complète) du frein postérieur de la corne postérieure du ménisque médial",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une contusion méniscale simple de la corne antérieure",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un ménisque médial en drapeau (flounce meniscus)",
+          "correct": false
+        }
+      ],
+      "explication": "Les lésions du frein postérieur du ménisque médial surviennent volontiers chez la femme d’âge moyen avec un IMC élevé et un faible niveau d’activité sportive, se révélant parfois par une douleur postérieure brutale lors d’un mouvement banal ou d’une flexion. La perte de l’ancrage osseux du frein empêche la conversion des charges axiales en tension circonférentielle (perte de compétence biomécanique similaire à une méniscectomie totale), ce qui entraîne une subluxation (extrusion ≥ 3 mm) du corps méniscal sur les coupes frontales et une surcharge mécanique aiguë du compartiment homolatéral aboutissant à une fracture sous-chondrale du condyle fémoral médial ou à une arthrose rapide.",
+      "correction_figures": [],
+      "source": {
+        "page": 664,
+        "element": "Pages 664, 671 à 673 et 679",
+        "refs": ""
+      },
+      "difficulty": 3
+    },
+    {
+      "id": "c24-q07",
+      "type": "QRM",
+      "theme": "Lésions des freins méniscaux",
+      "enonce": "Comparez les caractéristiques des lésions du frein postérieur du ménisque médial et de celles du frein postérieur du ménisque latéral : quelles propositions sont exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Les ruptures du frein postérieur du ménisque latéral sont habituellement d’origine traumatique chez le sujet sportif, associées dans 7 à 12 % des cas à une rupture du LCA",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "En cas de rupture isolée du frein postérolatéral, la subluxation (extrusion) du ménisque latéral sur les coupes frontales est souvent absente ou limitée grâce à l’action stabilisatrice des ligaments méniscofémoraux intacts",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’avulsion osseuse du frein postérieur (notamment médial) s’observe typiquement chez l’enfant pratiquant des sports avec hyperflexion (ski, trampoline) et peut être méconnue en IRM alors qu’elle est visible en radiographie",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Les freins méniscaux antérieurs sont de loin les plus fréquemment rompus lors des entorses du genou",
+          "correct": false
+        }
+      ],
+      "explication": "Contrairement au frein postéromédial (souvent dégénératif), le frein postérolatéral se rompt surtout lors d’un traumatisme sportif avec rupture du LCA (7-12 %). Lorsqu’il est rompu, les ligaments méniscofémoraux (Humphrey/Wrisberg), de par leur insertion tangentielle sur la corne postérieure du ménisque latéral, limitent la subluxation latérale du ménisque ; il faut donc toujours préciser leur intégrité. Chez l’enfant, l’atteinte peut prendre la forme d’une avulsion osseuse du frein postéromédial, mieux détectée en radiographie qu’en IRM. L’atteinte des freins antérieurs est au contraire très rare, souvent iatrogène ou liée à des variantes d’insertion.",
+      "correction_figures": [],
+      "source": {
+        "page": 671,
+        "element": "Pages 671 à 673",
+        "refs": ""
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c24-q08",
+      "type": "QCU",
+      "theme": "Anse de seau méniscale",
+      "enonce": "Sur l’IRM d’un patient présentant un blocage d’extension du genou, vous observez sur une coupe sagittale passant par la fosse intercondylaire une bande hypo-intense située juste en avant et en dessous du ligament croisé postérieur, réalisant le signe du « double LCP ». Le ligament croisé antérieur (LCA) est strictement normal et continu. Que pouvez-vous déduire avec certitude concernant l’origine de ce fragment déplacé ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il s’agit d’une anse de seau du ménisque latéral, car le LCA intact guide le fragment sous le LCP",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il s’agit d’une anse de seau du ménisque médial, car au compartiment latéral, la présence d’un LCA non rompu fait obstacle et empêche la migration d’une anse de seau latérale sous le LCP",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il s’agit obligatoirement du ligament interméniscal antérieur luxé en arrière",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il s’agit d’un lambeau méniscal horizontal incarcéré dans le récessus méniscotibial médial",
+          "correct": false
+        }
+      ],
+      "explication": "Le signe du « double LCP » sur les coupes sagittales correspond à la luxation d’une anse de seau méniscale dans la fosse intercondylaire, en avant et en dessous du LCP. Ce signe témoigne d’une lésion du ménisque médial car, du côté latéral, le LCA (s’il n’est pas rompu) s’interpose et empêche le fragment méniscal latéral de migrer sous le LCP. À l’inverse, au ménisque latéral, un fragment retourné vers l’avant donne plutôt un aspect de « mégacorne antérieure » (> 6-8 mm de haut) ou de « double corne antérieure ».",
+      "correction_figures": [],
+      "source": {
+        "page": 673,
+        "element": "Pages 673 et 674",
+        "refs": ""
+      },
+      "difficulty": 3
+    },
+    {
+      "id": "c24-q09",
+      "type": "QCU",
+      "theme": "Lambeau méniscal déplacé",
+      "enonce": "Un patient de 52 ans consulte pour une douleur focale très vive du versant médial du genou, reproduite cliniquement lors de l’application d’un valgus sur genou fléchi. L’IRM montre une fissure horizontale dégénérative du segment moyen du ménisque médial ainsi qu’un œdème osseux focal et un discret méplat du rebord tibial médial juste sous l’interligne. Quelle complication spécifique devez-vous signaler au chirurgien afin qu’elle ne soit pas méconnue lors d’une éventuelle arthroscopie ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une anse de seau luxée dans la fosse intercondylaire",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un lambeau méniscal inférieur incarcéré (luxé) dans le récessus synovial méniscotibial médial",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un kyste mucoïde du ligament croisé antérieur",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un ossicule méniscal de la corne postérieure",
+          "correct": false
+        }
+      ],
+      "explication": "Les fissures horizontales (notamment du segment moyen du ménisque médial) peuvent détacher un lambeau méniscal inférieur qui vient s’incarcérer dans le récessus synovial méniscotibial (le plus souvent) ou méniscofémoral. Cliniquement, la douleur médiale déclenchée par l’application d’un valgus genou fléchi est évocatrice. En imagerie (IRM, arthroscanner ou échographie), ce lambeau s’accompagne souvent d’un méplat ou d’un œdème osseux focal du rebord tibial adjacent par conflit mécanique. Il est essentiel de l’identifier en préopératoire car le récessus méniscotibial est difficile à explorer lors d’une arthroscopie non orientée.",
+      "correction_figures": [],
+      "source": {
+        "page": 664,
+        "element": "Pages 664, 674, 675 et 679",
+        "refs": ""
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c24-q10",
+      "type": "QRM",
+      "theme": "Stabilité des lésions méniscales",
+      "enonce": "Parmi les lésions méniscales suivantes évaluées en imagerie, lesquelles sont classées comme des lésions « instables » (et donc potentiellement arthrogènes) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une fissure verticale transfixiante (complète) de plus de 10 mm de longueur",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une fissure horizontale simple sans lambeau déplacé",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une fissure présentant un hypersignal T2 de type liquidien franc (témoignant de l’écartement des berges) ou associée à un fragment méniscal déplacé",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une lésion d’un frein méniscal postérieur ou de l’attache méniscotibiale",
+          "correct": true
+        },
+        {
+          "id": "E",
+          "texte": "Une fissure verticale partielle intéressant moins de la moitié de la hauteur méniscale",
+          "correct": false
+        }
+      ],
+      "explication": "En imagerie, les critères définissant une lésion méniscale instable sont : une fissure verticale complète > 10 mm de long, une désinsertion capsuloméniscale > 10 mm, une fissure complexe, une fissure en hypersignal T2 liquidien (passage de liquide entre les berges écartées), tout fragment méniscal déplacé, une lésion d’un frein méniscal postérieur ou une lésion de l’attache méniscotibiale/méniscofémorale. À l’inverse, une fissure horizontale isolée, une fissure verticale partielle < 50 % de la hauteur, une fissure verticale complète < 5-10 mm ou une petite fissure radiaire isolée sont considérées comme stables.",
+      "correction_figures": [],
+      "source": {
+        "page": 676,
+        "element": "Page 676",
+        "refs": ""
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c24-q11",
+      "type": "QRM",
+      "theme": "Variantes et pièges en IRM",
+      "enonce": "En IRM du genou, plusieurs structures anatomiques normales ou variantes peuvent générer des images pièges simulant une fissure ou un fragment méniscal déplacé. Quelles associations suivantes sont exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La racine longue du frein de la corne postérieure du ménisque latéral et le ligament méniscoméniscal oblique peuvent tous deux traverser la fosse intercondylaire et simuler une anse de seau luxée",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le ligament interméniscal antérieur (transverse), présent dans 60 à 70 % des cas, peut simuler sur les coupes sagittales une fissure oblique de la corne antérieure du ménisque latéral",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’artefact de l’angle magique sur les séquences à TE court (lorsqu’une structure fibreuse fait un angle de 55° avec le champ magnétique) augmente fréquemment le signal du coin supéromédial de la corne postérieure du ménisque latéral",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le ménisque « en drapeau » (flounce meniscus) traduit toujours une déchirure radiaire complète irréversible du segment moyen",
+          "correct": false
+        }
+      ],
+      "explication": "La racine longue du frein postérolatéral (qui s’insère sur l’épine tibiale médiale) et le ligament méniscoméniscal oblique (tendu de la corne antérieure d’un ménisque à la corne postérieure de l’autre) traversent l’échancrure et peuvent mimer une anse de seau. Le ligament interméniscal antérieur crée une interface pseudo-fissuraire sur la corne antérieure du ménisque latéral en sagittal. L’artefact d’angle magique à 55° affecte typiquement le coin supéromédial ascendant de la corne postérieure du ménisque latéral à TE court. En revanche, le ménisque « en drapeau » (flounce) est une simple plicature fonctionnelle et réversible du bord libre du segment moyen (liée au positionnement, à un valgus ou une laxité) et non une fissure.",
+      "correction_figures": [],
+      "source": {
+        "page": 676,
+        "element": "Pages 676 et 677",
+        "refs": ""
+      },
+      "difficulty": 3
+    },
+    {
+      "id": "c24-q12",
+      "type": "QCU",
+      "theme": "Performances et limites de l’IRM",
+      "enonce": "Pourquoi la sensibilité et la spécificité de l’IRM pour le diagnostic des fissures méniscales diminuent-elles en présence d’une rupture associée du ligament croisé antérieur (LCA), ou en présence d’une chondrocalcinose ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "En cas de rupture du LCA, l’efficacité diagnostique baisse surtout au ménisque latéral (74 %) du fait de lésions périphériques/désinsertions difficiles à voir et de la guérison spontanée possible de fissures périphériques grâce à l’hémarthrose ; dans la chondrocalcinose, les dépôts calciques créent un effet paramagnétique en T1/DP pouvant masquer ou simuler un hypersignal",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La rupture du LCA provoque une calcification immédiate des deux ménisques en moins de 24 heures",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La chondrocalcinose détruit sélectivement les ligaments méniscofémoraux de Humphrey et Wrisberg",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "En cas de rupture du LCA, les fissures ne touchent jamais le ménisque médial, même au stade d’instabilité chronique",
+          "correct": false
+        }
+      ],
+      "explication": "Lors d’une rupture du LCA, les performances de l’IRM chutent (sensibilité 80 % et spécificité 70 % au ménisque latéral ; 90 % et 82 % au médial) en raison de la fréquence des fissures périphériques et désinsertions capsuloméniscales difficiles à détecter, de la cicatrisation spontanée possible de certaines fissures périphériques grâce aux facteurs de croissance de l’hémarthrose, ou à l’inverse de l’apparition de nouvelles fissures médiales entre l’IRM et la chirurgie du fait de l’instabilité rotatoire. Par ailleurs, les dépôts calciques méniscaux (chondrocalcinose) génèrent un effet paramagnétique en T1 et densité de protons qui peut simuler ou masquer une fissure.",
+      "correction_figures": [],
+      "source": {
+        "page": 664,
+        "element": "Pages 664, 677 à 679",
+        "refs": ""
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c24-q13",
+      "type": "QRM",
+      "theme": "Kystes intra et paraméniscaux",
+      "enonce": "Quelles sont les caractéristiques anatomocliniques et d’imagerie des kystes intra et paraméniscaux ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Ils sont classiquement secondaires au passage de liquide synovial à travers une fissure méniscale horizontale (ou parfois radiaire avec mécanisme de soupape)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Bien qu’observés aussi souvent en médial qu’en latéral en IRM, ils sont trois fois plus fréquents au compartiment latéral dans les séries orthopédiques car ils y sont plus volontiers symptomatiques",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Au compartiment latéral, le kyste siège surtout en regard du segment moyen ou de la corne antérieure et reste habituellement contenu par la capsule sous le ligament collatéral latéral et la bandelette iliotibiale",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Au compartiment médial, le kyste peut perforer le ligament collatéral médial et la capsule pour fuser verticalement à distance sous le fascia crural",
+          "correct": true
+        }
+      ],
+      "explication": "Le kyste paraméniscal résulte de la chasse du liquide synovial dans une fissure horizontale (ou radiaire à soupape). En IRM, sa fréquence est équivalente aux deux ménisques, mais il est 3 fois plus souvent opéré/symptomatique en latéral (tuméfaction caoutchouteuse en regard du segment moyen ou de la corne antérieure, s’étalant transversalement sous le LCL et le tractus iliotibial). En médial, il naît surtout à la partie postérieure du segment moyen entre les deux plans du LCM et peut perforer la capsule pour migrer à distance sous le fascia crural.",
+      "correction_figures": [],
+      "source": {
+        "page": 679,
+        "element": "Page 679",
+        "refs": ""
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c24-q14",
+      "type": "QRM",
+      "theme": "Ménisque discoïde",
+      "enonce": "Quels critères radiographiques et IRM permettent de diagnostiquer un ménisque discoïde ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il est dix fois plus fréquent au ménisque médial qu’au ménisque latéral",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "En IRM, une largeur méniscale supérieure à 14 mm sur les coupes frontales",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "En IRM, un aspect continu entre la corne antérieure et la corne postérieure (« en nœud papillon ») sur plus de trois coupes sagittales contiguës",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Sur la radiographie de face, un élargissement de l’interligne fémorotibial latéral, un aspect trop carré du condyle fémoral latéral, une hyperplasie de l’épine tibiale latérale et une tête fibulaire haut située",
+          "correct": true
+        }
+      ],
+      "explication": "Le ménisque discoïde est une dysplasie dix fois plus fréquente au ménisque latéral (1,5 à 15 % de la population) qu’au ménisque médial (0,3 %). En IRM, il se définit par une largeur > 14 mm en frontal, une hauteur augmentée (> 2 mm par rapport à l’autre ménisque) et une continuité entre les cornes antérieure et postérieure sur plus de 3 coupes sagittales contiguës. En radiographie standard, il peut être suspecté devant l’augmentation de hauteur de l’interligne latéral, un condyle latéral carré, une épine tibiale latérale hyperplasique, un plateau tibial latéral convexe ou oblique et une ascension de la tête fibulaire.",
+      "correction_figures": [],
+      "source": {
+        "page": 680,
+        "element": "Page 680",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c24-q15",
+      "type": "QCU",
+      "theme": "Ménisque discoïde et diagnostic différentiel",
+      "enonce": "Un patient de 42 ans passe une IRM du genou qui met en évidence, au niveau du compartiment latéral, un ménisque de morphologie circonférentielle entourant un foramen central vide (aspect d’anneau), associé à d’importants remaniements arthrosiques fémorotibiaux latéraux (chondropathie sévère et ostéophytes). Quel est le diagnostic le plus probable pour expliquer cet aspect et comment le différencie-t-on d’une anse de seau traumatique ou d’un ménisque en anneau congénital ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il s’agit d’une usure dégénérative centrale (perforation centrale) d’un ménisque discoïde latéral, qui se distingue d’une anse de seau ou d’un ménisque en anneau par l’âge plus avancé du patient (~ 40 ans) et la présence de remaniements arthrosiques associés",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Il s’agit d’un ossicule méniscal géant radiotransparent",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Il s’agit d’une hypoplasie méniscale congénitale secondaire à une poliomyélite",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il s’agit d’une anse de seau du ménisque médial ayant migré dans le compartiment latéral",
+          "correct": false
+        }
+      ],
+      "explication": "Un ménisque discoïde étant plus épais, moins bien vascularisé et ayant des fibres de collagène désorganisées, il est très exposé aux lésions (notamment horizontales) mais aussi à une usure dégénérative centrale progressive créant un véritable foramen central (« central hole tear »). Cet aspect peut mimer une anse de seau ou un rare ménisque en anneau congénital, mais l’âge du patient (autour de 40 ans, plus élevé que dans l’anse de seau) et l’association à des remaniements arthrosiques fémorotibiaux permettent de redresser le diagnostic.",
+      "correction_figures": [],
+      "source": {
+        "page": 680,
+        "element": "Pages 680 et 681",
+        "refs": ""
+      },
+      "difficulty": 3
+    },
+    {
+      "id": "c24-q16",
+      "type": "QCU",
+      "theme": "Ossicule méniscal",
+      "enonce": "Sur une radiographie standard du genou de profil, vous découvrez une petite structure osseuse arrondie, bien corticalisée en périphérie, se projetant dans la partie postérieure de l’interligne fémorotibial médial. En IRM, cette structure est située au sein même de la corne postérieure du ménisque médial : elle apparaît en franc hypersignal T1 (signal graisseux médullaire entouré d’un liseré cortical hypo-intense) et est difficile à percevoir en pondération T2 avec saturation de la graisse. De quelle entité s’agit-il et à quelle lésion méniscale est-elle fréquemment associée ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Un corps étranger métallique post-chirurgical provoquant un artefact de susceptibilité magnétique",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un ossicule méniscal, situé classiquement à la corne postérieure ou au frein du ménisque médial et fréquemment associé à des fissures radiaires de la corne postérieure (ou à une séquelle d’avulsion du frein)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une chondrocalcinose méniscale diffuse",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un ménisque hypermobile latéral par agénésie des fascicules méniscopoplités",
+          "correct": false
+        }
+      ],
+      "explication": "L’ossicule méniscal siège quasi exclusivement à la corne postérieure ou au frein du ménisque médial. Contrairement à une calcification de chondrocalcinose ou à un ostéochondrome/corps étranger libre, il possède une corticale périphérique et un centre médullaire graisseux (d’où son hypersignal T1 caractéristique et son hyposignal sur les séquences T2 Fat-Sat). Son origine (métaplasie post-traumatique ou séquelle d’avulsion du frein) explique son association fréquente à des fissures radiaires de la corne postérieure du ménisque médial et à des remaniements cartilagineux adjacents.",
+      "correction_figures": [],
+      "source": {
+        "page": 681,
+        "element": "Page 681",
+        "refs": ""
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c24-q17",
+      "type": "QRM",
+      "theme": "Principes thérapeutiques et greffe méniscale",
+      "enonce": "Concernant les principes thérapeutiques actuels des lésions méniscales et les indications de greffe méniscale, quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "À quantité égale de tissu réséqué, l’exérèse du segment postérieur du ménisque médial est fonctionnellement beaucoup plus délabrante et arthrogène qu’une méniscectomie du bord libre",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Les fissures dégénératives horizontales doivent systématiquement faire l’objet d’une méniscectomie chirurgicale large dès leur découverte en IRM, même si elles sont peu symptomatiques",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une suture méniscale est envisageable devant une lésion traumatique aiguë longitudinale ou une désinsertion méniscocapsulaire siégeant en zone périphérique vascularisée (« zone rouge »)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La greffe méniscale (allogreffe ou implant collagène) s’adresse à des patients jeunes (< 40 ans) présentant un compartiment douloureux post-méniscectomie, sur un genou stable (ou stabilisé) et sans arthrose fémorotibiale sévère (absence d’os sous-chondral exposé)",
+          "correct": true
+        }
+      ],
+      "explication": "La préservation méniscale est la règle dès que possible. La résection du mur/segment postérieur du ménisque médial détruit la continuité des fibres circonférentielles et est beaucoup plus arthrogène qu’une régularisation du bord libre. Les lésions dégénératives horizontales sont peu arthrogènes par elles-mêmes (pas de décalage mécanique) alors que leur exérèse chirurgicale est toujours très délabrante : le traitement chirurgical n’y est donc surtout pas systématique. Les lésions aiguës en zone rouge sont suturables, et la greffe méniscale est réservée aux sujets < 40 ans symptomatiques après méniscectomie, sans arthrose évoluée ni instabilité ou obésité.",
+      "correction_figures": [],
+      "source": {
+        "page": 682,
+        "element": "Page 682",
+        "refs": ""
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c24-q18",
+      "type": "QCU",
+      "theme": "Imagerie du ménisque opéré",
+      "enonce": "Un patient a bénéficié il y a 8 mois d’une suture arthroscopique d’une fissure longitudinale périphérique du ménisque médial (ou d’une méniscectomie partielle chez un autre patient). Lors du contrôle IRM pour des douleurs résiduelles, pourquoi l’observation d’un hypersignal linéaire atteignant la surface articulaire (grade 3 de Crues) sur les séquences à TE court (T1 ou densité de protons) ne suffit-elle pas à affirmer une récidive de fissure ou un échec de cicatrisation ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Parce qu’après méniscectomie partielle, un hypersignal dégénératif centroméniscal préexistant (grade 2) peut désormais affleurer la nouvelle surface de résection et simuler un grade 3 ; et qu’après suture, le tissu de granulation cicatriciel peut rester en hypersignal de grade 3 à TE court (voire en T2) jusqu’à 27 mois malgré une cicatrisation effective",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Parce que les fils de suture chirurgicaux se transforment systématiquement en liquide synovial au bout de 4 mois",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Parce qu’un ménisque suturé disparaît normalement complètement en IRM pendant les deux premières années",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Parce que l’IRM postopératoire a une sensibilité de 100 % et une spécificité de 100 % dès la 2e semaine postopératoire",
+          "correct": false
+        }
+      ],
+      "explication": "L’interprétation d’un ménisque opéré en IRM est délicate. D’une part, après méniscectomie partielle, l’amputation du bord libre met en contact direct des hypersignaux dégénératifs internes (initialement de grade 2) avec la surface articulaire, créant un faux aspect de grade 3. D’autre part, après suture méniscale (dont la cicatrisation prend environ 4 mois), la cicatrice fibrovasculaire peut conserver un hypersignal linéaire de grade 3 sur les séquences à TE court (et parfois même en T2) pendant très longtemps (jusqu’à 27 mois) bien que la fissure soit parfaitement consolidée. Pour rechercher une vraie récidive, il faut privilégier la recherche d’un franc signal liquidien en pondération T2 dans la fissure, un fragment déplacé, ou recourir à l’arthroscanner / arthro-IRM pour prouver l’opacification de la fente.",
+      "correction_figures": [],
+      "source": {
+        "page": 683,
+        "element": "Page 683",
+        "refs": ""
+      },
+      "difficulty": 3
+    }
+  ]
 }

@@ -45,7 +45,8 @@
         "page": 128,
         "element": "Texte",
         "refs": "[25]"
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c4-q02",
@@ -86,7 +87,8 @@
         "page": 129,
         "element": "Texte",
         "refs": "[23, 140, 141, 208]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c4-q03",
@@ -136,7 +138,8 @@
         "page": 130,
         "element": "Encadré 4.2",
         "refs": "[10, 65, 108, 209]"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c4-q04",
@@ -181,7 +184,8 @@
         "page": 131,
         "element": "Encadré 4.1",
         "refs": "[150]"
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c4-q05",
@@ -226,7 +230,8 @@
         "page": 133,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c4-q06",
@@ -276,7 +281,8 @@
         "page": 137,
         "element": "Encadré 4.4",
         "refs": "[68, 133]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c4-q07",
@@ -321,7 +327,8 @@
         "page": 136,
         "element": "Texte",
         "refs": "[84]"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c4-q08",
@@ -366,7 +373,8 @@
         "page": 140,
         "element": "Texte",
         "refs": "[45, 181]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c4-q09",
@@ -416,7 +424,8 @@
         "page": 145,
         "element": "Texte",
         "refs": "[63, 128]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c4-q10",
@@ -457,7 +466,8 @@
         "page": 148,
         "element": "Texte",
         "refs": "[32, 86, 205]"
-      }
+      },
+      "difficulty": 2
     }
   ]
 }

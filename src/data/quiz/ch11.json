@@ -14,14 +14,35 @@
       "enonce": "Parmi les structures formant le complexe fibrocartilagineux triangulaire du carpe (TFCC), laquelle est située sous le disque articulaire, est bien vascularisée, et s’insère typiquement sur l’apex du processus styloïde ulnaire et/ou le ligament radio-ulnaire dorsal pour descendre vers le triquétrum ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le ligamentum subcruentum", "correct": false },
-        { "id": "B", "texte": "Le ménisque homologue", "correct": true },
-        { "id": "C", "texte": "Le ligament ulnolunaire", "correct": false },
-        { "id": "D", "texte": "La gaine du tendon du muscle extenseur ulnaire du carpe", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le ligamentum subcruentum",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le ménisque homologue",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le ligament ulnolunaire",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La gaine du tendon du muscle extenseur ulnaire du carpe",
+          "correct": false
+        }
       ],
       "explication": "Le ménisque homologue est une structure fibro-conjonctive bien vascularisée située sous le disque articulaire, s’insérant proximalement sur l’apex du processus styloïde et descendant vers le bord ulnaire du triquétrum. Le ligamentum subcruentum est le tissu fibrovasculaire séparant les deux contingents (fovéolaire et styloïdien) de l’insertion ulnaire du disque articulaire.",
       "correction_figures": [],
-      "source": { "page": 234, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 234,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c11-q02",
@@ -30,14 +51,35 @@
       "enonce": "Concernant la classification de Palmer des lésions du TFCC, quelles propositions décrivent correctement une lésion de type dégénératif (Classe II) ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une perforation centrale isolée du disque articulaire (sans lésion chondrale) chez un jeune patient", "correct": false },
-        { "id": "B", "texte": "Une perforation du disque articulaire associée à une chondromalacie du lunatum", "correct": true },
-        { "id": "C", "texte": "Une avulsion ulnaire du TFCC", "correct": false },
-        { "id": "D", "texte": "Une perforation du ligament lunotriquétral associée à une arthrose ulno-carpienne", "correct": true }
+        {
+          "id": "A",
+          "texte": "Une perforation centrale isolée du disque articulaire (sans lésion chondrale) chez un jeune patient",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une perforation du disque articulaire associée à une chondromalacie du lunatum",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une avulsion ulnaire du TFCC",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une perforation du ligament lunotriquétral associée à une arthrose ulno-carpienne",
+          "correct": true
+        }
       ],
       "explication": "La classe II de Palmer regroupe les lésions dégénératives. La classe IIC associe une perforation et une chondromalacie (lunaire ou ulnaire) et la classe IIE correspond à une perforation du ligament lunotriquétral avec arthrose ulno-carpienne. La classe IA (perforation centrale traumatique) et IB (avulsion ulnaire) sont des lésions traumatiques de classe I.",
       "correction_figures": [],
-      "source": { "page": 235, "element": "Encadré 11.2", "refs": "" }
+      "source": {
+        "page": 235,
+        "element": "Encadré 11.2",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c11-q03",
@@ -46,14 +88,35 @@
       "enonce": "Lors de l’analyse d’une IRM du poignet d’un patient de 25 ans, vous observez un hypersignal T2 linéaire, net, traversant toute l’épaisseur du bord radial du disque articulaire. Il s’y associe un petit épanchement dans l’articulation radio-ulnaire distale. Selon la classification de Palmer, à quelle classe cette lésion appartient-elle et quel traitement arthroscopique est généralement préconisé ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Lésion IA (centrale) nécessitant une suture", "correct": false },
-        { "id": "B", "texte": "Lésion IB (ulnaire) nécessitant une réinsertion", "correct": false },
-        { "id": "C", "texte": "Lésion ID (radiale) nécessitant un simple débridement", "correct": true },
-        { "id": "D", "texte": "Lésion IIC (dégénérative) nécessitant un fraisage de la tête ulnaire (wafer procedure)", "correct": false }
+        {
+          "id": "A",
+          "texte": "Lésion IA (centrale) nécessitant une suture",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Lésion IB (ulnaire) nécessitant une réinsertion",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Lésion ID (radiale) nécessitant un simple débridement",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Lésion IIC (dégénérative) nécessitant un fraisage de la tête ulnaire (wafer procedure)",
+          "correct": false
+        }
       ],
       "explication": "L’hypersignal liquidien transfixiant au bord radial signe une avulsion radiale, soit une lésion traumatique de classe ID de Palmer. Étant donné que le versant radial du disque n’est pas vascularisé (contrairement au versant ulnaire), la lésion ne peut pas cicatriser. Elle relève donc d’un simple débridement arthroscopique et non d’une réparation ou suture.",
       "correction_figures": [],
-      "source": { "page": 235, "element": "Texte (p. 235, 239 et 240)", "refs": "" }
+      "source": {
+        "page": 235,
+        "element": "Texte (p. 235, 239 et 240)",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c11-q04",
@@ -62,14 +125,35 @@
       "enonce": "Quels éléments anatomiques sont les principaux stabilisateurs (stabilisateurs intrinsèques et extrinsèques dans le plan sagittal) de l’articulation radio-ulnaire distale limitant les subluxations palmaires ou dorsales de la tête ulnaire ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Les ligaments radio-ulnaires dorsal et palmaire", "correct": true },
-        { "id": "B", "texte": "La membrane interosseuse", "correct": true },
-        { "id": "C", "texte": "Le muscle carré pronateur", "correct": true },
-        { "id": "D", "texte": "Le ligament radio-scapho-capital", "correct": false }
+        {
+          "id": "A",
+          "texte": "Les ligaments radio-ulnaires dorsal et palmaire",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La membrane interosseuse",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle carré pronateur",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le ligament radio-scapho-capital",
+          "correct": false
+        }
       ],
       "explication": "Les stabilisateurs principaux (intrinsèques) de l’articulation radio-ulnaire distale sont les éléments du TFCC, et surtout les ligaments radio-ulnaires dorsal et palmaire, dont le rôle est clairement établi dans le plan sagittal. Les stabilisateurs extrinsèques incluent la membrane interosseuse (qui joue un rôle sagittal quand les ligaments radio-ulnaires sont rompus) et le muscle carré pronateur. Le ligament radio-scapho-capital stabilise l’articulation radiocarpienne.",
       "correction_figures": [],
-      "source": { "page": 240, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 240,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c11-q05",
@@ -78,14 +162,35 @@
       "enonce": "Dans la classification de l’instabilité du carpe, à quel type correspond une instabilité isolée entre le scaphoïde et le lunatum (instabilité scapholunaire) ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une instabilité non dissociative", "correct": false },
-        { "id": "B", "texte": "Une instabilité dissociative", "correct": true },
-        { "id": "C", "texte": "Une instabilité complexe axiale", "correct": false },
-        { "id": "D", "texte": "Une instabilité adaptative", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une instabilité non dissociative",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une instabilité dissociative",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une instabilité complexe axiale",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une instabilité adaptative",
+          "correct": false
+        }
       ],
       "explication": "L’instabilité scapholunaire témoigne d’une instabilité de la rangée proximale du carpe (avec dissociation entre les os de cette même rangée) : il s’agit donc d’une instabilité dissociative. Les instabilités non dissociatives concernent les articulations radiocarpienne ou médiocarpienne.",
       "correction_figures": [],
-      "source": { "page": 243, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 243,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c11-q06",
@@ -94,14 +199,35 @@
       "enonce": "L’instabilité scapholunaire résulte d’une rupture du ligament scapholunaire souvent associée à des lésions des stabilisateurs secondaires. Quelle en est la conséquence biomécanique caractéristique sur le positionnement du scaphoïde et du lunatum ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le scaphoïde a tendance à subir une flexion palmaire spontanée", "correct": true },
-        { "id": "B", "texte": "Le lunatum a tendance à subir une extension dorsale (DISI)", "correct": true },
-        { "id": "C", "texte": "Le scaphoïde subit une subluxation rotatoire autour d’un axe correspondant au ligament radio-scapho-capital", "correct": true },
-        { "id": "D", "texte": "Le lunatum subit une bascule ventrale (VISI)", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le scaphoïde a tendance à subir une flexion palmaire spontanée",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le lunatum a tendance à subir une extension dorsale (DISI)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le scaphoïde subit une subluxation rotatoire autour d’un axe correspondant au ligament radio-scapho-capital",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le lunatum subit une bascule ventrale (VISI)",
+          "correct": false
+        }
       ],
       "explication": "Sans le ligament scapholunaire pour agir comme barre de torsion, le scaphoïde bascule spontanément en flexion palmaire (subluxation rotatoire induite par l’articulation scaphotrapézienne autour du ligament radio-scapho-capital) tandis que le lunatum bascule en extension dorsale (induit par le triquétrum, formant la déformation en DISI). La bascule ventrale du lunatum (VISI) est caractéristique de l’instabilité lunotriquétrale.",
       "correction_figures": [],
-      "source": { "page": 246, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 246,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c11-q07",
@@ -110,14 +236,35 @@
       "enonce": "Lors de l’évaluation radiographique statique (face et profil stricts) d’un poignet, vous observez un diastasis scapholunaire de 4 mm, une interruption du 1er arc de Gilula, un raccourcissement du scaphoïde (« signe de l’anneau ») et une bascule dorsale du lunatum avec un angle scapholunaire mesuré à 75°. Le patient se plaint de douleurs. Quel est le stade de cette instabilité scapholunaire selon la classification classique ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Prédynamique", "correct": false },
-        { "id": "B", "texte": "Dynamique", "correct": false },
-        { "id": "C", "texte": "Statique", "correct": true },
-        { "id": "D", "texte": "SLAC wrist (sans plus de précisions nécessaires)", "correct": false }
+        {
+          "id": "A",
+          "texte": "Prédynamique",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Dynamique",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Statique",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "SLAC wrist (sans plus de précisions nécessaires)",
+          "correct": false
+        }
       ],
       "explication": "Les radiographies statiques démontrent des anomalies patentes (diastasis, DISI avec angle scapholunaire > 70°), ce qui définit le stade « statique » de l’instabilité scapholunaire. Au stade « dynamique », les clichés statiques sont normaux et l’instabilité n’est visible que sur des clichés dynamiques. Bien que cette lésion évolue vers le SLAC wrist, l’énoncé ne décrit pas de signes d’arthrose.",
       "correction_figures": [],
-      "source": { "page": 247, "element": "Tableau 11.1 et Texte (p. 250)", "refs": "" }
+      "source": {
+        "page": 247,
+        "element": "Tableau 11.1 et Texte (p. 250)",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c11-q08",
@@ -126,14 +273,35 @@
       "enonce": "Le traitement de l’instabilité scapholunaire compliquée d’un SLAC wrist dépend du stade arthrosique. Un patient présente un SLAC wrist de stade 2 (arthrose radio-scaphoïdienne établie). L’interligne radiolunaire est intact et le cartilage de la tête du capitatum est en très bon état. Parmi les options chirurgicales suivantes, lesquelles sont classiquement indiquées et justifiées à ce stade ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une simple réparation anatomique du ligament scapholunaire avec capsulodèse", "correct": false },
-        { "id": "B", "texte": "Une résection de la rangée proximale des os du carpe", "correct": true },
-        { "id": "C", "texte": "Une scaphoïdectomie associée à une arthrodèse des « 4 coins »", "correct": true },
-        { "id": "D", "texte": "Une arthrodèse radiocarpienne totale d’emblée", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une simple réparation anatomique du ligament scapholunaire avec capsulodèse",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une résection de la rangée proximale des os du carpe",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une scaphoïdectomie associée à une arthrodèse des « 4 coins »",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une arthrodèse radiocarpienne totale d’emblée",
+          "correct": false
+        }
       ],
       "explication": "Au stade 2 du SLAC wrist (arthrose radio-scaphoïdienne), les réparations ligamentaires seules (réservées aux lésions aiguës < 6 semaines) sont dépassées. Les interventions palliatives recommandées sont la résection de la rangée proximale du carpe (possible ici car la tête du capitatum et la surface lunarienne du radius sont saines) ou une arthrodèse partielle (scaphoïdectomie + arthrodèse des 4 coins). L’arthrodèse totale est excessive à ce stade et réservée au stade 4 ou en dernier recours.",
       "correction_figures": [],
-      "source": { "page": 256, "element": "Texte (p. 212 et 256)", "refs": "" }
+      "source": {
+        "page": 256,
+        "element": "Texte (p. 212 et 256)",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c11-q09",
@@ -142,14 +310,35 @@
       "enonce": "Comment se nomme l’instabilité carpienne non dissociative se traduisant par un glissement complet de l’ensemble du carpe vers le bord ulnaire par rapport à l’extrémité distale du radius ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La dissociation lunotriquétrale", "correct": false },
-        { "id": "B", "texte": "La déformation en VISI", "correct": false },
-        { "id": "C", "texte": "L’instabilité radiocarpienne de type I", "correct": true },
-        { "id": "D", "texte": "L’instabilité lunocapitale isolée (CLIP)", "correct": false }
+        {
+          "id": "A",
+          "texte": "La dissociation lunotriquétrale",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La déformation en VISI",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’instabilité radiocarpienne de type I",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’instabilité lunocapitale isolée (CLIP)",
+          "correct": false
+        }
       ],
       "explication": "L’instabilité radiocarpienne de type I se caractérise par un glissement ulnaire de l’ensemble du carpe par rapport à l’extrémité distale du radius (translation ulnaire du carpe), traduisant une incompétence globale des ligaments radiocarpiens. Le type II correspond au glissement partiel (scaphoïde en place).",
       "correction_figures": [],
-      "source": { "page": 260, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 260,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c11-q10",
@@ -158,14 +347,35 @@
       "enonce": "Concernant l’instabilité médiocarpienne palmaire (CIND), qui affecte souvent des patients jeunes et hyperlaxes, quelles sont les constatations cliniques et radiographiques caractéristiques ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un ressaut audible (clunk) lors du passage de l’inclinaison radiale à l’inclinaison ulnaire", "correct": true },
-        { "id": "B", "texte": "Une bascule palmaire du lunatum (VISI) non dissociative (absence de diastasis lunotriquétral) sur les clichés statiques en cas d’instabilité fixée", "correct": true },
-        { "id": "C", "texte": "Une augmentation de l’angle radiolunaire et lunocapital, avec un angle scapholunaire normal sur le cliché de profil", "correct": true },
-        { "id": "D", "texte": "Une lésion systématique et complète du segment intermédiaire du ligament scapholunaire", "correct": false }
+        {
+          "id": "A",
+          "texte": "Un ressaut audible (clunk) lors du passage de l’inclinaison radiale à l’inclinaison ulnaire",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une bascule palmaire du lunatum (VISI) non dissociative (absence de diastasis lunotriquétral) sur les clichés statiques en cas d’instabilité fixée",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une augmentation de l’angle radiolunaire et lunocapital, avec un angle scapholunaire normal sur le cliché de profil",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une lésion systématique et complète du segment intermédiaire du ligament scapholunaire",
+          "correct": false
+        }
       ],
       "explication": "L’instabilité médiocarpienne palmaire se manifeste cliniquement par un ressaut (clunk) lors de l’inclinaison ulnaire (bascule brutale de la rangée proximale de la flexion vers l’extension). Radiologiquement (stade statique), on observe une VISI (flexion de la rangée proximale) sans dissociation des os de la rangée proximale : il n’y a donc ni diastasis lunotriquétral, ni anomalie de l’angle scapholunaire. C’est une instabilité non dissociative (ligaments extrinsèques lésés ou laxité, et non les ligaments interosseux intrinsèques comme le scapholunaire).",
       "correction_figures": [],
-      "source": { "page": 262, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 262,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     }
   ]
 }

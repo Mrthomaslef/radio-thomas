@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { QuizPlayer } from './ChapterQuiz.jsx';
-import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, resetQuestionsCache, imageSrc } from '../data/useQuestions.js';
+import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, resetQuestionsCache, imageSrc, resolveDifficulty } from '../data/useQuestions.js';
 
 const MAX_SIDE = 1400; // images are shrunk before sending: lighter pages, and well under the size limit
 
@@ -161,6 +161,7 @@ function writeLocalReviewed(map) {
 
 const blankQuestion = () => ({
   type: 'QCU',
+  difficulty: 2,
   theme: '',
   enonce: '',
   enonce_image: null,
@@ -292,7 +293,11 @@ export default function QuestionsAdmin({
         id: found.id,
         chapter: found.chapter,
         position: found.position,
-        q: { ...structuredClone(found.data), reviewed: isRowReviewed(found) },
+        q: {
+          ...structuredClone(found.data),
+          difficulty: resolveDifficulty(found.id, found.data?.difficulty),
+          reviewed: isRowReviewed(found),
+        },
         isNew: false,
         reportContext: editTarget,
       });
@@ -347,7 +352,11 @@ export default function QuestionsAdmin({
       id: row.id,
       chapter: row.chapter,
       position: row.position,
-      q: { ...structuredClone(row.data), reviewed: isRowReviewed(row) },
+      q: {
+        ...structuredClone(row.data),
+        difficulty: resolveDifficulty(row.id, row.data?.difficulty),
+        reviewed: isRowReviewed(row),
+      },
       isNew: false,
     });
   const create = () => {
@@ -520,6 +529,9 @@ export default function QuestionsAdmin({
                 <button className="qa-row" onClick={() => edit(r)}>
                   <b>{idxInChapter + 1}</b>
                   <span className="qa-text">{r.data.enonce}</span>
+                  <span className={`qa-diff qa-diff-${resolveDifficulty(r.id, r.data?.difficulty)}`}>
+                    Niv. {resolveDifficulty(r.id, r.data?.difficulty)}
+                  </span>
                   <span className={`qa-type qa-${r.data.type}`}>{r.data.type}</span>
                 </button>
               </li>
@@ -635,6 +647,23 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
             <option value="QCU">QCU (une seule bonne réponse)</option>
             <option value="QRM">QRM (plusieurs bonnes réponses)</option>
           </select>
+        </label>
+        <label>Niveau de difficulté
+          <div className="qa-diff-picker" role="group" aria-label="Niveau de difficulté">
+            {[1, 2, 3].map((lvl) => {
+              const currentDiff = resolveDifficulty(editing.id, q.difficulty);
+              return (
+                <button
+                  key={lvl}
+                  type="button"
+                  className={`qa-diff-btn qa-diff-${lvl} ${currentDiff === lvl ? 'on' : ''}`}
+                  onClick={() => set({ difficulty: lvl })}
+                >
+                  Niveau {lvl}
+                </button>
+              );
+            })}
+          </div>
         </label>
         <label>Sous-thème
           <input className="admin-input" value={q.theme} maxLength={80} onChange={(e) => set({ theme: e.target.value })} />

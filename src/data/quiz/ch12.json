@@ -14,14 +14,35 @@
       "enonce": "Lors d’une ténosynovite de De Quervain, la présence d’un septum fibreux cloisonnant le 1er compartiment dorsal en deux sous-compartiments est une variante anatomique fréquente. Quel est l’impact de ce septum sur le succès des infiltrations de corticoïdes réalisées « à l’aveugle » ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Il n’a aucun impact car le produit diffuse toujours à travers le septum", "correct": false },
-        { "id": "B", "texte": "Il est la principale cause d’échec de l’infiltration à l’aveugle (le produit ne diffusant pas dans le sous-compartiment du muscle court extenseur du pouce)", "correct": true },
-        { "id": "C", "texte": "Il garantit au contraire le succès de l’infiltration en concentrant le produit autour du muscle long abducteur", "correct": false },
-        { "id": "D", "texte": "Il rend la rupture tendineuse immédiate lors de l’infiltration", "correct": false }
+        {
+          "id": "A",
+          "texte": "Il n’a aucun impact car le produit diffuse toujours à travers le septum",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il est la principale cause d’échec de l’infiltration à l’aveugle (le produit ne diffusant pas dans le sous-compartiment du muscle court extenseur du pouce)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il garantit au contraire le succès de l’infiltration en concentrant le produit autour du muscle long abducteur",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il rend la rupture tendineuse immédiate lors de l’infiltration",
+          "correct": false
+        }
       ],
       "explication": "La présence d’un septum fibreux cloisonnant le 1er compartiment empêche la diffusion du produit infiltré dans le sous-compartiment (souvent celui du muscle court extenseur du pouce). C’est un facteur reconnu d’échec des infiltrations locales réalisées sans contrôle échographique (15 à 20 % de taux d’échec).",
       "correction_figures": [],
-      "source": { "page": 264, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 264,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c12-q02",
@@ -30,14 +51,35 @@
       "enonce": "La ténosynovite de De Quervain résulte souvent d’un surmenage microtraumatique ou de facteurs hormonaux. Quels sont les éléments cliniques et facteurs de risque classiquement associés à cette affection ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une forte prédominance féminine (sex-ratio 6/1 à 10/1)", "correct": true },
-        { "id": "B", "texte": "Une atteinte de patients jouant régulièrement aux échecs", "correct": false },
-        { "id": "C", "texte": "Un contexte de grossesse ou de post-partum (baby wrist)", "correct": true },
-        { "id": "D", "texte": "Une douleur du versant radial du poignet exacerbée par les manœuvres de Finkelstein et Brunelli", "correct": true }
+        {
+          "id": "A",
+          "texte": "Une forte prédominance féminine (sex-ratio 6/1 à 10/1)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une atteinte de patients jouant régulièrement aux échecs",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Un contexte de grossesse ou de post-partum (baby wrist)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une douleur du versant radial du poignet exacerbée par les manœuvres de Finkelstein et Brunelli",
+          "correct": true
+        }
       ],
       "explication": "La ténosynovite de De Quervain est bien plus fréquente chez la femme, particulièrement dans les suites d’une grossesse ou du portage d’enfants (baby wrist). Le diagnostic clinique repose sur la douleur du versant radial du poignet, réveillée par les manœuvres de Finkelstein et de Brunelli. Les activités sportives à risque impliquent plutôt des sports de raquette ou le volley-ball, pas les échecs.",
       "correction_figures": [],
-      "source": { "page": 264, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 264,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c12-q03",
@@ -46,14 +88,35 @@
       "enonce": "Un homme de 65 ans sous traitement pour polyarthrite rhumatoïde se plaint d’une difficulté soudaine et indolore à étendre complètement son majeur et son annulaire de la main droite. À l’échographie, on constate une rupture complète des tendons extenseurs correspondants. En considérant les complications classiques de la polyarthrite rhumatoïde au poignet, quel mécanisme lésionnel sous-jacent devez-vous fortement suspecter dans ce cas précis ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une attrition tendineuse secondaire à une subluxation dorsale de l’extrémité distale de l’ulna", "correct": true },
-        { "id": "B", "texte": "Une rupture aiguë liée à une fracture récente de Pouteau-Colles passée inaperçue", "correct": false },
-        { "id": "C", "texte": "Une attrition sur une encoche de Hill-Sachs", "correct": false },
-        { "id": "D", "texte": "Une infiltration locale massive de cristaux de pyrophosphate de calcium", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une attrition tendineuse secondaire à une subluxation dorsale de l’extrémité distale de l’ulna",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une rupture aiguë liée à une fracture récente de Pouteau-Colles passée inaperçue",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une attrition sur une encoche de Hill-Sachs",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une infiltration locale massive de cristaux de pyrophosphate de calcium",
+          "correct": false
+        }
       ],
       "explication": "Dans la polyarthrite rhumatoïde, les ruptures des tendons extenseurs des doigts (notamment des 4e, 5e et 3e compartiments) résultent souvent de l’attrition tendineuse sur l’extrémité distale de l’ulna, rendue saillante par l’arthrite radio-ulnaire distale et la subluxation dorsale de l’ulna. C’est un mécanisme classique à rechercher (et souvent à prévenir par la résection de la tête de l’ulna).",
       "correction_figures": [],
-      "source": { "page": 272, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 272,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c12-q04",
@@ -62,14 +125,35 @@
       "enonce": "Lors d’un traumatisme fermé avec fracture de l’extrémité distale du radius (par exemple, une fracture de Pouteau-Colles, même non déplacée), le tendon du muscle long extenseur du pouce est particulièrement à risque. Quelles affirmations concernant la rupture de ce tendon dans ce contexte sont justes ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La rupture survient de manière différée, classiquement 3 à 9 semaines après le traumatisme", "correct": true },
-        { "id": "B", "texte": "Elle peut être favorisée par l’attrition du tendon sur un matériel d’ostéosynthèse (plaque palmaire ou vis trop longue)", "correct": true },
-        { "id": "C", "texte": "Le patient se présente avec une impossibilité totale et complète d’étendre la phalange distale (aspect de « mallet thumb » systématique)", "correct": false },
-        { "id": "D", "texte": "Une fois la rupture confirmée, la réparation nécessite toujours une suture directe du tendon", "correct": false }
+        {
+          "id": "A",
+          "texte": "La rupture survient de manière différée, classiquement 3 à 9 semaines après le traumatisme",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Elle peut être favorisée par l’attrition du tendon sur un matériel d’ostéosynthèse (plaque palmaire ou vis trop longue)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le patient se présente avec une impossibilité totale et complète d’étendre la phalange distale (aspect de « mallet thumb » systématique)",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une fois la rupture confirmée, la réparation nécessite toujours une suture directe du tendon",
+          "correct": false
+        }
       ],
       "explication": "La rupture du tendon du muscle long extenseur du pouce (EPL) complique 0,3 à 5 % des fractures du radius (dont celles non déplacées) et survient de manière retardée (3 à 9 semaines). Le conflit avec le matériel d’ostéosynthèse est une cause majeure. En revanche, l’extension de l’interphalangienne du pouce n’est pas totalement abolie grâce à l’action de la dossière des muscles intrinsèques (le vrai mallet thumb est rare). La réparation fait le plus souvent appel à un transfert tendineux (extenseur propre de l’index) car la perte de substance et la rétraction interdisent souvent la suture directe.",
       "correction_figures": [],
-      "source": { "page": 269, "element": "Texte (p. 269–270)", "refs": "" }
+      "source": {
+        "page": 269,
+        "element": "Texte (p. 269–270)",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c12-q05",
@@ -78,14 +162,35 @@
       "enonce": "Lors de l’examen clinique de la face palmaire de la main pour tester spécifiquement le muscle fléchisseur profond de l’index, quelle manœuvre doit effectuer le clinicien ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Maintenir les autres doigts longs en extension stricte pour neutraliser l’action du fléchisseur profond (phénomène du quadrige)", "correct": false },
-        { "id": "B", "texte": "Maintenir l’articulation interphalangienne proximale de l’index en extension et demander au patient de fléchir l’articulation interphalangienne distale", "correct": true },
-        { "id": "C", "texte": "Demander au patient de serrer une feuille de papier entre le pouce et l’index (test de Froment)", "correct": false },
-        { "id": "D", "texte": "Effectuer le test de Finkelstein", "correct": false }
+        {
+          "id": "A",
+          "texte": "Maintenir les autres doigts longs en extension stricte pour neutraliser l’action du fléchisseur profond (phénomène du quadrige)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Maintenir l’articulation interphalangienne proximale de l’index en extension et demander au patient de fléchir l’articulation interphalangienne distale",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Demander au patient de serrer une feuille de papier entre le pouce et l’index (test de Froment)",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Effectuer le test de Finkelstein",
+          "correct": false
+        }
       ],
       "explication": "Pour tester le muscle fléchisseur profond des doigts, l’examinateur maintient l’articulation interphalangienne proximale en extension (pour neutraliser le muscle fléchisseur superficiel des doigts) et demande au patient de fléchir de manière active l’articulation interphalangienne distale.",
       "correction_figures": [],
-      "source": { "page": 282, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 282,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c12-q06",
@@ -94,14 +199,35 @@
       "enonce": "Au niveau du poignet, le tendon du muscle extenseur ulnaire du carpe (EUC, 6e compartiment dorsal) chemine dans une gouttière de l’ulna et y est maintenu par un rétinaculum propre. Dans certaines circonstances (traumatismes, polyarthrite rhumatoïde), une instabilité de ce tendon peut survenir. Quelle est la particularité physiologique de ce tendon lors des mouvements de l’avant-bras qui peut rendre l’analyse de l’instabilité difficile ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le tendon de l’EUC se subluxe de façon palmaire de manière physiologique en supination", "correct": true },
-        { "id": "B", "texte": "Le tendon de l’EUC se luxe dorsalement de façon physiologique en pronation", "correct": false },
-        { "id": "C", "texte": "Le tendon de l’EUC est le seul tendon du poignet dépourvu de gaine synoviale", "correct": false },
-        { "id": "D", "texte": "Le tendon de l’EUC passe systématiquement à travers le rétinaculum des extenseurs", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le tendon de l’EUC se subluxe de façon palmaire de manière physiologique en supination",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le tendon de l’EUC se luxe dorsalement de façon physiologique en pronation",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le tendon de l’EUC est le seul tendon du poignet dépourvu de gaine synoviale",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le tendon de l’EUC passe systématiquement à travers le rétinaculum des extenseurs",
+          "correct": false
+        }
       ],
       "explication": "De manière physiologique, le tendon du muscle extenseur ulnaire du carpe se subluxe de façon palmaire (médiale) en supination de l’avant-bras, alors qu’il demeure souvent dans son sillon en position neutre ou en pronation. Cette particularité doit être prise en compte lors de l’échographie dynamique pour ne pas diagnostiquer une instabilité pathologique à tort.",
       "correction_figures": [],
-      "source": { "page": 274, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 274,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c12-q07",
@@ -110,14 +236,35 @@
       "enonce": "Un canoéiste de haut niveau consulte pour des douleurs crépitantes situées au dos du poignet, environ 5 cm au-dessus du processus styloïde radial. Vous suspectez un syndrome de l’intersection proximale (« aï crépitant »). Au niveau anatomique et échographique, quelles structures tendineuses croisées sont spécifiquement impliquées dans cette affection ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Les tendons du long abducteur du pouce et du court extenseur du pouce (1er compartiment)", "correct": true },
-        { "id": "B", "texte": "Le tendon du long extenseur du pouce (3e compartiment)", "correct": false },
-        { "id": "C", "texte": "Les tendons du long et du court extenseurs radiaux du carpe (2e compartiment)", "correct": true },
-        { "id": "D", "texte": "Les tendons de l’extenseur commun des doigts (4e compartiment)", "correct": false }
+        {
+          "id": "A",
+          "texte": "Les tendons du long abducteur du pouce et du court extenseur du pouce (1er compartiment)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le tendon du long extenseur du pouce (3e compartiment)",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Les tendons du long et du court extenseurs radiaux du carpe (2e compartiment)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Les tendons de l’extenseur commun des doigts (4e compartiment)",
+          "correct": false
+        }
       ],
       "explication": "Le syndrome de l’intersection proximale se situe à l’endroit où la jonction myotendineuse des tendons du 1er compartiment (long abducteur et court extenseur du pouce) croise la face superficielle des tendons du 2e compartiment (long et court extenseurs radiaux du carpe). Le 3e compartiment (long extenseur du pouce) croise le 2e compartiment plus distalement, ce qui correspond au syndrome de l’intersection distale.",
       "correction_figures": [],
-      "source": { "page": 277, "element": "Texte (p. 277–278)", "refs": "" }
+      "source": {
+        "page": 277,
+        "element": "Texte (p. 277–278)",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c12-q08",
@@ -126,14 +273,35 @@
       "enonce": "Sur quel os du carpe le tendon du muscle fléchisseur ulnaire du carpe (FUC) s’insère-t-il directement, l’os se comportant alors comme une véritable poulie de réflexion ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le scaphoïde", "correct": false },
-        { "id": "B", "texte": "L’hamatum", "correct": false },
-        { "id": "C", "texte": "Le pisiforme", "correct": true },
-        { "id": "D", "texte": "Le triquétrum", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le scaphoïde",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’hamatum",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le pisiforme",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le triquétrum",
+          "correct": false
+        }
       ],
       "explication": "Le tendon distal du fléchisseur ulnaire du carpe se termine sur la moitié supérieure de la face antérieure du pisiforme. Le pisiforme est le seul os du carpe comportant l’insertion d’un muscle de l’avant-bras, se comportant comme une poulie de réflexion.",
       "correction_figures": [],
-      "source": { "page": 284, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 284,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c12-q09",
@@ -142,14 +310,35 @@
       "enonce": "Lors de l’échographie d’un patient suspect d’une ténosynovite infectieuse des fléchisseurs des doigts, vous observez de multiples formations hyperéchogènes intracanalaires surnommées « grains de riz » au sein d’une gaine distendue par du liquide. Face à ce tableau clinique et échographique, quelles étiologies spécifiques doivent être suspectées en priorité ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La maladie de Kienböck", "correct": false },
-        { "id": "B", "texte": "L’infection à mycobactérie (tuberculose ou mycobactéries atypiques)", "correct": true },
-        { "id": "C", "texte": "La polyarthrite rhumatoïde", "correct": true },
-        { "id": "D", "texte": "Le syndrome du canal carpien idiopathique", "correct": false }
+        {
+          "id": "A",
+          "texte": "La maladie de Kienböck",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’infection à mycobactérie (tuberculose ou mycobactéries atypiques)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La polyarthrite rhumatoïde",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le syndrome du canal carpien idiopathique",
+          "correct": false
+        }
       ],
       "explication": "La présence de « grains de riz » (dépôts de fibrine) au sein de la gaine tendineuse est fortement évocatrice d’une étiologie inflammatoire (rhumatoïde principalement) ou infectieuse (mycobactérienne principalement). La maladie de Kienböck (ostéonécrose) et le syndrome du canal carpien idiopathique ne produisent pas classiquement ces formations.",
       "correction_figures": [],
-      "source": { "page": 281, "element": "Texte (p. 281 et 284)", "refs": "" }
+      "source": {
+        "page": 281,
+        "element": "Texte (p. 281 et 284)",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c12-q10",
@@ -158,14 +347,35 @@
       "enonce": "La « laisse de Henry » est une arcade vasculaire qui peut être un facteur compressif pour le rameau profond du nerf radial. Une autre pathologie nerveuse, la torsion fasciculaire (constriction en sablier), peut mimer une compression extrinsèque sans lésion visible. En imagerie IRM, quel signe caractéristique permet d’évoquer une torsion fasciculaire du nerf interosseux postérieur ou du nerf radial ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le « signe du sablier » avec prise de contraste intense du muscle triceps", "correct": false },
-        { "id": "B", "texte": "Le « signe de l’œil de taureau » (hyposignal T2 central cerné d’un hypersignal périphérique sur les coupes axiales)", "correct": true },
-        { "id": "C", "texte": "L’apparition d’un kyste mucoïde centré sur la lésion en pondération T1", "correct": false },
-        { "id": "D", "texte": "Un aspect de dénervation musculaire purement confiné au muscle brachioradial", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le « signe du sablier » avec prise de contraste intense du muscle triceps",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le « signe de l’œil de taureau » (hyposignal T2 central cerné d’un hypersignal périphérique sur les coupes axiales)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’apparition d’un kyste mucoïde centré sur la lésion en pondération T1",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un aspect de dénervation musculaire purement confiné au muscle brachioradial",
+          "correct": false
+        }
       ],
       "explication": "Dans la torsion fasciculaire, le signe IRM de l’« œil de taureau » est défini par un hyposignal T2 central cerné d’un hypersignal périphérique du nerf dans son petit axe (coupe transversale) juste en amont d’une constriction. Ce signe serait utile à la détection et à la localisation des torsions nerveuses.",
       "correction_figures": [],
-      "source": { "page": 173, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 173,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 3
     }
   ]
 }

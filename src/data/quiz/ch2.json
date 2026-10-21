@@ -49,7 +49,8 @@
         "page": 56,
         "element": "Texte",
         "refs": "[16, 179, 192, 207]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q02",
@@ -99,7 +100,8 @@
         "page": 60,
         "element": "Texte",
         "refs": "[255, 292, 325]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q03",
@@ -144,7 +146,8 @@
         "page": 63,
         "element": "Texte",
         "refs": "[67]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q04",
@@ -189,7 +192,8 @@
         "page": 64,
         "element": "Texte",
         "refs": "[53, 135, 229, 292, 318]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q05",
@@ -239,7 +243,8 @@
         "page": 70,
         "element": "Figure 2.31",
         "refs": "[78, 80]"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c2-q06",
@@ -284,7 +289,8 @@
         "page": 64,
         "element": "Texte",
         "refs": "[35, 47, 189, 330]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q07",
@@ -330,7 +336,8 @@
         "page": 76,
         "element": "Texte",
         "refs": "[4, 23, 31, 40, 45, 82, 145, 196, 242, 247, 250]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q08",
@@ -376,7 +383,8 @@
         "page": 80,
         "element": "Encadré 2.7",
         "refs": "[119, 150, 286, 318, 337]"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c2-q09",
@@ -417,7 +425,8 @@
         "page": 87,
         "element": "Texte",
         "refs": "[193]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q10",
@@ -458,7 +467,8 @@
         "page": 90,
         "element": "Texte",
         "refs": "[30, 208, 262]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q11",
@@ -494,7 +504,8 @@
         "page": 53,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c2-q12",
@@ -530,7 +541,8 @@
         "page": 60,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q13",
@@ -566,7 +578,8 @@
         "page": 69,
         "element": "Texte (p. 69, 70)",
         "refs": ""
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c2-q14",
@@ -602,7 +615,8 @@
         "page": 63,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q15",
@@ -638,7 +652,8 @@
         "page": 90,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c2-q16",
@@ -674,7 +689,8 @@
         "page": 64,
         "element": "Texte (p. 64, 67)",
         "refs": ""
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c2-q17",
@@ -710,7 +726,8 @@
         "page": 79,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c2-q18",
@@ -746,7 +763,8 @@
         "page": 54,
         "element": "Texte (p. 54, 61)",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c2-q19",
@@ -782,7 +800,8 @@
         "page": 58,
         "element": "Texte (p. 58, 60)",
         "refs": ""
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c2-q20",
@@ -818,7 +837,8 @@
         "page": 80,
         "element": "Texte (p. 80, 81, 84)",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     }
   ]
 }

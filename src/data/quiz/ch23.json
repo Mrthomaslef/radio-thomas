@@ -41,7 +41,8 @@
         "page": 629,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c23-q02",
@@ -77,7 +78,8 @@
         "page": 630,
         "element": "Texte",
         "refs": "p. 630, 639"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c23-q03",
@@ -113,7 +115,8 @@
         "page": 632,
         "element": "Texte",
         "refs": "p. 632-634"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c23-q04",
@@ -154,7 +157,8 @@
         "page": 630,
         "element": "Texte",
         "refs": "p. 630, 634, 639"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c23-q05",
@@ -190,7 +194,8 @@
         "page": 635,
         "element": "Texte",
         "refs": "p. 635-637"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c23-q06",
@@ -226,7 +231,8 @@
         "page": 637,
         "element": "Texte",
         "refs": "p. 637-638"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c23-q07",
@@ -262,7 +268,8 @@
         "page": 630,
         "element": "Texte",
         "refs": "p. 630, 639"
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c23-q08",
@@ -298,7 +305,8 @@
         "page": 640,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c23-q09",
@@ -334,7 +342,8 @@
         "page": 642,
         "element": "Texte",
         "refs": "p. 642-643"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c23-q10",
@@ -370,7 +379,8 @@
         "page": 644,
         "element": "Texte",
         "refs": "p. 644-645"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c23-q11",
@@ -406,7 +416,8 @@
         "page": 645,
         "element": "Texte",
         "refs": "p. 645-646"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c23-q12",
@@ -442,7 +453,8 @@
         "page": 647,
         "element": "Texte",
         "refs": "p. 647-649"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c23-q13",
@@ -478,7 +490,8 @@
         "page": 649,
         "element": "Texte",
         "refs": "p. 649-650"
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c23-q14",
@@ -514,7 +527,8 @@
         "page": 650,
         "element": "Texte",
         "refs": "p. 650-651"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c23-q15",
@@ -550,7 +564,8 @@
         "page": 652,
         "element": "Texte",
         "refs": "p. 652-654"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c23-q16",
@@ -586,7 +601,8 @@
         "page": 656,
         "element": "Texte",
         "refs": "p. 656-657"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c23-q17",
@@ -622,7 +638,8 @@
         "page": 657,
         "element": "Texte",
         "refs": "p. 657-659"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c23-q18",
@@ -658,7 +675,8 @@
         "page": 656,
         "element": "Texte",
         "refs": "p. 656-657"
-      }
+      },
+      "difficulty": 2
     }
   ]
 }

@@ -41,7 +41,8 @@
         "page": 497,
         "element": "Texte et Encadré 19.3",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c19-q02",
@@ -77,7 +78,8 @@
         "page": 499,
         "element": "Texte et Figure 19.9",
         "refs": "p. 499-500"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c19-q03",
@@ -113,7 +115,8 @@
         "page": 510,
         "element": "Texte",
         "refs": "p. 510, 512, 514"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c19-q04",
@@ -149,7 +152,8 @@
         "page": 503,
         "element": "Encadré 19.5",
         "refs": "p. 503-504, 508"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c19-q05",
@@ -185,7 +189,8 @@
         "page": 516,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c19-q06",
@@ -221,7 +226,8 @@
         "page": 531,
         "element": "Encadré 19.12",
         "refs": "p. 531-532"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c19-q07",
@@ -257,7 +263,8 @@
         "page": 527,
         "element": "Texte",
         "refs": "p. 527, 536"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c19-q08",
@@ -293,7 +300,8 @@
         "page": 521,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c19-q09",
@@ -329,7 +337,8 @@
         "page": 511,
         "element": "Encadré 19.7 et Figure 19.27",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c19-q10",
@@ -365,7 +374,8 @@
         "page": 533,
         "element": "Encadré 19.11",
         "refs": "p. 533-534, 539"
-      }
+      },
+      "difficulty": 3
     }
   ]
 }

@@ -41,7 +41,8 @@
         "page": 541,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c20-q02",
@@ -77,7 +78,8 @@
         "page": 546,
         "element": "Texte et Figure 20.13",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c20-q03",
@@ -113,7 +115,8 @@
         "page": 555,
         "element": "Texte",
         "refs": "p. 555-558"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c20-q04",
@@ -149,7 +152,8 @@
         "page": 554,
         "element": "Texte",
         "refs": "p. 554-555"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c20-q05",
@@ -185,7 +189,8 @@
         "page": 582,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c20-q06",
@@ -221,7 +226,8 @@
         "page": 572,
         "element": "Texte",
         "refs": "p. 572, 574-576"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c20-q07",
@@ -257,7 +263,8 @@
         "page": 570,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c20-q08",
@@ -293,7 +300,8 @@
         "page": 583,
         "element": "Texte",
         "refs": "p. 583-586"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c20-q09",
@@ -329,7 +337,8 @@
         "page": 561,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c20-q10",
@@ -365,7 +374,8 @@
         "page": 562,
         "element": "Texte",
         "refs": "p. 562, 564, 567"
-      }
+      },
+      "difficulty": 3
     }
   ]
 }

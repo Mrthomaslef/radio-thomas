@@ -14,14 +14,35 @@
       "enonce": "Parmi les muscles épicondyliens médiaux, quels sont les deux muscles dont les tendons ont une attache plus antérieure et qui sont les plus fréquemment touchés lors d’une épicondylite médiale ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le long palmaire et le fléchisseur ulnaire du carpe", "correct": false },
-        { "id": "B", "texte": "Le rond pronateur et le fléchisseur radial du carpe", "correct": true },
-        { "id": "C", "texte": "Le fléchisseur superficiel des doigts et le long palmaire", "correct": false },
-        { "id": "D", "texte": "Le fléchisseur ulnaire du carpe et le rond pronateur", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le long palmaire et le fléchisseur ulnaire du carpe",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le rond pronateur et le fléchisseur radial du carpe",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le fléchisseur superficiel des doigts et le long palmaire",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le fléchisseur ulnaire du carpe et le rond pronateur",
+          "correct": false
+        }
       ],
       "explication": "Parmi les muscles formant le tendon commun des fléchisseurs, le rond pronateur et le fléchisseur radial du carpe ont une attache plus antérieure et sont plus souvent touchés dans l’épicondylite médiale.",
       "correction_figures": [],
-      "source": { "page": 175, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 175,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c6-q02",
@@ -30,14 +51,35 @@
       "enonce": "Le complexe ligamentaire médial du coude comprend trois faisceaux. Quelles propositions concernant le faisceau antérieur du ligament collatéral ulnaire (LCU) sont exactes ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Il est tendu de la face antéro-inférieure de l’épicondyle médial au tubercule sublime du processus coronoïde", "correct": true },
-        { "id": "B", "texte": "Il représente le principal stabilisateur médial du coude contre les contraintes en valgus", "correct": true },
-        { "id": "C", "texte": "Il ne devient un stabilisateur médial qu’à partir de 120° de flexion du coude", "correct": false },
-        { "id": "D", "texte": "En IRM, il apparaît normalement en hyposignal T1", "correct": true }
+        {
+          "id": "A",
+          "texte": "Il est tendu de la face antéro-inférieure de l’épicondyle médial au tubercule sublime du processus coronoïde",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Il représente le principal stabilisateur médial du coude contre les contraintes en valgus",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il ne devient un stabilisateur médial qu’à partir de 120° de flexion du coude",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "En IRM, il apparaît normalement en hyposignal T1",
+          "correct": true
+        }
       ],
       "explication": "Le faisceau antérieur du LCU est tendu de la face antéro-inférieure de l’épicondyle médial au rebord antéromédial du processus coronoïde (tubercule sublime). Il s’agit du principal stabilisateur médial du coude contre les contraintes en valgus et en rotation médiale. En IRM, ce faisceau est en hyposignal T1 et est constamment visible dans la population normale. C’est le faisceau postérieur du LCU qui n’est stabilisateur qu’à partir de 120° de flexion.",
       "correction_figures": [],
-      "source": { "page": 176, "element": "Texte (p. 176–177)", "refs": "" }
+      "source": {
+        "page": 176,
+        "element": "Texte (p. 176–177)",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c6-q03",
@@ -46,14 +88,35 @@
       "enonce": "Un joueur de baseball professionnel se plaint de douleurs chroniques du coude. L’imagerie révèle une lésion du faisceau antérieur du LCU. Selon le concept d’instabilité chronique en valgus (valgus overload syndrome), quelles autres lésions associées devez-vous spécifiquement rechercher en imagerie pour évaluer le retentissement complet de ce syndrome ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une chondropathie huméro-olécrânienne postérieure et des ostéophytes", "correct": true },
-        { "id": "B", "texte": "Une lésion ostéochondrale de la tête radiale ou du capitulum", "correct": true },
-        { "id": "C", "texte": "Une neuropathie ulnaire ou une épicondylite médiale", "correct": true },
-        { "id": "D", "texte": "Une lésion du tendon du muscle triceps brachial à son insertion", "correct": false }
+        {
+          "id": "A",
+          "texte": "Une chondropathie huméro-olécrânienne postérieure et des ostéophytes",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une lésion ostéochondrale de la tête radiale ou du capitulum",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une neuropathie ulnaire ou une épicondylite médiale",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une lésion du tendon du muscle triceps brachial à son insertion",
+          "correct": false
+        }
       ],
       "explication": "L’instabilité chronique en valgus entraîne différentes lésions réparties par compartiment. Dans le compartiment médial, on observe des phénomènes de traction incluant des lésions du LCU, une épicondylite médiale et une neuropathie ulnaire. Dans le compartiment latéral, les forces de compression engendrent une chondropathie huméroradiale (lésions ostéochondrales du capitulum et de la tête radiale). Dans le compartiment postérieur, des forces de cisaillement causent une chondropathie huméro-olécrânienne et une ostéophytose. L’atteinte primaire de l’insertion du triceps n’est pas une lésion classique du valgus overload syndrome.",
       "correction_figures": [],
-      "source": { "page": 177, "element": "Texte (p. 177–178)", "refs": "" }
+      "source": {
+        "page": 177,
+        "element": "Texte (p. 177–178)",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c6-q04",
@@ -62,14 +125,35 @@
       "enonce": "Concernant l’anatomie du tunnel ulnaire au niveau du coude, quelle variation morphologique (présente chez 11 à 23 % de la population asymptomatique) peut former le toit de ce tunnel et constituer une cause de compression du nerf ulnaire ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le ligament de Cooper", "correct": false },
-        { "id": "B", "texte": "Le muscle épitrochléo-anconéen (ou anconé médial)", "correct": true },
-        { "id": "C", "texte": "Le muscle court extenseur radial du carpe", "correct": false },
-        { "id": "D", "texte": "L’arcade de Struthers", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le ligament de Cooper",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le muscle épitrochléo-anconéen (ou anconé médial)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle court extenseur radial du carpe",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’arcade de Struthers",
+          "correct": false
+        }
       ],
       "explication": "Le toit du tunnel ulnaire est normalement formé par le rétinaculum du tunnel ulnaire (ligament d’Osborne). Ce rétinaculum présente des variations morphologiques et peut être remplacé par un muscle, reliquat du muscle épitrochléo-anconéen (ou anconé médial). Sa prévalence est de 11 à 23 % dans la population asymptomatique.",
       "correction_figures": [],
-      "source": { "page": 179, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 179,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c6-q05",
@@ -78,14 +162,35 @@
       "enonce": "Lors de l’exploration échographique d’une suspicion de neuropathie du nerf ulnaire au coude, quels éléments sémiologiques (directs ou indirects) cherchez-vous pour affirmer la souffrance nerveuse ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une tuméfaction du nerf avec une surface de section supérieure à 7,5–8 mm² mesurée en extension", "correct": true },
-        { "id": "B", "texte": "Une hyperhémie intra et périneurale visible en mode Doppler", "correct": true },
-        { "id": "C", "texte": "Une perte de l’organisation fasciculaire normale du nerf", "correct": true },
-        { "id": "D", "texte": "Une hypotrophie et une hyperéchogénicité du muscle fléchisseur ulnaire du carpe", "correct": true }
+        {
+          "id": "A",
+          "texte": "Une tuméfaction du nerf avec une surface de section supérieure à 7,5–8 mm² mesurée en extension",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une hyperhémie intra et périneurale visible en mode Doppler",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une perte de l’organisation fasciculaire normale du nerf",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une hypotrophie et une hyperéchogénicité du muscle fléchisseur ulnaire du carpe",
+          "correct": true
+        }
       ],
       "explication": "L’échographie recherche des signes directs de neuropathie tels qu’une tuméfaction du nerf (seuil pathologique > 7,5–8 mm² mesuré en extension pour éviter la compression physiologique), une perte de l’organisation fasciculaire, et une hyperhémie en mode Doppler. Les signes indirects et plus tardifs de dénervation incluent l’hypotrophie et l’hyperéchogénicité des muscles innervés par le nerf ulnaire, dont le muscle fléchisseur ulnaire du carpe.",
       "correction_figures": [],
-      "source": { "page": 180, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 180,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c6-q06",
@@ -94,14 +199,35 @@
       "enonce": "Une patiente de 40 ans se plaint de dysesthésies et de douleurs isolées apparues à la face médiale de l’avant-bras quelques jours après une ponction veineuse difficile. L’examen montre un point douloureux mimant une épicondylite médiale, mais localisé très superficiellement. Le médecin suspecte une lésion neurologique iatrogène. Quel nerf est très probablement lésé en raison de son rapport anatomique étroit avec la voie d’abord veineuse concernée ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Le nerf musculocutané, en rapport avec la veine céphalique", "correct": false },
-        { "id": "B", "texte": "Le nerf cutané latéral de l’avant-bras, en rapport avec la veine basilique", "correct": false },
-        { "id": "C", "texte": "Le nerf cutané médial de l’avant-bras, en rapport avec la veine basilique", "correct": true },
-        { "id": "D", "texte": "Le nerf ulnaire, en rapport avec la veine basilique", "correct": false }
+        {
+          "id": "A",
+          "texte": "Le nerf musculocutané, en rapport avec la veine céphalique",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le nerf cutané latéral de l’avant-bras, en rapport avec la veine basilique",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le nerf cutané médial de l’avant-bras, en rapport avec la veine basilique",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le nerf ulnaire, en rapport avec la veine basilique",
+          "correct": false
+        }
       ],
       "explication": "Le nerf cutané médial de l’avant-bras, rameau terminal sensitif, chemine à la face médiale de la veine basilique. Il peut donc être lésé lors de ponctions de cette veine. Son atteinte se manifeste par des dysesthésies et douleurs de la face médiale de l’avant-bras qui peuvent mimer une épicondylite médiale.",
       "correction_figures": [],
-      "source": { "page": 181, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 181,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c6-q07",
@@ -110,14 +236,35 @@
       "enonce": "Lors de l’évaluation d’une suspicion de rupture partielle du ligament collatéral ulnaire (LCU) en IRM, quel signe radiologique spécifique (lié à l’infiltration de liquide) doit être recherché au niveau de l’insertion distale du faisceau antérieur ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’apparition d’un kyste synovial postéromédial", "correct": false },
-        { "id": "B", "texte": "Le « T-sign », correspondant à du liquide s’insinuant à l’insertion coronoïdienne du ligament", "correct": true },
-        { "id": "C", "texte": "Le « notch sign » traduisant un rétrécissement focal du ligament", "correct": false },
-        { "id": "D", "texte": "Une calcification hétérotopique en forme de « J »", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’apparition d’un kyste synovial postéromédial",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le « T-sign », correspondant à du liquide s’insinuant à l’insertion coronoïdienne du ligament",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le « notch sign » traduisant un rétrécissement focal du ligament",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une calcification hétérotopique en forme de « J »",
+          "correct": false
+        }
       ],
       "explication": "Les ruptures partielles du LCU, et notamment la désinsertion partielle distale, se manifestent par la visibilité de liquide s’insinuant à l’insertion coronoïdienne du ligament, formant un aspect caractéristique appelé « T-sign » (la lettre T tournée de 90°). Les calcifications hétérotopiques traduisent des remaniements chroniques.",
       "correction_figures": [],
-      "source": { "page": 178, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 178,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c6-q08",
@@ -126,14 +273,35 @@
       "enonce": "Dans le cadre de l’évaluation d’une neuropathie ulnaire au coude, le concept de « double crush syndrome » impose de rechercher systématiquement une ou plusieurs autres atteintes. Quelles sont les localisations classiques à investiguer pour ce nerf ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Une compression au niveau du canal carpien", "correct": false },
-        { "id": "B", "texte": "Une radiculopathie cervicale proximale", "correct": true },
-        { "id": "C", "texte": "Un syndrome de la traversée cervicothoracobrachiale", "correct": true },
-        { "id": "D", "texte": "Un syndrome du canal de Guyon (atteinte distale)", "correct": true }
+        {
+          "id": "A",
+          "texte": "Une compression au niveau du canal carpien",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une radiculopathie cervicale proximale",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un syndrome de la traversée cervicothoracobrachiale",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Un syndrome du canal de Guyon (atteinte distale)",
+          "correct": true
+        }
       ],
       "explication": "Le concept de « double crush syndrome » correspond à la coexistence de plusieurs sites de compression sur le trajet d’un même nerf. Pour le nerf ulnaire, les associations fréquentes à rechercher sont une atteinte proximale (radiculopathie cervicale ou traversée cervicothoracobrachiale) et une atteinte distale (syndrome du canal de Guyon au poignet). Le canal carpien concerne le nerf médian.",
       "correction_figures": [],
-      "source": { "page": 180, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 180,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c6-q09",
@@ -142,14 +310,35 @@
       "enonce": "Deux lanceurs de javelot se plaignent de douleurs chroniques médiales du coude et d’une sensation d’instabilité. Le premier patient a 13 ans, le second a 25 ans. En vous basant sur la biomécanique du stress chronique en valgus et la maturité squelettique, quelles lésions respectives êtes-vous le plus susceptible d’observer chez ces deux patients ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Patient de 13 ans : Rupture en plein corps du ligament collatéral ulnaire / Patient de 25 ans : Avulsion de l’épicondyle latéral", "correct": false },
-        { "id": "B", "texte": "Patient de 13 ans : Apophysose du noyau épicondylien médial (Little league elbow) / Patient de 25 ans : Lésion ligamentaire chronique du ligament collatéral ulnaire (Major league elbow)", "correct": true },
-        { "id": "C", "texte": "Patient de 13 ans : Maladie de Panner / Patient de 25 ans : Ostéochondrite disséquante du capitulum", "correct": false },
-        { "id": "D", "texte": "Patient de 13 ans : Compression du nerf cutané médial / Patient de 25 ans : Syndrome du tunnel ulnaire", "correct": false }
+        {
+          "id": "A",
+          "texte": "Patient de 13 ans : Rupture en plein corps du ligament collatéral ulnaire / Patient de 25 ans : Avulsion de l’épicondyle latéral",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Patient de 13 ans : Apophysose du noyau épicondylien médial (Little league elbow) / Patient de 25 ans : Lésion ligamentaire chronique du ligament collatéral ulnaire (Major league elbow)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Patient de 13 ans : Maladie de Panner / Patient de 25 ans : Ostéochondrite disséquante du capitulum",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Patient de 13 ans : Compression du nerf cutané médial / Patient de 25 ans : Syndrome du tunnel ulnaire",
+          "correct": false
+        }
       ],
       "explication": "Face à des microtraumatismes répétés en valgus, la localisation de la lésion dépend de la maturité squelettique. Chez l’enfant (avant fusion du noyau épicondylien médial), la plaque de croissance est le point de faiblesse, menant à une apophysose médiale (Little league elbow). Chez l’adulte, l’os étant fusionné, les contraintes s’exercent sur les tissus mous, menant à des lésions chroniques du ligament collatéral ulnaire (Major league elbow).",
       "correction_figures": [],
-      "source": { "page": 177, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 177,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c6-q10",
@@ -158,14 +347,35 @@
       "enonce": "L’atteinte du nerf ulnaire est la pathologie canalaire la plus fréquente du coude. Parmi les symptômes suivants, lequel est caractéristique d’une atteinte neurologique avancée de ce nerf ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Des paresthésies touchant exclusivement le pouce, l’index et le médius", "correct": false },
-        { "id": "B", "texte": "Une perte de l’extension active des doigts longs et du poignet", "correct": false },
-        { "id": "C", "texte": "Des paresthésies et un engourdissement du bord médial de la main (5e doigt et moitié radiale du 4e doigt) pouvant évoluer vers une main en griffe", "correct": true },
-        { "id": "D", "texte": "Des dysesthésies isolées de la face antérolatérale de l’avant-bras", "correct": false }
+        {
+          "id": "A",
+          "texte": "Des paresthésies touchant exclusivement le pouce, l’index et le médius",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une perte de l’extension active des doigts longs et du poignet",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Des paresthésies et un engourdissement du bord médial de la main (5e doigt et moitié radiale du 4e doigt) pouvant évoluer vers une main en griffe",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Des dysesthésies isolées de la face antérolatérale de l’avant-bras",
+          "correct": false
+        }
       ],
       "explication": "Le territoire sensitif du nerf ulnaire comprend le 5e doigt, la moitié du 4e doigt et le versant ulnaire de la main. Son atteinte motrice tardive affecte les muscles intrinsèques de la main, causant faiblesse et main en griffe. Les paresthésies du pouce, de l’index et du médius ainsi que la perte de l’extension active des doigts longs et du poignet correspondent respectivement aux nerfs médian et radial. Les dysesthésies isolées de la face antérolatérale de l’avant-bras correspondent au nerf cutané latéral de l’avant-bras.",
       "correction_figures": [],
-      "source": { "page": 179, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 179,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     }
   ]
 }

@@ -45,7 +45,8 @@
         "page": 98,
         "element": "Texte",
         "refs": "[136]"
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c3-q02",
@@ -90,7 +91,8 @@
         "page": 98,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c3-q03",
@@ -140,7 +142,8 @@
         "page": 100,
         "element": "Texte",
         "refs": "[13, 173, 192, 193]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c3-q04",
@@ -190,7 +193,8 @@
         "page": 102,
         "element": "Tableau 3.3",
         "refs": "[3, 109, 209, 321]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c3-q05",
@@ -235,7 +239,8 @@
         "page": 106,
         "element": "Texte",
         "refs": "[112, 260]"
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c3-q06",
@@ -280,7 +285,8 @@
         "page": 117,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c3-q07",
@@ -326,7 +332,8 @@
         "page": 115,
         "element": "Texte",
         "refs": "[229, 236, 320]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c3-q08",
@@ -367,7 +374,8 @@
         "page": 120,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c3-q09",
@@ -417,7 +425,8 @@
         "page": 124,
         "element": "Encadré",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c3-q10",
@@ -462,7 +471,8 @@
         "page": 122,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     }
   ]
 }

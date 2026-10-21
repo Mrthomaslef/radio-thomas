@@ -50,6 +50,13 @@ export const bundledQuestions = CHAPTER_KEYS.flatMap((key) =>
   CHAPTERS[key].questions.map(({ id, ...data }, position) => ({ id, chapter: key, position, data }))
 );
 
+export const bundledById = new Map(bundledQuestions.map((b) => [b.id, b.data]));
+
+export function resolveDifficulty(id, rawDiff) {
+  const n = Number(rawDiff ?? bundledById.get(id)?.difficulty);
+  return n === 1 || n === 2 || n === 3 ? n : 2;
+}
+
 // Strips hardcoded option-letter references ("La réponse correcte est A.", "(B faux)", etc.)
 // because answer options are shuffled when displayed.
 export function cleanExplication(text) {
@@ -76,6 +83,7 @@ export function cleanExplication(text) {
 const toQuestion = (row) => ({
   id: row.id,
   ...row.data,
+  difficulty: resolveDifficulty(row.id, row.data?.difficulty),
   explication: cleanExplication(row.data?.explication),
 });
 

@@ -14,14 +14,35 @@
       "enonce": "Quelle est l’étiologie bactérienne de loin la plus fréquente dans les bursopathies olécrâniennes (hygromas) d’origine septique ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Escherichia coli", "correct": false },
-        { "id": "B", "texte": "Streptococcus pneumoniae", "correct": false },
-        { "id": "C", "texte": "Pseudomonas aeruginosa", "correct": false },
-        { "id": "D", "texte": "Staphylococcus aureus et epidermidis", "correct": true }
+        {
+          "id": "A",
+          "texte": "Escherichia coli",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Streptococcus pneumoniae",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Pseudomonas aeruginosa",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Staphylococcus aureus et epidermidis",
+          "correct": true
+        }
       ],
       "explication": "Dans les bursites septiques de l’olécrâne (qui surviennent habituellement suite à un traumatisme ou une dermabrasion), les germes incriminés sont le Staphylococcus aureus et epidermidis dans plus de 90 % des cas.",
       "correction_figures": [],
-      "source": { "page": 196, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 196,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c8-q02",
@@ -30,14 +51,35 @@
       "enonce": "Concernant le conflit postéromédial du coude, très souvent observé chez les sportifs de lancer, quelles sont les affirmations correctes quant à son mécanisme et ses lésions ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Il résulte de mouvements répétitifs d’hyperextension, de valgus et de supination", "correct": true },
-        { "id": "B", "texte": "Il se traduit par un conflit entre la partie postéromédiale proximale de l’olécrâne et la face médiale de la fosse olécrânienne", "correct": true },
-        { "id": "C", "texte": "Il affecte typiquement et isolément le compartiment latéral du coude", "correct": false },
-        { "id": "D", "texte": "Il peut entraîner une chondromalacie focale et l’apparition d’ostéophytes au pourtour des zones de conflit", "correct": true }
+        {
+          "id": "A",
+          "texte": "Il résulte de mouvements répétitifs d’hyperextension, de valgus et de supination",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Il se traduit par un conflit entre la partie postéromédiale proximale de l’olécrâne et la face médiale de la fosse olécrânienne",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il affecte typiquement et isolément le compartiment latéral du coude",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il peut entraîner une chondromalacie focale et l’apparition d’ostéophytes au pourtour des zones de conflit",
+          "correct": true
+        }
       ],
       "explication": "Le conflit postéromédial du coude est généré par des mouvements répétitifs combinant hyperextension, valgus et supination. Ce mécanisme entraîne un conflit anatomique direct entre la partie postéromédiale de l’olécrâne et la fosse olécrânienne. L’imagerie peut révéler une chondromalacie, un œdème sous-chondral, une synovite et une ostéophytose.",
       "correction_figures": [],
-      "source": { "page": 195, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 195,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c8-q03",
@@ -46,14 +88,35 @@
       "enonce": "Un haltérophile de 35 ans consulte aux urgences pour une douleur brutale supra-olécrânienne droite survenue lors d’un effort violent. À l’examen clinique, malgré une tuméfaction locale évidente et la suspicion d’une rupture complète du tendon distal du triceps brachial, le patient parvient toujours à réaliser une extension active (bien que faible) de son coude. Sur le plan purement anatomique, comment expliquer ce phénomène clinique qui peut faussement rassurer le clinicien ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’extension active est compensée par la contraction synergique du muscle biceps brachial", "correct": false },
-        { "id": "B", "texte": "L’extension reste possible grâce aux expansions tricipitales sur la crête de l’ulna, le fascia de l’extenseur ulnaire du carpe et l’insertion du muscle anconé", "correct": true },
-        { "id": "C", "texte": "La rupture du triceps n’affecte que les fibres superficielles latérales, laissant toujours le chef médial profond intact lors d’un traumatisme", "correct": false },
-        { "id": "D", "texte": "L’extension du coude est principalement sous le contrôle du nerf médian, qui reste indemne", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’extension active est compensée par la contraction synergique du muscle biceps brachial",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’extension reste possible grâce aux expansions tricipitales sur la crête de l’ulna, le fascia de l’extenseur ulnaire du carpe et l’insertion du muscle anconé",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La rupture du triceps n’affecte que les fibres superficielles latérales, laissant toujours le chef médial profond intact lors d’un traumatisme",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’extension du coude est principalement sous le contrôle du nerf médian, qui reste indemne",
+          "correct": false
+        }
       ],
       "explication": "En cas de rupture complète du triceps brachial, l’extension active peut rester présente du fait d’expansions tricipitales sur la crête de l’ulna en dedans, sur le fascia du muscle extenseur ulnaire du carpe en dehors, sur le fascia antébrachial distalement, et sur l’insertion du muscle anconé en profondeur. Le diagnostic clinique de rupture complète est donc souvent manqué à la phase aiguë.",
       "correction_figures": [],
-      "source": { "page": 194, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 194,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c8-q04",
@@ -62,14 +125,35 @@
       "enonce": "Le phénomène de « ressaut du chef médial du muscle triceps brachial » est une anomalie dynamique du coude. Quelles sont les caractéristiques de ce phénomène ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Il correspond au passage du chef médial du triceps en dehors de l’épicondyle latéral", "correct": false },
-        { "id": "B", "texte": "Il se produit lors du mouvement de flexion du coude", "correct": true },
-        { "id": "C", "texte": "Il peut entraîner le nerf ulnaire vers l’avant, causant parfois une neuropathie", "correct": true },
-        { "id": "D", "texte": "L’anomalie est favorisée par une hypertrophie du muscle triceps brachial ou un chef accessoire", "correct": true }
+        {
+          "id": "A",
+          "texte": "Il correspond au passage du chef médial du triceps en dehors de l’épicondyle latéral",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Il se produit lors du mouvement de flexion du coude",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il peut entraîner le nerf ulnaire vers l’avant, causant parfois une neuropathie",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’anomalie est favorisée par une hypertrophie du muscle triceps brachial ou un chef accessoire",
+          "correct": true
+        }
       ],
       "explication": "Le ressaut du chef médial du muscle triceps brachial correspond au passage du chef médial en dedans de l’épicondyle médial (et non latéral) au cours de la flexion du coude. Ce passage brusque peut entraîner le nerf ulnaire vers l’avant et provoquer une neuropathie. Ce phénomène est favorisé par une hypertrophie musculaire ou la présence d’un chef accessoire.",
       "correction_figures": [],
-      "source": { "page": 194, "element": "Texte (p. 194–195)", "refs": "" }
+      "source": {
+        "page": 194,
+        "element": "Texte (p. 194–195)",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c8-q05",
@@ -78,14 +162,35 @@
       "enonce": "Concernant la fracture de contrainte de l’olécrâne (fréquente chez les lanceurs et les gymnastes), dans quelle portion anatomique de l’olécrâne survient-elle préférentiellement ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Au niveau de la pointe proximale de l’olécrâne", "correct": false },
-        { "id": "B", "texte": "Dans son tiers moyen", "correct": true },
-        { "id": "C", "texte": "Au niveau de son tiers distal", "correct": false },
-        { "id": "D", "texte": "Au niveau de la base du processus coronoïde", "correct": false }
+        {
+          "id": "A",
+          "texte": "Au niveau de la pointe proximale de l’olécrâne",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Dans son tiers moyen",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Au niveau de son tiers distal",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Au niveau de la base du processus coronoïde",
+          "correct": false
+        }
       ],
       "explication": "La fracture de contrainte intéresse essentiellement l’olécrâne dans son tiers moyen.",
       "correction_figures": [],
-      "source": { "page": 195, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 195,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     },
     {
       "id": "c8-q06",
@@ -94,14 +199,35 @@
       "enonce": "L’anatomie du compartiment postérieur du coude comporte plusieurs bourses synoviales. Outre la bourse sous-cutanée olécrânienne (très sujette aux hygromas), quelles autres bourses profondes y sont décrites ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La bourse profonde subtendineuse, située entre la face profonde du tendon du triceps et le sommet de l’olécrâne", "correct": true },
-        { "id": "B", "texte": "La bourse bicipito-radiale postérieure", "correct": false },
-        { "id": "C", "texte": "La bourse profonde intratendineuse, située dans l’épaisseur du tendon distal du muscle triceps brachial", "correct": true },
-        { "id": "D", "texte": "La bourse de l’anconé", "correct": false }
+        {
+          "id": "A",
+          "texte": "La bourse profonde subtendineuse, située entre la face profonde du tendon du triceps et le sommet de l’olécrâne",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La bourse bicipito-radiale postérieure",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La bourse profonde intratendineuse, située dans l’épaisseur du tendon distal du muscle triceps brachial",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La bourse de l’anconé",
+          "correct": false
+        }
       ],
       "explication": "Deux bourses postérieures profondes sont décrites : la bourse profonde subtendineuse (entre la face profonde du tendon du muscle triceps brachial et le sommet de l’olécrâne) et la bourse profonde intratendineuse (dans l’épaisseur du tendon distal du muscle triceps brachial).",
       "correction_figures": [],
-      "source": { "page": 197, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 197,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c8-q07",
@@ -110,14 +236,35 @@
       "enonce": "Lors du bilan radiologique d’un patient consultant pour des douleurs postérieures chroniques du coude sans notion de traumatisme récent, vous remarquez une formation osseuse au sein de la fosse olécrânienne. Hésitant entre un fragment ostéochondral libre (corps étranger intra-articulaire) et une variante anatomique appelée « os supratrochléaire dorsal », quel élément radioclinique simple vous orienterait formellement vers la variante anatomique ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "L’aspect condensé et dense de la lésion", "correct": false },
-        { "id": "B", "texte": "La constatation du même aspect osseux de manière bilatérale sur des radiographies comparatives", "correct": true },
-        { "id": "C", "texte": "La présence d’une ostéochondrite associée du capitulum", "correct": false },
-        { "id": "D", "texte": "L’association à une fracture de contrainte de l’olécrâne", "correct": false }
+        {
+          "id": "A",
+          "texte": "L’aspect condensé et dense de la lésion",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La constatation du même aspect osseux de manière bilatérale sur des radiographies comparatives",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La présence d’une ostéochondrite associée du capitulum",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’association à une fracture de contrainte de l’olécrâne",
+          "correct": false
+        }
       ],
       "explication": "L’os supratrochléaire dorsal est une variante d’ossification de la fosse olécrânienne. L’histoire clinique et son caractère typiquement bilatéral permettent généralement de le distinguer d’un corps étranger intra-articulaire authentique.",
       "correction_figures": [],
-      "source": { "page": 197, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 197,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c8-q08",
@@ -126,14 +273,35 @@
       "enonce": "Concernant la tendinopathie distale du muscle triceps brachial, quelles sont les caractéristiques radiologiques et d’imagerie typiquement observées ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "En échographie, le tendon tricipital est épaissi avec des plages hypoéchogènes", "correct": true },
-        { "id": "B", "texte": "L’enthésophyte olécrânien visible en radiographie est un signe pathognomonique et très spécifique de cette pathologie", "correct": false },
-        { "id": "C", "texte": "En IRM, la présence de striations longitudinales hyperintenses est toujours le signe d’une fissuration grave du tendon", "correct": false },
-        { "id": "D", "texte": "En IRM, le tendon épaissi présente un signal intermédiaire en T1 ou T2", "correct": true }
+        {
+          "id": "A",
+          "texte": "En échographie, le tendon tricipital est épaissi avec des plages hypoéchogènes",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’enthésophyte olécrânien visible en radiographie est un signe pathognomonique et très spécifique de cette pathologie",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "En IRM, la présence de striations longitudinales hyperintenses est toujours le signe d’une fissuration grave du tendon",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "En IRM, le tendon épaissi présente un signal intermédiaire en T1 ou T2",
+          "correct": true
+        }
       ],
       "explication": "L’échographie montre un tendon épaissi et hétérogène avec des plages hypoéchogènes. L’IRM montre un tendon épaissi en signal intermédiaire T1/T2. L’enthésophyte olécrânien est très peu spécifique car il s’observe souvent chez les travailleurs manuels, avec l’âge, ou dans la goutte. Les striations longitudinales hyperintenses en IRM sont physiologiques (interposition de graisse entre les fibres).",
       "correction_figures": [],
-      "source": { "page": 193, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 193,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2
     },
     {
       "id": "c8-q09",
@@ -142,14 +310,35 @@
       "enonce": "Un menuisier de 55 ans présente une volumineuse tuméfaction inflammatoire, douloureuse et érythémateuse en regard de l’olécrâne. Vous demandez une IRM pour éliminer une ostéomyélite sous-jacente et statuer sur le caractère septique ou mécanique de cette bursite. Malgré le fort chevauchement des signes IRM entre bursites septiques et mécaniques, quel argument IRM (après injection) plaiderait de façon importante CONTRE une origine septique ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "La présence d’un œdème des tissus mous adjacents", "correct": false },
-        { "id": "B", "texte": "L’absence totale de rehaussement de la paroi bursale et des tissus mous après injection de gadolinium", "correct": true },
-        { "id": "C", "texte": "La présence de fins septums à l’intérieur de la bourse", "correct": false },
-        { "id": "D", "texte": "L’existence d’un épanchement intra-articulaire minime associé", "correct": false }
+        {
+          "id": "A",
+          "texte": "La présence d’un œdème des tissus mous adjacents",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’absence totale de rehaussement de la paroi bursale et des tissus mous après injection de gadolinium",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La présence de fins septums à l’intérieur de la bourse",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’existence d’un épanchement intra-articulaire minime associé",
+          "correct": false
+        }
       ],
       "explication": "Les signes IRM (taille, septums, œdème musculaire, épanchement) se chevauchent considérablement entre les bursopathies septiques et non septiques. Cependant, l’absence absolue de rehaussement bursal et des tissus mous après injection de gadolinium est un signe qui plaiderait fortement contre une origine septique.",
       "correction_figures": [],
-      "source": { "page": 196, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 196,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 3
     },
     {
       "id": "c8-q10",
@@ -158,14 +347,35 @@
       "enonce": "Bien qu’ils soient des structures anatomiques physiologiques, les plis synoviaux postérieurs du coude peuvent parfois devenir pathologiques. Quelle est leur principale traduction clinique dans ce contexte ?",
       "enonce_image": null,
       "items": [
-        { "id": "A", "texte": "Un déficit moteur de l’extension du coude par compression nerveuse", "correct": false },
-        { "id": "B", "texte": "Une subluxation récidivante postérieure de la tête radiale", "correct": false },
-        { "id": "C", "texte": "Des épisodes de blocage articulaire pouvant mimer la présence d’un corps étranger intra-articulaire", "correct": true },
-        { "id": "D", "texte": "Une résorption osseuse chronique de la fosse olécrânienne", "correct": false }
+        {
+          "id": "A",
+          "texte": "Un déficit moteur de l’extension du coude par compression nerveuse",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une subluxation récidivante postérieure de la tête radiale",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Des épisodes de blocage articulaire pouvant mimer la présence d’un corps étranger intra-articulaire",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une résorption osseuse chronique de la fosse olécrânienne",
+          "correct": false
+        }
       ],
       "explication": "Les plis synoviaux postérieurs (situés à proximité du coussinet adipeux postérieur) sont des structures physiologiques, mais ils peuvent occasionnellement devenir symptomatiques et provoquer des épisodes de blocage mimant un corps étranger intra-articulaire.",
       "correction_figures": [],
-      "source": { "page": 197, "element": "Texte", "refs": "" }
+      "source": {
+        "page": 197,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
     }
   ]
 }

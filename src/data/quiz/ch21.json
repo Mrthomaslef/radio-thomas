@@ -41,7 +41,8 @@
         "page": 587,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c21-q02",
@@ -77,7 +78,8 @@
         "page": 591,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c21-q03",
@@ -113,7 +115,8 @@
         "page": 594,
         "element": "Texte",
         "refs": "p. 594-595"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c21-q04",
@@ -149,7 +152,8 @@
         "page": 588,
         "element": "Texte",
         "refs": "p. 588, 596"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c21-q05",
@@ -185,7 +189,8 @@
         "page": 605,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c21-q06",
@@ -221,7 +226,8 @@
         "page": 605,
         "element": "Texte",
         "refs": "p. 605-606"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c21-q07",
@@ -257,7 +263,8 @@
         "page": 602,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c21-q08",
@@ -293,7 +300,8 @@
         "page": 588,
         "element": "Texte",
         "refs": "p. 588, 592"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c21-q09",
@@ -329,7 +337,8 @@
         "page": 603,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c21-q10",
@@ -365,7 +374,8 @@
         "page": 589,
         "element": "Texte",
         "refs": "p. 589, 591"
-      }
+      },
+      "difficulty": 2
     }
   ]
 }

@@ -93,9 +93,15 @@ export function validateQuestion(q) {
     return { error: 'Référence invalide (élément obligatoire, références 200 caractères max)' };
   }
 
+  const rawDiff = q.difficulty === undefined || q.difficulty === null ? 2 : Number(q.difficulty);
+  if (rawDiff !== 1 && rawDiff !== 2 && rawDiff !== 3) {
+    return { error: 'Le niveau de difficulté doit être 1, 2 ou 3' };
+  }
+
   return {
     data: {
       type: q.type,
+      difficulty: rawDiff,
       theme: clean(q.theme),
       enonce: clean(q.enonce),
       enonce_image,

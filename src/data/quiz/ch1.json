@@ -45,7 +45,8 @@
         "page": 7,
         "element": "Texte",
         "refs": "[129, 150]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c1-q02",
@@ -86,7 +87,8 @@
         "page": 11,
         "element": "Texte",
         "refs": "[242, 185]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c1-q03",
@@ -136,7 +138,8 @@
         "page": 14,
         "element": "Texte",
         "refs": "[203, 109, 106]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c1-q04",
@@ -177,7 +180,8 @@
         "page": 17,
         "element": "Texte",
         "refs": "[102, 118, 17]"
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c1-q05",
@@ -213,7 +217,8 @@
         "page": 20,
         "element": "Tableau 1.1",
         "refs": "[16, 91]"
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c1-q06",
@@ -263,7 +268,8 @@
         "page": 24,
         "element": "Texte",
         "refs": "[155, 176, 87]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c1-q07",
@@ -304,7 +310,8 @@
         "page": 29,
         "element": "Texte",
         "refs": "[36, 97]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c1-q08",
@@ -350,7 +357,8 @@
         "page": 31,
         "element": "Texte",
         "refs": "[6, 95, 98]"
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c1-q09",
@@ -400,7 +408,8 @@
         "page": 47,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c1-q10",
@@ -441,7 +450,8 @@
         "page": 50,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 3
     },
     {
       "id": "c1-q11",
@@ -477,7 +487,8 @@
         "page": 7,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c1-q12",
@@ -513,7 +524,8 @@
         "page": 13,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c1-q13",
@@ -549,7 +561,8 @@
         "page": 24,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c1-q14",
@@ -585,7 +598,8 @@
         "page": 45,
         "element": "Texte (p. 45, 47)",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c1-q15",
@@ -621,7 +635,8 @@
         "page": 22,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c1-q16",
@@ -657,7 +672,8 @@
         "page": 23,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c1-q17",
@@ -693,7 +709,8 @@
         "page": 10,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c1-q18",
@@ -729,7 +746,8 @@
         "page": 7,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     },
     {
       "id": "c1-q19",
@@ -765,7 +783,8 @@
         "page": 19,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 2
     },
     {
       "id": "c1-q20",
@@ -801,7 +820,8 @@
         "page": 21,
         "element": "Texte",
         "refs": ""
-      }
+      },
+      "difficulty": 1
     }
   ]
 }
