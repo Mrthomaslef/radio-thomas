@@ -518,8 +518,9 @@ export default function ProposeQuestionPage() {
                 aria-label={`Réponse ${it.id} correcte`}
               />
               <b>{it.id}</b>
-              <input
-                className="admin-input"
+              <textarea
+                className="admin-input qa-item-textarea"
+                rows={Math.max(2, Math.ceil((it.texte || '').length / 75))}
                 value={it.texte}
                 maxLength={400}
                 placeholder={`Proposition ${it.id}…`}

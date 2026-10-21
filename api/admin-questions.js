@@ -3,6 +3,7 @@
 // Colleagues in the reviewer space (#/correcteur) authenticate with the reviewer password ('cocochin').
 import { randomBytes, randomUUID } from 'node:crypto';
 import { validateChapter, validateId, validateQuestion } from './_validate.js';
+import { generateQuestionFromBook } from './_ai.js';
 
 const REVIEWER_PASSWORD = 'cocochin';
 
@@ -110,6 +111,32 @@ export default async function handler(req, res) {
 
   const isReviewer = password === REVIEWER_PASSWORD;
 
+  // Handle AI question generation from book chapters (available to both Admin and Reviewers)
+  if (body.action === 'generate_ai') {
+    if (!isReviewer) {
+      try {
+        const check = await rpc('admin_list_questions', { p_password: password });
+        if (check.status === 'locked') return res.status(429).json({ error: 'Trop de tentatives, réessayez plus tard' });
+        if (check.status !== 'ok') return res.status(401).json({ error: 'Mot de passe incorrect' });
+      } catch {
+        return res.status(502).json({ error: 'Base de données injoignable' });
+      }
+    }
+    try {
+      const question = await generateQuestionFromBook({
+        chapter: body.chapter,
+        questionType: body.questionType,
+        difficulty: body.difficulty,
+        topicHint: body.topicHint,
+        existingQuestions: body.existingQuestions,
+        env: process.env,
+      });
+      return res.status(200).json({ status: 'ok', question });
+    } catch (e) {
+      return res.status(400).json({ error: e.message || 'Erreur lors de la génération de la question par l’IA.' });
+    }
+  }
+
   // Handle reviewer notification when a quiz/chapter has been reviewed
   if (body.action === 'notify_review') {
     if (!validateChapter(body.chapter)) {
@@ -163,7 +190,10 @@ export default async function handler(req, res) {
               map.set(id, ov);
             }
           }
-          return res.status(200).json({ status: 'ok', questions: [...map.values()] });
+          return res.status(200).json({
+            status: 'ok',
+            questions: [...map.values()].filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99'),
+          });
         } catch {
           return res.status(502).json({ error: 'Base de données injoignable' });
         }
@@ -307,7 +337,7 @@ export default async function handler(req, res) {
           }
         }
       }
-      out.questions = [...map.values()];
+      out.questions = [...map.values()].filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99');
     }
 
     return res.status(200).json(out);

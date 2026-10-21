@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import { generateQuestionFromBook } from './api/_ai.js';
 
 const CACHE_FILE = path.join(process.cwd(), 'node_modules', '.cache', 'quiz-cotten-leaderboard-v2.json');
 const CONTRIB_CACHE_FILE = path.join(process.cwd(), 'node_modules', '.cache', 'quiz-cotten-contributors-v4.json');
@@ -23,10 +24,36 @@ function writeJsonCache(file, map) {
   }
 }
 
-function localLeaderboardPlugin(target) {
+function localLeaderboardPlugin(target, env = {}) {
   return {
     name: 'local-leaderboard-api',
     configureServer(server) {
+      server.middlewares.use('/api/generate-question', async (req, res, next) => {
+        if (req.method !== 'POST') return next();
+        let raw = '';
+        req.on('data', (chunk) => { raw += chunk; });
+        req.on('end', async () => {
+          try {
+            const body = JSON.parse(raw || '{}');
+            const question = await generateQuestionFromBook({
+              chapter: body.chapter,
+              questionType: body.questionType,
+              difficulty: body.difficulty,
+              topicHint: body.topicHint,
+              existingQuestions: body.existingQuestions,
+              env: { ...process.env, ...env },
+            });
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ status: 'ok', question }));
+          } catch (e) {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ error: e.message || 'Erreur lors de la génération IA.' }));
+          }
+        });
+      });
+
       server.middlewares.use('/api/leaderboard', async (req, res, next) => {
         const isContribUrl = (req.url || '').includes('type=contributors');
         const cacheFile = isContribUrl ? CONTRIB_CACHE_FILE : CACHE_FILE;
@@ -162,7 +189,7 @@ export default defineConfig(({ mode }) => {
     env.VITE_API_PROXY || 'https://radio-thomas-charlesandres-projects.vercel.app';
 
   return {
-    plugins: [react(), localLeaderboardPlugin(target)],
+    plugins: [react(), localLeaderboardPlugin(target, env)],
     server: {
       proxy: {
         '/api': { target, changeOrigin: true },

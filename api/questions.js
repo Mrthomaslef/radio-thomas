@@ -45,12 +45,14 @@ export default async function handler(req, res) {
       }
     }
 
-    const questions = [...map.values()].map((q) => {
-      if (q?.data?.reviewed && !q.data.reviewed_by) {
-        return { ...q, data: { ...q.data, reviewed_by: 'Thomas L.' } };
-      }
-      return q;
-    });
+    const questions = [...map.values()]
+      .filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99')
+      .map((q) => {
+        if (q?.data?.reviewed && !q.data.reviewed_by) {
+          return { ...q, data: { ...q.data, reviewed_by: 'Thomas L.' } };
+        }
+        return q;
+      });
     // Short cache: a correction made in the admin shows up within ~30 s.
     res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=60');
     return res.status(200).json({ questions });

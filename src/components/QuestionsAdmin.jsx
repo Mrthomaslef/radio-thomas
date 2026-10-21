@@ -142,6 +142,27 @@ const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 const isReviewerPass = (pw) => String(pw || '').trim().toLowerCase() === 'cocochin';
 
 async function call(password, payload) {
+  if (payload.action === 'generate_ai') {
+    const r = await fetch('/api/admin-questions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password, ...payload }),
+    });
+    const data = await r.json().catch(() => ({}));
+    if (r.ok && data?.question) return data;
+    // Fallback to local Vite middleware (/api/generate-question) during local dev before backend deploy
+    const localRes = await fetch('/api/generate-question', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(() => null);
+    if (localRes && localRes.ok) {
+      const localData = await localRes.json().catch(() => ({}));
+      if (localData?.question) return localData;
+    }
+    throw new Error(data.error || 'Erreur lors de la génération par l’IA.');
+  }
+
   if (isReviewerPass(password)) {
     if (payload.action === 'list') {
       const r = await fetch('/api/questions');
@@ -299,9 +320,15 @@ export default function QuestionsAdmin({
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [chapter, setChapter] = useState('ch1');
-  const [editing, setEditing] = useState(null); // { id, chapter, position, q, isNew, reportContext }
+  const [editing, setEditing] = useState(null); // { id, chapter, position, q, isNew, reportContext, aiContext }
   const [preview, setPreview] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [aiModalOpen, setAiModalOpen] = useState(false);
+  const [aiChapter, setAiChapter] = useState('ch1');
+  const [aiType, setAiType] = useState('AUTO');
+  const [aiDifficulty, setAiDifficulty] = useState(2);
+  const [aiTopicHint, setAiTopicHint] = useState('');
+  const [aiBusy, setAiBusy] = useState(false);
 
   const load = useCallback(async () => {
     setError('');
@@ -745,6 +772,77 @@ export default function QuestionsAdmin({
     });
   };
 
+  const openAiGenerator = () => {
+    setAiChapter(chapter);
+    setError('');
+    setNotice('');
+    setAiModalOpen(true);
+  };
+
+  const runAiGenerator = async (overrideParams = null) => {
+    const targetChapter = overrideParams?.chapter || aiChapter || chapter;
+    const targetType = overrideParams?.questionType || aiType || 'AUTO';
+    const targetDiff = Number(overrideParams?.difficulty || aiDifficulty || 2);
+    const targetHint = overrideParams?.topicHint !== undefined ? overrideParams.topicHint : aiTopicHint;
+
+    setAiBusy(true);
+    setBusy(true);
+    setError('');
+    setNotice('');
+    try {
+      const currentRows = rows || bundledQuestions;
+      const chapterRows = currentRows.filter((r) => !r.deleted_at && r.chapter === targetChapter);
+      const existingQuestions = chapterRows.map((r) => ({
+        theme: r.data?.theme || '',
+        enonce: r.data?.enonce || '',
+      }));
+      if (editing?.q?.enonce) {
+        existingQuestions.push({
+          theme: editing.q.theme || '',
+          enonce: editing.q.enonce,
+        });
+      }
+
+      const out = await call(password, {
+        action: 'generate_ai',
+        chapter: targetChapter,
+        questionType: targetType,
+        difficulty: targetDiff,
+        topicHint: targetHint,
+        existingQuestions,
+      });
+
+      const generated = out.question;
+      const position = chapterRows.length ? Math.max(...chapterRows.map((r) => r.position || 0)) + 1 : 0;
+      setChapter(targetChapter);
+      setAiModalOpen(false);
+      setPreview(true);
+      setEditing({
+        id: newId(targetChapter, currentRows),
+        chapter: targetChapter,
+        position,
+        q: {
+          ...blankQuestion(reviewerName),
+          ...generated,
+          reviewed: true,
+          reviewed_by: reviewerName || REVIEWERS[0],
+        },
+        isNew: true,
+        aiContext: {
+          chapter: targetChapter,
+          questionType: targetType,
+          difficulty: targetDiff,
+          topicHint: targetHint,
+        },
+      });
+    } catch (e) {
+      setError(e.message || 'Erreur lors de la génération par l’IA.');
+    } finally {
+      setAiBusy(false);
+      setBusy(false);
+    }
+  };
+
   const save = async (forceReviewed = null) => {
     setBusy(true); setError(''); setNotice('');
     const nextReviewed = forceReviewed !== null ? forceReviewed : Boolean(editing.q.reviewed);
@@ -843,9 +941,11 @@ export default function QuestionsAdmin({
         editing={editing}
         setEditing={setEditing}
         busy={busy}
+        aiBusy={aiBusy}
         error={error}
         onSave={() => save(null)}
         onSaveAndReview={() => save(true)}
+        onRegenerateAi={editing.aiContext ? () => runAiGenerator(editing.aiContext) : null}
         onCancel={() => { setEditing(null); setPreview(false); setError(''); }}
         onDelete={editing.isNew ? null : () => remove(editing)}
         preview={preview}
@@ -1033,9 +1133,120 @@ export default function QuestionsAdmin({
               ✓ Valider tout le chapitre ({reviewerName})
             </button>
           )}
+          <button
+            type="button"
+            className="btn btn-small qa-ai-btn"
+            onClick={openAiGenerator}
+            disabled={busy}
+          >
+            ✨ Générer une question par IA
+          </button>
           <button className="btn btn-small" onClick={create}>+ Nouvelle question</button>
         </div>
       </div>
+
+      {aiModalOpen && (
+        <div className="qa-ai-panel" role="region" aria-label="Générer une question par l’IA">
+          <div className="qa-ai-panel-head">
+            <div>
+              <strong>✨ Générer une nouvelle question à partir du livre (IA Gemini)</strong>
+              <p>
+                L’IA lit directement le chapitre choisi dans l’ouvrage <em>Imagerie musculosquelettique – Pathologies locorégionales</em> et rédige une question sourcée en évitant de répéter les{' '}
+                <b>{(chapterCounts[aiChapter]?.total || 0)}</b> question(s) déjà présentes dans ce chapitre.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="btn btn-ghost btn-small"
+              onClick={() => setAiModalOpen(false)}
+              disabled={aiBusy}
+            >
+              ✕ Fermer
+            </button>
+          </div>
+
+          <div className="qa-grid qa-ai-grid">
+            <label>1. Choisir le chapitre du livre (1 à 36)
+              <select
+                className="admin-input"
+                value={aiChapter}
+                onChange={(e) => setAiChapter(e.target.value)}
+                disabled={aiBusy}
+              >
+                {themes.map((t) => (
+                  <optgroup key={t.id} label={t.title}>
+                    {t.chapters.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        Chapitre {chapterNumber(c.id)} — {c.title} ({chapterCounts[c.id]?.total || 0} q.)
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
+            </label>
+
+            <label>2. Type de question
+              <select
+                className="admin-input"
+                value={aiType}
+                onChange={(e) => setAiType(e.target.value)}
+                disabled={aiBusy}
+              >
+                <option value="AUTO">Au choix de l’IA (QCU ou QRM)</option>
+                <option value="QCU">QCU (1 seule bonne réponse)</option>
+                <option value="QRM">QRM (plusieurs bonnes réponses)</option>
+              </select>
+            </label>
+
+            <label>3. Niveau de difficulté
+              <div className="qa-diff-picker" role="group" aria-label="Niveau de difficulté IA">
+                {[1, 2, 3].map((lvl) => (
+                  <button
+                    key={lvl}
+                    type="button"
+                    className={`qa-diff-btn qa-diff-${lvl} ${aiDifficulty === lvl ? 'on' : ''}`}
+                    onClick={() => setAiDifficulty(lvl)}
+                    disabled={aiBusy}
+                  >
+                    Niveau {lvl}
+                  </button>
+                ))}
+              </div>
+            </label>
+          </div>
+
+          <label className="qa-field">
+            4. Notion ou sous-thème particulier à cibler (facultatif — laissez vide pour que l’IA choisisse une partie non traitée du chapitre)
+            <input
+              className="admin-input"
+              value={aiTopicHint}
+              maxLength={120}
+              placeholder="Ex. : Classification de Patte, conflit postérosupérieur, critères IRM d’instabilité…"
+              onChange={(e) => setAiTopicHint(e.target.value)}
+              disabled={aiBusy}
+            />
+          </label>
+
+          <div className="qa-ai-actions">
+            <button
+              type="button"
+              className="btn qa-ai-submit-btn"
+              onClick={() => runAiGenerator()}
+              disabled={aiBusy}
+            >
+              {aiBusy ? '✨ Lecture du chapitre et rédaction en cours…' : `✨ Générer la question (${chapterFullLabel(aiChapter)})`}
+            </button>
+            <button
+              type="button"
+              className="btn btn-ghost"
+              onClick={() => setAiModalOpen(false)}
+              disabled={aiBusy}
+            >
+              Annuler
+            </button>
+          </div>
+        </div>
+      )}
 
       {filteredLive.length === 0 ? (
         <p className="admin-empty">
@@ -1094,7 +1305,7 @@ export default function QuestionsAdmin({
   );
 }
 
-function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onCancel, onDelete, preview, setPreview, password, reviewerName, setReviewerName }) {
+function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndReview, onRegenerateAi, onCancel, onDelete, preview, setPreview, password, reviewerName, setReviewerName }) {
   const q = editing.q;
   const set = (patch) => setEditing((e) => ({ ...e, q: { ...e.q, ...patch } }));
   const setItem = (i, patch) => set({ items: q.items.map((it, k) => (k === i ? { ...it, ...patch } : it)) });
@@ -1135,12 +1346,73 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
   if (preview) {
     return (
       <div className="qa">
-        <div className="qa-bar">
-          <span>Aperçu : voilà ce que verront les élèves (rien n’est enregistré)</span>
-          <button className="btn btn-ghost btn-small" onClick={() => setPreview(false)}>← Retour à l’édition</button>
-        </div>
+        {editing.aiContext ? (
+          <div className="admin-report-banner qa-ai-banner">
+            <div className="qa-ai-banner-top">
+              <div>
+                <strong>
+                  ✨ Aperçu de la question générée par l’IA · {chapterFullLabel(editing.chapter)} (p. {q.source?.page || '—'})
+                </strong>
+                <p>
+                  Testez la question ci-dessous telle que la verront les étudiants. Vous pouvez la <strong>soumettre directement</strong>, passer en <strong>mode édition</strong> pour la modifier, ou la <strong>supprimer</strong>.
+                </p>
+              </div>
+              <div className="qa-ai-banner-actions">
+                <button
+                  type="button"
+                  className="btn btn-small"
+                  onClick={onSave}
+                  disabled={busy || aiBusy}
+                >
+                  {busy && !aiBusy ? 'Enregistrement…' : '✓ Soumettre et publier'}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-small"
+                  onClick={() => setPreview(false)}
+                  disabled={busy || aiBusy}
+                >
+                  ✎ Passer en mode édition
+                </button>
+                {onRegenerateAi && (
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-small"
+                    onClick={onRegenerateAi}
+                    disabled={busy || aiBusy}
+                  >
+                    {aiBusy ? '✨ Génération…' : '↻ Régénérer une autre'}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-small qa-danger"
+                  onClick={onCancel}
+                  disabled={busy || aiBusy}
+                >
+                  ✕ Supprimer
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="qa-bar">
+            <span>Aperçu : voilà ce que verront les élèves (rien n’est enregistré)</span>
+            <div className="qa-ai-banner-actions">
+              <button className="btn btn-ghost btn-small" onClick={() => setPreview(false)}>← Retour à l’édition</button>
+              <button className="btn btn-ghost btn-small qa-danger" onClick={onCancel}>✕ Annuler / Fermer</button>
+            </div>
+          </div>
+        )}
+        {error && <p className="admin-error" role="alert">{error}</p>}
         <div className="qa-preview">
-          <QuizPlayer chapterKey={`preview-${editing.chapter}`} meta={CHAPTERS[editing.chapter].chapitre} questions={previewQuestions} preview />
+          <QuizPlayer
+            key={`${editing.id}-${(q.enonce || '').slice(0, 24)}`}
+            chapterKey={`preview-${editing.chapter}`}
+            meta={CHAPTERS[editing.chapter].chapitre}
+            questions={previewQuestions}
+            preview
+          />
         </div>
       </div>
     );
@@ -1203,6 +1475,48 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
           </p>
         </div>
       )}
+      {editing.aiContext && (
+        <div className="admin-report-banner qa-ai-banner">
+          <div className="qa-ai-banner-top">
+            <div>
+              <strong>
+                ✨ Question générée par l’IA à partir du livre · {chapterFullLabel(editing.chapter)} (p. {q.source?.page || '—'})
+              </strong>
+              <p>
+                Rédigée à partir du chapitre officiel sans répéter les questions existantes. Vous pouvez relire ou modifier les champs ci-dessous, puis <strong>soumettre</strong> la question pour l’ajouter au chapitre ou la <strong>supprimer</strong>.
+              </p>
+            </div>
+            <div className="qa-ai-banner-actions">
+              <button
+                type="button"
+                className="btn btn-small"
+                onClick={onSave}
+                disabled={busy || aiBusy}
+              >
+                {busy && !aiBusy ? 'Enregistrement…' : '✓ Soumettre et publier'}
+              </button>
+              {onRegenerateAi && (
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-small"
+                  onClick={onRegenerateAi}
+                  disabled={busy || aiBusy}
+                >
+                  {aiBusy ? '✨ Génération…' : '↻ Régénérer une autre'}
+                </button>
+              )}
+              <button
+                type="button"
+                className="btn btn-ghost btn-small qa-danger"
+                onClick={onCancel}
+                disabled={busy || aiBusy}
+              >
+                ✕ Supprimer ce brouillon
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {error && <p className="admin-error" role="alert">{error}</p>}
 
       <div className="qa-grid">
@@ -1258,7 +1572,13 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
       </fieldset>
 
       <label className="qa-field">Énoncé
-        <textarea className="admin-input" rows={3} value={q.enonce} maxLength={1500} onChange={(e) => set({ enonce: e.target.value })} />
+        <textarea
+          className="admin-input"
+          rows={Math.max(3, Math.ceil((q.enonce || '').length / 80))}
+          value={q.enonce}
+          maxLength={1500}
+          onChange={(e) => set({ enonce: e.target.value })}
+        />
       </label>
 
       <fieldset className="qa-items">
@@ -1273,7 +1593,13 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
               aria-label={`Réponse ${it.id} correcte`}
             />
             <b>{it.id}</b>
-            <input className="admin-input" value={it.texte} maxLength={400} onChange={(e) => setItem(i, { texte: e.target.value })} />
+            <textarea
+              className="admin-input qa-item-textarea"
+              rows={Math.max(2, Math.ceil((it.texte || '').length / 75))}
+              value={it.texte}
+              maxLength={400}
+              onChange={(e) => setItem(i, { texte: e.target.value })}
+            />
             <button className="link-btn" onClick={() => removeItem(i)} disabled={q.items.length <= 2} aria-label={`Retirer la réponse ${it.id}`}>Retirer</button>
           </div>
         ))}
@@ -1325,21 +1651,30 @@ function Editor({ editing, setEditing, busy, error, onSave, onSaveAndReview, onC
       </fieldset>
 
       <div className="qa-actions">
-        <button className="btn" onClick={onSave} disabled={busy}>
-          {busy
+        <button className="btn" onClick={onSave} disabled={busy || aiBusy}>
+          {busy && !aiBusy
             ? 'Enregistrement…'
             : editing.submissionContext
             ? '✓ Enregistrer et publier (+10 pts)'
+            : editing.aiContext
+            ? '✓ Soumettre et enregistrer la question'
             : 'Enregistrer'}
         </button>
         {!q.reviewed && onSaveAndReview && (
-          <button className="btn btn-ghost" onClick={onSaveAndReview} disabled={busy}>
+          <button className="btn btn-ghost" onClick={onSaveAndReview} disabled={busy || aiBusy}>
             ✓ Enregistrer et valider la relecture
           </button>
         )}
-        <button className="btn btn-ghost" onClick={() => setPreview(true)}>Aperçu</button>
-        <button className="btn btn-ghost" onClick={onCancel} disabled={busy}>Annuler</button>
-        {onDelete && <button className="btn btn-ghost qa-danger" onClick={onDelete} disabled={busy}>Supprimer</button>}
+        {onRegenerateAi && (
+          <button className="btn btn-ghost" onClick={onRegenerateAi} disabled={busy || aiBusy}>
+            {aiBusy ? '✨ Génération en cours…' : '↻ Régénérer une autre question'}
+          </button>
+        )}
+        <button className="btn btn-ghost" onClick={() => setPreview(true)} disabled={busy || aiBusy}>Aperçu</button>
+        <button className="btn btn-ghost" onClick={onCancel} disabled={busy || aiBusy}>
+          {editing.aiContext ? '✕ Supprimer / Ignorer' : 'Annuler'}
+        </button>
+        {onDelete && <button className="btn btn-ghost qa-danger" onClick={onDelete} disabled={busy || aiBusy}>Supprimer</button>}
       </div>
     </div>
   );
