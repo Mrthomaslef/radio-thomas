@@ -15,7 +15,7 @@ const MAX_SIDE = 1400; // images are shrunk before sending: lighter pages, and w
 // Reads a picture, shrinks it, and returns { mime, data (base64), compactDataUrl } ready to upload.
 function prepareImage(file) {
   return new Promise((resolve, reject) => {
-    if (!/^image\/(png|jpeg|webp)$/.test(file.type)) {
+    if (file.type && !/^image\/(png|jpe?g|webp|gif|bmp|avif|heic|heif)$/i.test(file.type)) {
       reject(new Error('Format non pris en charge : utilisez une image PNG, JPEG ou WebP.'));
       return;
     }
@@ -33,16 +33,24 @@ function prepareImage(file) {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
 
-      // Also build a compact dataUrl (< 42 KB) as a fallback if quiz_images table is not migrated
-      const compactScale = Math.min(1, 720 / Math.max(img.width, img.height));
-      const c2 = document.createElement('canvas');
-      c2.width = Math.max(1, Math.round(img.width * compactScale));
-      c2.height = Math.max(1, Math.round(img.height * compactScale));
-      const ctx2 = c2.getContext('2d');
-      ctx2.fillStyle = '#fff';
-      ctx2.fillRect(0, 0, c2.width, c2.height);
-      ctx2.drawImage(img, 0, 0, c2.width, c2.height);
-      const compactDataUrl = c2.toDataURL('image/jpeg', 0.68);
+      // Build a compact dataUrl (<= 18 KB) so even multiple images in the same question fit under the 50 KB DB limit
+      let maxSide = 680;
+      let quality = 0.72;
+      let compactDataUrl = '';
+      for (let attempt = 0; attempt < 8; attempt++) {
+        const compactScale = Math.min(1, maxSide / Math.max(img.width, img.height));
+        const c2 = document.createElement('canvas');
+        c2.width = Math.max(1, Math.round(img.width * compactScale));
+        c2.height = Math.max(1, Math.round(img.height * compactScale));
+        const ctx2 = c2.getContext('2d');
+        ctx2.fillStyle = '#fff';
+        ctx2.fillRect(0, 0, c2.width, c2.height);
+        ctx2.drawImage(img, 0, 0, c2.width, c2.height);
+        compactDataUrl = c2.toDataURL('image/jpeg', quality);
+        if (compactDataUrl.length <= 18000) break;
+        maxSide = Math.max(200, Math.round(maxSide * 0.82));
+        quality = Math.max(0.38, quality - 0.07);
+      }
 
       resolve({
         mime: 'image/jpeg',
@@ -69,15 +77,23 @@ function ImagePicker({ password, label, onPicked, disabled }) {
     setBusy(true); setErr('');
     try {
       const { mime, data, compactDataUrl } = await prepareImage(file);
-      try {
-        const out = await call(password, { action: 'upload', mime, data });
-        onPicked({ upload: out.id });
-      } catch {
-        // Fallback to inline compactDataUrl if the quiz_images migration hasn't been applied yet
+      if (isReviewerPass(password)) {
         if (compactDataUrl && compactDataUrl.length <= 44000) {
           onPicked({ dataUrl: compactDataUrl });
         } else {
           throw new Error('Impossible d’enregistrer cette image.');
+        }
+      } else {
+        try {
+          const out = await call(password, { action: 'upload', mime, data });
+          onPicked({ upload: out.id });
+        } catch {
+          // Fallback to inline compactDataUrl if the quiz_images migration hasn't been applied yet
+          if (compactDataUrl && compactDataUrl.length <= 44000) {
+            onPicked({ dataUrl: compactDataUrl });
+          } else {
+            throw new Error('Impossible d’enregistrer cette image.');
+          }
         }
       }
     } catch (ex) {

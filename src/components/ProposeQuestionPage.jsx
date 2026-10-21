@@ -24,7 +24,7 @@ function prepareProposedImage(file) {
       let quality = 0.72;
       let dataUrl = '';
 
-      for (let attempt = 0; attempt < 4; attempt++) {
+      for (let attempt = 0; attempt < 8; attempt++) {
         const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
         const canvas = document.createElement('canvas');
         canvas.width = Math.max(1, Math.round(img.width * scale));
@@ -34,9 +34,9 @@ function prepareProposedImage(file) {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         dataUrl = canvas.toDataURL('image/jpeg', quality);
-        if (dataUrl.length <= 24000) break;
-        maxSide = Math.round(maxSide * 0.8);
-        quality = Math.max(0.5, quality - 0.1);
+        if (dataUrl.length <= 18000) break;
+        maxSide = Math.max(200, Math.round(maxSide * 0.82));
+        quality = Math.max(0.38, quality - 0.07);
       }
 
       if (dataUrl.length > 44000) {
