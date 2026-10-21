@@ -120,14 +120,26 @@ export function QuizPlayer({
   initialIdx = null,
 }) {
   const saved = useMemo(
-    () => (preview || randomMode ? { answers: {}, sent: false } : readChapterProgress(key)),
+    () => (preview || randomMode ? { answers: {}, sent: false, historyRecorded: false } : readChapterProgress(key)),
     [key, preview, randomMode]
   );
 
   const questions = useMemo(() => rawQuestions.map((q) => ({ ...q, shown: mixItems(q) })), [rawQuestions]);
 
+  // If the quiz was already completed before this page load, do not record another entry on reload.
+  const alreadyCompletedOnMount = useMemo(() => {
+    if (preview || randomMode) return false;
+    if (saved.sent || saved.historyRecorded) return true;
+    const savedAns = saved.answers || {};
+    return (
+      rawQuestions.length > 0 &&
+      rawQuestions.every((q) => Array.isArray(savedAns[q.id]) && savedAns[q.id].length > 0)
+    );
+  }, [preview, randomMode, saved, rawQuestions]);
+
   const [answers, setAnswers] = useState(saved.answers || {}); // qid -> picked item ids
-  const [sent, setSent] = useState(Boolean(saved.sent));
+  const [sent, setSent] = useState(Boolean(alreadyCompletedOnMount));
+  const [historyRecorded, setHistoryRecorded] = useState(Boolean(alreadyCompletedOnMount));
   const [picked, setPicked] = useState([]);
   const [showCorrection, setShowCorrection] = useState(false);
   const [zoom, setZoom] = useState(null);
@@ -137,7 +149,8 @@ export function QuizPlayer({
   const [reportStatus, setReportStatus] = useState('idle'); // idle | sending | sent
   const [reportError, setReportError] = useState('');
   const topRef = useRef(null);
-  const recordedHistoryRef = useRef(false);
+  const recordedHistoryRef = useRef(Boolean(alreadyCompletedOnMount));
+  const wasRestartedRef = useRef(false);
 
   const resetReportBox = () => {
     setReportOpen(false);
@@ -161,13 +174,19 @@ export function QuizPlayer({
     return subscribePlayer(() => {
       const latest = readChapterProgress(key);
       setAnswers((prev) => ({ ...(latest.answers || {}), ...prev }));
-      if (latest.sent) setSent(true);
+      if (latest.sent || latest.historyRecorded) {
+        setSent(true);
+        setHistoryRecorded(true);
+        recordedHistoryRef.current = true;
+      }
     });
   }, [key, preview, randomMode]);
 
   useEffect(() => {
-    if (!preview && !randomMode) writeChapterProgress(key, { answers, sent });
-  }, [key, preview, randomMode, answers, sent]);
+    if (!preview && !randomMode) {
+      writeChapterProgress(key, { answers, sent, historyRecorded });
+    }
+  }, [key, preview, randomMode, answers, sent, historyRecorded]);
 
   const q = questions[idx];
   const qKey = q?._chapterKey || key;
@@ -211,9 +230,6 @@ export function QuizPlayer({
     if (randomMode && !preview) {
       writeQuestionAnswer(qKey, q.id, null);
     }
-    setSent(false);
-    setSaveState('idle');
-    recordedHistoryRef.current = false;
     setPicked([]);
     setShowCorrection(false);
   };
@@ -237,6 +253,8 @@ export function QuizPlayer({
     }
     if (!preview && !randomMode) clearChapterProgress(key);
     recordedHistoryRef.current = false;
+    wasRestartedRef.current = true;
+    setHistoryRecorded(false);
     setAnswers({}); setSent(false); setPicked([]); setShowCorrection(false); setIdx(0); setSaveState('idle');
     resetReportBox();
   };
@@ -273,7 +291,11 @@ export function QuizPlayer({
     setSaveState('saving');
     if (!recordedHistoryRef.current) {
       recordedHistoryRef.current = true;
-      recordQuizAttempt({ quiz: randomMode ? 'quiz-aleatoire' : key, score, total }, name);
+      setHistoryRecorded(true);
+      recordQuizAttempt(
+        { quiz: randomMode ? 'quiz-aleatoire' : key, score, total, restarted: wasRestartedRef.current },
+        name
+      );
     }
     try {
       const r = await fetch('/api/attempts', {
@@ -286,17 +308,23 @@ export function QuizPlayer({
     } catch { setSaveState('error'); }
   };
   useEffect(() => {
-    if (answeredAll.length === total && !preview) {
+    if (answeredAll.length === total && total > 0 && !preview) {
       const name = readName();
-      const passed = total > 0 && score / total >= 0.6;
-      if (name && !recordedHistoryRef.current) {
+      if (name && !historyRecorded && !recordedHistoryRef.current) {
         recordedHistoryRef.current = true;
-        recordQuizAttempt({ quiz: randomMode ? 'quiz-aleatoire' : key, score, total }, name);
+        setHistoryRecorded(true);
+        if (!randomMode) {
+          writeChapterProgress(key, { answers, sent: true, historyRecorded: true });
+        }
+        recordQuizAttempt(
+          { quiz: randomMode ? 'quiz-aleatoire' : key, score, total, restarted: wasRestartedRef.current },
+          name
+        );
       }
       if (!sent && saveState === 'idle') sendResult();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [answeredAll.length]);
+  }, [answeredAll.length, total]);
 
   useEffect(() => {
     if (!zoom) return undefined;

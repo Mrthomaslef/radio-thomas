@@ -103,9 +103,14 @@ function schedulePush(name) {
 export function writeChapterProgress(chapterKey, data, name = readName()) {
   if (!name) return;
   const all = readRawMap(name);
+  const prev = all[chapterKey] || {};
   all[chapterKey] = {
     answers: data.answers || {},
     sent: Boolean(data.sent),
+    historyRecorded:
+      data.historyRecorded !== undefined
+        ? Boolean(data.historyRecorded)
+        : Boolean(data.sent || prev.historyRecorded),
   };
   writeRawMap(name, all);
   notify();
@@ -115,7 +120,7 @@ export function writeChapterProgress(chapterKey, data, name = readName()) {
 export function clearChapterProgress(chapterKey, name = readName()) {
   if (!name) return;
   const all = readRawMap(name);
-  all[chapterKey] = { answers: {}, sent: false };
+  all[chapterKey] = { answers: {}, sent: false, historyRecorded: false };
   writeRawMap(name, all);
   notify();
   schedulePush(name);
@@ -188,7 +193,7 @@ export function decodeAttemptKey(key) {
   };
 }
 
-export function recordQuizAttempt({ quiz, score, total, createdAt }, name = readName()) {
+export function recordQuizAttempt({ quiz, score, total, createdAt, restarted = false }, name = readName()) {
   if (!name) return;
   const normalizedQuiz =
     quiz === 'aleatoire' || quiz === 'quiz-aleatoire' ? 'quiz-aleatoire' : String(quiz || 'ch1');
@@ -208,6 +213,7 @@ export function recordQuizAttempt({ quiz, score, total, createdAt }, name = read
         score: s,
         total: t,
         passed: s / t >= 0.6,
+        ...(restarted ? { restarted: true } : {}),
       },
       ...existingList,
     ];
@@ -301,12 +307,35 @@ export function readQuizHistory(name = readName(), byChapter = null) {
     }
   }
 
-  return [...byId.values()].sort((a, b) => {
+  const sorted = [...byId.values()].sort((a, b) => {
     if (a.created_at && b.created_at) return b.created_at.localeCompare(a.created_at);
     if (a.created_at) return -1;
     if (b.created_at) return 1;
     return a.quiz.localeCompare(b.quiz);
   });
+
+  // Deduplicate accidental reload entries (same chapter quiz, same score & total within 30 min without restart)
+  const chronological = [...sorted].reverse();
+  const dedupedChrono = [];
+  const lastByQuiz = new Map();
+  for (const item of chronological) {
+    if (item.quiz && item.quiz !== 'quiz-aleatoire' && !item.restarted && item.created_at) {
+      const prev = lastByQuiz.get(item.quiz);
+      if (
+        prev &&
+        prev.score === item.score &&
+        prev.total === item.total &&
+        prev.created_at &&
+        Math.abs(new Date(item.created_at).getTime() - new Date(prev.created_at).getTime()) < 30 * 60 * 1000
+      ) {
+        continue;
+      }
+    }
+    dedupedChrono.push(item);
+    if (item.quiz) lastByQuiz.set(item.quiz, item);
+  }
+
+  return dedupedChrono.reverse();
 }
 
 export async function syncUsersHistoryFromAttempts(attempts) {
@@ -389,6 +418,9 @@ export async function syncProgressFromServer(name = readName()) {
       merged[ch] = {
         answers: mergedAnswers,
         sent: Boolean(remVal.sent || locVal.sent),
+        historyRecorded: Boolean(
+          remVal.historyRecorded || locVal.historyRecorded || remVal.sent || locVal.sent
+        ),
       };
     }
 
