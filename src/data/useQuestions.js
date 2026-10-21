@@ -156,30 +156,77 @@ function groupByChapter(rows) {
     localReviewerMap = {};
   }
 
+  const serverById = new Map(rows.map((r) => [r.id, r]));
   const byId = new Map(rows.map((r) => [r.id, r]));
+  let localMapUpgraded = false;
   for (const [id, revRow] of Object.entries(localReviewerMap)) {
     if (revRow && revRow.id && revRow.chapter && revRow.data) {
-      byId.set(id, revRow);
+      const srv = serverById.get(id);
+      const srvFigs = srv?.data?.correction_figures || [];
+      const locFigs = revRow?.data?.correction_figures || [];
+      const srvHasUploads =
+        Boolean(srv?.data?.enonce_image?.upload) || srvFigs.some((f) => f && f.upload);
+      const locHasDataUrls =
+        Boolean(revRow?.data?.enonce_image?.dataUrl) || locFigs.some((f) => f && f.dataUrl);
+      const srvIsNewer =
+        srv?.updated_at && (!revRow.updated_at || srv.updated_at >= revRow.updated_at);
+
+      if (rows !== bundledQuestions && srv && (srvIsNewer || (srvHasUploads && locHasDataUrls))) {
+        const upgradedData = {
+          ...revRow.data,
+          ...srv.data,
+          enonce_image: srv.data?.enonce_image?.upload
+            ? { ...srv.data.enonce_image, alt: revRow.data?.enonce_image?.alt || srv.data.enonce_image.alt || '' }
+            : srv.data?.enonce_image || revRow.data?.enonce_image || null,
+          correction_figures:
+            srvFigs.length > 0 && srvFigs.some((f) => f?.upload)
+              ? srvFigs.map((sf, idx) => ({
+                  ...sf,
+                  caption: locFigs[idx]?.caption || sf.caption || 'Figure',
+                }))
+              : srvFigs.length > 0
+              ? srvFigs
+              : locFigs,
+        };
+        const upgradedRow = { ...srv, data: upgradedData };
+        byId.set(id, upgradedRow);
+        localReviewerMap[id] = upgradedRow;
+        localMapUpgraded = true;
+      } else {
+        byId.set(id, revRow);
+      }
+    }
+  }
+  if (localMapUpgraded && typeof window !== 'undefined') {
+    try {
+      window.localStorage.setItem('quiz-cotten:reviewer-edits:v1', JSON.stringify(localReviewerMap));
+    } catch {
+      // ignore storage quota errors
     }
   }
 
   // Auto-sync any local reviewer edits or local 'reviewed' flags from this browser to the live database
   if (typeof window !== 'undefined' && rows !== bundledQuestions) {
-    const serverById = new Map(rows.map((r) => [r.id, r]));
     const toSync = [];
     for (const [id, revRow] of Object.entries(localReviewerMap)) {
       if (!revRow?.id || !revRow?.chapter || !revRow?.data) continue;
       const srv = serverById.get(id);
       const srvData = srv?.data;
       const locData = revRow.data;
+      const localIsNewer =
+        !srv?.updated_at || (revRow.updated_at && revRow.updated_at > srv.updated_at);
+      const hasUnpromotedDataUrl =
+        Boolean(locData.enonce_image?.dataUrl) ||
+        (locData.correction_figures || []).some((f) => f && f.dataUrl);
       if (
         !srvData ||
-        srvData.enonce !== locData.enonce ||
-        srvData.explication !== locData.explication ||
-        srvData.theme !== locData.theme ||
-        Boolean(srvData.reviewed) !== Boolean(locData.reviewed) ||
-        JSON.stringify(srvData.items) !== JSON.stringify(locData.items) ||
-        JSON.stringify(srvData.correction_figures) !== JSON.stringify(locData.correction_figures)
+        hasUnpromotedDataUrl ||
+        (localIsNewer &&
+          (srvData.enonce !== locData.enonce ||
+            srvData.explication !== locData.explication ||
+            srvData.theme !== locData.theme ||
+            Boolean(srvData.reviewed) !== Boolean(locData.reviewed) ||
+            JSON.stringify(srvData.items) !== JSON.stringify(locData.items)))
       ) {
         toSync.push(revRow);
       }
@@ -276,11 +323,13 @@ function groupByChapter(rows) {
 
 const fallback = () => groupByChapter(bundledQuestions);
 
-let cache = null; // one request per page load, shared by the home page and the quiz
+let cache = null; // shared by the home page and the quiz
+let lastFetchAt = 0;
 const listeners = new Set();
 
 function fetchLiveQuestions() {
-  return fetch(`/api/questions?t=${Date.now()}`, { cache: 'no-store' })
+  lastFetchAt = Date.now();
+  return fetch(`/api/questions?t=${lastFetchAt}`, { cache: 'no-store' })
     .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
     .then((json) => {
       if (!Array.isArray(json.questions) || json.questions.length === 0) throw new Error('empty');
@@ -305,11 +354,27 @@ export function useQuestions() {
 
   useEffect(() => {
     listeners.add(setState);
-    if (!cache) {
+    if (!cache || Date.now() - lastFetchAt > 3000) {
       fetchLiveQuestions();
+    }
+    const onRefresh = () => {
+      if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return;
+      if (Date.now() - lastFetchAt > 2000) {
+        fetchLiveQuestions();
+      }
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('focus', onRefresh);
+      window.addEventListener('hashchange', onRefresh);
+      document.addEventListener('visibilitychange', onRefresh);
     }
     return () => {
       listeners.delete(setState);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('focus', onRefresh);
+        window.removeEventListener('hashchange', onRefresh);
+        document.removeEventListener('visibilitychange', onRefresh);
+      }
     };
   }, []);
 

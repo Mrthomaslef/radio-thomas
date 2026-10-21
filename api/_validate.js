@@ -18,7 +18,7 @@ const validUpload = (u) => typeof u === 'string' && UPLOAD.test(u);
 
 // Compressed inline images (from contributor proposals or fallback when quiz_images table is not active).
 const DATA_URL = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/]+={0,2}$/;
-const validDataUrl = (d) => typeof d === 'string' && d.length >= 100 && d.length <= 45000 && DATA_URL.test(d);
+const validDataUrl = (d) => typeof d === 'string' && d.length >= 100 && d.length <= 2000000 && DATA_URL.test(d);
 
 // An image is either a bundled file ({file}), an upload ({upload}) or an inline dataUrl ({dataUrl}),
 // plus a text field (`alt` for statement/answer images, `caption` for correction figures).

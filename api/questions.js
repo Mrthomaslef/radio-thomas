@@ -15,35 +15,13 @@ export default async function handler(req, res) {
       apikey: SUPABASE_PUBLISHABLE_KEY,
       Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
     };
-    const [r, ovRes] = await Promise.all([
-      fetch(
-        `${SUPABASE_URL}/rest/v1/quiz_questions?select=id,chapter,position,data,updated_at&deleted_at=is.null&order=chapter.asc,position.asc&limit=2000`,
-        { headers }
-      ),
-      fetch(`${SUPABASE_URL}/rest/v1/rpc/get_quiz_progress`, {
-        method: 'POST',
-        headers: { ...headers, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ p_name: '__rev_questions__' }),
-      }).catch(() => null),
-    ]);
+    const r = await fetch(
+      `${SUPABASE_URL}/rest/v1/quiz_questions?select=id,chapter,position,data,updated_at&deleted_at=is.null&order=chapter.asc,position.asc&limit=2000`,
+      { headers }
+    );
     if (!r.ok) return res.status(502).json({ error: `Erreur base de données (${r.status})` });
     const baseQuestions = await r.json();
     const map = new Map(baseQuestions.map((q) => [q.id, q]));
-
-    if (ovRes && ovRes.ok) {
-      const ovData = await ovRes.json().catch(() => ({}));
-      const overlay = ovData?.progress;
-      if (overlay && typeof overlay === 'object' && !Array.isArray(overlay)) {
-        for (const [id, ov] of Object.entries(overlay)) {
-          if (ov && ov.id && ov.chapter && ov.data) {
-            const existing = map.get(id);
-            if (!existing || !existing.updated_at || (ov.updated_at && ov.updated_at >= existing.updated_at)) {
-              map.set(id, ov);
-            }
-          }
-        }
-      }
-    }
 
     const questions = [...map.values()]
       .filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99')
@@ -54,7 +32,7 @@ export default async function handler(req, res) {
         return q;
       });
     // Always serve fresh questions so edits made on a computer appear immediately on phones/tablets.
-    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
     return res.status(200).json({ questions });
   } catch {
     return res.status(502).json({ error: 'Base de données injoignable' });

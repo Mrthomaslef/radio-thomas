@@ -10,9 +10,18 @@ import {
   submitQuizReviewNotification,
 } from '../data/reports.js';
 
-const MAX_SIDE = 1400; // images are shrunk before sending: lighter pages, and well under the size limit
+const MAX_SIDE = 1800; // high-resolution cap for very large photos; screenshots <= 1.45 MB are kept 100% lossless
 
-// Reads a picture, shrinks it, and returns { mime, data (base64), compactDataUrl } ready to upload.
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ''));
+    reader.onerror = () => reject(new Error('Impossible de lire ce fichier image.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+// Reads a picture: keeps PNG/JPEG/WebP files <= 1.45 MB 100% lossless, or resizes larger files at 1800 px HD.
 function prepareImage(file) {
   return new Promise((resolve, reject) => {
     if (file.type && !/^image\/(png|jpe?g|webp|gif|bmp|avif|heic|heif)$/i.test(file.type)) {
@@ -21,42 +30,67 @@ function prepareImage(file) {
     }
     const url = URL.createObjectURL(file);
     const img = new Image();
-    img.onload = () => {
+    img.onload = async () => {
       URL.revokeObjectURL(url);
-      const scale = Math.min(1, MAX_SIDE / Math.max(img.width, img.height));
-      const canvas = document.createElement('canvas');
-      canvas.width = Math.max(1, Math.round(img.width * scale));
-      canvas.height = Math.max(1, Math.round(img.height * scale));
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#fff'; // transparent areas become white (JPEG has no transparency)
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.90);
+      try {
+        // Build a compact fallback dataUrl (<= 34 KB) only used if the server is unreachable
+        let maxSide = 960;
+        let quality = 0.82;
+        let compactDataUrl = '';
+        for (let attempt = 0; attempt < 8; attempt++) {
+          const compactScale = Math.min(1, maxSide / Math.max(img.width, img.height));
+          const c2 = document.createElement('canvas');
+          c2.width = Math.max(1, Math.round(img.width * compactScale));
+          c2.height = Math.max(1, Math.round(img.height * compactScale));
+          const ctx2 = c2.getContext('2d');
+          ctx2.fillStyle = '#fff';
+          ctx2.fillRect(0, 0, c2.width, c2.height);
+          ctx2.drawImage(img, 0, 0, c2.width, c2.height);
+          compactDataUrl = c2.toDataURL('image/jpeg', quality);
+          if (compactDataUrl.length <= 34000) break;
+          maxSide = Math.max(360, Math.round(maxSide * 0.85));
+          quality = Math.max(0.5, quality - 0.06);
+        }
 
-      // Build a high-quality fallback dataUrl (<= 34 KB) in case offline
-      let maxSide = 960;
-      let quality = 0.82;
-      let compactDataUrl = '';
-      for (let attempt = 0; attempt < 8; attempt++) {
-        const compactScale = Math.min(1, maxSide / Math.max(img.width, img.height));
-        const c2 = document.createElement('canvas');
-        c2.width = Math.max(1, Math.round(img.width * compactScale));
-        c2.height = Math.max(1, Math.round(img.height * compactScale));
-        const ctx2 = c2.getContext('2d');
-        ctx2.fillStyle = '#fff';
-        ctx2.fillRect(0, 0, c2.width, c2.height);
-        ctx2.drawImage(img, 0, 0, c2.width, c2.height);
-        compactDataUrl = c2.toDataURL('image/jpeg', quality);
-        if (compactDataUrl.length <= 34000) break;
-        maxSide = Math.max(360, Math.round(maxSide * 0.85));
-        quality = Math.max(0.5, quality - 0.06);
+        // If the original file is PNG/JPEG/WebP and <= 1.45 MB, keep the original lossless bytes!
+        const normMime =
+          file.type === 'image/jpg' ? 'image/jpeg' : file.type;
+        if (
+          (normMime === 'image/png' || normMime === 'image/jpeg' || normMime === 'image/webp') &&
+          file.size > 100 &&
+          file.size <= 1450000
+        ) {
+          const origDataUrl = await readFileAsDataUrl(file);
+          const commaIdx = origDataUrl.indexOf(',');
+          if (commaIdx > 0) {
+            resolve({
+              mime: normMime,
+              data: origDataUrl.slice(commaIdx + 1),
+              compactDataUrl,
+            });
+            return;
+          }
+        }
+
+        // Otherwise resize at 1800 px high-quality JPEG
+        const scale = Math.min(1, MAX_SIDE / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(img.width * scale));
+        canvas.height = Math.max(1, Math.round(img.height * scale));
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+
+        resolve({
+          mime: 'image/jpeg',
+          data: dataUrl.slice(dataUrl.indexOf(',') + 1),
+          compactDataUrl,
+        });
+      } catch (err) {
+        reject(err);
       }
-
-      resolve({
-        mime: 'image/jpeg',
-        data: dataUrl.slice(dataUrl.indexOf(',') + 1),
-        compactDataUrl,
-      });
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);
@@ -187,7 +221,10 @@ async function call(password, payload) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password, ...payload }),
         });
-        if (r.ok) return { ok: true };
+        if (r.ok) {
+          const out = await r.json().catch(() => ({}));
+          return { ok: true, ...out };
+        }
       } catch {
         // Fallback below
       }
@@ -493,7 +530,40 @@ export default function QuestionsAdmin({
       }
       for (const [id, localEd] of Object.entries(localEditsMap)) {
         if (localEd?.id && localEd?.data) {
-          byId.set(id, localEd);
+          const srv = serverById.get(id);
+          const srvFigs = srv?.data?.correction_figures || [];
+          const locFigs = localEd?.data?.correction_figures || [];
+          const srvHasUploads =
+            Boolean(srv?.data?.enonce_image?.upload) || srvFigs.some((f) => f && f.upload);
+          const locHasDataUrls =
+            Boolean(localEd?.data?.enonce_image?.dataUrl) || locFigs.some((f) => f && f.dataUrl);
+          const srvIsNewer =
+            srv?.updated_at && (!localEd.updated_at || srv.updated_at >= localEd.updated_at);
+
+          if (srv && (srvIsNewer || (srvHasUploads && locHasDataUrls))) {
+            // Upgrade local cache with the server's lossless { upload } images and latest data
+            const upgradedData = {
+              ...localEd.data,
+              ...srv.data,
+              enonce_image: srv.data?.enonce_image?.upload
+                ? { ...srv.data.enonce_image, alt: localEd.data?.enonce_image?.alt || srv.data.enonce_image.alt || '' }
+                : srv.data?.enonce_image || localEd.data?.enonce_image || null,
+              correction_figures:
+                srvFigs.length > 0 && srvFigs.some((f) => f?.upload)
+                  ? srvFigs.map((sf, idx) => ({
+                      ...sf,
+                      caption: locFigs[idx]?.caption || sf.caption || 'Figure',
+                    }))
+                  : srvFigs.length > 0
+                  ? srvFigs
+                  : locFigs,
+            };
+            const upgradedRow = { ...srv, data: upgradedData };
+            byId.set(id, upgradedRow);
+            writeLocalReviewerEdit(upgradedRow);
+          } else {
+            byId.set(id, localEd);
+          }
         }
       }
 
@@ -516,14 +586,22 @@ export default function QuestionsAdmin({
           byId.set(id, { ...row, data: mergedData });
         }
 
+        const localEd = localEditsMap[id];
+        const localIsNewer =
+          localEd && (!srv?.updated_at || (localEd.updated_at && localEd.updated_at > srv.updated_at));
+        const hasUnpromotedDataUrl =
+          Boolean(mergedData.enonce_image?.dataUrl) ||
+          (mergedData.correction_figures || []).some((f) => f && f.dataUrl);
+
         const isOutOfSync =
-          (localEditsMap[id] &&
+          (localEd &&
             (!srvData ||
-              srvData.enonce !== mergedData.enonce ||
-              srvData.explication !== mergedData.explication ||
-              srvData.theme !== mergedData.theme ||
-              JSON.stringify(srvData.items) !== JSON.stringify(mergedData.items) ||
-              JSON.stringify(srvData.correction_figures) !== JSON.stringify(mergedData.correction_figures))) ||
+              hasUnpromotedDataUrl ||
+              (localIsNewer &&
+                (srvData.enonce !== mergedData.enonce ||
+                  srvData.explication !== mergedData.explication ||
+                  srvData.theme !== mergedData.theme ||
+                  JSON.stringify(srvData.items) !== JSON.stringify(mergedData.items))))) ||
           (shouldBeReviewed && (!srvData?.reviewed || !srvData?.reviewed_by));
 
         if (isOutOfSync) {
@@ -533,7 +611,18 @@ export default function QuestionsAdmin({
             chapter: row.chapter,
             position: row.position || 0,
             question: mergedData,
-          }).catch(() => {});
+          })
+            .then((out) => {
+              if (out?.question) {
+                const promotedRow = {
+                  ...row,
+                  data: out.question,
+                  updated_at: new Date().toISOString(),
+                };
+                writeLocalReviewerEdit(promotedRow);
+              }
+            })
+            .catch(() => {});
         }
       }
 
@@ -989,13 +1078,24 @@ export default function QuestionsAdmin({
     }
 
     try {
-      await call(password, {
+      const saveOut = await call(password, {
         action: 'save',
         id: finalId,
         chapter: currentEditing.chapter,
         position: currentEditing.position,
         question: nextQ,
       });
+      if (saveOut?.question) {
+        const promotedRow = {
+          ...savedRow,
+          data: saveOut.question,
+          updated_at: new Date().toISOString(),
+        };
+        writeLocalReviewerEdit(promotedRow);
+        setRows((prev) =>
+          (prev || []).map((r) => (r.id === finalId ? promotedRow : r))
+        );
+      }
       if (currentEditing.reportContext && onResolveReport) {
         await onResolveReport(currentEditing.reportContext);
       }
@@ -1715,6 +1815,18 @@ function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndRev
               <small>{f.upload || f.dataUrl ? 'Image envoyée' : f.file}</small>
               <textarea className="admin-input" rows={3} value={f.caption} maxLength={1200} onChange={(e) => setFigure(i, { caption: e.target.value })} />
               <div className="qa-fig-actions">
+                <ImagePicker
+                  password={password}
+                  label="Remplacer l’image"
+                  disabled={busy}
+                  onPicked={(picked) =>
+                    setFigure(i, {
+                      upload: picked.upload,
+                      dataUrl: picked.dataUrl,
+                      file: undefined,
+                    })
+                  }
+                />
                 <button className="link-btn" onClick={() => moveFigure(i, -1)} disabled={i === 0}>↑ Monter</button>
                 <button className="link-btn" onClick={() => moveFigure(i, 1)} disabled={i === q.correction_figures.length - 1}>↓ Descendre</button>
                 <button className="link-btn" onClick={() => set({ correction_figures: q.correction_figures.filter((_, k) => k !== i) })}>Retirer</button>
@@ -1724,7 +1836,7 @@ function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndRev
         ))}
         <ImagePicker password={password} label="+ Ajouter une image à la correction" disabled={busy || q.correction_figures.length >= 6}
           onPicked={(picked) => set({ correction_figures: [...q.correction_figures, { ...picked, caption: '' }] })} />
-        <p className="privacy">Les images sont réduites automatiquement (1 400 px maximum) avant l’envoi. N’envoyez que des images que vous avez le droit de publier.</p>
+        <p className="privacy">Les captures d’écran (PNG/JPEG jusqu’à 1,45 Mo) sont conservées dans leur qualité originale sans perte. N’envoyez que des images que vous avez le droit de publier.</p>
       </fieldset>
 
       <fieldset className="qa-items">

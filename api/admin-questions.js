@@ -31,27 +31,84 @@ async function rpc(name, args) {
   return r.json();
 }
 
-async function fetchReviewerOverlay() {
-  try {
-    const out = await rpc('get_quiz_progress', { p_name: '__rev_questions__' });
-    if (out?.progress && typeof out.progress === 'object' && !Array.isArray(out.progress)) {
-      return out.progress;
-    }
-  } catch {
-    // quiz_progress table/function may not be applied yet
-  }
-  return {};
-}
+async function promoteInlineImagesToTable(questionId, rawQuestion, adminPw) {
+  if (!rawQuestion || typeof rawQuestion !== 'object' || !adminPw) return rawQuestion;
+  const hasEnonceDataUrl = typeof rawQuestion.enonce_image?.dataUrl === 'string';
+  const figs = Array.isArray(rawQuestion.correction_figures) ? rawQuestion.correction_figures : [];
+  const hasFigDataUrl = figs.some((f) => typeof f?.dataUrl === 'string');
+  if (!hasEnonceDataUrl && !hasFigDataUrl) return rawQuestion;
 
-async function saveReviewerOverlay(id, rowObj) {
-  try {
-    await rpc('save_quiz_progress', {
-      p_name: '__rev_questions__',
-      p_progress: { [id]: rowObj },
-    });
-  } catch {
-    // Ignore if quiz_progress is not applied
+  const { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } = process.env;
+  let existingData = null;
+  if (questionId && SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY) {
+    try {
+      const r = await fetch(
+        `${SUPABASE_URL}/rest/v1/quiz_questions?id=eq.${encodeURIComponent(questionId)}&select=data&limit=1`,
+        {
+          headers: {
+            apikey: SUPABASE_PUBLISHABLE_KEY,
+            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+          },
+        }
+      );
+      if (r.ok) {
+        const rows = await r.json();
+        existingData = rows?.[0]?.data || null;
+      }
+    } catch {
+      // Ignore fetch error
+    }
   }
+
+  const convertOne = async (imgObj, existingImgObj, textKey) => {
+    if (!imgObj || typeof imgObj !== 'object' || typeof imgObj.dataUrl !== 'string') return imgObj;
+    // If the database already holds a lossless uploaded image for this slot, keep its upload ID and update the caption/alt
+    if (existingImgObj?.upload && /^[a-f0-9]{32}$/.test(existingImgObj.upload)) {
+      return {
+        upload: existingImgObj.upload,
+        [textKey]: imgObj[textKey] || existingImgObj[textKey] || '',
+      };
+    }
+    const m = imgObj.dataUrl.match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/]+=*)$/);
+    if (!m) return imgObj;
+    const [, mime, b64] = m;
+    if (b64.length < 100 || b64.length > 2000000) return imgObj;
+    try {
+      const imgId = randomUUID().replace(/-/g, '');
+      const out = await rpc('admin_upload_image', {
+        p_password: adminPw,
+        p_id: imgId,
+        p_mime: mime,
+        p_b64: b64,
+      });
+      if (out?.status === 'ok') {
+        return {
+          upload: out.id || imgId,
+          [textKey]: imgObj[textKey] ?? '',
+        };
+      }
+    } catch {
+      // Keep original imgObj if upload fails
+    }
+    return imgObj;
+  };
+
+  const nextQuestion = { ...rawQuestion };
+  if (hasEnonceDataUrl) {
+    nextQuestion.enonce_image = await convertOne(
+      rawQuestion.enonce_image,
+      existingData?.enonce_image,
+      'alt'
+    );
+  }
+  if (hasFigDataUrl) {
+    const existingFigs = Array.isArray(existingData?.correction_figures) ? existingData.correction_figures : [];
+    const sameLength = existingFigs.length === figs.length;
+    nextQuestion.correction_figures = await Promise.all(
+      figs.map((f, idx) => convertOne(f, sameLength ? existingFigs[idx] : null, 'caption'))
+    );
+  }
+  return nextQuestion;
 }
 
 async function recordAttemptChunks(slugPrefix, chapter, payloadObj) {
@@ -170,29 +227,20 @@ export default async function handler(req, res) {
     switch (body.action) {
       case 'list': {
         try {
-          const [r, overlay] = await Promise.all([
-            fetch(
-              `${SUPABASE_URL}/rest/v1/quiz_questions?select=id,chapter,position,data,updated_at,deleted_at&deleted_at=is.null&order=chapter.asc,position.asc&limit=2000`,
-              {
-                headers: {
-                  apikey: SUPABASE_PUBLISHABLE_KEY,
-                  Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-                },
-              }
-            ),
-            fetchReviewerOverlay(),
-          ]);
+          const r = await fetch(
+            `${SUPABASE_URL}/rest/v1/quiz_questions?select=id,chapter,position,data,updated_at,deleted_at&deleted_at=is.null&order=chapter.asc,position.asc&limit=2000`,
+            {
+              headers: {
+                apikey: SUPABASE_PUBLISHABLE_KEY,
+                Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+              },
+            }
+          );
           if (!r.ok) return res.status(502).json({ error: `Erreur base de données (${r.status})` });
           const baseQuestions = await r.json();
-          const map = new Map(baseQuestions.map((q) => [q.id, q]));
-          for (const [id, ov] of Object.entries(overlay || {})) {
-            if (ov && ov.id && ov.chapter && ov.data) {
-              map.set(id, ov);
-            }
-          }
           return res.status(200).json({
             status: 'ok',
-            questions: [...map.values()].filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99'),
+            questions: baseQuestions.filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99'),
           });
         } catch {
           return res.status(502).json({ error: 'Base de données injoignable' });
@@ -204,11 +252,13 @@ export default async function handler(req, res) {
         }
         const position = Number.isInteger(body.position) ? body.position : 0;
         if (position < 0 || position > 100000) return res.status(400).json({ error: 'Position invalide' });
-        const { data, error } = validateQuestion(body.question);
+
+        const adminPw = await resolveAdminPasswordForReviewer(process.env);
+        const promotedQuestion = await promoteInlineImagesToTable(body.id, body.question, adminPw);
+        const { data, error } = validateQuestion(promotedQuestion);
         if (error) return res.status(400).json({ error });
 
         // Save directly into public.quiz_questions so all devices (phones, tablets, computers) see the edit immediately
-        const adminPw = await resolveAdminPasswordForReviewer(process.env);
         if (adminPw) {
           try {
             await rpc('admin_save_question', {
@@ -222,7 +272,7 @@ export default async function handler(req, res) {
             // Fallback below
           }
         }
-        return res.status(200).json({ status: 'ok' });
+        return res.status(200).json({ status: 'ok', question: data });
       }
       case 'import':
         return res.status(200).json({ status: 'ok', imported: 0 });
@@ -281,7 +331,8 @@ export default async function handler(req, res) {
       }
       const position = Number.isInteger(body.position) ? body.position : 0;
       if (position < 0 || position > 100000) return res.status(400).json({ error: 'Position invalide' });
-      const { data, error } = validateQuestion(body.question);
+      const promotedQuestion = await promoteInlineImagesToTable(body.id, body.question, password);
+      const { data, error } = validateQuestion(promotedQuestion);
       if (error) return res.status(400).json({ error });
       fn = 'admin_save_question';
       args = { p_password: password, p_id: body.id, p_chapter: body.chapter, p_position: position, p_data: data };
@@ -341,26 +392,9 @@ export default async function handler(req, res) {
     if (out.status !== 'ok') return res.status(400).json({ error: 'Requête refusée' });
 
     if (body.action === 'save' && args.p_data) {
-      await saveReviewerOverlay(args.p_id, {
-        id: args.p_id,
-        chapter: args.p_chapter,
-        position: args.p_position,
-        data: args.p_data,
-        updated_at: new Date().toISOString(),
-        deleted_at: null,
-      });
+      out.question = args.p_data;
     } else if (body.action === 'list' && Array.isArray(out.questions)) {
-      const overlay = await fetchReviewerOverlay();
-      const map = new Map(out.questions.map((q) => [q.id, q]));
-      for (const [id, ov] of Object.entries(overlay || {})) {
-        if (ov && ov.id && ov.chapter && ov.data) {
-          const existing = map.get(id);
-          if (!existing || !existing.updated_at || (ov.updated_at && ov.updated_at >= existing.updated_at)) {
-            map.set(id, ov);
-          }
-        }
-      }
-      out.questions = [...map.values()].filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99');
+      out.questions = out.questions.filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99');
     }
 
     return res.status(200).json(out);
