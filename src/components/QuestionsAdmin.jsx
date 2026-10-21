@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { QuizPlayer } from './ChapterQuiz.jsx';
-import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, bundledById, resetQuestionsCache, imageSrc, resolveDifficulty } from '../data/useQuestions.js';
+import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, bundledById, resetQuestionsCache, imageSrc, resolveDifficulty, mergeLocalAndServerRow } from '../data/useQuestions.js';
 import { themes } from '../data/themes.js';
 import {
   REVIEWERS,
@@ -528,41 +528,17 @@ export default function QuestionsAdmin({
           }
         }
       }
+      const idsToSync = new Set();
       for (const [id, localEd] of Object.entries(localEditsMap)) {
         if (localEd?.id && localEd?.data) {
           const srv = serverById.get(id);
-          const srvFigs = srv?.data?.correction_figures || [];
-          const locFigs = localEd?.data?.correction_figures || [];
-          const srvHasUploads =
-            Boolean(srv?.data?.enonce_image?.upload) || srvFigs.some((f) => f && f.upload);
-          const locHasDataUrls =
-            Boolean(localEd?.data?.enonce_image?.dataUrl) || locFigs.some((f) => f && f.dataUrl);
-          const srvIsNewer =
-            srv?.updated_at && (!localEd.updated_at || srv.updated_at >= localEd.updated_at);
-
-          if (srv && (srvIsNewer || (srvHasUploads && locHasDataUrls))) {
-            // Upgrade local cache with the server's lossless { upload } images and latest data
-            const upgradedData = {
-              ...localEd.data,
-              ...srv.data,
-              enonce_image: srv.data?.enonce_image?.upload
-                ? { ...srv.data.enonce_image, alt: localEd.data?.enonce_image?.alt || srv.data.enonce_image.alt || '' }
-                : srv.data?.enonce_image || localEd.data?.enonce_image || null,
-              correction_figures:
-                srvFigs.length > 0 && srvFigs.some((f) => f?.upload)
-                  ? srvFigs.map((sf, idx) => ({
-                      ...sf,
-                      caption: locFigs[idx]?.caption || sf.caption || 'Figure',
-                    }))
-                  : srvFigs.length > 0
-                  ? srvFigs
-                  : locFigs,
-            };
-            const upgradedRow = { ...srv, data: upgradedData };
-            byId.set(id, upgradedRow);
-            writeLocalReviewerEdit(upgradedRow);
-          } else {
-            byId.set(id, localEd);
+          const { row: mergedRow, changedLocal, shouldSyncToServer } = mergeLocalAndServerRow(id, localEd, srv);
+          byId.set(id, mergedRow);
+          if (changedLocal) {
+            writeLocalReviewerEdit(mergedRow);
+          }
+          if (shouldSyncToServer) {
+            idsToSync.add(id);
           }
         }
       }
@@ -586,22 +562,8 @@ export default function QuestionsAdmin({
           byId.set(id, { ...row, data: mergedData });
         }
 
-        const localEd = localEditsMap[id];
-        const localIsNewer =
-          localEd && (!srv?.updated_at || (localEd.updated_at && localEd.updated_at > srv.updated_at));
-        const hasUnpromotedDataUrl =
-          Boolean(mergedData.enonce_image?.dataUrl) ||
-          (mergedData.correction_figures || []).some((f) => f && f.dataUrl);
-
         const isOutOfSync =
-          (localEd &&
-            (!srvData ||
-              hasUnpromotedDataUrl ||
-              (localIsNewer &&
-                (srvData.enonce !== mergedData.enonce ||
-                  srvData.explication !== mergedData.explication ||
-                  srvData.theme !== mergedData.theme ||
-                  JSON.stringify(srvData.items) !== JSON.stringify(mergedData.items))))) ||
+          idsToSync.has(id) ||
           (shouldBeReviewed && (!srvData?.reviewed || !srvData?.reviewed_by));
 
         if (isOutOfSync) {

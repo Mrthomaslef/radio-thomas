@@ -143,6 +143,115 @@ function readLocallyAcceptedRows() {
   }
 }
 
+export function mergeLocalAndServerRow(id, locRow, srvRow) {
+  if (!locRow?.data) return { row: srvRow, changedLocal: false, shouldSyncToServer: false };
+  if (!srvRow?.data) return { row: locRow, changedLocal: false, shouldSyncToServer: true };
+
+  const loc = locRow.data;
+  const srv = srvRow.data;
+  const bundled = bundledById.get(id);
+
+  const isDiffFromBundled = (d) =>
+    !bundled ||
+    d.type !== bundled.type ||
+    resolveDifficulty(id, d.difficulty) !== resolveDifficulty(id, bundled.difficulty) ||
+    d.enonce !== bundled.enonce ||
+    d.theme !== bundled.theme ||
+    JSON.stringify(d.items) !== JSON.stringify(bundled.items) ||
+    cleanExplication(d.explication) !== cleanExplication(bundled.explication);
+
+  const locDiffers = isDiffFromBundled(loc);
+  const srvDiffers = isDiffFromBundled(srv);
+
+  // Local browser edits always win when they contain customizations compared to the bundled question
+  const preferLocalText =
+    locDiffers ||
+    !srvDiffers ||
+    (locRow.updated_at && (!srvRow.updated_at || locRow.updated_at >= srvRow.updated_at));
+
+  const baseText = preferLocalText ? loc : srv;
+
+  // Upgrade any inline dataUrl images to lossless server { upload } IDs while keeping local captions/order
+  const srvEnonceImg = srv.enonce_image;
+  const locEnonceImg = loc.enonce_image;
+  let mergedEnonceImg = preferLocalText ? locEnonceImg ?? srvEnonceImg ?? null : srvEnonceImg ?? locEnonceImg ?? null;
+  if (mergedEnonceImg?.dataUrl && srvEnonceImg?.upload) {
+    mergedEnonceImg = {
+      upload: srvEnonceImg.upload,
+      alt: locEnonceImg?.alt || srvEnonceImg.alt || '',
+    };
+  }
+
+  const srvFigs = Array.isArray(srv.correction_figures) ? srv.correction_figures : [];
+  const locFigs = Array.isArray(loc.correction_figures) ? loc.correction_figures : [];
+  const locHasCustomFigs =
+    locFigs.some((f) => f?.dataUrl || f?.upload) ||
+    (bundled && JSON.stringify(locFigs) !== JSON.stringify(bundled.correction_figures || []));
+
+  const rawFigs = locHasCustomFigs ? locFigs : srvFigs.length > 0 ? srvFigs : locFigs;
+  const mergedFigs = rawFigs.map((f, idx) => {
+    if (f?.dataUrl && srvFigs[idx]?.upload) {
+      return {
+        upload: srvFigs[idx].upload,
+        caption: f.caption || srvFigs[idx].caption || 'Figure',
+      };
+    }
+    return f;
+  });
+
+  const mergedData = {
+    ...srv,
+    ...baseText,
+    reviewed: Boolean(loc.reviewed || srv.reviewed),
+    reviewed_by: loc.reviewed_by || srv.reviewed_by || (loc.reviewed || srv.reviewed ? 'Thomas L.' : null),
+    enonce_image: mergedEnonceImg,
+    correction_figures: mergedFigs,
+  };
+
+  const srvFigsNorm = srvFigs.map((f) => ({
+    upload: f?.upload || null,
+    file: f?.file || null,
+    caption: f?.caption || '',
+  }));
+  const mergedFigsNorm = mergedFigs.map((f) => ({
+    upload: f?.upload || null,
+    file: f?.file || null,
+    caption: f?.caption || '',
+  }));
+
+  const shouldSyncToServer =
+    mergedData.type !== srv.type ||
+    resolveDifficulty(id, mergedData.difficulty) !== resolveDifficulty(id, srv.difficulty) ||
+    mergedData.enonce !== srv.enonce ||
+    mergedData.explication !== srv.explication ||
+    mergedData.theme !== srv.theme ||
+    Boolean(mergedData.reviewed) !== Boolean(srv.reviewed) ||
+    (mergedData.reviewed_by || null) !== (srv.reviewed_by || null) ||
+    JSON.stringify(mergedData.items) !== JSON.stringify(srv.items) ||
+    Boolean(mergedData.enonce_image?.dataUrl) ||
+    (mergedData.enonce_image?.upload || null) !== (srv.enonce_image?.upload || null) ||
+    mergedFigs.some((f) => Boolean(f?.dataUrl)) ||
+    JSON.stringify(mergedFigsNorm) !== JSON.stringify(srvFigsNorm);
+
+  const hadDataUrlUpgraded =
+    (Boolean(locEnonceImg?.dataUrl) && Boolean(mergedEnonceImg?.upload)) ||
+    locFigs.some((f, idx) => Boolean(f?.dataUrl) && Boolean(mergedFigs[idx]?.upload));
+
+  const mergedRow = {
+    ...srvRow,
+    ...locRow,
+    chapter: locRow.chapter || srvRow.chapter,
+    position: Number.isInteger(locRow.position) ? locRow.position : srvRow.position || 0,
+    data: mergedData,
+  };
+
+  return {
+    row: mergedRow,
+    changedLocal: hadDataUrlUpgraded || (!preferLocalText && srvDiffers),
+    shouldSyncToServer,
+  };
+}
+
 // Group database rows by chapter; keeps only known chapters and includes any new bundled questions not yet in DB.
 function groupByChapter(rows) {
   let localReviewerMap = {};
@@ -158,42 +267,24 @@ function groupByChapter(rows) {
 
   const serverById = new Map(rows.map((r) => [r.id, r]));
   const byId = new Map(rows.map((r) => [r.id, r]));
+  const toSync = [];
   let localMapUpgraded = false;
+
   for (const [id, revRow] of Object.entries(localReviewerMap)) {
     if (revRow && revRow.id && revRow.chapter && revRow.data) {
-      const srv = serverById.get(id);
-      const srvFigs = srv?.data?.correction_figures || [];
-      const locFigs = revRow?.data?.correction_figures || [];
-      const srvHasUploads =
-        Boolean(srv?.data?.enonce_image?.upload) || srvFigs.some((f) => f && f.upload);
-      const locHasDataUrls =
-        Boolean(revRow?.data?.enonce_image?.dataUrl) || locFigs.some((f) => f && f.dataUrl);
-      const srvIsNewer =
-        srv?.updated_at && (!revRow.updated_at || srv.updated_at >= revRow.updated_at);
-
-      if (rows !== bundledQuestions && srv && (srvIsNewer || (srvHasUploads && locHasDataUrls))) {
-        const upgradedData = {
-          ...revRow.data,
-          ...srv.data,
-          enonce_image: srv.data?.enonce_image?.upload
-            ? { ...srv.data.enonce_image, alt: revRow.data?.enonce_image?.alt || srv.data.enonce_image.alt || '' }
-            : srv.data?.enonce_image || revRow.data?.enonce_image || null,
-          correction_figures:
-            srvFigs.length > 0 && srvFigs.some((f) => f?.upload)
-              ? srvFigs.map((sf, idx) => ({
-                  ...sf,
-                  caption: locFigs[idx]?.caption || sf.caption || 'Figure',
-                }))
-              : srvFigs.length > 0
-              ? srvFigs
-              : locFigs,
-        };
-        const upgradedRow = { ...srv, data: upgradedData };
-        byId.set(id, upgradedRow);
-        localReviewerMap[id] = upgradedRow;
-        localMapUpgraded = true;
-      } else {
+      if (rows === bundledQuestions) {
         byId.set(id, revRow);
+        continue;
+      }
+      const srv = serverById.get(id);
+      const { row: mergedRow, changedLocal, shouldSyncToServer } = mergeLocalAndServerRow(id, revRow, srv);
+      byId.set(id, mergedRow);
+      if (changedLocal) {
+        localReviewerMap[id] = mergedRow;
+        localMapUpgraded = true;
+      }
+      if (shouldSyncToServer) {
+        toSync.push(mergedRow);
       }
     }
   }
@@ -207,30 +298,6 @@ function groupByChapter(rows) {
 
   // Auto-sync any local reviewer edits or local 'reviewed' flags from this browser to the live database
   if (typeof window !== 'undefined' && rows !== bundledQuestions) {
-    const toSync = [];
-    for (const [id, revRow] of Object.entries(localReviewerMap)) {
-      if (!revRow?.id || !revRow?.chapter || !revRow?.data) continue;
-      const srv = serverById.get(id);
-      const srvData = srv?.data;
-      const locData = revRow.data;
-      const localIsNewer =
-        !srv?.updated_at || (revRow.updated_at && revRow.updated_at > srv.updated_at);
-      const hasUnpromotedDataUrl =
-        Boolean(locData.enonce_image?.dataUrl) ||
-        (locData.correction_figures || []).some((f) => f && f.dataUrl);
-      if (
-        !srvData ||
-        hasUnpromotedDataUrl ||
-        (localIsNewer &&
-          (srvData.enonce !== locData.enonce ||
-            srvData.explication !== locData.explication ||
-            srvData.theme !== locData.theme ||
-            Boolean(srvData.reviewed) !== Boolean(locData.reviewed) ||
-            JSON.stringify(srvData.items) !== JSON.stringify(locData.items)))
-      ) {
-        toSync.push(revRow);
-      }
-    }
     for (const [id, isRev] of Object.entries(localReviewed)) {
       if (!isRev || localReviewerMap[id]) continue;
       const srv = serverById.get(id) || bundledQuestions.find((b) => b.id === id);
@@ -261,9 +328,28 @@ function groupByChapter(rows) {
               position: item.position || 0,
               question: item.data,
             }),
-          }).catch(() => {});
+          })
+            .then((r) => (r.ok ? r.json() : null))
+            .then((out) => {
+              if (out?.question) {
+                try {
+                  const currMap = JSON.parse(localStorage.getItem('quiz-cotten:reviewer-edits:v1') || '{}') || {};
+                  if (currMap[item.id]) {
+                    currMap[item.id] = {
+                      ...currMap[item.id],
+                      data: out.question,
+                      updated_at: new Date().toISOString(),
+                    };
+                    localStorage.setItem('quiz-cotten:reviewer-edits:v1', JSON.stringify(currMap));
+                  }
+                } catch {
+                  // ignore storage errors
+                }
+              }
+            })
+            .catch(() => {});
         }
-      }, 200);
+      }, 100);
     }
   }
   const merged = [];

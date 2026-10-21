@@ -103,9 +103,8 @@ async function promoteInlineImagesToTable(questionId, rawQuestion, adminPw) {
   }
   if (hasFigDataUrl) {
     const existingFigs = Array.isArray(existingData?.correction_figures) ? existingData.correction_figures : [];
-    const sameLength = existingFigs.length === figs.length;
     nextQuestion.correction_figures = await Promise.all(
-      figs.map((f, idx) => convertOne(f, sameLength ? existingFigs[idx] : null, 'caption'))
+      figs.map((f, idx) => convertOne(f, existingFigs[idx] || null, 'caption'))
     );
   }
   return nextQuestion;
