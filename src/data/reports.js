@@ -529,24 +529,28 @@ export async function submitReviewerQuestionEdit({ id, chapter, position, questi
   }
   if (chunks.length > 800) return false;
 
+  const tasks = [];
   for (let p = 0; p * 100 < chunks.length; p++) {
     const partChunks = chunks.slice(p * 100, (p + 1) * 100);
     const courseSlug = p === 0 ? editSlug : `${editSlug}-p${p}`;
     for (let idx = 0; idx < partChunks.length; idx++) {
-      await fetch('/api/attempts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: partChunks[idx],
-          course: courseSlug,
-          quiz: id,
-          score: idx,
-          total: partChunks.length,
-          passed: false,
-        }),
-      }).catch(() => {});
+      tasks.push(
+        fetch('/api/attempts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: partChunks[idx],
+            course: courseSlug,
+            quiz: id,
+            score: idx,
+            total: partChunks.length,
+            passed: false,
+          }),
+        }).catch(() => {})
+      );
     }
   }
+  await Promise.all(tasks);
   return true;
 }
 
@@ -583,20 +587,22 @@ export async function submitQuizReviewNotification({ chapter, reviewer, count, t
   for (let i = 0; i < b64.length; i += 76) {
     chunks.push(b64.slice(i, i + 76));
   }
-  for (let idx = 0; idx < chunks.length; idx++) {
-    await fetch('/api/attempts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: chunks[idx],
-        course: notifSlug,
-        quiz: chapter || 'ch1',
-        score: idx,
-        total: chunks.length,
-        passed: false,
-      }),
-    }).catch(() => {});
-  }
+  await Promise.all(
+    chunks.map((chunk, idx) =>
+      fetch('/api/attempts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: chunk,
+          course: notifSlug,
+          quiz: chapter || 'ch1',
+          score: idx,
+          total: chunks.length,
+          passed: false,
+        }),
+      }).catch(() => {})
+    )
+  );
   return true;
 }
 

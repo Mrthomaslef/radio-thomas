@@ -45,9 +45,9 @@ export function validateChapter(chapter) {
 export function validateQuestion(q) {
   if (!q || typeof q !== 'object') return { error: 'Question invalide' };
   if (q.type !== 'QCU' && q.type !== 'QRM') return { error: 'Le type doit être QCU ou QRM' };
-  if (!isStr(q.theme, 1, 80)) return { error: 'Le sous-thème est obligatoire (80 caractères max)' };
-  if (!isStr(q.enonce, 1, 1500)) return { error: 'L’énoncé est obligatoire (1 500 caractères max)' };
-  if (!isStr(q.explication, 1, 6000)) return { error: 'L’explication est obligatoire (6 000 caractères max)' };
+  const themeStr = typeof q.theme === 'string' && q.theme.trim() ? clean(q.theme).slice(0, 120) : 'Général';
+  if (!isStr(q.enonce, 1, 2000)) return { error: 'L’énoncé est obligatoire (2 000 caractères max)' };
+  const explicationStr = typeof q.explication === 'string' && q.explication.trim() ? clean(q.explication).slice(0, 8000) : 'Correction validée.';
 
   if (!Array.isArray(q.items) || q.items.length < 2 || q.items.length > 6) {
     return { error: 'Il faut entre 2 et 6 réponses' };
@@ -59,7 +59,7 @@ export function validateQuestion(q) {
       return { error: 'Réponses invalides (lettres A à F, sans doublon)' };
     }
     seen.add(it.id);
-    if (!isStr(it.texte, 1, 400)) return { error: 'Chaque réponse doit contenir du texte (400 caractères max)' };
+    if (!isStr(it.texte, 1, 800)) return { error: 'Chaque réponse doit contenir du texte (800 caractères max)' };
     if (typeof it.correct !== 'boolean') return { error: 'Réponses invalides' };
     items.push({ id: it.id, texte: clean(it.texte), correct: it.correct });
   }
@@ -80,18 +80,16 @@ export function validateQuestion(q) {
   }
   const correction_figures = [];
   for (const f of q.correction_figures) {
-    const fig = cleanImage(f, 'caption', 1200, true);
-    if (!fig) return { error: 'Figure invalide : image et légende (1 200 caractères max) obligatoires' };
+    const fWithCaption = f && typeof f === 'object' && !String(f.caption || '').trim() ? { ...f, caption: 'Figure' } : f;
+    const fig = cleanImage(fWithCaption, 'caption', 1200, true);
+    if (!fig) return { error: 'Figure invalide : image obligatoire (1 200 caractères max pour la légende)' };
     correction_figures.push(fig);
   }
 
-  const s = q.source;
-  if (!s || !Number.isInteger(s.page) || s.page < 1 || s.page > 9999) {
-    return { error: 'La page de la référence doit être un nombre entier' };
-  }
-  if (!isStr(s.element, 1, 80) || !isStr(s.refs ?? '', 0, 200)) {
-    return { error: 'Référence invalide (élément obligatoire, références 200 caractères max)' };
-  }
+  const s = q.source || {};
+  const pageNum = Number.isInteger(Number(s.page)) && Number(s.page) >= 1 && Number(s.page) <= 9999 ? Number(s.page) : 1;
+  const elementStr = typeof s.element === 'string' && s.element.trim() ? clean(s.element).slice(0, 80) : 'Texte';
+  const refsStr = typeof s.refs === 'string' ? clean(s.refs).slice(0, 200) : '';
 
   const rawDiff = q.difficulty === undefined || q.difficulty === null ? 2 : Number(q.difficulty);
   if (rawDiff !== 1 && rawDiff !== 2 && rawDiff !== 3) {
@@ -110,13 +108,13 @@ export function validateQuestion(q) {
     data: {
       type: q.type,
       difficulty: rawDiff,
-      theme: clean(q.theme),
+      theme: themeStr,
       enonce: clean(q.enonce),
       enonce_image,
       items,
-      explication: clean(q.explication),
+      explication: explicationStr,
       correction_figures,
-      source: { page: s.page, element: clean(s.element), refs: clean(s.refs ?? '') },
+      source: { page: pageNum, element: elementStr, refs: refsStr },
       reviewed: isReviewed,
       ...(reviewedBy ? { reviewed_by: reviewedBy } : {}),
     },

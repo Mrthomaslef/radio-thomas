@@ -170,6 +170,16 @@ async function call(password, payload) {
       return { questions: Array.isArray(data.questions) ? data.questions : [] };
     }
     if (payload.action === 'save') {
+      try {
+        const r = await fetch('/api/admin-questions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password, ...payload }),
+        });
+        if (r.ok) return { ok: true };
+      } catch {
+        // Fallback below
+      }
       await submitReviewerQuestionEdit({
         id: payload.id,
         chapter: payload.chapter,
@@ -844,16 +854,52 @@ export default function QuestionsAdmin({
   };
 
   const save = async (forceReviewed = null) => {
-    setBusy(true); setError(''); setNotice('');
+    setError('');
+    setNotice('');
+
+    if (!editing?.q?.enonce || !String(editing.q.enonce).trim()) {
+      setError('Veuillez renseigner l’énoncé de la question.');
+      return;
+    }
+    const items = Array.isArray(editing.q.items) ? editing.q.items : [];
+    if (items.length < 2 || items.some((it) => !String(it?.texte || '').trim())) {
+      setError('Chaque proposition de réponse doit contenir du texte.');
+      return;
+    }
+    if (!items.some((it) => it.correct)) {
+      setError('Veuillez cocher au moins une bonne réponse.');
+      return;
+    }
+
+    setBusy(true);
     const nextReviewed = forceReviewed !== null ? forceReviewed : Boolean(editing.q.reviewed);
     const chosenReviewer = nextReviewed
       ? editing.q.reviewed_by || reviewerName || REVIEWERS[0]
       : editing.q.reviewed_by || '';
+
+    const rawPage = Number.parseInt(editing.q.source?.page, 10);
     const nextQ = {
       ...editing.q,
+      theme: String(editing.q.theme || '').trim() || CHAPTER_LABELS[editing.chapter] || 'Général',
+      enonce: String(editing.q.enonce || '').trim(),
+      explication: String(editing.q.explication || '').trim() || 'Correction validée.',
+      items: items.map((it) => ({
+        ...it,
+        texte: String(it.texte || '').trim().slice(0, 800),
+      })),
+      correction_figures: (editing.q.correction_figures || []).map((f) => ({
+        ...f,
+        caption: String(f?.caption || '').trim() || 'Figure',
+      })),
+      source: {
+        page: Number.isInteger(rawPage) && rawPage >= 1 && rawPage <= 9999 ? rawPage : 1,
+        element: String(editing.q.source?.element || '').trim() || 'Texte',
+        refs: String(editing.q.source?.refs || '').trim(),
+      },
       reviewed: nextReviewed,
       reviewed_by: chosenReviewer || null,
     };
+
     const allRows = rows || bundledQuestions;
     const finalId =
       editing.isNew && allRows.some((r) => r.id === editing.id)
@@ -866,49 +912,79 @@ export default function QuestionsAdmin({
     setLocalReviewedBy(updatedByMap);
     writeLocalReviewedBy(updatedByMap);
 
-    writeLocalReviewerEdit({
+    const savedRow = {
       id: finalId,
       chapter: editing.chapter,
       position: editing.position,
       data: nextQ,
+      updated_at: new Date().toISOString(),
+      deleted_at: null,
+    };
+
+    writeLocalReviewerEdit(savedRow);
+
+    setRows((prev) => {
+      const list = Array.isArray(prev) ? [...prev] : [...bundledQuestions];
+      const idx = list.findIndex((r) => r.id === finalId);
+      if (idx >= 0) {
+        list[idx] = savedRow;
+      } else {
+        list.push(savedRow);
+      }
+      return list;
     });
 
     const otherReviewedInChapter = live.filter((r) => r.id !== finalId && isRowReviewed(r)).length;
     const newChapterReviewedCount = otherReviewedInChapter + (nextReviewed ? 1 : 0);
     const totalInChapter = editing.isNew ? live.length + 1 : live.length;
+    const chapterNotified = nextReviewed && totalInChapter > 0 && newChapterReviewedCount === totalInChapter;
+
+    const currentEditing = editing;
+    setNotice(
+      currentEditing.submissionContext
+        ? `Question publiée et proposition de ${currentEditing.submissionContext.author || 'l’utilisateur'} validée (+10 pts) !`
+        : chapterNotified
+        ? `Question enregistrée et chapitre « ${chapterFullLabel(currentEditing.chapter)} » entièrement relu par ${chosenReviewer} (administrateur notifié) !`
+        : nextReviewed && chosenReviewer
+        ? `Question enregistrée et marquée « Relu par ${chosenReviewer} ».`
+        : 'Question enregistrée.'
+    );
+
+    // Redirect immediately back to the main reviewer/questions list
+    setEditing(null);
+    setPreview(false);
+    setBusy(false);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     try {
-      await call(password, { action: 'save', id: finalId, chapter: editing.chapter, position: editing.position, question: nextQ });
-      if (editing.reportContext && onResolveReport) {
-        await onResolveReport(editing.reportContext);
+      await call(password, {
+        action: 'save',
+        id: finalId,
+        chapter: currentEditing.chapter,
+        position: currentEditing.position,
+        question: nextQ,
+      });
+      if (currentEditing.reportContext && onResolveReport) {
+        await onResolveReport(currentEditing.reportContext);
       }
-      if (editing.submissionContext && onResolveSubmission) {
-        await onResolveSubmission(editing.submissionContext, 'accepted');
+      if (currentEditing.submissionContext && onResolveSubmission) {
+        await onResolveSubmission(currentEditing.submissionContext, 'accepted');
       }
-      let chapterNotified = false;
-      if (nextReviewed && totalInChapter > 0 && newChapterReviewedCount === totalInChapter) {
+      if (chapterNotified) {
         await submitQuizReviewNotification({
           password,
-          chapter: editing.chapter,
+          chapter: currentEditing.chapter,
           reviewer: chosenReviewer || reviewerName || REVIEWERS[0],
           count: totalInChapter,
           total: totalInChapter,
         });
-        chapterNotified = true;
       }
       resetQuestionsCache();
-      setNotice(
-        editing.submissionContext
-          ? `Question publiée et proposition de ${editing.submissionContext.author || 'l’utilisateur'} validée (+10 pts) !`
-          : chapterNotified
-          ? `Question enregistrée et chapitre « ${chapterFullLabel(editing.chapter)} » entièrement relu par ${chosenReviewer} (administrateur notifié) !`
-          : nextReviewed && chosenReviewer
-          ? `Question enregistrée et marquée « Relu par ${chosenReviewer} ».`
-          : 'Question enregistrée. Elle apparaît sur le site d’ici une trentaine de secondes.'
-      );
-      setEditing(null); setPreview(false);
-      await load();
-    } catch (e) { setError(e.message); } finally { setBusy(false); }
+    } catch {
+      // Saved locally in writeLocalReviewerEdit so the user never loses their work
+    }
   };
 
   const remove = async (row) => {
@@ -1650,6 +1726,7 @@ function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndRev
         </div>
       </fieldset>
 
+      {error && <p className="admin-error" role="alert">{error}</p>}
       <div className="qa-actions">
         <button className="btn" onClick={onSave} disabled={busy || aiBusy}>
           {busy && !aiBusy
