@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { readName, saveName, subscribePlayer, syncProgressFromServer } from '../data/player.js';
-import { fetchLeaderboard, fetchContributorsLeaderboard } from '../data/leaderboard.js';
+import { readName, saveName, subscribePlayer } from '../data/player.js';
+import {
+  fetchLeaderboard,
+  fetchContributorsLeaderboard,
+  getCachedLeaderboard,
+} from '../data/leaderboard.js';
 import Icon from './Icons.jsx';
 
 const normKey = (s) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ').toLowerCase() : '');
@@ -12,17 +16,14 @@ export default function LeaderboardPage() {
   const [tab, setTab] = useState(() =>
     window.location.hash === '#/contributeurs' ? 'contributors' : 'quiz'
   );
-  const [entries, setEntries] = useState([]);
-  const [contributors, setContributors] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [entries, setEntries] = useState(() => getCachedLeaderboard('quiz') || []);
+  const [contributors, setContributors] = useState(() => getCachedLeaderboard('contributors') || []);
+  const [loading, setLoading] = useState(
+    () => getCachedLeaderboard('quiz') === null && getCachedLeaderboard('contributors') === null
+  );
 
   const loadLeaderboard = useCallback(async () => {
-    setLoading(true);
     try {
-      const current = readName();
-      if (current) {
-        await syncProgressFromServer(current);
-      }
       const [quizList, contribList] = await Promise.all([
         fetchLeaderboard(),
         fetchContributorsLeaderboard(),
@@ -41,9 +42,8 @@ export default function LeaderboardPage() {
   useEffect(() => {
     return subscribePlayer(() => {
       setPseudo(readName());
-      loadLeaderboard();
     });
-  }, [loadLeaderboard]);
+  }, []);
 
   const submitPseudo = (e) => {
     e.preventDefault();

@@ -6,8 +6,8 @@
 // from question reports and accepted proposals.
 
 export default async function handler(req, res) {
-  res.setHeader('Cache-Control', 'no-store');
   if (req.method === 'POST') {
+    res.setHeader('Cache-Control', 'no-store');
     // Old browsers used to push their own totals here; the server now computes everything itself.
     return res.status(200).json({ ok: true });
   }
@@ -15,6 +15,7 @@ export default async function handler(req, res) {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'Méthode non autorisée.' });
   }
+  res.setHeader('Cache-Control', 'public, s-maxage=15, stale-while-revalidate=60');
 
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_PUBLISHABLE_KEY;
