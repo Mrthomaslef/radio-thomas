@@ -31,11 +31,11 @@ function prepareImage(file) {
       ctx.fillStyle = '#fff'; // transparent areas become white (JPEG has no transparency)
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.90);
 
-      // Build a compact dataUrl (<= 18 KB) so even multiple images in the same question fit under the 50 KB DB limit
-      let maxSide = 680;
-      let quality = 0.72;
+      // Build a high-quality fallback dataUrl (<= 34 KB) in case offline
+      let maxSide = 960;
+      let quality = 0.82;
       let compactDataUrl = '';
       for (let attempt = 0; attempt < 8; attempt++) {
         const compactScale = Math.min(1, maxSide / Math.max(img.width, img.height));
@@ -47,9 +47,9 @@ function prepareImage(file) {
         ctx2.fillRect(0, 0, c2.width, c2.height);
         ctx2.drawImage(img, 0, 0, c2.width, c2.height);
         compactDataUrl = c2.toDataURL('image/jpeg', quality);
-        if (compactDataUrl.length <= 18000) break;
-        maxSide = Math.max(200, Math.round(maxSide * 0.82));
-        quality = Math.max(0.38, quality - 0.07);
+        if (compactDataUrl.length <= 34000) break;
+        maxSide = Math.max(360, Math.round(maxSide * 0.85));
+        quality = Math.max(0.5, quality - 0.06);
       }
 
       resolve({
@@ -66,7 +66,7 @@ function prepareImage(file) {
   });
 }
 
-// Picks a file, uploads it, and hands back { upload } or { dataUrl } (plus a text field handled by the caller).
+// Picks a file, uploads it to public.quiz_images (1400 px HD), and hands back { upload } (or { dataUrl } fallback).
 function ImagePicker({ password, label, onPicked, disabled }) {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
@@ -77,24 +77,19 @@ function ImagePicker({ password, label, onPicked, disabled }) {
     setBusy(true); setErr('');
     try {
       const { mime, data, compactDataUrl } = await prepareImage(file);
-      if (isReviewerPass(password)) {
-        if (compactDataUrl && compactDataUrl.length <= 44000) {
-          onPicked({ dataUrl: compactDataUrl });
-        } else {
-          throw new Error('Impossible d’enregistrer cette image.');
-        }
-      } else {
-        try {
-          const out = await call(password, { action: 'upload', mime, data });
+      try {
+        const out = await call(password, { action: 'upload', mime, data });
+        if (out?.id) {
           onPicked({ upload: out.id });
-        } catch {
-          // Fallback to inline compactDataUrl if the quiz_images migration hasn't been applied yet
-          if (compactDataUrl && compactDataUrl.length <= 44000) {
-            onPicked({ dataUrl: compactDataUrl });
-          } else {
-            throw new Error('Impossible d’enregistrer cette image.');
-          }
+          return;
         }
+      } catch {
+        // Fallback to inline compactDataUrl if offline
+      }
+      if (compactDataUrl && compactDataUrl.length <= 44000) {
+        onPicked({ dataUrl: compactDataUrl });
+      } else {
+        throw new Error('Impossible d’enregistrer cette image.');
       }
     } catch (ex) {
       setErr(ex.message);

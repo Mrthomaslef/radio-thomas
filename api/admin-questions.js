@@ -228,9 +228,40 @@ export default async function handler(req, res) {
         return res.status(200).json({ status: 'ok', imported: 0 });
       case 'delete':
         return res.status(403).json({ error: 'Seul l’administrateur peut supprimer une question.' });
-      case 'upload':
-        // Reviewer image uploads fall back cleanly to compactDataUrl in QuestionsAdmin.jsx
+      case 'upload': {
+        const MIME = { 'image/png': 'png', 'image/jpeg': 'jpeg', 'image/webp': 'webp' };
+        const mime = body.mime;
+        const b64 = typeof body.data === 'string' ? body.data : '';
+        if (!MIME[mime] || b64.length < 100 || b64.length > 2000000 || !/^[A-Za-z0-9+/]+={0,2}$/.test(b64)) {
+          return res.status(400).json({ error: 'Image invalide (PNG, JPEG ou WebP, 1,5 Mo maximum)' });
+        }
+        const bytes = Buffer.from(b64, 'base64');
+        const head = bytes.subarray(0, 12);
+        const isPng = head.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+        const isJpeg = head[0] === 0xff && head[1] === 0xd8 && head[2] === 0xff;
+        const isWebp = head.subarray(0, 4).toString('latin1') === 'RIFF' && head.subarray(8, 12).toString('latin1') === 'WEBP';
+        const real = { png: isPng, jpeg: isJpeg, webp: isWebp }[MIME[mime]];
+        if (!real) return res.status(400).json({ error: 'Le fichier n’est pas une vraie image' });
+
+        const adminPw = await resolveAdminPasswordForReviewer(process.env);
+        if (adminPw) {
+          try {
+            const imgId = randomUUID().replace(/-/g, '');
+            const out = await rpc('admin_upload_image', {
+              p_password: adminPw,
+              p_id: imgId,
+              p_mime: mime,
+              p_b64: b64,
+            });
+            if (out?.status === 'ok') {
+              return res.status(200).json({ status: 'ok', id: out.id || imgId });
+            }
+          } catch {
+            // Fallback below
+          }
+        }
         return res.status(400).json({ error: 'Utilisez le mode image intégrée' });
+      }
       default:
         return res.status(400).json({ error: 'Action inconnue' });
     }
