@@ -103,14 +103,26 @@ export default function Home({ openTheme }) {
                       const ans = progress[c.id]?.answers || {};
                       const done = qs.filter((q) => ans[q.id]).length;
                       return (
-                        <li key={c.id}>
+                        <li key={c.id} className="chapter-item">
                           {c.href ? (
-                            <a href={c.href} className="chapter">
-                              <b>{i + 1}</b> <span>{c.title}</span>
-                              <span className="chapter-go">
-                                {done > 0 ? `${done}/${total}` : `${total} questions`} <Icon name="arrow" size={16} />
-                              </span>
-                            </a>
+                            <div className="chapter-row">
+                              <a href={c.href} className="chapter">
+                                <b>{i + 1}</b> <span>{c.title}</span>
+                                <span className="chapter-go">
+                                  {done > 0 ? `${done}/${total}` : `${total} questions`} <Icon name="arrow" size={16} />
+                                </span>
+                              </a>
+                              {total > 0 && (
+                                <a
+                                  href={`${c.href}?random=5`}
+                                  className="chapter-5q"
+                                  title={`5 questions aléatoires — ${c.title}`}
+                                  aria-label={`Faire 5 questions aléatoires du chapitre ${c.title}`}
+                                >
+                                  5Q
+                                </a>
+                              )}
+                            </div>
                           ) : (
                             <div className="chapter chapter-soon">
                               <b>{i + 1}</b> <span>{c.title}</span>

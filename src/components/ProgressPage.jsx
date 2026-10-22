@@ -356,6 +356,15 @@ export default function ProgressPage() {
                                       Réinitialiser
                                     </button>
                                   )}
+                                  {qs.length > 0 && (
+                                    <a
+                                      href={`#/quiz/${c.id}?random=5`}
+                                      className="btn btn-ghost btn-small"
+                                      title={`5 questions aléatoires — ${c.title}`}
+                                    >
+                                      5Q
+                                    </a>
+                                  )}
                                   <a href={`#/quiz/${c.id}`} className="btn btn-small">
                                     {qs.length === 0
                                       ? 'Voir'

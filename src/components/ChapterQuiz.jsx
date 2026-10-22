@@ -42,17 +42,37 @@ const isPerfect = (q, picked) => {
   const good = q.items.filter((i) => i.correct).map((i) => i.id).sort().join();
   return good === [...picked].sort().join();
 };
+const shuffleList = (list) => {
+  const arr = [...list];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
 
 // Loads the live questions (editable from the admin page), then plays them.
 export default function ChapterQuiz({ chapter }) {
-  const { key, data, initialIdx } = chapter;
+  const { key, data, initialIdx, randomCount } = chapter;
   const { byChapter, loading } = useQuestions();
   const [pseudo, setPseudo] = useState(readName);
   const [draft, setDraft] = useState('');
+  const [drawSeed, setDrawSeed] = useState(0);
   const questions = byChapter[key] || [];
   const backHref = `#/${data.chapitre.theme || 'epaule'}`;
 
   useEffect(() => subscribePlayer(() => setPseudo(readName())), []);
+
+  const activeQuestions = useMemo(() => {
+    if (!randomCount || questions.length === 0) return questions;
+    const progress = readChapterProgress(key);
+    const ans = progress?.answers || {};
+    const unanswered = shuffleList(questions.filter((q) => !ans[q.id]));
+    const answered = shuffleList(questions.filter((q) => ans[q.id]));
+    const pool = [...unanswered, ...answered].slice(0, Math.min(randomCount, questions.length));
+    return pool.map((q) => ({ ...q, _chapterKey: key, _meta: data.chapitre }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questions, randomCount, key, data.chapitre, drawSeed]);
 
   if (!pseudo) {
     const onSubmit = (e) => {
@@ -100,11 +120,20 @@ export default function ChapterQuiz({ chapter }) {
   }
   return (
     <QuizPlayer
-      key={`${pseudo}:${key}`}
+      key={`${pseudo}:${key}:${randomCount || 'all'}:${drawSeed}`}
       chapterKey={key}
       meta={data.chapitre}
-      questions={questions}
+      questions={activeQuestions}
       initialIdx={initialIdx}
+      randomMode={Boolean(randomCount)}
+      onRestart={
+        randomCount
+          ? () => {
+              setDrawSeed((s) => s + 1);
+              window.scrollTo(0, 0);
+            }
+          : null
+      }
     />
   );
 }
@@ -259,14 +288,14 @@ export function QuizPlayer({
   };
 
   const restart = () => {
+    if (onRestart) {
+      onRestart();
+      return;
+    }
     if (randomMode && !preview) {
       for (const item of questions) {
         writeQuestionAnswer(item._chapterKey || key, item.id, null);
       }
-    }
-    if (onRestart) {
-      onRestart();
-      return;
     }
     recordedHistoryRef.current = false;
     wasRestartedRef.current = true;

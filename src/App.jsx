@@ -46,13 +46,18 @@ const parseTheme = () => {
 };
 
 function parseRoute() {
-  const m = window.location.hash.match(/^#\/quiz\/([\w-]+)(?:\?q=(\d+))?/);
+  const m = window.location.hash.match(/^#\/quiz\/([\w-]+)(?:\?(.+))?$/);
   if (!m || !chapters[m[1]]) return null;
-  const qNum = m[2] ? parseInt(m[2], 10) : null;
+  const params = new URLSearchParams(m[2] || '');
+  const qRaw = params.get('q');
+  const rndRaw = params.get('random');
+  const qNum = qRaw ? parseInt(qRaw, 10) : null;
+  const randomCount = rndRaw ? parseInt(rndRaw, 10) : null;
   return {
     key: m[1],
     data: chapters[m[1]],
     initialIdx: qNum && qNum >= 1 ? qNum - 1 : null,
+    randomCount: randomCount && randomCount >= 1 ? randomCount : null,
   };
 }
 
@@ -103,7 +108,7 @@ export default function App() {
         ) : proposePage ? (
           <ProposeQuestionPage />
         ) : course ? (
-          <ChapterQuiz key={`${course.key}:${course.initialIdx ?? 'auto'}`} chapter={course} />
+          <ChapterQuiz key={`${course.key}:${course.initialIdx ?? 'auto'}:${course.randomCount ?? 'all'}`} chapter={course} />
         ) : (
           <Home openTheme={theme} />
         )}
