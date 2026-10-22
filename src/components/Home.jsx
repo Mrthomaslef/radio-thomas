@@ -109,7 +109,7 @@ export default function Home({ openTheme }) {
                               <a href={c.href} className="chapter">
                                 <b>{i + 1}</b> <span>{c.title}</span>
                                 <span className="chapter-go">
-                                  {done > 0 ? `${done}/${total}` : `${total} questions`} <Icon name="arrow" size={16} />
+                                  {`${done}/${total}`} <Icon name="arrow" size={16} />
                                 </span>
                               </a>
                               {total > 0 && (
