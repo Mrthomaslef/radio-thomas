@@ -323,7 +323,7 @@ export default function ProgressPage() {
                       <span>{t.title}</span>
                       <span className="prog-collapse-meta">
                         <span className="theme-count">
-                          {themeTotalQ > 0 ? `${themeAnsweredQ} / ${themeTotalQ} répondues · ` : ''}
+                          {themeTotalQ > 0 ? `${themeAnsweredQ}/${themeTotalQ} · ` : ''}
                           {t.chapters.length} chapitres
                         </span>
                         <span className={`prog-chevron ${isOpen ? 'open' : ''}`} aria-hidden="true">▾</span>
