@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { themes } from '../data/themes.js';
 import { CHAPTERS, useQuestions, resolveDifficulty } from '../data/useQuestions.js';
-import { readName, saveName, readChapterProgress, subscribePlayer } from '../data/player.js';
+import {
+  readName,
+  saveName,
+  readChapterProgress,
+  subscribePlayer,
+  syncProgressFromServer,
+} from '../data/player.js';
 import { QuizPlayer } from './ChapterQuiz.jsx';
 import Icon from './Icons.jsx';
 
@@ -40,7 +46,10 @@ export default function RandomQuiz() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [availableChapters]);
 
-  useEffect(() => subscribePlayer(() => setPseudo(readName())), []);
+  useEffect(() => {
+    syncProgressFromServer();
+    return subscribePlayer(() => setPseudo(readName()));
+  }, []);
 
   const chapterPool = useMemo(() => {
     const out = [];

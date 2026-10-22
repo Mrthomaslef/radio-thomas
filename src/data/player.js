@@ -104,6 +104,7 @@ export function writeChapterProgress(chapterKey, data, name = readName()) {
   if (!name) return;
   const all = readRawMap(name);
   const prev = all[chapterKey] || {};
+  const clearedAt = data.clearedAt !== undefined ? Number(data.clearedAt) || 0 : Number(prev.clearedAt) || 0;
   all[chapterKey] = {
     answers: data.answers || {},
     sent: Boolean(data.sent),
@@ -111,7 +112,7 @@ export function writeChapterProgress(chapterKey, data, name = readName()) {
       data.historyRecorded !== undefined
         ? Boolean(data.historyRecorded)
         : Boolean(data.sent || prev.historyRecorded),
-    resetAt: data.resetAt !== undefined ? data.resetAt : prev.resetAt || 0,
+    ...(clearedAt > 0 ? { clearedAt } : {}),
   };
   writeRawMap(name, all);
   notify();
@@ -125,7 +126,7 @@ export function clearChapterProgress(chapterKey, name = readName()) {
     answers: {},
     sent: false,
     historyRecorded: false,
-    resetAt: Date.now(),
+    clearedAt: Date.now(),
   };
   writeRawMap(name, all);
   notify();
@@ -136,9 +137,13 @@ export function writeQuestionAnswer(chapterKey, questionId, picked, name = readN
   if (!name || !chapterKey || !questionId) return;
   const cur = readChapterProgress(chapterKey, name);
   const answers = { ...(cur.answers || {}) };
-  if (picked && picked.length) answers[questionId] = picked;
-  else delete answers[questionId];
-  writeChapterProgress(chapterKey, { answers, sent: cur.sent }, name);
+  if (picked && picked.length) {
+    answers[questionId] = picked;
+    writeChapterProgress(chapterKey, { answers, sent: cur.sent }, name);
+  } else {
+    delete answers[questionId];
+    writeChapterProgress(chapterKey, { answers, sent: cur.sent, clearedAt: Date.now() }, name);
+  }
 }
 
 const BOOKMARKS_CHAPTER_KEY = 'ch97';
@@ -472,52 +477,59 @@ export async function syncProgressFromServer(name = readName()) {
   if (!clean) return;
   migrateLegacyIfEmpty(clean);
   try {
-    const r = await fetch(`/api/progress?name=${encodeURIComponent(clean)}`);
+    const r = await fetch(`/api/progress?name=${encodeURIComponent(clean)}`, { cache: 'no-store' });
     if (!r.ok) return;
     const json = await r.json();
     const remote = json?.progress && typeof json.progress === 'object' ? json.progress : {};
     const local = readRawMap(clean);
-    const merged = { ...remote };
+    const allChapters = new Set([...Object.keys(remote), ...Object.keys(local)]);
+    const merged = {};
     let localHasNewer = false;
 
-    for (const [ch, locVal] of Object.entries(local)) {
+    for (const ch of allChapters) {
+      const locVal = local[ch] || { answers: {}, sent: false };
       const remVal = remote[ch] || { answers: {}, sent: false };
-      const locReset = Number(locVal?.resetAt) || 0;
-      const remReset = Number(remVal?.resetAt) || 0;
+      const locCleared = Number(locVal?.clearedAt) || 0;
+      const remCleared = Number(remVal?.clearedAt) || 0;
 
-      // If the user reset this chapter locally more recently than the server copy, keep the local reset state
-      if (locReset > remReset) {
+      if (locCleared > remCleared) {
         merged[ch] = {
           answers: locVal.answers || {},
           sent: Boolean(locVal.sent),
           historyRecorded: Boolean(locVal.historyRecorded || locVal.sent),
-          resetAt: locReset,
+          clearedAt: locCleared,
         };
         localHasNewer = true;
         continue;
       }
 
-      if (remReset > locReset) {
+      if (remCleared > locCleared) {
         merged[ch] = {
           answers: remVal.answers || {},
           sent: Boolean(remVal.sent),
           historyRecorded: Boolean(remVal.historyRecorded || remVal.sent),
-          resetAt: remReset,
+          clearedAt: remCleared,
         };
         continue;
       }
 
-      const mergedAnswers = { ...(remVal.answers || {}), ...(locVal.answers || {}) };
-      if (Object.keys(mergedAnswers).length > Object.keys(remVal.answers || {}).length) {
+      const remAns = remVal.answers || {};
+      const locAns = locVal.answers || {};
+      const mergedAnswers = { ...remAns, ...locAns };
+      if (
+        Object.keys(mergedAnswers).length > Object.keys(remAns).length ||
+        Object.keys(locAns).some((k) => JSON.stringify(locAns[k]) !== JSON.stringify(remAns[k]))
+      ) {
         localHasNewer = true;
       }
+      const maxCleared = Math.max(locCleared, remCleared);
       merged[ch] = {
         answers: mergedAnswers,
         sent: Boolean(remVal.sent || locVal.sent),
         historyRecorded: Boolean(
           remVal.historyRecorded || locVal.historyRecorded || remVal.sent || locVal.sent
         ),
-        resetAt: Math.max(locReset, remReset),
+        ...(maxCleared > 0 ? { clearedAt: maxCleared } : {}),
       };
     }
 
@@ -525,4 +537,20 @@ export async function syncProgressFromServer(name = readName()) {
     notify();
     if (localHasNewer) schedulePush(clean);
   } catch { /* ignore network errors */ }
+}
+
+if (typeof window !== 'undefined') {
+  let lastAutoSync = 0;
+  const autoSync = () => {
+    const now = Date.now();
+    if (now - lastAutoSync < 1500) return;
+    lastAutoSync = now;
+    const n = readName();
+    if (n) syncProgressFromServer(n);
+  };
+  window.addEventListener('focus', autoSync);
+  window.addEventListener('hashchange', autoSync);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') autoSync();
+  });
 }

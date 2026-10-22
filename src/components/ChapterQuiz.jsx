@@ -61,7 +61,10 @@ export default function ChapterQuiz({ chapter }) {
   const questions = byChapter[key] || [];
   const backHref = `#/${data.chapitre.theme || 'epaule'}`;
 
-  useEffect(() => subscribePlayer(() => setPseudo(readName())), []);
+  useEffect(() => {
+    syncProgressFromServer();
+    return subscribePlayer(() => setPseudo(readName()));
+  }, []);
 
   const activeQuestions = useMemo(() => {
     if (!randomCount || questions.length === 0) return questions;

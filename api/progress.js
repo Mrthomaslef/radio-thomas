@@ -33,12 +33,49 @@ function cleanProgress(raw) {
       const validPicked = picked.filter((x) => typeof x === 'string' && ITEM_ID.test(x)).slice(0, 6);
       if (validPicked.length > 0) answers[qid] = [...new Set(validPicked)];
     }
+    const clearedAt = Number(val.clearedAt);
     out[ch] = {
       answers,
       sent: Boolean(val.sent),
+      ...(Number.isFinite(clearedAt) && clearedAt > 0 ? { clearedAt: Math.floor(clearedAt) } : {}),
     };
   }
   return out;
+}
+
+function mergeServerAndClientProgress(serverProg, clientProg) {
+  const merged = { ...(serverProg && typeof serverProg === 'object' ? serverProg : {}) };
+  for (const [ch, inc] of Object.entries(clientProg || {})) {
+    const srv = merged[ch] || { answers: {}, sent: false };
+    const incCleared = Number(inc?.clearedAt) || 0;
+    const srvCleared = Number(srv?.clearedAt) || 0;
+
+    if (incCleared > srvCleared) {
+      merged[ch] = {
+        answers: inc.answers || {},
+        sent: Boolean(inc.sent),
+        clearedAt: incCleared,
+      };
+      continue;
+    }
+
+    if (srvCleared > incCleared) {
+      merged[ch] = {
+        answers: srv.answers || {},
+        sent: Boolean(srv.sent),
+        clearedAt: srvCleared,
+      };
+      continue;
+    }
+
+    const maxCleared = Math.max(incCleared, srvCleared);
+    merged[ch] = {
+      answers: { ...(srv.answers || {}), ...(inc.answers || {}) },
+      sent: Boolean(srv.sent || inc.sent),
+      ...(maxCleared > 0 ? { clearedAt: maxCleared } : {}),
+    };
+  }
+  return merged;
 }
 
 export default async function handler(req, res) {
@@ -77,13 +114,32 @@ export default async function handler(req, res) {
     const progress = cleanProgress(body?.progress);
     if (!name || !progress) return res.status(400).json({ error: 'Données de progression invalides' });
     try {
+      let existing = {};
+      try {
+        const curRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_quiz_progress`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ p_name: name }),
+        });
+        if (curRes.ok) {
+          const curData = await curRes.json();
+          if (curData?.progress && typeof curData.progress === 'object') {
+            existing = curData.progress;
+          }
+        }
+      } catch {
+        // Proceed with incoming progress if reading current fails
+      }
+
+      const merged = mergeServerAndClientProgress(existing, progress);
+
       const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/save_quiz_progress`, {
         method: 'POST',
         headers,
-        body: JSON.stringify({ p_name: name, p_progress: progress }),
+        body: JSON.stringify({ p_name: name, p_progress: merged }),
       });
       if (!r.ok) return res.status(502).json({ error: `Erreur base de données (${r.status})` });
-      return res.status(200).json({ ok: true });
+      return res.status(200).json({ ok: true, progress: merged });
     } catch {
       return res.status(502).json({ error: 'Base de données injoignable' });
     }
