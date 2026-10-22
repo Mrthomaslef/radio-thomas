@@ -6,5 +6,376 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c30-q01",
+      "type": "QRM",
+      "difficulty": 1,
+      "theme": "Pied plat valgus et évaluation radiopodométrique",
+      "enonce": "Concernant le pied plat valgus et son évaluation radiopodométrique, quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le pied plat valgus associe, dans le plan sagittal, un affaissement de l’arche médiale, une verticalisation du talus et un raccourcissement de la colonne médiale",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Dans plus de 95 % des cas chez l’enfant, le pied plat valgus est idiopathique, souple et résolutif, mais à l’âge adulte (après 40 ans), il peut devenir douloureux en raison d’une arthrose talonaviculaire, d’un conflit bord médial / chaussure ou d’une insuffisance du tendon tibial postérieur (TTP)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Sur un cliché de profil en charge, l’angle de Djian-Annonier (évaluant la hauteur de l’arche médiale) est supérieur à 130° et l’angle de Meary-Tomeno présente une cassure (souvent à l’interligne talonaviculaire) formant un angle à sommet inférieur",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le pied plat se complique souvent d’un hallux valgus (car l’allongement de l’arche médiale augmente les contraintes en valgus sur l’hallux), ce qui nécessite systématiquement une radiographie en charge de l’arrière-pied avant toute chirurgie de l’avant-pied",
+          "correct": true
+        }
+      ],
+      "explication": "Le pied plat valgus correspond à un effondrement de l’arche médiale (Djian-Annonier > 130°), une verticalisation du talus (cassure de l’axe de Meary-Tomeno à sommet plantaire/inférieur) et un allongement (et non un raccourcissement) de la colonne médiale en sagittal. Il est le plus souvent physiologique chez l’enfant. En vieillissant, la défaillance des structures de soutien (TTP, spring ligament) majore la déformation, et l’allongement du bord médial induit des contraintes asymétriques sur le 1er rayon, favorisant un hallux valgus.",
+      "correction_figures": [],
+      "source": {
+        "page": 891,
+        "element": "Pages 891, 894 et 896",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c30-q02",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Synostose (coalition) calcanéonaviculaire",
+      "enonce": "Un adolescent de 14 ans consulte pour l’apparition soudaine de vives douleurs antérolatérales de la cheville avec un enraidissement en valgus et une contracture invincible des muscles fibulaires. Les clichés radiographiques montrent un pont osseux continu entre le processus antérieur du calcanéus (rostre) et le bord inférolatéral de l’os naviculaire, associé à une petite hypoplasie de la tête du talus. Quel est le diagnostic et quelle en est la prise en charge thérapeutique la plus adaptée à son âge ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une fracture de fatigue de l’os naviculaire ; mise en décharge complète pendant 45 jours",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un pied plat valgus paralytique (par poliomyélite) ; arthrodèse talocrurale immédiate",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une synostose (coalition) calcanéonaviculaire (pied plat contracturé) ; si la douleur persiste, la résection large de la synostose (avec interposition musculaire) est indiquée avant l’arthrodèse",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une maladie de Freiberg du rostre calcanéen ; semelle orthopédique",
+          "correct": false
+        }
+      ],
+      "explication": "Les synostoses du tarse (coalitions tarsiennes, le plus souvent calcanéonaviculaires ou talocalcanéennes) sont des ponts fibreux, cartilagineux ou osseux anormaux entre deux os. Elles se révèlent typiquement chez le grand adolescent au moment de leur ossification par un tableau bruyant de pied plat « contracturé » (douleurs antérolatérales, valgus bloqué, contracture réflexe des fibulaires). Dans la synostose calcanéonaviculaire, on observe (surtout de 3/4) la fusion du rostre calcanéen avec le naviculaire. À cet âge (autour de 13 à 14 ans) et sans arthrose, si le tarse est encore souple sous anesthésie, la résection large du pont osseux (avec interposition du muscle pédieux) est le traitement de choix ; la double arthrodèse est réservée aux échecs ou aux sujets plus âgés avec arthrose.",
+      "correction_figures": [],
+      "source": {
+        "page": 898,
+        "element": "Pages 898 et 899",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c30-q03",
+      "type": "QRM",
+      "difficulty": 3,
+      "theme": "Maladie de Blount (tibia vara)",
+      "enonce": "Concernant la maladie de Blount (tibia vara), son diagnostic positif et différentiel, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La maladie de Blount résulte d’une augmentation des contraintes mécaniques sur le versant postéromédial du cartilage de croissance tibial proximal (favorisée par la marche précoce et la surcharge pondérale), provoquant une déformation associant varus, procurvatum et torsion tibiale médiale",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Dans la forme infantile (début < 3 ans, souvent bilatérale), le diagnostic précoce repose sur la mesure de l’angle métaphysodiaphysaire proximal du tibia, qui est normal (autour de 5°) dans le genu varum physiologique mais s’élève (≥ 11°) dans la maladie de Blount",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Radiologiquement, on observe un retard d’ossification de la partie médiale du noyau épiphysaire tibial et un éperon en « bec » de la métaphyse médiale, dont la sévérité est gradée de I à VI selon la classification de Langenskiöld (le stade VI correspondant à un pont d’épiphysiodèse complet)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "En IRM, pour compenser l’affaissement osseux, on observe constamment une atrophie majeure du ménisque médial et du cartilage épiphysaire médial (chondroépiphyse)",
+          "correct": false
+        }
+      ],
+      "explication": "La maladie de Blount (tibia vara) est une ostéochondrodysplasie mécanique du tibia proximal médial associant varus, procurvatum et rotation interne. Il faut la distinguer du varus physiologique du nourrisson (qui régresse vers 18 mois à 2 ans) : un angle métaphysodiaphysaire (angle de Drennan) > 11° signe la maladie de Blount. L’évolution se fait en 6 stades (de Langenskiöld) allant de l’éperon métaphysaire à l’épiphysiodèse médiale complète. En IRM, on observe au contraire une hypertrophie compensatrice de la chondroépiphyse et du ménisque médial pour tenter de maintenir un interligne horizontal malgré le défaut osseux sous-jacent.",
+      "correction_figures": [],
+      "source": {
+        "page": 771,
+        "element": "Pages 771 à 774",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c30-q04",
+      "type": "QCU",
+      "difficulty": 1,
+      "theme": "Hallux valgus",
+      "enonce": "Comment se présente cliniquement et radiologiquement l’hallux valgus, et quels en sont les facteurs prédisposants ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il s’agit d’une déformation associant un metatarsus varus, une déviation latérale (valgus) en pronation de P1 et une subluxation latérale des sésamoïdes (ou plutôt de la tête de M1 en dedans) ; elle est très fortement favorisée par un 1er métatarsien court (« pied égyptien », présent dans > 70 % des cas)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le diagnostic radiographique nécessite uniquement des clichés du pied de face en décharge stricte",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Sur le plan anatomique, les sésamoïdes se subluxent réellement en dehors car le ligament intermétatarsien transverse profond se rompt systématiquement",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’angle d’orientation de la surface articulaire distale du métatarsien (DMAA) est toujours strictement normal (0°), même dans les formes congénitales",
+          "correct": false
+        }
+      ],
+      "explication": "L’hallux valgus (surtout féminin) associe metatarsus varus, hallux valgus (angle M1P1 > 15°) en pronation, et saillie médiale de M1 (la tête de M1 glisse en dedans sur les sésamoïdes qui restent, eux, fixés à M2 par le ligament intermétatarsien transverse profond intact). Le principal facteur prédisposant est le pied égyptien (P1 du 1er orteil long mais métatarsien M1 court). Le bilan nécessite impérativement des clichés en charge pour quantifier les angles. L’angle DMAA (orientation de la surface articulaire distale de M1) est souvent augmenté (et non nul) dans les formes congénitales.",
+      "correction_figures": [],
+      "source": {
+        "page": 905,
+        "element": "Pages 905 à 907",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c30-q05",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Syndrome du 2e rayon et rupture de la plaque plantaire",
+      "enonce": "Une patiente de 55 ans consulte pour des douleurs à la base du 2e orteil avec apparition d’une déformation en griffe et d’un durillon plantaire. À l’examen, la manœuvre de Lachman de la 2e articulation métatarsophalangienne (MTP) reproduit la douleur avec une instabilité verticale importante (signe de Thomson-Hamilton). Quel est l’élément physiopathologique principal à l’origine de ce syndrome du 2e rayon ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une hypertrophie primitive isolée du muscle lombrical",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une maladie de Freiberg de la 2e tête métatarsienne",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une distension puis une rupture de la plaque plantaire (souvent à son insertion sur P1), favorisée par un 2e métatarsien long ou une insuffisance du 1er rayon (hallux valgus), entraînant une instabilité et une subluxation/luxation dorsale de P1",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Un névrome de Morton du 1er espace intercapitométatarsien",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome du 2e rayon correspond à une instabilité douloureuse de la 2e MTP (évoluant de l’instabilité simple douloureuse à la subluxation inflammatoire puis à la luxation dorsale irréductible en griffe). Il résulte de la surcharge mécanique de cette articulation (souvent liée à un 2e métatarsien trop long ou à l’insuffisance du 1er rayon dans l’hallux valgus), entraînant une distension et une rupture de la plaque plantaire fibrocartilagineuse (le plus souvent à son insertion sur P1). L’échographie ou l’IRM peuvent confirmer la rupture de la plaque (qui est un frein puissant à l’extension), la synovite/bursite et la subluxation dorsale. La maladie de Freiberg est une nécrose de la tête métatarsienne touchant surtout les jeunes.",
+      "correction_figures": [],
+      "source": {
+        "page": 908,
+        "element": "Pages 908 à 911",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c30-q06",
+      "type": "QRM",
+      "difficulty": 3,
+      "theme": "Fractures de contrainte de la cheville et du pied",
+      "enonce": "Concernant les fractures de contrainte de la cheville et du pied, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Les fractures de fatigue des métatarsiens (50 % des cas au pied) siègent préférentiellement sur le col ou la diaphyse des 2e et 3e métatarsiens (surtout si le 1er métatarsien est court ou en présence d’un pied creux)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La radiographie initiale est très souvent normale et ne révèle un trait fracturaire, une apposition périostée ou un cal osseux qu’après 2 à 4 semaines",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La fracture de l’os naviculaire, classique en athlétisme, siège dans le tiers central mal vascularisé (risque de pseudarthrose) et s’oriente dans le plan sagittal, nécessitant souvent une IRM ou un scanner pour le diagnostic car elle est mal « enfilée » en radiographie standard",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Les fractures de contrainte des sésamoïdes de l’hallux touchent principalement le sésamoïde latéral et se traduisent d’emblée par un fragment volumineux exubérant refoulant le tendon fléchisseur",
+          "correct": false
+        }
+      ],
+      "explication": "Les fractures de métatarsiens sont très fréquentes, favorisées par un mauvais appui (M1 court), siégeant souvent sur le 2e ou 3e métatarsien. Les radiographies précoces sont généralement normales (retard radioclinique d’une fracture par micro-accumulation), puis apparaissent les signes de réparation. La fracture de stress du naviculaire (sprint, saut) est sagittale, touche le tiers central hypovasculaire et est difficile à voir en radiographie. En revanche, ce sont les fractures du sésamoïde médial (le plus gros et le plus exposé à la pression/traction) qui sont les plus fréquentes ; elles se manifestent par un écartement des fragments (fracture en traction) et doivent être différenciées d’un sésamoïde bipartite bénin (bords ronds et clivage large).",
+      "correction_figures": [],
+      "source": {
+        "page": 913,
+        "element": "Pages 913, 914, 915 et 916",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c30-q07",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Ostéochondroses du pied (Freiberg, Köhler, Sever)",
+      "enonce": "Concernant les ostéochondroses du pied, quelles sont les différences cliniques et radiologiques entre la maladie de Freiberg, la maladie de Köhler et la maladie de Sever ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La maladie de Freiberg est une nécrose de la tête métatarsienne (le plus souvent M2, 70 %), touchant plutôt les filles adolescentes/jeunes femmes, se traduisant radiologiquement par une ostéocondensation, un aplatissement et une fragmentation de la tête de M2 pouvant aboutir à une arthrose sévère",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La maladie de Köhler est une ostéochondrose de l’os naviculaire de l’enfant (vers 4-6 ans, surtout garçon), caractérisée par une condensation et un aplatissement asymétrique de l’os naviculaire ; le diagnostic reste clinique et d’évolution bénigne (restitution ad integrum en quelques mois)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La maladie de Sever est une apophysite de la grosse tubérosité du calcanéus survenant vers 7-10 ans au début des activités sportives (surcharge de traction du tendon calcanéen) ; son diagnostic est strictement radiologique par la présence d’une condensation fragmentée du noyau",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La maladie de Köhler est l’équivalent adulte du syndrome de Müller-Weiss",
+          "correct": false
+        }
+      ],
+      "explication": "La maladie de Freiberg touche les têtes métatarsiennes (surtout M2) de la jeune fille avec nécrose et effondrement sous-chondral. La maladie de Köhler touche l’os naviculaire du jeune enfant de façon bénigne. En revanche, la maladie de Sever est une pathologie de traction clinique de l’apophyse calcanéenne de l’enfant sportif ; son aspect radiologique condensé et fragmenté est d’une part très banal (variante normale de croissance) et d’autre part non spécifique, la radiographie ne servant qu’à éliminer une autre cause (infection osseuse, etc.). Le syndrome de Müller-Weiss (nécrose du naviculaire chez la femme adulte obèse ou avec pieds plats) n’a rien à voir avec la maladie de Köhler de l’enfant.",
+      "correction_figures": [],
+      "source": {
+        "page": 918,
+        "element": "Pages 918 à 922",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c30-q08",
+      "type": "QCU",
+      "difficulty": 1,
+      "theme": "Syndrome du carrefour postérieur de la cheville",
+      "enonce": "Un danseur étoile consulte pour une douleur chronique postérolatérale de la cheville, reproductible et hyperalgique lors de la flexion plantaire complète sur les pointes. La radiographie de profil objective un processus osseux postérieur du talus particulièrement long (processus de Stieda). Quel est le nom de cette pathologie mécanique et quelle structure tendineuse passant dans ce carrefour peut y être intimement associée et lésée (ténosynovite associée) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le syndrome d’accrochage synovial (patellar clunk syndrome) ; tendon patellaire",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le syndrome du carrefour postérieur (conflit postérieur de la cheville) ; tendon du muscle long fléchisseur de l’hallux (LFH)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La maladie de Haglund ; tendon d’Achille",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le syndrome de l’os peroneum douloureux (POPS) ; tendon du muscle court fibulaire",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome du carrefour postérieur (ou syndrome de l’os trigone) correspond au conflit par pincement des structures postérieures entre le bord postéro-inférieur du tibia et la face supérieure du calcanéus lors des flexions plantaires extrêmes (pointes chez la danseuse, football). Il est favorisé par une volumineuse queue du talus (processus de Stieda) ou la présence d’un os trigone (qui se fracture ou dont la synchondrose se cisaille). La gouttière comprise entre les tubercules postérieur médial et latéral du talus (ou l’os trigone) abrite le tendon du muscle long fléchisseur de l’hallux, qui souffre fréquemment dans ce conflit (ténosynovite ou nodule sténosant).",
+      "correction_figures": [],
+      "source": {
+        "page": 922,
+        "element": "Pages 922 et 923",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c30-q09",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Syndrome douloureux régional complexe de type 1 (SDRC 1)",
+      "enonce": "Un patient de 45 ans a été victime il y a deux mois d’une entorse de la cheville droite traitée par immobilisation plâtrée simple. Il revient consulter pour l’apparition progressive de douleurs permanentes et cuisantes en « étau » du pied, aggravées par la mise en charge mais aussi par le simple effleurement (allodynie). Le pied est gonflé (œdème remontant au mollet), chaud, érythémateux et hypersudatif. Quelle est cette complication (Syndrome Douloureux Régional Complexe de type 1 - SDRC 1) et quels en sont les signes classiques en imagerie ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il s’agit d’un SDRC 1 (ancienne algodystrophie) dont le diagnostic est éminemment clinique et correspond à une disproportion des symptômes (sans atteinte neurologique focale) par rapport à l’évolution attendue du traumatisme",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Les radiographies initiales (avant 4-8 semaines) sont souvent normales, puis montrent une déminéralisation (raréfaction osseuse) tachetée, mouchetée et microvacuolaire, prédominant à l’os sous-chondral, mais respectant toujours l’interligne articulaire (sans pincement ni érosions)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La scintigraphie osseuse objective classiquement à ce stade une hypofixation franche du pied droit",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’IRM (si elle est réalisée, bien que la clinique suffise souvent) met en évidence de façon très précoce (avant la radio) un œdème médullaire osseux (hypo T1 / hyper T2) de localisation épiphysaire volontiers sous-chondrale, associé à un œdème des parties molles et à un possible épanchement articulaire ; son caractère migratoire (sur des IRM successives) est très évocateur",
+          "correct": true
+        }
+      ],
+      "explication": "Le SDRC 1 (algodystrophie) est une complication neurovasculaire disproportionnée par rapport au traumatisme (sans atteinte nerveuse vraie), dont la phase chaude s’accompagne d’un pied hyperalgique, allodynique, chaud, rouge et hypersudatif. La radiographie révèle avec un peu de retard une déminéralisation tachetée sous-chondrale, sans atteinte de l’interligne articulaire (contrairement aux arthrites). La scintigraphie au stade chaud (précoce) est au contraire hyperfixante de façon locorégionale aux temps précoces et tardifs (l’hypofixation s’observe surtout chez l’enfant). L’IRM montre un œdème osseux précoce et migratoire, non spécifique en soi mais typique dans le contexte clinique.",
+      "correction_figures": [],
+      "source": {
+        "page": 925,
+        "element": "Pages 925 à 929",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c30-q10",
+      "type": "QCU",
+      "difficulty": 1,
+      "theme": "Traitement du syndrome douloureux régional complexe (SDRC 1)",
+      "enonce": "Quel est le traitement habituel de première intention et de base préconisé à la phase aiguë (phase chaude) du syndrome douloureux régional complexe de type 1 (SDRC 1) de la cheville ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’amputation trans-tibiale d’urgence",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le traitement chirurgical par neurolyse du nerf sciatique poplité",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une prise en charge précoce et prudente associant des antalgiques (palier I à III), une mise en décharge partielle si la douleur est trop vive, et surtout une kinésithérapie précoce mais strictement indolore pour préserver la fonction et drainer l’œdème",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une immobilisation plâtrée stricte et définitive du genou à la racine des orteils",
+          "correct": false
+        }
+      ],
+      "explication": "Le traitement du SDRC 1 doit être le plus précoce possible pour enrayer l’évolution vers l’enraidissement et la phase froide dystrophique (rétractions). Il est multidisciplinaire et très conservateur : antalgiques forts, décharge si appui intolérable, et surtout une rééducation douce, précoce et strictement infra-douloureuse (l’agressivité thérapeutique aggrave le SDRC). Les blocs régionaux peuvent parfois être discutés, mais la chirurgie ou le plâtre prolongé aggravent considérablement le syndrome.",
+      "correction_figures": [],
+      "source": {
+        "page": 929,
+        "element": "Page 929",
+        "refs": ""
+      }
+    }
+  ]
 }
