@@ -6,5 +6,608 @@
     "auteurs": "A. Cotten",
     "livre": "Imagerie musculosquelettique – Pathologies locorégionales, 2e édition, Elsevier Masson, 2017"
   },
-  "questions": []
+  "questions": [
+    {
+      "id": "c29-q01",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Anatomie et physiopathologie du tendon calcanéen",
+      "enonce": "Concernant l’anatomie et la physiopathologie du tendon calcanéen (tendon d’Achille), quelles sont les propositions exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le tendon calcanéen est formé par l’accolement des lames tendineuses du muscle soléaire et des deux chefs du muscle gastrocnémien ; ses fibres présentent une rotation avant de s’insérer sur la tubérosité du calcanéus",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Il possède une véritable gaine synoviale, ce qui explique la fréquence des ténosynovites isolées à ce niveau",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La vascularisation du tendon calcanéen provient exclusivement des vaisseaux intra-osseux calcanéens, ce qui explique la zone critique hypovasculaire située à son tiers moyen",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le paratendon est une structure fibreuse richement vascularisée et innervée, fondamentale pour la nutrition du tendon ; son épaississement dans les tendinopathies chroniques gêne le glissement tendineux et libère des substances nociceptives",
+          "correct": true
+        },
+        {
+          "id": "E",
+          "texte": "La longueur du tendon prédisposerait à des pathologies différentes : enthésopathies pour les tendons courts et tendinopathies corporéales (tendinoses) pour les tendons longs",
+          "correct": true
+        }
+      ],
+      "explication": "Le tendon d’Achille résulte de la confluence des fibres du soléaire et des gastrocnémiens qui s’enroulent sur elles-mêmes avant de s’insérer sur le calcanéus. Il est le seul tendon de la cheville à ne pas posséder de gaine synoviale. Il coulisse dans un paratendon (dédoublement du fascia crural) qui est richement innervé et vascularisé ; c’est d’ailleurs le paratendon qui assure la nutrition du tendon calcanéen et qui est source de douleur lorsqu’il s’épaissit. Enfin, les tendons longs exposent plutôt aux tendinoses du tiers moyen (où siège une zone critique hypovascularisée) et les courts aux enthésopathies.",
+      "correction_figures": [],
+      "source": {
+        "page": 827,
+        "element": "Pages 827 et 828",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q02",
+      "type": "QRM",
+      "difficulty": 1,
+      "theme": "Tendinopathie corporéale du tendon calcanéen",
+      "enonce": "En échographie, comment se traduit classiquement une tendinopathie mécanique corporéale (tendinose) du tiers moyen du tendon calcanéen ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une tuméfaction fusiforme étendue (perte du parallélisme des bords)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une ovalisation du tendon en coupe axiale avec perte de sa concavité antérieure physiologique",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Un aspect globalement hyperéchogène avec renforcement postérieur",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une hyperhémie intra- et péritendineuse au mode Doppler (témoin de lésions actives et corrélée à la douleur)",
+          "correct": true
+        }
+      ],
+      "explication": "La tendinopathie corporéale (liée au surmenage et aux microtraumatismes) se caractérise en échographie par une tuméfaction fusiforme ou nodulaire. En coupe axiale, le tendon perd sa forme normale (plate ou concave en avant) pour devenir convexe/ovalaire. Son échostructure devient globalement hypoéchogène (et non hyperéchogène) avec une perte partielle de l’aspect fibrillaire. L’hyperhémie Doppler traduit des lésions actives et douloureuses (néovascularisation).",
+      "correction_figures": [],
+      "source": {
+        "page": 828,
+        "element": "Pages 828 et 829",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q03",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Xanthomes intratendineux du tendon calcanéen",
+      "enonce": "Un homme de 35 ans, sédentaire et suivi pour une hypercholestérolémie familiale, consulte pour un épaississement bilatéral et asymptomatique des deux tendons d’Achille. L’échographie montre un élargissement tendineux hypoéchogène diffus bilatéral, parsemé de nodules intratendineux, sans hyperhémie Doppler. De quel diagnostic s’agit-il le plus probablement ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une rupture bilatérale chronique négligée",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une maladie de Haglund",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Des xanthomes intratendineux",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une enthésite bilatérale dans le cadre d’une spondyloarthrite ankylosante",
+          "correct": false
+        }
+      ],
+      "explication": "Les xanthomes intratendineux (accumulation d’histiocytes spumeux riches en lipides) s’observent chez des patients atteints d’hyperlipidémie (type II et III) ou, en cas d’aspect disséqué très élargi, de xanthomatose cérébrotendineuse. Ils sont typiquement bilatéraux, symétriques, indolores et se présentent en échographie sous forme de nodules hypo- ou hyperéchogènes ou d’un élargissement tendineux. L’IRM montre un aspect réticulaire moucheté. La maladie de Haglund est un conflit osseux distal postérosupérieur, l’enthésite inflammatoire donne des douleurs d’insertion avec œdème osseux et la rupture donne une impotence fonctionnelle.",
+      "correction_figures": [],
+      "source": {
+        "page": 829,
+        "element": "Pages 829 et 831",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q04",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "Maladie de Haglund",
+      "enonce": "Une patiente de 28 ans, portant régulièrement des chaussures à contrefort arrière rigide, présente des talalgies postérieures gauches exacerbées par le chaussage. Sur les radiographies de profil en charge, on objective une saillie osseuse particulièrement proéminente à l’angle postérosupérieur du calcanéus. En échographie, vous retrouvez une bursite rétrocalcanéenne (coincée entre l’os et le tendon) et une zone d’hypoéchogénicité avec perte fibrillaire stricte sur les fibres antérieures de la portion distale du tendon calcanéen. Quelle est l’entité physiopathologique à l’origine de ce tableau clinique et radiologique ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une aponévropathie d’insertion (épine calcanéenne) de la face plantaire du calcanéus",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une maladie de Haglund (conflit mécanique entre l’angle postérosupérieur agressif du calcanéus et la face antérieure du tendon d’Achille)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une enthésopathie inflammatoire isolée",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une rupture spontanée complète du tendon d’Achille",
+          "correct": false
+        }
+      ],
+      "explication": "Ce tableau associe l’anomalie morphologique de l’angle postérosupérieur du calcanéus (trop saillant), une bursite rétrocalcanéenne de frottement et une tendinopathie/fissuration focale de la face antérieure du tendon calcanéen au contact de cette saillie osseuse, aggravée par un chaussage rigide : il s’agit typiquement de la maladie de Haglund. L’enthésopathie mécanique ou inflammatoire touche l’insertion elle-même (plus bas) et l’aponévropathie donne des talalgies plantaires (inférieures). La rupture complète provoquerait une perte de l’équinisme et une manœuvre de Thompson positive.",
+      "correction_figures": [],
+      "source": {
+        "page": 832,
+        "element": "Page 832",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q05",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Rupture complète du tendon calcanéen",
+      "enonce": "Concernant la rupture complète du tendon calcanéen et son exploration en échographie, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Cliniquement, elle se traduit par une douleur en « coup de fouet », une perte de l’équinisme physiologique du pied en procubitus (signe de Brunet-Guedj) et l’absence de flexion plantaire à la pression du mollet (manœuvre de Thompson)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une infiltration péritendineuse de corticoïdes protège efficacement contre le risque de rupture tendineuse",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "En échographie, la présence d’une structure tendineuse intacte longeant le bord médial de la zone de rupture correspond au tendon du muscle plantaire grêle, qui peut mimer une rupture partielle mais peut aussi être utilisé chirurgicalement pour une plastie de renfort",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’échographie doit préciser la distance de la rupture par rapport à l’insertion sur le calcanéus, l’écart interfragmentaire et sa réductibilité en flexion plantaire, car ces éléments orientent le choix entre un traitement orthopédique ou chirurgical (à ciel ouvert ou percutané)",
+          "correct": true
+        }
+      ],
+      "explication": "La clinique associe le coup de fouet, le signe de Brunet-Guedj et la manœuvre de Thompson positive. L’échographie montre la solution de continuité (souvent effilochée avec des débris) et doit impérativement préciser la distance par rapport à l’enthèse, la taille de l’écart interfragmentaire (gap) et sa réductibilité en flexion plantaire pour guider le traitement (un gap réductible et éloigné de l’enthèse permet une réparation percutanée ou orthopédique). La persistance du tendon plantaire (grêle), situé sur le versant médial du tendon calcanéen, ne doit pas faire croire à tort à une rupture seulement partielle ; il peut servir à la réparation. À l’inverse, l’infiltration péritendineuse de corticoïdes est formellement proscrite car elle favorise la rupture.",
+      "correction_figures": [],
+      "source": {
+        "page": 834,
+        "element": "Pages 834 et 835",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q06",
+      "type": "QCU",
+      "difficulty": 1,
+      "theme": "Insuffisance du tendon tibial postérieur et pied plat acquis",
+      "enonce": "Quelle anomalie clinique classique à l’inspection du pied, observée de dos en station debout (« too many toes sign »), traduit l’effondrement de l’arche médiale et un pied plat valgus souvent lié à la défaillance d’un tendon postéromédial précis ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’insuffisance du tendon du muscle tibial antérieur",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "L’insuffisance du tendon du muscle tibial postérieur (TTP) et/ou la rupture du spring ligament",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La rupture du tendon du muscle long fibulaire",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’aponévropathie plantaire mécanique",
+          "correct": false
+        }
+      ],
+      "explication": "Le tendon du muscle tibial postérieur (TTP) et le spring ligament (complexe calcanéonaviculaire plantaire) sont les principaux soutiens dynamiques et statiques de l’arche médiale du pied. L’insuffisance chronique du TTP et/ou la distension-rupture du spring ligament entraînent un effondrement de cette arche, se traduisant cliniquement par un pied plat valgus acquis avec le signe des « trop d’orteils » (too many toes) perçu à l’inspection postérieure (on aperçoit les orteils latéraux déborder en externe à cause de l’abduction de l’avant-pied).",
+      "correction_figures": [],
+      "source": {
+        "page": 836,
+        "element": "Pages 836 et 842",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q07",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Tendon du muscle tibial postérieur et os naviculaire accessoire",
+      "enonce": "Concernant le tendon du muscle tibial postérieur (TTP), quelles sont les propositions vraies ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le TTP est le tendon le plus antérieur et le plus médial de la gouttière rétromalléolaire médiale",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Dans l’espace rétromalléolaire, le diamètre du TTP est normalement identique à celui du tendon du long fléchisseur des orteils, situé juste en arrière de lui",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le syndrome de l’os naviculaire accessoire (type II) correspond à des microtraumatismes douloureux de la synchondrose reliant la tubérosité naviculaire à un osselet accessoire sur lequel vient s’insérer une partie des fibres du TTP",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La rupture transfixiante du TTP siège souvent dans la zone hypovascularisée rétromalléolaire et peut entraîner une rétraction nécessitant un transfert tendineux de suppléance",
+          "correct": true
+        },
+        {
+          "id": "E",
+          "texte": "Lors d’une échographie avec flexion dorsale et éversion contrariée, le TTP peut exceptionnellement se luxer en arrière de la malléole latérale",
+          "correct": false
+        }
+      ],
+      "explication": "Le TTP est le tendon le plus antérieur et le plus médial sous le rétinaculum des fléchisseurs. Son diamètre normal doit toujours être approximativement deux fois supérieur à celui du tendon adjacent du long fléchisseur des orteils (un TTP de même calibre que le LFO traduit une rupture par allongement ou atrophie). Le syndrome de l’os naviculaire accessoire de type II correspond à des douleurs mécaniques sur la synchondrose reliant l’os surnuméraire à la tubérosité du naviculaire à l’insertion du TTP. La rupture complète avec rétraction du TTP requiert souvent un transfert tendineux. Enfin, en cas de luxation du TTP (rare), le tendon passe en avant de la malléole médiale (la malléole latérale concerne les fibulaires).",
+      "correction_figures": [],
+      "source": {
+        "page": 836,
+        "element": "Pages 836 à 839",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q08",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "Fissure du court fibulaire et muscle peroneus quartus",
+      "enonce": "Une patiente de 55 ans consulte pour des douleurs postérieures de la cheville évoluant depuis plusieurs mois, avec empâtement rétromalléolaire latéral et douleurs majorées en inversion. L’IRM axiale met en évidence un aspect aminci en « boomerang » du tendon du muscle court fibulaire moulé sur la malléole, et sur des coupes plus distales, l’apparition de deux hémi-tendons distincts de part et d’autre du tendon du long fibulaire. Quelle variante anatomique musculaire surnuméraire peut parfois être responsable d’un tel conflit intrarétinaculaire menant à cette pathologie ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le muscle peroneus tertius (3e fibulaire)",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le muscle peroneus quartus",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle soléaire accessoire",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le muscle accessoire du long fléchisseur des orteils",
+          "correct": false
+        }
+      ],
+      "explication": "L’IRM décrit une fissure longitudinale du tendon du muscle court fibulaire, lésion classique de ce tendon qui se divise alors en deux hémi-tendons entre lesquels vient parfois s’incarcérer le tendon du long fibulaire. Cette fissure peut être d’origine traumatique ou microtraumatique, favorisée par des anomalies anatomiques de la gouttière ou une laxité, mais aussi par la présence d’un muscle peroneus quartus (présent dans 10 à 22 % des cas). Ce muscle accessoire latéral chemine en arrière des tendons fibulaires sous le rétinaculum supérieur et peut entraîner une hyperpression, une ténosynovite ou une fissuration du court fibulaire par conflit spatial. Le peroneus tertius (inconstant mais très fréquent, > 80 %) est situé en avant, dans la loge antérieure, tandis que les muscles soléaire accessoire et accessoire du LFO sont postéromédiaux.",
+      "correction_figures": [],
+      "source": {
+        "page": 845,
+        "element": "Pages 845, 846 et 886",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q09",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Tendons fibulaires et syndrome de l’os peroneum",
+      "enonce": "Concernant la pathologie des tendons fibulaires et le syndrome de l’os peroneum, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La luxation antérieure des tendons fibulaires est favorisée par une lésion ou une agénésie du rétinaculum supérieur des fibulaires, et survient classiquement lors d’une contraction brutale en dorsiflexion du pied chez les skieurs ou patineurs",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’os peroneum est un os sésamoïde situé dans l’épaisseur du tendon du muscle court fibulaire en regard du tubercule de Gerdy",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "En présence d’un os peroneum, la migration postérieure de ses fragments osseux en radiographie ou en échographie est un signe pathognomonique de rupture complète distale du tendon du muscle long fibulaire",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Le syndrome de l’os peroneum douloureux (POPS) correspond à un conflit mécanique entre le cuboïde et l’os peroneum, se traduisant en IRM par un œdème osseux du sésamoïde et souvent du cuboïde adjacent",
+          "correct": true
+        }
+      ],
+      "explication": "L’instabilité antérieure (préfibulaire) des tendons fibulaires fait suite à une lésion/décollement (type 1 d’Oden) ou avulsion du rétinaculum supérieur des fibulaires, survenant souvent en dorsiflexion forcée. L’os peroneum est un sésamoïde présent chez environ 30 % des individus, mais il est situé dans le tendon du muscle long fibulaire en regard de la face latérale de l’os cuboïde. Si le tendon long fibulaire se rompt au niveau ou en aval du sésamoïde, la contraction musculaire attire le(s) fragment(s) sésamoïdien(s) vers l’arrière, ce qui est pathognomonique de la rupture tendineuse. Le syndrome douloureux du POPS résulte d’un conflit cuboïde/os peroneum avec œdème osseux bilésionnel en IRM.",
+      "correction_figures": [],
+      "source": {
+        "page": 845,
+        "element": "Pages 845, 848, 850 et 852",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q10",
+      "type": "QCU",
+      "difficulty": 1,
+      "theme": "Entorse latérale de la cheville",
+      "enonce": "Lors d’une entorse latérale grave de la cheville en inversion forcée, dans quel ordre chronologique les trois faisceaux du complexe ligamentaire collatéral latéral se rompent-ils classiquement ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "1/ Ligament calcanéofibulaire, puis 2/ Ligament talofibulaire antérieur, puis 3/ Ligament talofibulaire postérieur",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "1/ Ligament talofibulaire postérieur, puis 2/ Ligament calcanéofibulaire, puis 3/ Ligament talofibulaire antérieur",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "1/ Ligament talofibulaire antérieur, puis 2/ Ligament calcanéofibulaire, puis 3/ Ligament talofibulaire postérieur",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Les trois faisceaux se rompent toujours simultanément lors d’un traumatisme en varus",
+          "correct": false
+        }
+      ],
+      "explication": "Les entorses latérales de la cheville surviennent classiquement en flexion plantaire et inversion, ce qui met en tension et rompt les ligaments selon une séquence bien précise : le ligament talofibulaire antérieur (le plus fragile et le premier tendu) se rompt en premier, suivi du ligament calcanéofibulaire (si le traumatisme se poursuit), et enfin de façon exceptionnelle, du très résistant ligament talofibulaire postérieur (qui n’est par ailleurs tendu qu’en dorsiflexion). Un traumatisme en varus pur peut plus rarement provoquer une rupture isolée du ligament calcanéofibulaire.",
+      "correction_figures": [],
+      "source": {
+        "page": 855,
+        "element": "Page 855",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q11",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Séquelles et conflits post-entorse de cheville",
+      "enonce": "Concernant les séquelles et complications d’une entorse latérale de cheville, que recherche-t-on en imagerie (échographie, IRM ou arthroscanner) en cas de douleur résiduelle chronique ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Un conflit antérolatéral : développement d’un tissu fibro-inflammatoire dans la gouttière antérolatérale, associé à une hypertrophie cicatricielle du ligament talofibulaire antérieur, douloureux en dorsiflexion et éversion",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un syndrome du sinus du tarse : douleurs prémalléolaires latérales exacerbées en inversion, avec en IRM une disparition de la graisse normale du sinus (comblement inflammatoire ou fibreux) et d’éventuelles ruptures des ligaments interosseux et cervical",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une laxité talocrurale chronique, qui peut être suspectée sur des radiographies dynamiques montrant un bâillement asymétrique de l’angle tibiotalien > 10° en varus forcé",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Un conflit postéromédial : lié à un mécanisme de contrecoup initial, avec tissu cicatriciel engainant le ligament talofibulaire postérieur",
+          "correct": false
+        }
+      ],
+      "explication": "Les séquelles d’entorse latérale (> 20 % des cas) sont dominées par les conflits tissulaires et l’instabilité. Le conflit antérolatéral (très fréquent) associe un comblement fibro-synovial de la gouttière prémalléolaire et une hypertrophie cicatricielle du faisceau antérieur. Le syndrome du sinus du tarse (atteinte des ligaments cervical et interosseux talocalcanéen, effacement de la graisse) est une complication fréquente d’entorse sévère. La laxité talocrurale se chiffre sur les radiographies en varus forcé avec une asymétrie > 10° par rapport au côté sain. Le conflit postéromédial existe (lésion de contrecoup en inversion), mais il concerne l’écrasement du plan profond du ligament collatéral médial (ligament tibiotalaire postérieur profond) et de la capsule médiale entre la malléole médiale et le talus, et non le ligament talofibulaire postérieur (qui est latéral).",
+      "correction_figures": [],
+      "source": {
+        "page": 857,
+        "element": "Pages 857, 859 et 860",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q12",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Syndesmose tibiofibulaire distale",
+      "enonce": "Concernant la syndesmose tibiofibulaire distale et ses lésions, quelles sont les affirmations correctes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La syndesmose est renforcée par quatre ligaments : les ligaments tibiofibulaires antérieur, postérieur, transverse inférieur et le ligament interosseux (prolongeant la membrane interosseuse et constituant la structure la plus solide)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’entorse de la syndesmose survient typiquement lors d’un traumatisme en dorsiflexion et rotation médiale forcée",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Les ligaments se rompent d’avant en arrière (le ligament tibiofibulaire antérieur étant le plus fragile) et l’atteinte du ligament interosseux est requise pour générer un vrai diastasis",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Sur des radiographies de face et de mortaise, un diastasis de la syndesmose se traduit par un espace clair tibiofibulaire (à 1 cm au-dessus de l’interligne) supérieur ou égal à 6 mm et par une disparition du chevauchement tibiofibulaire",
+          "correct": true
+        }
+      ],
+      "explication": "L’anatomie ligamentaire de la syndesmose comprend les faisceaux antérieur, postérieur, transverse inférieur et interosseux (ce dernier étant le plus solide). Le mécanisme typique d’entorse de la syndesmose (1 à 11 % des entorses, souvent dans les sports de glisse) associe dorsiflexion et rotation latérale (externe) et non médiale. Les ligaments lâchent d’avant (plus fragiles) en arrière, le diastasis n’apparaissant qu’en cas de rupture du puissant interosseux. Radiologiquement, on mesure à 1 cm au-dessus de la ligne articulaire : l’espace clair tibiofibulaire (normalement < 5 mm, franchement diastasique si ≥ 6 mm) et le chevauchement osseux (qui disparaît en cas de diastasis).",
+      "correction_figures": [],
+      "source": {
+        "page": 866,
+        "element": "Pages 866, 867 et 868",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q13",
+      "type": "QCU",
+      "difficulty": 1,
+      "theme": "Aponévropathie plantaire mécanique",
+      "enonce": "Concernant la pathologie mécanique de l’aponévrose plantaire (« aponévrosite plantaire » ou enthésopathie), quel aspect typique observe-t-on en échographie à la phase chronique ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Un épaississement (> 4-5 mm) globalement hyperéchogène de la composante latérale de l’aponévrose au niveau de son insertion sur le 5e métatarsien",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un épaississement (> 4-5 mm) marqué et hypoéchogène de l’enthèse proximale de la composante centrale sur la tubérosité médiale du calcanéus, avec parfois une hyperhémie Doppler",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La présence d’un enthésophyte calcanéen inférieur bien défini et corticalisé est un signe de gravité pathognomonique d’une rupture imminente nécessitant une fasciotomie",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La formation d’un ou plusieurs nodules tissulaires infiltrants sur le versant superficiel de l’aponévrose au niveau du médio-pied",
+          "correct": false
+        }
+      ],
+      "explication": "L’aponévropathie mécanique proximale (fasciite plantaire) touche préférentiellement les sujets de 40 à 50 ans en surpoids et affecte l’insertion du robuste faisceau central sur le tubercule médial du calcanéus. En échographie, elle se traduit par un épaississement (> 4-5 mm) et une perte de l’échostructure fibrillaire qui devient hypoéchogène, parfois hyperhémiée. L’enthésophyte calcanéen (l’épine calcanéenne) est très fréquent mais traduit simplement un phénomène de traction chronique de l’os (qui s’adapte) ; il est souvent asymptomatique et n’est pas un signe de gravité ou de rupture. La présence de nodules tissulaires superficiels de la région moyenne correspond à une fibromatose plantaire (maladie de Ledderhose) et non à une aponévropathie mécanique.",
+      "correction_figures": [],
+      "source": {
+        "page": 872,
+        "element": "Pages 872, 873, 875 et 876",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q14",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Maladie de Ledderhose (fibromatose plantaire)",
+      "enonce": "Un patient sportif de 35 ans consulte pour des douleurs plantaires avec apparition de trois petites tuméfactions nodulaires dures au niveau du médio-pied plantaire, indolores au repos. L’échographie et l’IRM (coupes sagittales) montrent de petits nodules hypoéchogènes, en hyposignal T1 et T2, se rehaussant modérément après injection, enchâssés à la face superficielle de la composante centrale de l’aponévrose plantaire mais respectant une fine lame aponévrotique en profondeur. De quelle affection s’agit-il le plus probablement ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une rupture corporéale plurifocale de l’aponévrose plantaire",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un synovialosarcome plantaire",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une maladie de Ledderhose (fibromatose plantaire)",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une enthésite microcristalline goutteuse",
+          "correct": false
+        }
+      ],
+      "explication": "La maladie de Ledderhose correspond à une fibromatose plantaire superficielle, bénigne mais récidivante, souvent bilatérale (20 à 50 %) et parfois associée à une maladie de Dupuytren. Elle se présente sous forme de nodules tissulaires fibro-inflammatoires (hypo/isosignal T1 et T2 avec rehaussement). Son signe distinctif en imagerie est que ces nodules se développent aux dépens de la face superficielle de l’aponévrose plantaire (fascia central), en respectant souvent une fine lame aponévrotique profonde, ce qui permet d’écarter un processus sarcomateux profond refoulant l’aponévrose.",
+      "correction_figures": [],
+      "source": {
+        "page": 875,
+        "element": "Pages 875 et 876",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q15",
+      "type": "QRM",
+      "difficulty": 3,
+      "theme": "Syndrome du tunnel tarsien et neuropathie de Baxter",
+      "enonce": "Le syndrome du tunnel tarsien postéromédial correspond à une neuropathie de compression du nerf tibial et/ou de ses branches. Quelles sont les caractéristiques anatomiques et étiologiques de ce syndrome compressif et de l’une de ses branches distales, le nerf calcanéen inférieur (nerf de Baxter) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le tunnel tarsien proximal (tibiotalaire) contient le nerf tibial, l’artère tibiale postérieure et ses veines, et passe sous le rétinaculum des fléchisseurs en arrière des tendons des muscles tibial postérieur, long fléchisseur des orteils et long fléchisseur de l’hallux",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La percussion de la face médiale du calcanéus en arrière de la malléole provoque une douleur exquise en décharge électrique (signe de Tinel positif)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’échographie en position debout est indispensable pour rechercher des dilatations veineuses compressives symptomatiques (veines > 5 mm, tortueuses, plexus veineux plantaire) qui constituent une étiologie fréquente de compression au sein de ce tunnel étroit",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "La neuropathie de Baxter (compression du nerf calcanéen inférieur, rameau du nerf plantaire latéral) entraîne des talalgies chroniques et se traduit en IRM par des signes de dénervation (œdème puis atrophie graisseuse) électivement sur le muscle abducteur de l’hallux",
+          "correct": false
+        }
+      ],
+      "explication": "Le nerf tibial chemine dans le tunnel tarsien postéromédial (étage proximal sous le rétinaculum) avec les vaisseaux tibiaux, en arrière des trois tendons médiaux (TTP, LFO, LFH). Sa compression donne des paresthésies plantaires et un signe de Tinel positif à la percussion rétromalléolaire. Dans 60 à 80 % des cas, une étiologie est documentée : kyste, muscle surnuméraire, ou varices/veines dilatées dont la mise en évidence nécessite une échographie en position debout. La neuropathie de Baxter (compression du nerf calcanéen inférieur) donne bien des talalgies chroniques, mais ce nerf moteur innerve principalement le muscle abducteur du 5e orteil (et le carré plantaire / court fléchisseur des orteils), et c’est donc sur l’abducteur du V que l’on recherche les signes IRM d’amyotrophie de dénervation (l’abducteur de l’hallux est innervé par le nerf plantaire médial).",
+      "correction_figures": [],
+      "source": {
+        "page": 878,
+        "element": "Pages 878 à 880",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c29-q16",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Névrome de Morton",
+      "enonce": "Une patiente de 55 ans consulte pour des métatarsalgies plantaires aiguës à type de décharges électriques entre le 3e et le 4e orteil, exacerbées par le port d’escarpins serrés et reproduites à l’examen par la compression transversale des têtes métatarsiennes (signe de Mulder). Vous suspectez un névrome de Morton. Quel est le substrat anatomo-pathologique réel de cette lésion et quelles en sont les caractéristiques en IRM ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "C’est une authentique tumeur nerveuse maligne (schwannome) se rehaussant intensément après injection de gadolinium",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "C’est une fibrose intra et périneurale réactionnelle aux microtraumatismes du nerf digital plantaire commun, apparaissant en IRM sous forme d’une masse ovoïde (souvent > 5 mm), en iso-signal T1 par rapport aux muscles et signal T2 variable, souvent surmontée d’une bursite intercapitométatarsienne",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "C’est un ganglion synovial géant issu de l’articulation métatarsophalangienne",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "C’est une fracture de fatigue de la tête du 3e métatarsien avec volumineux cal cicatriciel compressif",
+          "correct": false
+        }
+      ],
+      "explication": "Le névrome de Morton n’est pas une tumeur mais une pseudotumeur fibro-inflammatoire et cicatricielle (fibrose intra et périneurale) du nerf digital plantaire commun, secondaire à la compression et à l’étirement répétés du nerf sous le ligament intermétatarsien profond (favorisé par les talons hauts et chaussures serrées, d’où la forte prédominance féminine). Il siège typiquement dans le 3e ou le 2e espace intercapitométatarsien. En IRM (mieux vue en procubitus), il se traduit par un nodule plantaire iso-intense aux muscles en T1, à rehaussement variable, très souvent coiffé (sur le versant dorsal) par une bursite intermétatarsienne associée d’origine mécanique. L’échographie (associée à la manœuvre de Mulder dynamique) reste l’examen de 1re intention pour l’identifier et guider une éventuelle infiltration.",
+      "correction_figures": [],
+      "source": {
+        "page": 882,
+        "element": "Pages 882 et 883",
+        "refs": ""
+      }
+    }
+  ]
 }
