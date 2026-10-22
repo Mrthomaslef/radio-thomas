@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { themes } from '../data/themes.js';
 import { CHAPTERS, useQuestions, resolveDifficulty } from '../data/useQuestions.js';
-import { readName, saveName, subscribePlayer } from '../data/player.js';
+import { readName, saveName, readChapterProgress, subscribePlayer } from '../data/player.js';
 import { QuizPlayer } from './ChapterQuiz.jsx';
 import Icon from './Icons.jsx';
 
@@ -107,7 +107,12 @@ export default function RandomQuiz() {
 
   const startQuiz = () => {
     if (pool.length === 0 || effectiveCount < 1) return;
-    const drawn = pickRandom(pool, effectiveCount);
+    const unanswered = pool.filter((q) => {
+      const ans = readChapterProgress(q._chapterKey)?.answers || {};
+      return !ans[q.id];
+    });
+    const sourcePool = unanswered.length > 0 ? unanswered : pool;
+    const drawn = pickRandom(sourcePool, Math.min(effectiveCount, sourcePool.length));
     setSession({ id: Date.now(), questions: drawn });
     window.scrollTo(0, 0);
   };

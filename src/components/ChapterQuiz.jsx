@@ -68,8 +68,10 @@ export default function ChapterQuiz({ chapter }) {
     const progress = readChapterProgress(key);
     const ans = progress?.answers || {};
     const unanswered = shuffleList(questions.filter((q) => !ans[q.id]));
-    const answered = shuffleList(questions.filter((q) => ans[q.id]));
-    const pool = [...unanswered, ...answered].slice(0, Math.min(randomCount, questions.length));
+    const pool =
+      unanswered.length > 0
+        ? unanswered.slice(0, Math.min(randomCount, unanswered.length))
+        : shuffleList(questions).slice(0, Math.min(randomCount, questions.length));
     return pool.map((q) => ({ ...q, _chapterKey: key, _meta: data.chapitre }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questions, randomCount, key, data.chapitre, drawSeed]);
@@ -455,12 +457,14 @@ export function QuizPlayer({
               {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
             </button>
             <a className="btn" href={backHref}>
-              {randomMode ? 'Configurer un autre quiz' : 'Autres chapitres'}
+              {randomMode && key === 'quiz-aleatoire' ? 'Configurer un autre quiz' : 'Autres chapitres'}
             </a>
           </div>
-          <p className="cq-restart-note">
-            Attention : cliquer sur « {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'} » réinitialise vos réponses pour ces questions et les repasse en orange (non faites).
-          </p>
+          {!randomMode && (
+            <p className="cq-restart-note">
+              Attention : cliquer sur « Recommencer » réinitialise vos réponses pour ces questions et les repasse en orange (non faites).
+            </p>
+          )}
         </section>
       ) : (
         <section className="cq-card" key={q.id}>
