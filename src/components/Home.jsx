@@ -107,7 +107,7 @@ export default function Home({ openTheme }) {
                           {c.href ? (
                             <div className="chapter-row">
                               <a href={c.href} className="chapter">
-                                <b>{i + 1}</b> <span>{c.title}</span>
+                                <b>{i + 1}</b> <span className="chapter-title">{c.title}</span>
                                 <span className="chapter-go">
                                   {`${done}/${total}`} <Icon name="arrow" size={16} />
                                 </span>
@@ -125,7 +125,7 @@ export default function Home({ openTheme }) {
                             </div>
                           ) : (
                             <div className="chapter chapter-soon">
-                              <b>{i + 1}</b> <span>{c.title}</span>
+                              <b>{i + 1}</b> <span className="chapter-title">{c.title}</span>
                               <span className="chapter-go">Bientôt</span>
                             </div>
                           )}
