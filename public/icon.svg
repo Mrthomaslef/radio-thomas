@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#05090f" />
+      <stop offset="100%" stop-color="#0a121d" />
+    </linearGradient>
+    <radialGradient id="glowCyan" cx="80%" cy="10%" r="70%">
+      <stop offset="0%" stop-color="#38e1ff" stop-opacity="0.24" />
+      <stop offset="100%" stop-color="#38e1ff" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowViolet" cx="15%" cy="85%" r="70%">
+      <stop offset="0%" stop-color="#7c8cff" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#7c8cff" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="45%">
+      <stop offset="0%" stop-color="#38e1ff" />
+      <stop offset="75%" stop-color="#7c8cff" />
+    </linearGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M 64 0 L 0 0 0 64" fill="none" stroke="#a0dcff" stroke-opacity="0.07" stroke-width="2" />
+    </pattern>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bgGrad)" />
+  <rect width="512" height="512" fill="url(#glowCyan)" />
+  <rect width="512" height="512" fill="url(#glowViolet)" />
+  <rect width="512" height="512" fill="url(#grid)" />
+
+  <text
+    x="256"
+    y="226"
+    text-anchor="middle"
+    fill="#e8f4fb"
+    stroke="#e8f4fb"
+    stroke-width="11"
+    stroke-linejoin="round"
+    paint-order="stroke fill"
+    font-family="Helvetica Neue, Arial, sans-serif"
+    font-weight="bold"
+    font-size="148"
+    letter-spacing="2"
+  >QUIZ</text>
+
+  <text
+    x="256"
+    y="376"
+    text-anchor="middle"
+    fill="url(#textGrad)"
+    stroke="url(#textGrad)"
+    stroke-width="9"
+    stroke-linejoin="round"
+    paint-order="stroke fill"
+    font-family="Helvetica Neue, Arial, sans-serif"
+    font-weight="bold"
+    font-size="124"
+    letter-spacing="1"
+  >Cochin</text>
+</svg>
