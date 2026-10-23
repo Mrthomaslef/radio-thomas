@@ -178,37 +178,6 @@ export default function AdminPage({ reviewerMode = false }) {
             }
           }
 
-          // Persist any reviewer edits from quiz_attempts / localStorage into quiz_questions
-          const revEdits = parsed.reviewerEdits || [];
-          if (revEdits.length > 0) {
-            const dbById = new Map(dbList.map((row) => [row.id, row]));
-            for (const ed of revEdits) {
-              if (!ed.id || !ed.data) continue;
-              const existing = dbById.get(ed.id);
-              const needsSync =
-                !existing ||
-                existing.data?.reviewed !== ed.data?.reviewed ||
-                existing.data?.reviewed_by !== ed.data?.reviewed_by ||
-                existing.data?.enonce !== ed.data?.enonce ||
-                existing.data?.explication !== ed.data?.explication;
-              if (needsSync) {
-                const saveRes = await fetch('/api/admin-questions', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    password,
-                    action: 'save',
-                    id: ed.id,
-                    chapter: ed.chapter || existing?.chapter || 'ch1',
-                    position: Number.isInteger(ed.position) ? ed.position : existing?.position || 0,
-                    question: ed.data,
-                  }),
-                });
-                if (saveRes.ok) synced = true;
-              }
-            }
-          }
-
           const accepted = (parsed.submissions || []).filter(
             (s) => s.resolved_at && s.decision !== 'refused' && s.status !== 'refused' && s.question?.enonce
           );
