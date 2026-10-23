@@ -64,6 +64,19 @@ export default function Home({ openTheme }) {
         QUIZ <span className="grad">Cochin</span>
       </motion.h1>
 
+      {!isAppMode && (
+        <div className="home-app-wrap">
+          <a
+            href="https://www.google.com/search?q=comment+ajouter+un+site+web+sur+l%27%C3%A9cran+d%27accueil+iPhone+et+Android+tutoriel"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-small home-app-btn"
+          >
+            Mode App : Ajouter à ma page d’accueil
+          </a>
+        </div>
+      )}
+
       {editing ? (
         <motion.form className="home-panel name-step" onSubmit={submit} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <label htmlFor="pseudo">Choisis un pseudo pour commencer ou reprendre ta session</label>
@@ -155,19 +168,6 @@ export default function Home({ openTheme }) {
               </div>
             );
           })}
-
-          {!isAppMode && (
-            <div className="home-app-wrap">
-              <a
-                href="https://www.google.com/search?q=comment+ajouter+un+site+web+sur+l%27%C3%A9cran+d%27accueil+iPhone+et+Android+tutoriel"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-ghost btn-small home-app-btn"
-              >
-                Mode &quot;app&quot; : ajouter à ma page d’accueil
-              </a>
-            </div>
-          )}
         </motion.div>
       )}
     </section>

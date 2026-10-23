@@ -1413,9 +1413,14 @@ a.cq-dot:hover { transform: scale(1.08); }
 }
 
 .home-app-wrap {
-  display: flex;
+  display: none;
   justify-content: center;
-  margin-top: 22px;
+  margin: -6px 0 18px;
+}
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  .home-app-wrap {
+    display: flex;
+  }
 }
 @media all and (display-mode: standalone), all and (display-mode: fullscreen) {
   .home-app-wrap {
@@ -1423,13 +1428,17 @@ a.cq-dot:hover { transform: scale(1.08); }
   }
 }
 .home-app-btn {
-  font-size: 0.84rem;
-  color: var(--muted);
-  border-color: var(--line);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cyan);
+  background: rgba(56, 225, 255, 0.14);
+  border: 1px solid rgba(56, 225, 255, 0.55);
+  box-shadow: 0 4px 16px rgba(56, 225, 255, 0.15);
 }
 .home-app-btn:hover {
-  color: var(--cyan);
-  border-color: rgba(56, 225, 255, 0.45);
+  color: #041018;
+  background: var(--cyan);
+  border-color: var(--cyan);
 }
 
 .footer-feedback-wrap {
