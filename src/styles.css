@@ -1445,6 +1445,43 @@ a.cq-dot:hover { transform: scale(1.08); }
   gap: 12px;
 }
 
+.ptr-indicator {
+  position: fixed;
+  top: calc(8px + env(safe-area-inset-top, 0px));
+  left: 50%;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(10, 18, 29, 0.94);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.ptr-indicator.is-ready {
+  color: var(--cyan);
+  border-color: var(--cyan);
+}
+.ptr-icon {
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+}
+.ptr-icon.is-spinning {
+  animation: ptr-spin 0.7s linear infinite;
+}
+@keyframes ptr-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 
 

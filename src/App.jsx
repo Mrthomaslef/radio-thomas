@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Navbar from './components/Navbar.jsx';
 import Home from './components/Home.jsx';
 import Footer from './components/Footer.jsx';
@@ -8,7 +8,8 @@ import ProgressPage from './components/ProgressPage.jsx';
 import LeaderboardPage from './components/LeaderboardPage.jsx';
 import RandomQuiz from './components/RandomQuiz.jsx';
 import ProposeQuestionPage from './components/ProposeQuestionPage.jsx';
-import { CHAPTERS as chapters } from './data/useQuestions.js';
+import { CHAPTERS as chapters, resetQuestionsCache } from './data/useQuestions.js';
+import { syncProgressFromServer } from './data/player.js';
 
 // Tiny hash router:
 // - "#/quiz/<key>" (or "#/quiz/<key>?q=<1-based>") plays a chapter quiz
@@ -70,6 +71,10 @@ export default function App() {
   const [randomPage, setRandomPage] = useState(isRandomRoute);
   const [proposePage, setProposePage] = useState(isProposeRoute);
   const [theme, setTheme] = useState(parseTheme);
+  const [pullDist, setPullDist] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+  const pullDistRef = useRef(0);
+  const refreshingRef = useRef(false);
 
   useEffect(() => {
     const onHash = () => {
@@ -87,12 +92,108 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    let startY = null;
+    let startX = null;
+
+    const onTouchStart = (e) => {
+      if (refreshingRef.current) return;
+      if (window.scrollY > 2) {
+        startY = null;
+        return;
+      }
+      const tag = e.target?.tagName;
+      if (tag === 'TEXTAREA' || tag === 'INPUT' || tag === 'SELECT') {
+        startY = null;
+        return;
+      }
+      const t = e.touches?.[0];
+      if (!t) return;
+      startY = t.clientY;
+      startX = t.clientX;
+    };
+
+    const onTouchMove = (e) => {
+      if (startY === null || refreshingRef.current) return;
+      if (window.scrollY > 2) {
+        startY = null;
+        if (pullDistRef.current > 0) {
+          pullDistRef.current = 0;
+          setPullDist(0);
+        }
+        return;
+      }
+      const t = e.touches?.[0];
+      if (!t) return;
+      const dy = t.clientY - startY;
+      const dx = Math.abs(t.clientX - (startX || 0));
+      if (dy > 14 && dy > dx * 1.4) {
+        const damped = Math.min(105, Math.round((dy - 14) * 0.55));
+        pullDistRef.current = damped;
+        setPullDist(damped);
+      } else if (pullDistRef.current > 0) {
+        pullDistRef.current = 0;
+        setPullDist(0);
+      }
+    };
+
+    const onTouchEnd = async () => {
+      if (startY === null || refreshingRef.current) return;
+      startY = null;
+      const d = pullDistRef.current;
+      if (d >= 56) {
+        refreshingRef.current = true;
+        setRefreshing(true);
+        pullDistRef.current = 56;
+        setPullDist(56);
+        try {
+          resetQuestionsCache();
+          await syncProgressFromServer();
+        } catch {
+          // ignore
+        }
+        window.location.reload();
+      } else if (d > 0) {
+        pullDistRef.current = 0;
+        setPullDist(0);
+      }
+    };
+
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', onTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('touchcancel', onTouchEnd);
+    };
+  }, []);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage, theme]);
 
   return (
     <>
       <div className="bg-grid" aria-hidden="true" />
+      {(pullDist > 0 || refreshing) && (
+        <div
+          className={`ptr-indicator ${pullDist >= 56 || refreshing ? 'is-ready' : ''}`}
+          style={{ transform: `translate(-50%, ${Math.min(pullDist, 64)}px)` }}
+          role="status"
+          aria-live="polite"
+        >
+          <span className={`ptr-icon ${refreshing ? 'is-spinning' : ''}`}>↻</span>
+          <span>
+            {refreshing
+              ? 'Actualisation…'
+              : pullDist >= 56
+              ? 'Relâcher pour actualiser'
+              : 'Tirer pour actualiser'}
+          </span>
+        </div>
+      )}
       <Navbar />
       <main>
         {admin ? (
