@@ -96,6 +96,7 @@ To add a theme: add it to `src/data/themes.js`. To add a chapter: add `src/data/
 | `/api/admin` | POST | `{password}` → list of all attempts (RPC `admin_list_attempts`) |
 | `/api/admin-questions` | POST | `{password, action: list/save/delete/import, …}`; content validated by `_validate.js` |
 | `/api/hello` | GET | Smoke test that reads the `hello` table |
+| `/api/admin-questions` saves | POST | A `save` on an existing question must send `baseUpdatedAt` (the `updated_at` last seen); otherwise **409 conflict**, nothing is written. Review flags go through `action:'set_reviewed'` (server re-reads the row, only the flag changes). Never push whole questions from a possibly stale page |
 | `/api/leaderboard` | GET | Quiz points (`get_leaderboard()`); `?type=contributors` → contributor points (`get_contributors_leaderboard()`). Both computed in SQL, never stored client-side: do not add localStorage/blob merging back |
 
 Error messages returned by the API are in French. Functions use the **publishable** key only; they never have a secret key.

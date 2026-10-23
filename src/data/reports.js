@@ -3,7 +3,7 @@
 
 const LOCAL_SUBMISSIONS_KEY = 'quiz-cotten:local-submissions:v1';
 const LOCAL_DECISIONS_KEY = 'quiz-cotten:submission-decisions:v1';
-const LOCAL_REVIEWER_EDITS_KEY = 'quiz-cotten:reviewer-edits:v1';
+const LOCAL_REVIEWER_EDITS_KEY = 'quiz-cotten:reviewer-edits:v2';
 const LOCAL_REVIEW_NOTIFS_KEY = 'quiz-cotten:review-notifications:v1';
 
 export const REVIEWERS = [

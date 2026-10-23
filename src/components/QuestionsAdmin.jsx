@@ -187,7 +187,24 @@ const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 const isReviewerPass = (pw) => String(pw || '').trim().toLowerCase() === 'cocochin';
 
+// updated_at of each question as last seen from the server. Every save sends it back as `baseUpdatedAt`,
+// so the server refuses to overwrite a question that someone (or another device) changed in the meantime.
+const serverStamps = new Map();
+const rememberStamps = (list) => {
+  for (const q of Array.isArray(list) ? list : []) {
+    if (q?.id && q.updated_at) serverStamps.set(q.id, q.updated_at);
+  }
+};
+const conflictError = (data) => {
+  const err = new Error(data?.error || 'Cette question a été modifiée entre-temps. Rechargez la page.');
+  err.code = 'conflict';
+  return err;
+};
+
 async function call(password, payload) {
+  if (payload.action === 'save') {
+    payload = { ...payload, baseUpdatedAt: serverStamps.get(payload.id) };
+  }
   if (payload.action === 'generate_ai') {
     const r = await fetch('/api/admin-questions', {
       method: 'POST',
@@ -213,6 +230,7 @@ async function call(password, payload) {
     if (payload.action === 'list') {
       const r = await fetch('/api/questions');
       const data = await r.json().catch(() => ({}));
+      rememberStamps(data.questions);
       return { questions: Array.isArray(data.questions) ? data.questions : [] };
     }
     if (payload.action === 'save') {
@@ -222,11 +240,14 @@ async function call(password, payload) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password, ...payload }),
         });
+        if (r.status === 409) throw conflictError(await r.json().catch(() => ({})));
         if (r.ok) {
           const out = await r.json().catch(() => ({}));
+          if (out.updatedAt) serverStamps.set(payload.id, out.updatedAt);
           return { ok: true, ...out };
         }
-      } catch {
+      } catch (e) {
+        if (e?.code === 'conflict') throw e;
         // Fallback below
       }
       await submitReviewerQuestionEdit({
@@ -248,6 +269,13 @@ async function call(password, payload) {
     body: JSON.stringify({ password, ...payload }),
   });
   const data = await r.json().catch(() => ({}));
+  if (r.status === 409) throw conflictError(data);
+  if (r.ok) {
+    if (payload.action === 'list') rememberStamps(data.questions);
+    if (data.updatedAt && (payload.action === 'save' || payload.action === 'set_reviewed')) {
+      serverStamps.set(payload.id, data.updatedAt);
+    }
+  }
   if (!r.ok) {
     if (r.status === 429 && payload.action === 'list') {
       const qRes = await fetch('/api/questions');
@@ -577,17 +605,30 @@ export default function QuestionsAdmin({
           byId.set(id, { ...row, data: mergedData });
         }
 
-        const isOutOfSync =
-          idsToSync.has(id) ||
-          (shouldBeReviewed && (!srvData?.reviewed || !srvData?.reviewed_by));
+        // Only the "reviewed" flag is pushed from here, and the server applies it on its own current copy:
+        // an out-of-date page can never send old question text back.
+        const isOutOfSync = shouldBeReviewed && srv && (!srvData?.reviewed || !srvData?.reviewed_by);
 
-        if (isOutOfSync) {
+        // A real unsynced edit (a save that failed earlier) is retried; the server still refuses it if the
+        // question changed since this list was loaded (see serverStamps / baseUpdatedAt).
+        if (idsToSync.has(id) && srv) {
           call(password, {
             action: 'save',
             id: row.id,
             chapter: row.chapter,
             position: row.position || 0,
             question: mergedData,
+          })
+            .then(() => removeLocalReviewerEdit(row.id))
+            .catch((e) => {
+              if (e?.code === 'conflict') removeLocalReviewerEdit(row.id);
+            });
+        } else if (isOutOfSync) {
+          call(password, {
+            action: 'set_reviewed',
+            id: row.id,
+            reviewed: true,
+            reviewedBy: chosenRevBy,
           })
             .then(() => {
               removeLocalReviewerEdit(row.id);
@@ -640,13 +681,6 @@ export default function QuestionsAdmin({
       reviewed_by: chosenReviewer || null,
     };
 
-    writeLocalReviewerEdit({
-      id: row.id,
-      chapter: row.chapter,
-      position: row.position,
-      data: nextData,
-    });
-
     const otherReviewedInChapter = live.filter((r) => r.id !== row.id && isRowReviewed(r)).length;
     const newChapterReviewedCount = otherReviewedInChapter + (nextVal ? 1 : 0);
 
@@ -655,11 +689,10 @@ export default function QuestionsAdmin({
     );
     try {
       await call(password, {
-        action: 'save',
+        action: 'set_reviewed',
         id: row.id,
-        chapter: row.chapter,
-        position: row.position,
-        question: nextData,
+        reviewed: nextVal,
+        reviewedBy: chosenReviewer,
       });
       if (nextVal && live.length > 0 && newChapterReviewedCount === live.length) {
         await submitQuizReviewNotification({
@@ -707,12 +740,6 @@ export default function QuestionsAdmin({
             reviewed: true,
             reviewed_by: r.data?.reviewed_by || chosenReviewer,
           };
-          writeLocalReviewerEdit({
-            id: r.id,
-            chapter: r.chapter,
-            position: r.position,
-            data: nextData,
-          });
           return { ...r, data: nextData };
         })
       );
@@ -724,11 +751,10 @@ export default function QuestionsAdmin({
           reviewed_by: r.data?.reviewed_by || chosenReviewer,
         };
         await call(password, {
-          action: 'save',
+          action: 'set_reviewed',
           id: r.id,
-          chapter: r.chapter,
-          position: r.position,
-          question: nextData,
+          reviewed: true,
+          reviewedBy: nextData.reviewed_by,
         }).catch(() => {});
       }
 
@@ -1083,8 +1109,17 @@ export default function QuestionsAdmin({
         });
       }
       resetQuestionsCache();
-    } catch {
-      // Saved locally in writeLocalReviewerEdit so the user never loses their work
+    } catch (e) {
+      if (e?.code === 'conflict') {
+        // Somebody (or another device) changed this question since this page loaded: keep the server copy.
+        removeLocalReviewerEdit(finalId);
+        setNotice('');
+        setError(
+          'Cette question a été modifiée entre-temps sur un autre appareil : votre enregistrement n’a PAS été appliqué pour ne rien écraser. La liste est rechargée ; refaites votre modification si besoin.'
+        );
+        await load();
+      }
+      // Other errors: saved locally in writeLocalReviewerEdit so the user never loses their work
     }
   };
 

@@ -208,19 +208,14 @@ export function mergeLocalAndServerRow(id, locRow, srvRow) {
 // Group database rows by chapter; keeps only known chapters and includes any new bundled questions not yet in DB.
 function groupByChapter(rows) {
   let localReviewerMap = {};
-  let localReviewed = {};
-  let localReviewedBy = {};
   try {
-    localReviewerMap = JSON.parse(localStorage.getItem('quiz-cotten:reviewer-edits:v1') || '{}') || {};
-    localReviewed = JSON.parse(localStorage.getItem('radio-thomas:reviewed-questions') || '{}') || {};
-    localReviewedBy = JSON.parse(localStorage.getItem('radio-thomas:reviewed-by-questions') || '{}') || {};
+    localReviewerMap = JSON.parse(localStorage.getItem('quiz-cotten:reviewer-edits:v2') || '{}') || {};
   } catch {
     localReviewerMap = {};
   }
 
   const serverById = new Map(rows.map((r) => [r.id, r]));
   const byId = new Map(rows.map((r) => [r.id, r]));
-  const toSync = [];
   let localMapChanged = false;
 
   for (const [id, revRow] of Object.entries(localReviewerMap)) {
@@ -230,76 +225,25 @@ function groupByChapter(rows) {
         continue;
       }
       const srv = serverById.get(id);
-      const { row: mergedRow, removeLocal, shouldSyncToServer } = mergeLocalAndServerRow(id, revRow, srv);
+      const { row: mergedRow, removeLocal } = mergeLocalAndServerRow(id, revRow, srv);
       byId.set(id, mergedRow);
       if (removeLocal) {
         delete localReviewerMap[id];
         localMapChanged = true;
       }
-      if (shouldSyncToServer) {
-        toSync.push(mergedRow);
-      }
     }
   }
   if (localMapChanged && typeof window !== 'undefined') {
     try {
-      window.localStorage.setItem('quiz-cotten:reviewer-edits:v1', JSON.stringify(localReviewerMap));
+      window.localStorage.setItem('quiz-cotten:reviewer-edits:v2', JSON.stringify(localReviewerMap));
     } catch {
       // ignore storage quota errors
     }
   }
 
-  // Auto-sync any pending offline edits or local 'reviewed' flags from this browser to the live database
-  if (typeof window !== 'undefined' && rows !== bundledQuestions) {
-    for (const [id, isRev] of Object.entries(localReviewed)) {
-      if (!isRev || localReviewerMap[id]) continue;
-      const srv = serverById.get(id) || bundledQuestions.find((b) => b.id === id);
-      if (srv && !srv.data?.reviewed) {
-        toSync.push({
-          id: srv.id,
-          chapter: srv.chapter,
-          position: srv.position || 0,
-          data: {
-            ...srv.data,
-            reviewed: true,
-            reviewed_by: localReviewedBy[id] || srv.data?.reviewed_by || 'Thomas L.',
-          },
-        });
-      }
-    }
-    if (toSync.length > 0) {
-      setTimeout(() => {
-        for (const item of toSync) {
-          fetch('/api/admin-questions', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              password: 'cocochin',
-              action: 'save',
-              id: item.id,
-              chapter: item.chapter,
-              position: item.position || 0,
-              question: item.data,
-            }),
-          })
-            .then((r) => {
-              if (r.ok) {
-                try {
-                  const currMap = JSON.parse(localStorage.getItem('quiz-cotten:reviewer-edits:v1') || '{}') || {};
-                  if (currMap[item.id]) {
-                    delete currMap[item.id];
-                    localStorage.setItem('quiz-cotten:reviewer-edits:v1', JSON.stringify(currMap));
-                  }
-                } catch {
-                  // ignore storage errors
-                }
-              }
-            })
-            .catch(() => {});
-        }
-      }, 100);
-    }
-  }
+  // Public pages never write to the database: pending local edits are retried from the reviewer page only,
+  // where the server checks they are not older than what is already saved.
+
   const merged = [];
 
   for (const r of byId.values()) {

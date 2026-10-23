@@ -31,6 +31,30 @@ async function rpc(name, args) {
   return r.json();
 }
 
+// Current live row (RLS hides soft-deleted rows, which are then treated as "not existing").
+async function readLiveRow(id) {
+  const { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } = process.env;
+  const r = await fetch(
+    `${SUPABASE_URL}/rest/v1/quiz_questions?id=eq.${encodeURIComponent(id)}&select=id,chapter,position,data,updated_at&limit=1`,
+    { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` } }
+  );
+  if (!r.ok) throw new Error(String(r.status));
+  const rows = await r.json();
+  return rows[0] || null;
+}
+
+// Optimistic concurrency: a save on an existing question must say which version of the row it was based on.
+// A stale page (or an old cached script that sends nothing) can then never overwrite a newer correction.
+const CONFLICT_MESSAGE =
+  'Cette question a été modifiée entre-temps (autre appareil ou autre personne). Rechargez la page avant de la modifier.';
+async function hasConflict(id, baseUpdatedAt) {
+  const row = await readLiveRow(id);
+  if (!row) return false;
+  const base = typeof baseUpdatedAt === 'string' ? Date.parse(baseUpdatedAt) : NaN;
+  if (!Number.isFinite(base)) return true;
+  return Date.parse(row.updated_at) > base;
+}
+
 async function promoteInlineImagesToTable(questionId, rawQuestion, adminPw) {
   if (!rawQuestion || typeof rawQuestion !== 'object' || !adminPw) return rawQuestion;
   const hasEnonceDataUrl = typeof rawQuestion.enonce_image?.dataUrl === 'string';
@@ -187,6 +211,43 @@ export default async function handler(req, res) {
     return res.status(200).json({ status: 'ok' });
   }
 
+  // Flip only the "reviewed" flag of a question. The server re-reads the current row, so a stale page can
+  // mark a question as reviewed without ever pushing its old text back.
+  if (body.action === 'set_reviewed') {
+    if (!validateId(body.id)) return res.status(400).json({ error: 'Identifiant invalide' });
+    try {
+      const row = await readLiveRow(body.id);
+      if (!row) return res.status(404).json({ error: 'Question introuvable' });
+      const by = typeof body.reviewedBy === 'string' ? body.reviewedBy.trim().slice(0, 80) : '';
+      const next = { ...row.data };
+      if (body.reviewed === true) {
+        next.reviewed = true;
+        next.reviewed_by = by || row.data?.reviewed_by || 'Thomas L.';
+      } else {
+        next.reviewed = false;
+        next.reviewed_by = null;
+      }
+      const { data, error } = validateQuestion(next);
+      if (error) return res.status(400).json({ error });
+      const pw = isReviewer ? await resolveAdminPasswordForReviewer(process.env) : password;
+      if (!pw) return res.status(502).json({ error: 'Enregistrement impossible pour le moment' });
+      const out = await rpc('admin_save_question', {
+        p_password: pw,
+        p_id: row.id,
+        p_chapter: row.chapter,
+        p_position: row.position,
+        p_data: data,
+      });
+      if (out.status === 'locked') return res.status(429).json({ error: 'Trop de tentatives, réessayez plus tard' });
+      if (out.status === 'bad_password') return res.status(401).json({ error: 'Mot de passe incorrect' });
+      if (out.status !== 'ok') return res.status(400).json({ error: 'Requête refusée' });
+      const fresh = await readLiveRow(row.id);
+      return res.status(200).json({ status: 'ok', question: data, updatedAt: fresh?.updated_at || null });
+    } catch {
+      return res.status(502).json({ error: 'Base de données injoignable' });
+    }
+  }
+
   // Reviewer mode ('cocochin'): never call private.check_admin so we never trigger admin login lockout
   if (isReviewer) {
     switch (body.action) {
@@ -218,26 +279,35 @@ export default async function handler(req, res) {
         const position = Number.isInteger(body.position) ? body.position : 0;
         if (position < 0 || position > 100000) return res.status(400).json({ error: 'Position invalide' });
 
+        try {
+          if (await hasConflict(body.id, body.baseUpdatedAt)) {
+            return res.status(409).json({ error: CONFLICT_MESSAGE, code: 'conflict' });
+          }
+        } catch {
+          return res.status(502).json({ error: 'Base de données injoignable' });
+        }
+
         const adminPw = await resolveAdminPasswordForReviewer(process.env);
         const promotedQuestion = await promoteInlineImagesToTable(body.id, body.question, adminPw);
         const { data, error } = validateQuestion(promotedQuestion);
         if (error) return res.status(400).json({ error });
 
         // Save directly into public.quiz_questions so all devices (phones, tablets, computers) see the edit immediately
-        if (adminPw) {
-          try {
-            await rpc('admin_save_question', {
-              p_password: adminPw,
-              p_id: body.id,
-              p_chapter: body.chapter,
-              p_position: position,
-              p_data: data,
-            });
-          } catch {
-            // Fallback below
-          }
+        if (!adminPw) return res.status(502).json({ error: 'Enregistrement impossible pour le moment' });
+        try {
+          const out = await rpc('admin_save_question', {
+            p_password: adminPw,
+            p_id: body.id,
+            p_chapter: body.chapter,
+            p_position: position,
+            p_data: data,
+          });
+          if (out.status !== 'ok') return res.status(400).json({ error: 'Requête refusée' });
+          const fresh = await readLiveRow(body.id);
+          return res.status(200).json({ status: 'ok', question: data, updatedAt: fresh?.updated_at || null });
+        } catch {
+          return res.status(502).json({ error: 'Base de données injoignable' });
         }
-        return res.status(200).json({ status: 'ok', question: data });
       }
       case 'import':
         return res.status(200).json({ status: 'ok', imported: 0 });
@@ -296,6 +366,13 @@ export default async function handler(req, res) {
       }
       const position = Number.isInteger(body.position) ? body.position : 0;
       if (position < 0 || position > 100000) return res.status(400).json({ error: 'Position invalide' });
+      try {
+        if (await hasConflict(body.id, body.baseUpdatedAt)) {
+          return res.status(409).json({ error: CONFLICT_MESSAGE, code: 'conflict' });
+        }
+      } catch {
+        return res.status(502).json({ error: 'Base de données injoignable' });
+      }
       const promotedQuestion = await promoteInlineImagesToTable(body.id, body.question, password);
       const { data, error } = validateQuestion(promotedQuestion);
       if (error) return res.status(400).json({ error });
@@ -358,6 +435,7 @@ export default async function handler(req, res) {
 
     if (body.action === 'save' && args.p_data) {
       out.question = args.p_data;
+      out.updatedAt = (await readLiveRow(body.id).catch(() => null))?.updated_at || null;
     } else if (body.action === 'list' && Array.isArray(out.questions)) {
       out.questions = out.questions.filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99');
     }
