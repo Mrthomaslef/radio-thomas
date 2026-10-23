@@ -43,7 +43,7 @@ export default function Home({ openTheme }) {
   return (
     <section className="home" id="top">
       <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-        QUIZ <span className="grad">Cotten</span>
+        QUIZ <span className="grad">Cochin</span>
       </motion.h1>
 
       {editing ? (
