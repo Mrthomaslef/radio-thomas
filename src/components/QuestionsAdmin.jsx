@@ -1255,38 +1255,6 @@ export default function QuestionsAdmin({
         <div className="qa-bar-actions">
           <button
             type="button"
-            className="btn btn-ghost btn-small"
-            disabled={CHAPTER_KEYS.indexOf(chapter) <= 0}
-            onClick={() => {
-              const idx = CHAPTER_KEYS.indexOf(chapter);
-              if (idx > 0) setChapter(CHAPTER_KEYS[idx - 1]);
-            }}
-            title={
-              CHAPTER_KEYS.indexOf(chapter) > 0
-                ? chapterFullLabel(CHAPTER_KEYS[CHAPTER_KEYS.indexOf(chapter) - 1])
-                : undefined
-            }
-          >
-            ← Ch. {Math.max(1, chapterNumber(chapter) - 1)}
-          </button>
-          <button
-            type="button"
-            className="btn btn-ghost btn-small"
-            disabled={CHAPTER_KEYS.indexOf(chapter) >= CHAPTER_KEYS.length - 1}
-            onClick={() => {
-              const idx = CHAPTER_KEYS.indexOf(chapter);
-              if (idx >= 0 && idx < CHAPTER_KEYS.length - 1) setChapter(CHAPTER_KEYS[idx + 1]);
-            }}
-            title={
-              CHAPTER_KEYS.indexOf(chapter) < CHAPTER_KEYS.length - 1
-                ? chapterFullLabel(CHAPTER_KEYS[CHAPTER_KEYS.indexOf(chapter) + 1])
-                : undefined
-            }
-          >
-            Ch. {Math.min(CHAPTER_KEYS.length, chapterNumber(chapter) + 1)} →
-          </button>
-          <button
-            type="button"
             className="btn btn-small qa-ai-btn"
             onClick={openAiGenerator}
             disabled={busy}
