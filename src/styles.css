@@ -1411,6 +1411,21 @@ a.cq-dot:hover { transform: scale(1.08); }
   gap: 8px;
 }
 
+.home-app-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+.home-app-btn {
+  font-size: 0.84rem;
+  color: var(--muted);
+  border-color: var(--line);
+}
+.home-app-btn:hover {
+  color: var(--cyan);
+  border-color: rgba(56, 225, 255, 0.45);
+}
+
 
 
 
