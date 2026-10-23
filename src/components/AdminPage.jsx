@@ -75,6 +75,7 @@ export default function AdminPage({ reviewerMode = false }) {
   const [courseFilter, setCourseFilter] = useState('');
   const [tab, setTab] = useState(reviewerMode ? 'questions' : 'results'); // results | questions | reports | submissions | reviews
   const [editTarget, setEditTarget] = useState(null);
+  const [closeQuestionEditor, setCloseQuestionEditor] = useState(null);
   const [resolvingId, setResolvingId] = useState(null);
   const [submissionError, setSubmissionError] = useState('');
   const { byChapter, reload: reloadQuestions } = useQuestions();
@@ -552,9 +553,17 @@ export default function AdminPage({ reviewerMode = false }) {
         <div className="admin-head">
           <div>
             <span className="eyebrow">Espace correcteur</span>
-            <h1 className="admin-title">Relecture &amp; correction des questions</h1>
+            <h1 className="admin-title">Correction</h1>
           </div>
-          <button className="btn btn-ghost btn-small" onClick={logout}>Se déconnecter</button>
+          {closeQuestionEditor ? (
+            <button className="btn btn-ghost btn-small" onClick={() => closeQuestionEditor()}>
+              ← Retour
+            </button>
+          ) : (
+            <button className="btn btn-ghost btn-small" onClick={logout}>
+              Se déconnecter
+            </button>
+          )}
         </div>
 
         <QuestionsAdmin
@@ -562,6 +571,7 @@ export default function AdminPage({ reviewerMode = false }) {
           reviewerMode
           editTarget={editTarget}
           onClearEditTarget={clearEditTarget}
+          onEditingChange={setCloseQuestionEditor}
         />
       </section>
     );
@@ -569,7 +579,7 @@ export default function AdminPage({ reviewerMode = false }) {
 
   const titleByTab = {
     results: 'Résultats des quiz',
-    questions: 'Questions du quiz',
+    questions: closeQuestionEditor ? 'Correction' : 'Questions du quiz',
     reports: 'Signalements & retours',
     submissions: 'Questions proposées',
     reviews: 'Quiz relus par les correcteurs',
@@ -582,7 +592,15 @@ export default function AdminPage({ reviewerMode = false }) {
           <span className="eyebrow">Espace admin</span>
           <h1 className="admin-title">{titleByTab[tab] || 'Administration'}</h1>
         </div>
-        <button className="btn btn-ghost btn-small" onClick={logout}>Se déconnecter</button>
+        {tab === 'questions' && closeQuestionEditor ? (
+          <button className="btn btn-ghost btn-small" onClick={() => closeQuestionEditor()}>
+            ← Retour
+          </button>
+        ) : (
+          <button className="btn btn-ghost btn-small" onClick={logout}>
+            Se déconnecter
+          </button>
+        )}
       </div>
 
       {openReviewNotifications.length > 0 && tab !== 'reviews' && (
@@ -670,6 +688,7 @@ export default function AdminPage({ reviewerMode = false }) {
           onResolveSubmission={handleResolveSubmission}
           acceptedSubmissions={acceptedSubmissions}
           reviewerEdits={reviewerEdits}
+          onEditingChange={setCloseQuestionEditor}
         />
       ) : tab === 'reviews' ? (
         <div className="admin-reports">

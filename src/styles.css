@@ -343,6 +343,7 @@ a.card { display: block; color: inherit; }
 .admin-input:focus { outline: 2px solid var(--cyan); outline-offset: 2px; }
 .admin-error { color: var(--bad); font-size: 0.92rem; }
 .admin-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
+.admin-head > .btn { margin-left: auto; }
 .admin-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 22px; }
 .admin-stat { padding: 18px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); }
 .admin-stat strong { display: block; font-family: var(--display); font-size: 2rem; color: var(--cyan); }

@@ -364,6 +364,7 @@ export default function QuestionsAdmin({
   activeReviewer = null,
   onChangeReviewer = null,
   reviewerMode = false,
+  onEditingChange = null,
 }) {
   const [rows, setRows] = useState(null);
   const [localReviewed, setLocalReviewed] = useState(readLocalReviewed);
@@ -381,6 +382,19 @@ export default function QuestionsAdmin({
   const [chapter, setChapter] = useState('ch1');
   const [editing, setEditing] = useState(null); // { id, chapter, position, q, isNew, reportContext, aiContext }
   const [preview, setPreview] = useState(false);
+
+  useEffect(() => {
+    if (!onEditingChange) return;
+    if (editing) {
+      onEditingChange(() => () => {
+        setEditing(null);
+        setPreview(false);
+        setError('');
+      });
+    } else {
+      onEditingChange(null);
+    }
+  }, [editing, onEditingChange]);
   const [busy, setBusy] = useState(false);
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [aiChapter, setAiChapter] = useState('ch1');
