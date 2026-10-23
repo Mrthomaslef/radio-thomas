@@ -62,6 +62,15 @@ function parseRoute() {
   };
 }
 
+function isStandaloneApp() {
+  if (typeof window === 'undefined') return false;
+  if (window.navigator?.standalone === true) return true;
+  if (window.matchMedia?.('(display-mode: standalone)')?.matches) return true;
+  if (window.matchMedia?.('(display-mode: fullscreen)')?.matches) return true;
+  if (typeof document !== 'undefined' && document.referrer.includes('android-app://')) return true;
+  return false;
+}
+
 export default function App() {
   const [course, setCourse] = useState(parseRoute);
   const [admin, setAdmin] = useState(isAdminRoute);
@@ -96,6 +105,7 @@ export default function App() {
     let startX = null;
 
     const onTouchStart = (e) => {
+      if (!isStandaloneApp()) return;
       if (refreshingRef.current) return;
       if (window.scrollY > 2) {
         startY = null;
