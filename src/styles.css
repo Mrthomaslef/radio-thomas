@@ -1417,6 +1417,11 @@ a.cq-dot:hover { transform: scale(1.08); }
   justify-content: center;
   margin-top: 22px;
 }
+@media all and (display-mode: standalone), all and (display-mode: fullscreen) {
+  .home-app-wrap {
+    display: none !important;
+  }
+}
 .home-app-btn {
   font-size: 0.84rem;
   color: var(--muted);

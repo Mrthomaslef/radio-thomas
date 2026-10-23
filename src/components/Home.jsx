@@ -11,6 +11,15 @@ import {
 } from '../data/player.js';
 import Icon from './Icons.jsx';
 
+function isStandaloneMode() {
+  if (typeof window === 'undefined') return false;
+  if (window.navigator?.standalone === true) return true;
+  if (window.matchMedia?.('(display-mode: standalone)')?.matches) return true;
+  if (window.matchMedia?.('(display-mode: fullscreen)')?.matches) return true;
+  if (typeof document !== 'undefined' && document.referrer.includes('android-app://')) return true;
+  return false;
+}
+
 // Home: ask a pseudo, then pick a theme and one of its chapters.
 // `openTheme` comes from the URL (#/epaule) so "back" from a chapter lands on the chapter list.
 export default function Home({ openTheme }) {
@@ -19,6 +28,15 @@ export default function Home({ openTheme }) {
   const [draft, setDraft] = useState(pseudo);
   const [editing, setEditing] = useState(!pseudo);
   const [progress, setProgress] = useState(() => readAllProgress(readName()));
+  const [isAppMode, setIsAppMode] = useState(isStandaloneMode);
+
+  useEffect(() => {
+    const mq = window.matchMedia?.('(display-mode: standalone)');
+    if (!mq) return undefined;
+    const onChange = () => setIsAppMode(isStandaloneMode());
+    mq.addEventListener?.('change', onChange);
+    return () => mq.removeEventListener?.('change', onChange);
+  }, []);
 
   useEffect(() => {
     const n = readName();
@@ -138,16 +156,18 @@ export default function Home({ openTheme }) {
             );
           })}
 
-          <div className="home-app-wrap">
-            <a
-              href="https://www.google.com/search?q=comment+ajouter+un+site+web+sur+l%27%C3%A9cran+d%27accueil+iPhone+et+Android+tutoriel"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-ghost btn-small home-app-btn"
-            >
-              Mode &quot;app&quot; : ajouter à ma page d’accueil
-            </a>
-          </div>
+          {!isAppMode && (
+            <div className="home-app-wrap">
+              <a
+                href="https://www.google.com/search?q=comment+ajouter+un+site+web+sur+l%27%C3%A9cran+d%27accueil+iPhone+et+Android+tutoriel"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-ghost btn-small home-app-btn"
+              >
+                Mode &quot;app&quot; : ajouter à ma page d’accueil
+              </a>
+            </div>
+          )}
         </motion.div>
       )}
     </section>
