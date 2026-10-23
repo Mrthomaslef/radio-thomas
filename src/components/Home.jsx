@@ -60,22 +60,23 @@ export default function Home({ openTheme }) {
 
   return (
     <section className="home" id="top">
-      <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-        QUIZ <span className="grad">Cochin</span>
-      </motion.h1>
-
       {!isAppMode && (
         <div className="home-app-wrap">
           <a
             href="https://www.google.com/search?q=comment+ajouter+un+site+web+sur+l%27%C3%A9cran+d%27accueil+iPhone+et+Android+tutoriel"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-small home-app-btn"
+            className="home-app-banner"
           >
-            Mode App : Ajouter à ma page d’accueil
+            <span>Mode App : Ajouter à ma page d’accueil</span>
+            <Icon name="arrow" size={16} />
           </a>
         </div>
       )}
+
+      <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+        QUIZ <span className="grad">Cochin</span>
+      </motion.h1>
 
       {editing ? (
         <motion.form className="home-panel name-step" onSubmit={submit} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

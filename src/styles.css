@@ -1414,12 +1414,11 @@ a.cq-dot:hover { transform: scale(1.08); }
 
 .home-app-wrap {
   display: none;
-  justify-content: center;
-  margin: -6px 0 18px;
+  margin-bottom: 18px;
 }
 @media (max-width: 768px), (hover: none) and (pointer: coarse) {
   .home-app-wrap {
-    display: flex;
+    display: block;
   }
 }
 @media all and (display-mode: standalone), all and (display-mode: fullscreen) {
@@ -1427,15 +1426,23 @@ a.cq-dot:hover { transform: scale(1.08); }
     display: none !important;
   }
 }
-.home-app-btn {
+.home-app-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--cyan);
-  background: rgba(56, 225, 255, 0.14);
-  border: 1px solid rgba(56, 225, 255, 0.55);
-  box-shadow: 0 4px 16px rgba(56, 225, 255, 0.15);
+  background: linear-gradient(90deg, rgba(56, 225, 255, 0.16), rgba(167, 139, 250, 0.14));
+  border: 1px solid rgba(56, 225, 255, 0.5);
+  box-shadow: 0 4px 16px rgba(56, 225, 255, 0.12);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
-.home-app-btn:hover {
+.home-app-banner:hover {
   color: #041018;
   background: var(--cyan);
   border-color: var(--cyan);
