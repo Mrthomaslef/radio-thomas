@@ -1426,6 +1426,25 @@ a.cq-dot:hover { transform: scale(1.08); }
   border-color: rgba(56, 225, 255, 0.45);
 }
 
+.footer-feedback-wrap {
+  max-width: 680px;
+  margin: 0 auto 18px;
+  padding: 0 clamp(16px, 5vw, 40px);
+}
+.footer-feedback-card {
+  background: #131822;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+.footer-feedback-done {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 
 
 

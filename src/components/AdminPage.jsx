@@ -632,7 +632,7 @@ export default function AdminPage({ reviewerMode = false }) {
             <strong>
               ⚑ {openReports.length} {openReports.length > 1 ? 'nouveaux retours d’utilisateurs' : 'nouveau retour d’utilisateur'}
             </strong>
-            <span>Un participant a signalé une remarque sur une question du quiz.</span>
+            <span>Un participant a envoyé un retour ou signalé un bug / une remarque sur une question.</span>
           </div>
           <button type="button" className="btn btn-small" onClick={() => setTab('reports')}>
             Lire {openReports.length > 1 ? 'les retours' : 'le retour'}
@@ -885,7 +885,8 @@ export default function AdminPage({ reviewerMode = false }) {
           ) : (
             <div className="admin-reports-list">
               {openReports.map((r) => {
-                const qInfo = questionMap[r.question_id];
+                const isSiteBug = r.question_id === 'site-bug';
+                const qInfo = isSiteBug ? null : questionMap[r.question_id];
                 const chKey = r.chapter || qInfo?.chapter || 'ch1';
                 return (
                   <article key={r.id} className="admin-report-card">
@@ -894,7 +895,9 @@ export default function AdminPage({ reviewerMode = false }) {
                         <strong>{r.name}</strong> · {formatDate(r.created_at)}
                       </span>
                       <span className="admin-report-tag">
-                        {courseLabel(chKey)} · {qInfo ? `Question ${qInfo.number}` : r.question_id} ({r.question_id})
+                        {isSiteBug
+                          ? 'Retour général / Bug du site'
+                          : `${courseLabel(chKey)} · ${qInfo ? `Question ${qInfo.number}` : r.question_id} (${r.question_id})`}
                       </span>
                     </div>
                     {qInfo?.enonce && (
@@ -904,9 +907,11 @@ export default function AdminPage({ reviewerMode = false }) {
                     )}
                     <p className="admin-report-msg">« {r.message} »</p>
                     <div className="admin-report-actions">
-                      <button type="button" className="btn btn-small" onClick={() => openQuestionFromReport(r)}>
-                        Modifier la question
-                      </button>
+                      {!isSiteBug && (
+                        <button type="button" className="btn btn-small" onClick={() => openQuestionFromReport(r)}>
+                          Modifier la question
+                        </button>
+                      )}
                       <button
                         type="button"
                         className="btn btn-small btn-ghost"
@@ -927,7 +932,8 @@ export default function AdminPage({ reviewerMode = false }) {
               <summary>{resolvedReports.length} signalement(s) déjà traité(s)</summary>
               <div className="admin-reports-list" style={{ marginTop: 12 }}>
                 {resolvedReports.map((r) => {
-                  const qInfo = questionMap[r.question_id];
+                  const isSiteBug = r.question_id === 'site-bug';
+                  const qInfo = isSiteBug ? null : questionMap[r.question_id];
                   const chKey = r.chapter || qInfo?.chapter || 'ch1';
                   return (
                     <article key={r.id} className="admin-report-card is-resolved">
@@ -936,15 +942,17 @@ export default function AdminPage({ reviewerMode = false }) {
                           <strong>{r.name}</strong> · {formatDate(r.created_at)}
                         </span>
                         <span className="admin-report-tag">
-                          {courseLabel(chKey)} · {r.question_id}
+                          {isSiteBug ? 'Retour général / Bug du site' : `${courseLabel(chKey)} · ${r.question_id}`}
                         </span>
                       </div>
                       <p className="admin-report-msg">« {r.message} »</p>
-                      <div className="admin-report-actions">
-                        <button type="button" className="btn btn-small btn-ghost" onClick={() => openQuestionFromReport(r)}>
-                          Modifier la question
-                        </button>
-                      </div>
+                      {!isSiteBug && (
+                        <div className="admin-report-actions">
+                          <button type="button" className="btn btn-small btn-ghost" onClick={() => openQuestionFromReport(r)}>
+                            Modifier la question
+                          </button>
+                        </div>
+                      )}
                     </article>
                   );
                 })}
