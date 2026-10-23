@@ -17,7 +17,7 @@ export default function Navbar() {
   return (
     <header className={`nav ${scrolled ? 'nav-scrolled' : ''}`}>
       <a href="#/" className="brand">
-        <span className="brand-mark">Q</span> QUIZ&nbsp;Cotten
+        <span className="brand-mark">Q</span> QUIZ&nbsp;Cochin
       </a>
       <div className="nav-right">
         {pseudo && <span className="nav-user" title="Session active">{pseudo}</span>}
