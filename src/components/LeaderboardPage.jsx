@@ -185,7 +185,7 @@ export default function LeaderboardPage() {
                 Proposez une nouvelle question (+10 pts une fois validée) ou signalez une remarque pendant un quiz (+1 pt)&nbsp;!
               </p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-                <a href="#/proposer" className="btn btn-small">+ Proposer une question (+10 pts)</a>
+                <a href="#/proposer" className="btn btn-small">Proposer une question (+10 pts)</a>
                 <a href="#/" className="btn btn-small btn-ghost">Choisir un quiz</a>
               </div>
             </>

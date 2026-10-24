@@ -116,7 +116,7 @@ export default function Home({ openTheme }) {
                 Quiz aléatoire <Icon name="arrow" size={15} />
               </a>
               <a href="#/proposer" className="btn btn-ghost btn-small">
-                + Proposer une question
+                Proposer une question
               </a>
             </div>
           </div>
