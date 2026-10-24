@@ -642,83 +642,127 @@
       "difficulty": 1
     },
     {
-      "id": "c3-q15",
+      "id": "c3-q17",
       "type": "QRM",
-      "theme": "Nerf suprascapulaire : trajet et rôle",
-      "enonce": "Concernant le trajet et le rôle du nerf suprascapulaire, quelles sont les affirmations exactes ?",
+      "theme": "Plexus brachial",
+      "enonce": "Concernant le protocole IRM et le choix des séquences pour l’exploration du plexus brachial, quelles sont les affirmations exactes ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Il naît du tronc supérieur (C5-C6) du plexus brachial et passe sous le ventre inférieur du muscle omohyoïdien avant de pénétrer dans l’échancrure suprascapulaire.",
+          "texte": "L’IRM 3 Tesla permet une suppression du signal de la graisse plus uniforme et génère moins d’artefacts de susceptibilité magnétique que l’IRM 1,5 Tesla.",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Dans l’échancrure suprascapulaire, le nerf et l’artère suprascapulaire passent ensemble sous le ligament scapulaire transverse supérieur.",
-          "correct": false
-        },
-        {
-          "id": "C",
-          "texte": "Il est strictement moteur, innervant les muscles supra-épineux et infra-épineux.",
-          "correct": false
-        },
-        {
-          "id": "D",
-          "texte": "Après avoir traversé l’échancrure suprascapulaire, il innerve le muscle supra-épineux, puis passe dans l’échancrure spinoglénoïdale pour aller innerver le muscle infra-épineux.",
-          "correct": true
-        }
-      ],
-      "explication": "Le nerf suprascapulaire (C5-C6) passe sous le muscle omohyoïdien puis dans l’échancrure suprascapulaire (sous le ligament transverse supérieur), innerve le muscle supra-épineux, passe par l’échancrure spinoglénoïdale et se termine dans le muscle infra-épineux. À l’état normal, seul le nerf (et souvent la veine) passe sous le ligament scapulaire transverse supérieur, tandis que l’artère passe au-dessus (un trajet aberrant de l’artère dans l’échancrure est d’ailleurs un facteur de risque de compression). Le nerf suprascapulaire est mixte : il a un rôle moteur, mais aussi un rôle sensitif pour la bourse subacromiodeltoïdienne, les articulations glénohumérale et acromioclaviculaire, certains ligaments et la peau du bras.",
-      "correction_figures": [],
-      "source": {
-        "page": 116,
-        "element": "Trajet du nerf suprascapulaire",
-        "refs": ""
-      },
-      "difficulty": 1
-    },
-    {
-      "id": "c3-q16",
-      "type": "QRM",
-      "theme": "Nerf suprascapulaire : étiologies et facteurs favorisants",
-      "enonce": "Parmi les facteurs suivants, lesquels sont considérés comme favorisants ou responsables d’un syndrome compressif ou d’une souffrance du nerf suprascapulaire ?",
-      "enonce_image": null,
-      "items": [
-        {
-          "id": "A",
-          "texte": "Une échancrure suprascapulaire étroite ou transformée en foramen osseux par l’ossification du ligament scapulaire transverse supérieur.",
-          "correct": true
-        },
-        {
-          "id": "B",
-          "texte": "Un kyste mucoïde développé dans l’échancrure suprascapulaire ou spinoglénoïdale.",
+          "texte": "Une étude associée du rachis cervical, incluant notamment des coupes sagittales T2, doit être réalisée de manière systématique afin d’éliminer d’autres pathologies pouvant mimer une lésion du plexus.",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Des microtraumatismes par étirement lors de l’armer du bras (ex. : volley-ball, tennis), entraînant parfois des lésions de l’artère suprascapulaire associée.",
-          "correct": true
+          "texte": "Les séquences 3D T1 ou T2 avec suppression du signal de la graisse sont recommandées pour une étude anatomique précise et la détection d’éventuelles variations anatomiques.",
+          "correct": false
         },
         {
           "id": "D",
-          "texte": "Une hypertrophie du muscle petit pectoral.",
-          "correct": false
+          "texte": "Les séquences 3D myélographiques sont utiles pour détecter les avulsions radiculaires.",
+          "correct": true
         },
         {
           "id": "E",
-          "texte": "Le syndrome de Parsonage-Turner (dont le nerf suprascapulaire est atteint dans plus de 80 % des cas).",
+          "texte": "L’injection de gadolinium doit être réalisée systématiquement",
+          "correct": false
+        },
+        {
+          "id": "F",
+          "texte": "Une séquence d’angio-IRM avec élévation du bras homolatéral peut sensibiliser la détection de la compression vasculaire",
+          "correct": false
+        }
+      ],
+      "explication": "Une étude du rachis cervical (sagittale T2) est systématique pour éliminer les diagnostics différentiels\n\nLa séquence 3D myélographique (pondérée T2) permet d’analyser les avulsions radiculaires grâce à sa haute résolution spatiale, mais s’accompagne d’un risque de faux positifs dus aux artefacts de flux, particulièrement à 3 T\n\nL’IRM 1,5 T qui offre une suppression de graisse plus uniforme et moins d’artefacts de susceptibilité, tandis que la 3 T offre un meilleur rapport signal/bruit et une meilleure résolution temporelle\n\nL’étude anatomique précise repose sur les séquences 3D T1 ou T2 sans suppression du signal de la graisse.\n\nL’injection de gadolinium peut s’avérer nécessaire en cas de pathologie tumorale, infectieuse, inflammatoire, ou après radiothérapie/chirurgie\n\nEn cas de syndrome de la traversée cervicobrachiale, une élévation homolatérale du bras peut sensibiliser la détection de la compression vasculaire (séquence d’angio-IRM) ou nerveuse",
+      "correction_figures": [],
+      "source": {
+        "page": 99,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 2,
+      "reviewed": true,
+      "reviewed_by": "Thomas L."
+    },
+    {
+      "id": "c3-q18",
+      "type": "QRM",
+      "theme": "Neuropathies inflammatoires dysimmunitaires chroniques",
+      "enonce": "Concernant les caractéristiques cliniques et radiologiques des neuropathies inflammatoires dysimmunitaires chroniques, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La Polyradiculonévrite inflammatoire démyélinisante chronique (PIDC) se caractérise par un déficit symétrique, avec une atteinte sensitive prédominant sur l’atteinte motrice.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Dans la PIDC, l’IRM objective typiquement une hypertrophie nerveuse bilatérale et symétrique (souvent à prédominance plexulaire), avec un hypersignal STIR et parfois un rehaussement après injection de gadolinium.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le syndrome de Lewis-Sumner (ou MASDAM) se distingue par une atteinte asymétrique et exclusivement motrice de la partie distale du membre supérieur.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La neuropathie motrice multifocale et la sclérose latérale amyotrophique (SLA) peuvent être différenciées en imagerie, la première présentant des élargissements focaux et des anomalies de signal des nerfs périphériques en IRM ou échographie.",
           "correct": true
         }
       ],
-      "explication": "La souffrance du nerf suprascapulaire est plurifactorielle : une échancrure suprascapulaire étroite ou fermée par un ligament ossifié, la présence d’un kyste mucoïde ou d’une tumeur, ou les microtraumatismes sportifs lors du geste d’armer du bras avec possible micro-embolie artérielle sont des facteurs compressifs et ischémiques classiques. Le syndrome de Parsonage-Turner (névralgie amyotrophiante) touche ce nerf dans plus de 80 % des cas. L’hypertrophie musculaire peut être en cause, mais il s’agit du muscle subscapulaire, de l’infra-épineux ou de muscles surnuméraires (ex. subclavius posticus), et non du petit pectoral.",
+      "explication": "La PIDC s’accompagne d’une hypertrophie bilatérale et symétrique (surtout plexulaire) bien visible en IRM, marquée par un hypersignal STIR. La présence d’élargissements focaux et d’anomalies de signal sur les nerfs périphériques en IRM ou échographie permet de différencier la neuropathie motrice multifocale de la SLA, qui constitue son principal diagnostic différentiel. Dans la PIDC, l’atteinte est symétrique mais le déficit moteur prédomine sur le sensitif (atteinte motrice > sensitive). Le syndrome de Lewis-Sumner se caractérise par une atteinte asymétrique sensitivomotrice (douleurs et amyotrophie), et non purement motrice.",
       "correction_figures": [],
       "source": {
-        "page": 116,
-        "element": "Étiologies de l’atteinte du nerf suprascapulaire",
+        "page": 108,
+        "element": "Neuropathies inflammatoires dysimmunitaires (PIDC, Syndrome de Lewis-Sumner, Neuropathie motrice multifocale)",
         "refs": ""
       },
       "difficulty": 2
+    },
+    {
+      "id": "c3-q19",
+      "type": "QCU",
+      "theme": "Neuropathies inflammatoires dysimmunitaires : neuropathie motrice multifocale",
+      "enonce": "Un patient consulte pour un déficit moteur d’installation progressive, touchant de manière asymétrique le membre supérieur droit. Ce déficit s’accompagne de crampes et de fasciculations, sans aucun trouble sensitif associé. L’électromyogramme (EMG) révèle des blocs de conduction situés en dehors des zones de compression nerveuse habituelles. Quel est le diagnostic le plus probable et son traitement de référence ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une Polyradiculonévrite inflammatoire démyélinisante chronique (PIDC) ; traitée par corticothérapie et échanges plasmatiques.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un syndrome de Lewis-Sumner (MASDAM) ; traité par immunosuppresseurs.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une neuropathie motrice multifocale ; traitée par injections intraveineuses d’immunoglobulines.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une Sclérose Latérale Amyotrophique (SLA) ; ne justifiant pas d’immunoglobulines.",
+          "correct": false
+        }
+      ],
+      "explication": "L’installation progressive d’un déficit moteur asymétrique débutant aux membres supérieurs, associé à des crampes, des fasciculations et la mise en évidence de blocs de conduction en dehors des zones de compression, est le tableau typique de la neuropathie motrice multifocale. Son traitement repose sur l’injection intraveineuse d’immunoglobulines. La PIDC donnerait une atteinte symétrique et proximodistale. Le syndrome de Lewis-Sumner inclurait une composante sensitive (douleurs). La SLA est le principal diagnostic différentiel, mais ne présente pas de blocs de conduction caractéristiques ni d’élargissements nerveux focaux en imagerie.",
+      "correction_figures": [],
+      "source": {
+        "page": 108,
+        "element": "Neuropathies inflammatoires dysimmunitaires (Neuropathie motrice multifocale)",
+        "refs": ""
+      },
+      "difficulty": 1
     }
   ]
 }
