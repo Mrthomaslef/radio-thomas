@@ -136,12 +136,25 @@ export default function Home({ openTheme }) {
                       const total = qs.length || c.fallbackCount;
                       const ans = progress[c.id]?.answers || {};
                       const done = qs.filter((q) => ans[q.id]).length;
+                      const allReviewed = qs.length > 0 && qs.every((q) => q.reviewed);
                       return (
                         <li key={c.id} className="chapter-item">
                           {c.href ? (
                             <div className="chapter-row">
                               <a href={c.href} className="chapter">
-                                <b>{i + 1}</b> <span className="chapter-title">{c.title}</span>
+                                <b>{i + 1}</b>{' '}
+                                <span className="chapter-title">
+                                  {c.title}
+                                  {allReviewed && (
+                                    <span
+                                      className="chapter-reviewed-badge"
+                                      title="Chapitre entièrement relu et validé"
+                                      aria-label="Chapitre entièrement relu et validé"
+                                    >
+                                      <Icon name="check" size={12} />
+                                    </span>
+                                  )}
+                                </span>
                                 <span className="chapter-go">
                                   {`${done}/${total}`} <Icon name="arrow" size={16} />
                                 </span>

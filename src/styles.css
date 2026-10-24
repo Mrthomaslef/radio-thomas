@@ -480,6 +480,13 @@ a.chapter:hover { border-color: var(--cyan); background: rgba(56, 225, 255, 0.07
   flex: 1; min-width: 0; font-size: 0.95rem; line-height: 1.3;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
+.chapter-reviewed-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; margin-left: 7px; vertical-align: -3px;
+  border-radius: 50%; background: rgba(52, 211, 153, 0.2);
+  border: 1px solid rgba(52, 211, 153, 0.65); color: var(--good);
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.25);
+}
 .chapter-go {
   flex: none; margin-left: auto; display: inline-flex; align-items: center; gap: 6px;
   color: var(--cyan); font-size: 0.85rem; font-weight: 600; white-space: nowrap;
