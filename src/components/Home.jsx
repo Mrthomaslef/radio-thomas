@@ -136,8 +136,19 @@ export default function Home({ openTheme }) {
 
           {themes.map((t) => {
             const open = openTheme === t.id;
+            const themePassed =
+              t.chapters.length > 0 &&
+              t.chapters.every((c) => {
+                const qs = byChapter[c.id] || [];
+                if (qs.length === 0) return false;
+                const ans = progress[c.id]?.answers || {};
+                const answeredQs = qs.filter((q) => Array.isArray(ans[q.id]) && ans[q.id].length > 0);
+                if (answeredQs.length !== qs.length) return false;
+                const score = answeredQs.filter((q) => isQuestionCorrect(q, ans[q.id])).length;
+                return score / qs.length >= 0.6;
+              });
             return (
-              <div key={t.id} className="theme">
+              <div key={t.id} className={`theme ${themePassed ? 'theme-passed' : ''}`}>
                 <a
                   href={open ? '#/' : `#/${t.id}`}
                   className={`theme-head ${open ? 'on' : ''}`}
