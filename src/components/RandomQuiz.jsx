@@ -37,6 +37,11 @@ export default function RandomQuiz() {
   const [difficulties, setDifficulties] = useState([1, 2, 3]);
   const [count, setCount] = useState(10);
   const [session, setSession] = useState(null); // { id, questions }
+  const [openThemes, setOpenThemes] = useState({});
+
+  const toggleOpenTheme = (themeId) => {
+    setOpenThemes((prev) => ({ ...prev, [themeId]: !prev[themeId] }));
+  };
 
   // Initialize selection with all available chapters once questions are loaded
   useEffect(() => {
@@ -167,8 +172,8 @@ export default function RandomQuiz() {
     return (
       <div className="rnd-play">
         <div className="rnd-play-top">
-          <button type="button" className="cq-back link-btn" onClick={() => setSession(null)}>
-            ← Modifier les chapitres ou le nombre de questions
+          <button type="button" className="rnd-action-btn" onClick={() => setSession(null)}>
+            ← Modifier la sélection
           </button>
         </div>
         <QuizPlayer
@@ -203,7 +208,7 @@ export default function RandomQuiz() {
       <div className="cq-card rnd-box">
         <div className="rnd-sec-head">
           <h2>1. Chapitres à inclure</h2>
-          <button type="button" className="link-btn" onClick={selectAll}>
+          <button type="button" className="rnd-action-btn" onClick={selectAll}>
             {selected.length === availableChapters.length ? 'Tout désélectionner' : 'Tout sélectionner'}
           </button>
         </div>
@@ -211,43 +216,72 @@ export default function RandomQuiz() {
         <div className="rnd-themes">
           {themes.map((t) => {
             const validIds = t.chapters.map((c) => c.id).filter((id) => (byChapter[id] || []).length > 0);
-            const allInTheme = validIds.length > 0 && validIds.every((id) => selected.includes(id));
+            const selectedInTheme = validIds.filter((id) => selected.includes(id));
+            const allInTheme = validIds.length > 0 && selectedInTheme.length === validIds.length;
+            const someInTheme = selectedInTheme.length > 0;
+            const totalQsInTheme = t.chapters.reduce((sum, c) => sum + (byChapter[c.id] || []).length, 0);
+            const isOpen = Boolean(openThemes[t.id]);
             return (
-              <div key={t.id} className="rnd-theme">
-                <div className="rnd-theme-head">
-                  <h3>{t.title}</h3>
+              <div
+                key={t.id}
+                className={`rnd-theme-card ${isOpen ? 'is-open' : ''} ${someInTheme ? 'has-selected' : ''}`}
+              >
+                <div className="rnd-theme-bar">
+                  <button
+                    type="button"
+                    className="rnd-theme-toggle"
+                    onClick={() => toggleOpenTheme(t.id)}
+                    aria-expanded={isOpen}
+                  >
+                    <div className="rnd-theme-info">
+                      <span className="rnd-theme-title">{t.title}</span>
+                      <span className="rnd-theme-meta">
+                        {validIds.length > 0
+                          ? `${selectedInTheme.length}/${validIds.length} ch. · ${totalQsInTheme} q.`
+                          : `${t.chapters.length} ch. · 0 q.`}
+                      </span>
+                    </div>
+                    <span className={`prog-chevron ${isOpen ? 'open' : ''}`} aria-hidden="true">▾</span>
+                  </button>
                   {validIds.length > 0 && (
-                    <button type="button" className="link-btn" onClick={() => toggleTheme(t)}>
-                      {allInTheme ? 'Décocher ce thème' : 'Cocher ce thème'}
+                    <button
+                      type="button"
+                      className={`rnd-theme-check-btn ${allInTheme ? 'on' : ''}`}
+                      onClick={() => toggleTheme(t)}
+                    >
+                      {allInTheme ? '✓ Tout coché' : 'Tout cocher'}
                     </button>
                   )}
                 </div>
-                <div className="rnd-ch-list">
-                  {t.chapters.map((c, idx) => {
-                    const qCount = (byChapter[c.id] || []).length;
-                    const checked = selected.includes(c.id);
-                    const disabled = qCount === 0;
-                    return (
-                      <label
-                        key={c.id}
-                        className={`rnd-ch ${checked ? 'on' : ''} ${disabled ? 'is-disabled' : ''}`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={checked}
-                          disabled={disabled}
-                          onChange={() => toggleChapter(c.id)}
-                        />
-                        <span className="rnd-ch-title">
-                          <b>{idx + 1}.</b> {c.title}
-                        </span>
-                        <span className="rnd-ch-count">
-                          {qCount > 0 ? `${qCount} questions` : '0 question'}
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
+
+                {isOpen && (
+                  <div className="rnd-ch-list">
+                    {t.chapters.map((c, idx) => {
+                      const qCount = (byChapter[c.id] || []).length;
+                      const checked = selected.includes(c.id);
+                      const disabled = qCount === 0;
+                      return (
+                        <label
+                          key={c.id}
+                          className={`rnd-ch ${checked ? 'on' : ''} ${disabled ? 'is-disabled' : ''}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            disabled={disabled}
+                            onChange={() => toggleChapter(c.id)}
+                          />
+                          <span className="rnd-ch-title">
+                            <b>{idx + 1}.</b> {c.title}
+                          </span>
+                          <span className="rnd-ch-count">
+                            {qCount > 0 ? `${qCount} q.` : '0 q.'}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}
@@ -257,12 +291,12 @@ export default function RandomQuiz() {
       <div className="cq-card rnd-box">
         <div className="rnd-sec-head">
           <h2>2. Niveau de difficulté</h2>
-          <button type="button" className="link-btn" onClick={selectAllDifficulties}>
-            {difficulties.length === 3 ? 'Tout désélectionner' : 'Tous les niveaux (1, 2 et 3)'}
+          <button type="button" className="rnd-action-btn" onClick={selectAllDifficulties}>
+            {difficulties.length === 3 ? 'Tout désélectionner' : 'Tous les niveaux'}
           </button>
         </div>
         <p className="rnd-diff-help">
-          Tu peux choisir un seul niveau, en combiner deux ou sélectionner les trois :
+          Choisis un ou plusieurs niveaux de difficulté :
         </p>
         <div className="rnd-diff-grid" role="group" aria-label="Filtrer par niveau de difficulté">
           {[1, 2, 3].map((lvl) => {
@@ -277,9 +311,9 @@ export default function RandomQuiz() {
                 aria-pressed={on}
               >
                 <span className="rnd-diff-check" aria-hidden="true">{on ? '✓' : ''}</span>
-                <span className="rnd-diff-title">Difficulté {lvl}</span>
+                <span className="rnd-diff-title">Niveau {lvl}</span>
                 <span className="rnd-diff-count">
-                  {c} question{c > 1 ? 's' : ''}
+                  {c} q.
                 </span>
               </button>
             );
@@ -291,7 +325,7 @@ export default function RandomQuiz() {
         <div className="rnd-sec-head">
           <h2>3. Nombre de questions</h2>
           <span className="rnd-pool-info">
-            {pool.length} question{pool.length > 1 ? 's' : ''} disponible{pool.length > 1 ? 's' : ''} dans la sélection
+            {pool.length} question{pool.length > 1 ? 's' : ''} disponible{pool.length > 1 ? 's' : ''}
           </span>
         </div>
 
@@ -320,7 +354,7 @@ export default function RandomQuiz() {
 
         {pool.length > 0 && (
           <div className="rnd-custom">
-            <label htmlFor="rnd-count-input">Ou choisis un nombre précis :</label>
+            <label htmlFor="rnd-count-input">Ou nombre précis :</label>
             <input
               id="rnd-count-input"
               type="number"
@@ -336,11 +370,11 @@ export default function RandomQuiz() {
         <div className="rnd-launch">
           <button
             type="button"
-            className="btn"
+            className="btn rnd-launch-btn"
             onClick={startQuiz}
             disabled={pool.length === 0}
           >
-            Lancer le quiz aléatoire ({effectiveCount} question{effectiveCount > 1 ? 's' : ''}) <Icon name="arrow" size={18} />
+            Lancer le quiz ({effectiveCount} question{effectiveCount > 1 ? 's' : ''})
           </button>
         </div>
       </div>
