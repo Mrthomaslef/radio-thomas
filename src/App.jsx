@@ -193,14 +193,13 @@ export default function App() {
           style={{ transform: `translate(-50%, ${Math.min(pullDist, 64)}px)` }}
           role="status"
           aria-live="polite"
+          aria-label="Actualisation"
         >
-          <span className={`ptr-icon ${refreshing ? 'is-spinning' : ''}`}>↻</span>
-          <span>
-            {refreshing
-              ? 'Actualisation…'
-              : pullDist >= 56
-              ? 'Relâcher pour actualiser'
-              : 'Tirer pour actualiser'}
+          <span
+            className={`ptr-icon ${refreshing ? 'is-spinning' : ''}`}
+            style={!refreshing ? { transform: `rotate(${Math.round(pullDist * 4.5)}deg)` } : undefined}
+          >
+            ↻
           </span>
         </div>
       )}
