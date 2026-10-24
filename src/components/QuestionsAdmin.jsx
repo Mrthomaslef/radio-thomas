@@ -1440,7 +1440,7 @@ export default function QuestionsAdmin({
                     onChange={(e) => toggleReviewed(r, e.target.checked)}
                   />
                   <span>
-                    {checked ? (rReviewer ? `✓ Relue · ${rReviewer}` : '✓ Relue') : 'À relire'}
+                    {checked ? (rReviewer ? `Relue · ${rReviewer}` : 'Relue') : 'À relire'}
                   </span>
                 </label>
                 <button className="qa-row" onClick={() => edit(r)}>
@@ -1623,7 +1623,7 @@ function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndRev
                 })
               }
             />
-            <span>{q.reviewed ? `✓ Relu par ${q.reviewed_by || reviewerName}` : 'Marquer comme relue'}</span>
+            <span>{q.reviewed ? `Relu par ${q.reviewed_by || reviewerName}` : 'Marquer comme relue'}</span>
           </label>
         </div>
       </div>
