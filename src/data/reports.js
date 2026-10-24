@@ -34,6 +34,7 @@ export function writeLocalReviewerEdit(rowObj) {
       position: rowObj.position ?? 0,
       data: rowObj.data || rowObj.question,
       updated_at: rowObj.updated_at || new Date().toISOString(),
+      localQueued: true,
     };
     localStorage.setItem(LOCAL_REVIEWER_EDITS_KEY, JSON.stringify(map));
   } catch {

@@ -102,17 +102,38 @@ function schedulePush(name) {
 
 export function writeChapterProgress(chapterKey, data, name = readName()) {
   if (!name) return;
+  const now = Date.now();
   const all = readRawMap(name);
   const prev = all[chapterKey] || {};
+  const prevAns = prev.answers || {};
+  const nextAns = data.answers || {};
+  const prevTs =
+    prev.answerTimestamps && typeof prev.answerTimestamps === 'object' ? prev.answerTimestamps : {};
+  const nextTs = {
+    ...prevTs,
+    ...(data.answerTimestamps && typeof data.answerTimestamps === 'object' ? data.answerTimestamps : {}),
+  };
+
+  for (const [qid, picked] of Object.entries(nextAns)) {
+    if (
+      !nextTs[qid] ||
+      JSON.stringify(prevAns[qid]) !== JSON.stringify(picked)
+    ) {
+      nextTs[qid] = now;
+    }
+  }
+
   const clearedAt = data.clearedAt !== undefined ? Number(data.clearedAt) || 0 : Number(prev.clearedAt) || 0;
   all[chapterKey] = {
-    answers: data.answers || {},
+    answers: nextAns,
     sent: Boolean(data.sent),
     historyRecorded:
       data.historyRecorded !== undefined
         ? Boolean(data.historyRecorded)
         : Boolean(data.sent || prev.historyRecorded),
+    ...(Object.keys(nextTs).length > 0 ? { answerTimestamps: nextTs } : {}),
     ...(clearedAt > 0 ? { clearedAt } : {}),
+    updatedAt: Number(data.updatedAt) || now,
   };
   writeRawMap(name, all);
   notify();
@@ -121,12 +142,14 @@ export function writeChapterProgress(chapterKey, data, name = readName()) {
 
 export function clearChapterProgress(chapterKey, name = readName()) {
   if (!name) return;
+  const now = Date.now();
   const all = readRawMap(name);
   all[chapterKey] = {
     answers: {},
     sent: false,
     historyRecorded: false,
-    clearedAt: Date.now(),
+    clearedAt: now,
+    updatedAt: now,
   };
   writeRawMap(name, all);
   notify();
@@ -135,14 +158,22 @@ export function clearChapterProgress(chapterKey, name = readName()) {
 
 export function writeQuestionAnswer(chapterKey, questionId, picked, name = readName()) {
   if (!name || !chapterKey || !questionId) return;
+  const now = Date.now();
   const cur = readChapterProgress(chapterKey, name);
   const answers = { ...(cur.answers || {}) };
+  const answerTimestamps = { ...(cur.answerTimestamps || {}) };
   if (picked && picked.length) {
     answers[questionId] = picked;
-    writeChapterProgress(chapterKey, { answers, sent: cur.sent }, name);
+    answerTimestamps[questionId] = now;
+    writeChapterProgress(chapterKey, { answers, answerTimestamps, sent: cur.sent, updatedAt: now }, name);
   } else {
     delete answers[questionId];
-    writeChapterProgress(chapterKey, { answers, sent: cur.sent, clearedAt: Date.now() }, name);
+    answerTimestamps[questionId] = now;
+    writeChapterProgress(
+      chapterKey,
+      { answers, answerTimestamps, sent: cur.sent, clearedAt: now, updatedAt: now },
+      name
+    );
   }
 }
 
@@ -172,9 +203,11 @@ function writeLocalBookmarksMap(name, map) {
 
 export function readBookmarks(name = readName()) {
   if (!name) return {};
-  const localMap = readLocalBookmarksMap(name);
   const all = readAllProgress(name);
-  const remoteAns = all[BOOKMARKS_CHAPTER_KEY]?.answers || {};
+  const ch97 = all[BOOKMARKS_CHAPTER_KEY];
+  const remoteAns = ch97?.answers || {};
+  const remoteTs = ch97?.answerTimestamps || {};
+  const localMap = readLocalBookmarksMap(name);
   const out = {};
 
   for (const [qid, val] of Object.entries(remoteAns)) {
@@ -182,9 +215,19 @@ export function readBookmarks(name = readName()) {
       out[qid] = true;
     }
   }
-  for (const [qid, isOn] of Object.entries(localMap)) {
-    if (isOn) out[qid] = true;
-    else delete out[qid];
+
+  // Only fall back to localMap for questions not yet tracked in ch97.answers
+  for (const [qid, entry] of Object.entries(localMap)) {
+    const isObj = entry && typeof entry === 'object' && !Array.isArray(entry);
+    const isOn = isObj ? Boolean(entry.on) : Boolean(entry);
+    const locTime = isObj ? Number(entry.ts) || 0 : 0;
+    const remTime = Number(remoteTs[qid]) || 0;
+    const hasRemote = Array.isArray(remoteAns[qid]) && remoteAns[qid].length > 0;
+
+    if (!hasRemote || (locTime > 0 && locTime > remTime)) {
+      if (isOn) out[qid] = true;
+      else delete out[qid];
+    }
   }
   return out;
 }
@@ -197,17 +240,24 @@ export function isQuestionBookmarked(questionId, name = readName()) {
 
 export function toggleQuestionBookmark(questionId, name = readName()) {
   if (!name || !questionId) return false;
+  const now = Date.now();
   const current = readBookmarks(name);
   const nextVal = !current[questionId];
 
   const localMap = readLocalBookmarksMap(name);
-  localMap[questionId] = nextVal;
+  localMap[questionId] = { on: nextVal, ts: now };
   writeLocalBookmarksMap(name, localMap);
 
   const cur = readChapterProgress(BOOKMARKS_CHAPTER_KEY, name);
   const answers = { ...(cur.answers || {}) };
+  const answerTimestamps = { ...(cur.answerTimestamps || {}) };
   answers[questionId] = [nextVal ? 'A' : 'B'];
-  writeChapterProgress(BOOKMARKS_CHAPTER_KEY, { answers, sent: true }, name);
+  answerTimestamps[questionId] = now;
+  writeChapterProgress(
+    BOOKMARKS_CHAPTER_KEY,
+    { answers, answerTimestamps, sent: true, updatedAt: now },
+    name
+  );
   return nextVal;
 }
 
@@ -497,7 +547,11 @@ export async function syncProgressFromServer(name = readName()) {
           answers: locVal.answers || {},
           sent: Boolean(locVal.sent),
           historyRecorded: Boolean(locVal.historyRecorded || locVal.sent),
+          ...(locVal.answerTimestamps && Object.keys(locVal.answerTimestamps).length > 0
+            ? { answerTimestamps: locVal.answerTimestamps }
+            : {}),
           clearedAt: locCleared,
+          updatedAt: Math.max(Number(locVal.updatedAt) || 0, locCleared),
         };
         localHasNewer = true;
         continue;
@@ -508,29 +562,82 @@ export async function syncProgressFromServer(name = readName()) {
           answers: remVal.answers || {},
           sent: Boolean(remVal.sent),
           historyRecorded: Boolean(remVal.historyRecorded || remVal.sent),
+          ...(remVal.answerTimestamps && Object.keys(remVal.answerTimestamps).length > 0
+            ? { answerTimestamps: remVal.answerTimestamps }
+            : {}),
           clearedAt: remCleared,
+          updatedAt: Math.max(Number(remVal.updatedAt) || 0, remCleared),
         };
         continue;
       }
 
       const remAns = remVal.answers || {};
       const locAns = locVal.answers || {};
-      const mergedAnswers = { ...remAns, ...locAns };
-      if (
-        Object.keys(mergedAnswers).length > Object.keys(remAns).length ||
-        Object.keys(locAns).some((k) => JSON.stringify(locAns[k]) !== JSON.stringify(remAns[k]))
-      ) {
-        localHasNewer = true;
+      const remTs = remVal.answerTimestamps || {};
+      const locTs = locVal.answerTimestamps || {};
+      const remChTs = Number(remVal.updatedAt) || 0;
+      const locChTs = Number(locVal.updatedAt) || 0;
+
+      const allQids = new Set([...Object.keys(remAns), ...Object.keys(locAns)]);
+      const mergedAnswers = {};
+      const mergedTimestamps = {};
+
+      for (const qid of allQids) {
+        const hasRem = Array.isArray(remAns[qid]) && remAns[qid].length > 0;
+        const hasLoc = Array.isArray(locAns[qid]) && locAns[qid].length > 0;
+        const rTime = Number(remTs[qid]) || remChTs;
+        const lTime = Number(locTs[qid]) || locChTs;
+
+        if (hasRem && hasLoc) {
+          const sameAns = JSON.stringify(remAns[qid]) === JSON.stringify(locAns[qid]);
+          if (sameAns) {
+            mergedAnswers[qid] = remAns[qid];
+            const maxT = Math.max(rTime, lTime);
+            if (maxT > 0) mergedTimestamps[qid] = maxT;
+          } else if (lTime > rTime) {
+            mergedAnswers[qid] = locAns[qid];
+            if (lTime > 0) mergedTimestamps[qid] = lTime;
+            localHasNewer = true;
+          } else {
+            // Remote server copy wins when equal or newer (prevents stale local storage from reverting answers)
+            mergedAnswers[qid] = remAns[qid];
+            if (rTime > 0) mergedTimestamps[qid] = rTime;
+          }
+        } else if (hasLoc) {
+          mergedAnswers[qid] = locAns[qid];
+          if (lTime > 0) mergedTimestamps[qid] = lTime;
+          localHasNewer = true;
+        } else if (hasRem) {
+          mergedAnswers[qid] = remAns[qid];
+          if (rTime > 0) mergedTimestamps[qid] = rTime;
+        }
       }
+
       const maxCleared = Math.max(locCleared, remCleared);
+      const maxUpdated = Math.max(remChTs, locChTs);
       merged[ch] = {
         answers: mergedAnswers,
         sent: Boolean(remVal.sent || locVal.sent),
         historyRecorded: Boolean(
           remVal.historyRecorded || locVal.historyRecorded || remVal.sent || locVal.sent
         ),
+        ...(Object.keys(mergedTimestamps).length > 0 ? { answerTimestamps: mergedTimestamps } : {}),
         ...(maxCleared > 0 ? { clearedAt: maxCleared } : {}),
+        ...(maxUpdated > 0 ? { updatedAt: maxUpdated } : {}),
       };
+    }
+
+    // Keep the local bookmarks mirror in sync with merged ch97 so stale local flags never override ch97
+    const mergedCh97 = merged[BOOKMARKS_CHAPTER_KEY];
+    if (mergedCh97?.answers) {
+      const syncedBookmarks = {};
+      const ch97Ts = mergedCh97.answerTimestamps || {};
+      for (const [qid, val] of Object.entries(mergedCh97.answers)) {
+        if (Array.isArray(val) && val.length > 0) {
+          syncedBookmarks[qid] = { on: val[0] === 'A', ts: Number(ch97Ts[qid]) || Date.now() };
+        }
+      }
+      writeLocalBookmarksMap(clean, syncedBookmarks);
     }
 
     writeRawMap(clean, merged);

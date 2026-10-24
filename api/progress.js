@@ -33,47 +33,105 @@ function cleanProgress(raw) {
       const validPicked = picked.filter((x) => typeof x === 'string' && ITEM_ID.test(x)).slice(0, 6);
       if (validPicked.length > 0) answers[qid] = [...new Set(validPicked)];
     }
+    const rawTimestamps =
+      val.answerTimestamps && typeof val.answerTimestamps === 'object' ? val.answerTimestamps : {};
+    const answerTimestamps = {};
+    for (const [qid, ts] of Object.entries(rawTimestamps)) {
+      const n = Number(ts);
+      if (QUESTION_ID.test(qid) && Number.isFinite(n) && n > 0) {
+        answerTimestamps[qid] = Math.floor(n);
+      }
+    }
     const clearedAt = Number(val.clearedAt);
+    const updatedAt = Number(val.updatedAt);
     out[ch] = {
       answers,
       sent: Boolean(val.sent),
+      ...(Object.keys(answerTimestamps).length > 0 ? { answerTimestamps } : {}),
       ...(Number.isFinite(clearedAt) && clearedAt > 0 ? { clearedAt: Math.floor(clearedAt) } : {}),
+      ...(Number.isFinite(updatedAt) && updatedAt > 0 ? { updatedAt: Math.floor(updatedAt) } : {}),
     };
   }
   return out;
 }
 
+function mergeChapterProgress(srv = {}, inc = {}) {
+  const srvCleared = Number(srv?.clearedAt) || 0;
+  const incCleared = Number(inc?.clearedAt) || 0;
+
+  if (incCleared > srvCleared) {
+    return {
+      answers: inc.answers || {},
+      sent: Boolean(inc.sent),
+      ...(inc.answerTimestamps && Object.keys(inc.answerTimestamps).length > 0
+        ? { answerTimestamps: inc.answerTimestamps }
+        : {}),
+      clearedAt: incCleared,
+      updatedAt: Math.max(Number(inc.updatedAt) || 0, incCleared),
+    };
+  }
+
+  if (srvCleared > incCleared) {
+    return {
+      answers: srv.answers || {},
+      sent: Boolean(srv.sent),
+      ...(srv.answerTimestamps && Object.keys(srv.answerTimestamps).length > 0
+        ? { answerTimestamps: srv.answerTimestamps }
+        : {}),
+      clearedAt: srvCleared,
+      updatedAt: Math.max(Number(srv.updatedAt) || 0, srvCleared),
+    };
+  }
+
+  const srvAns = srv.answers || {};
+  const incAns = inc.answers || {};
+  const srvTs = srv.answerTimestamps || {};
+  const incTs = inc.answerTimestamps || {};
+  const srvChTs = Number(srv.updatedAt) || 0;
+  const incChTs = Number(inc.updatedAt) || 0;
+
+  const allQids = new Set([...Object.keys(srvAns), ...Object.keys(incAns)]);
+  const mergedAnswers = {};
+  const mergedTimestamps = {};
+
+  for (const qid of allQids) {
+    const hasSrv = Array.isArray(srvAns[qid]) && srvAns[qid].length > 0;
+    const hasInc = Array.isArray(incAns[qid]) && incAns[qid].length > 0;
+    const sTime = Number(srvTs[qid]) || srvChTs;
+    const iTime = Number(incTs[qid]) || incChTs;
+
+    if (hasSrv && hasInc) {
+      if (iTime >= sTime) {
+        mergedAnswers[qid] = incAns[qid];
+        if (iTime > 0) mergedTimestamps[qid] = iTime;
+      } else {
+        mergedAnswers[qid] = srvAns[qid];
+        if (sTime > 0) mergedTimestamps[qid] = sTime;
+      }
+    } else if (hasInc) {
+      mergedAnswers[qid] = incAns[qid];
+      if (iTime > 0) mergedTimestamps[qid] = iTime;
+    } else if (hasSrv) {
+      mergedAnswers[qid] = srvAns[qid];
+      if (sTime > 0) mergedTimestamps[qid] = sTime;
+    }
+  }
+
+  const maxCleared = Math.max(incCleared, srvCleared);
+  const maxUpdated = Math.max(srvChTs, incChTs);
+  return {
+    answers: mergedAnswers,
+    sent: Boolean(srv.sent || inc.sent),
+    ...(Object.keys(mergedTimestamps).length > 0 ? { answerTimestamps: mergedTimestamps } : {}),
+    ...(maxCleared > 0 ? { clearedAt: maxCleared } : {}),
+    ...(maxUpdated > 0 ? { updatedAt: maxUpdated } : {}),
+  };
+}
+
 function mergeServerAndClientProgress(serverProg, clientProg) {
   const merged = { ...(serverProg && typeof serverProg === 'object' ? serverProg : {}) };
   for (const [ch, inc] of Object.entries(clientProg || {})) {
-    const srv = merged[ch] || { answers: {}, sent: false };
-    const incCleared = Number(inc?.clearedAt) || 0;
-    const srvCleared = Number(srv?.clearedAt) || 0;
-
-    if (incCleared > srvCleared) {
-      merged[ch] = {
-        answers: inc.answers || {},
-        sent: Boolean(inc.sent),
-        clearedAt: incCleared,
-      };
-      continue;
-    }
-
-    if (srvCleared > incCleared) {
-      merged[ch] = {
-        answers: srv.answers || {},
-        sent: Boolean(srv.sent),
-        clearedAt: srvCleared,
-      };
-      continue;
-    }
-
-    const maxCleared = Math.max(incCleared, srvCleared);
-    merged[ch] = {
-      answers: { ...(srv.answers || {}), ...(inc.answers || {}) },
-      sent: Boolean(srv.sent || inc.sent),
-      ...(maxCleared > 0 ? { clearedAt: maxCleared } : {}),
-    };
+    merged[ch] = mergeChapterProgress(merged[ch] || { answers: {}, sent: false }, inc);
   }
   return merged;
 }

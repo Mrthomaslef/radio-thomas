@@ -147,6 +147,12 @@ export function mergeLocalAndServerRow(id, locRow, srvRow) {
   if (!locRow?.data) return { row: srvRow, removeLocal: false, shouldSyncToServer: false };
   if (!srvRow?.data) return { row: locRow, removeLocal: false, shouldSyncToServer: true };
 
+  // Legacy entries from report-revedit-* or older local saves lack a real localQueued flag:
+  // the central database is already authoritative, so discard them.
+  if (!locRow.localQueued) {
+    return { row: srvRow, removeLocal: true, shouldSyncToServer: false };
+  }
+
   const loc = locRow.data;
   const srv = srvRow.data;
   const locTime = locRow.updated_at ? Date.parse(locRow.updated_at) || 0 : 0;
