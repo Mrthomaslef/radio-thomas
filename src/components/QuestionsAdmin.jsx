@@ -278,24 +278,36 @@ async function call(password, payload) {
     payload = { ...payload, baseUpdatedAt: serverStamps.get(payload.id) };
   }
   if (payload.action === 'generate_ai') {
-    const r = await fetch('/api/admin-questions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password, ...payload }),
-    });
-    const data = await r.json().catch(() => ({}));
-    if (r.ok && data?.question) return data;
-    // Fallback to local Vite middleware (/api/generate-question) during local dev before backend deploy
-    const localRes = await fetch('/api/generate-question', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    }).catch(() => null);
-    if (localRes && localRes.ok) {
-      const localData = await localRes.json().catch(() => ({}));
-      if (localData?.question) return localData;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 14000);
+    try {
+      const r = await fetch('/api/admin-questions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
+        body: JSON.stringify({ password, ...payload }),
+      });
+      const data = await r.json().catch(() => ({}));
+      if (r.ok && data?.question) return data;
+      // Fallback to local Vite middleware (/api/generate-question) during local dev before backend deploy
+      const localRes = await fetch('/api/generate-question', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).catch(() => null);
+      if (localRes && localRes.ok) {
+        const localData = await localRes.json().catch(() => ({}));
+        if (localData?.question) return localData;
+      }
+      throw new Error(data.error || 'Erreur lors de la génération par l’IA.');
+    } catch (e) {
+      if (e?.name === 'AbortError') {
+        throw new Error('La génération IA a mis trop de temps. Veuillez réessayer.');
+      }
+      throw e;
+    } finally {
+      clearTimeout(timer);
     }
-    throw new Error(data.error || 'Erreur lors de la génération par l’IA.');
   }
 
   if (isReviewerPass(password)) {

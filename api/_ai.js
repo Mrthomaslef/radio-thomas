@@ -142,10 +142,10 @@ function loadBookChapter(chapter) {
   return null;
 }
 
-// Selects a focused excerpt (~25k chars, ~6–10 pages) from the chapter so generation is fast (<4s),
+// Selects a focused excerpt (~15k chars, ~4–5 pages) from the chapter so generation is fast (<4s),
 // explores the whole chapter across calls, and prioritizes topicHint if provided.
 function selectBookPages(pages, topicHint = '') {
-  if (!Array.isArray(pages) || pages.length <= 8) return pages || [];
+  if (!Array.isArray(pages) || pages.length <= 5) return pages || [];
   const hint = String(topicHint || '').trim().toLowerCase();
   if (hint.length >= 2) {
     const words = hint.split(/\s+/).filter((w) => w.length >= 2);
@@ -161,16 +161,16 @@ function selectBookPages(pages, topicHint = '') {
     const matched = scored.filter((s) => s.score > 0).sort((a, b) => b.score - a.score);
     if (matched.length > 0) {
       const chosenIndices = new Set();
-      for (const m of matched.slice(0, 5)) {
+      for (const m of matched.slice(0, 4)) {
         chosenIndices.add(m.idx);
-        if (m.idx + 1 < pages.length && chosenIndices.size < 8) chosenIndices.add(m.idx + 1);
+        if (m.idx + 1 < pages.length && chosenIndices.size < 5) chosenIndices.add(m.idx + 1);
       }
       return [...chosenIndices].sort((a, b) => a - b).map((i) => pages[i]);
     }
   }
 
-  // Pick a random contiguous window of ~7 pages so every click explores a fresh section of the chapter
-  const windowSize = Math.min(pages.length, 7);
+  // Pick a random contiguous window of ~4 pages so every click explores a fresh section of the chapter
+  const windowSize = Math.min(pages.length, 4);
   const maxStart = Math.max(0, pages.length - windowSize);
   const start = Math.floor(Math.random() * (maxStart + 1));
   return pages.slice(start, start + windowSize);
@@ -276,31 +276,40 @@ EXTRAIT DU CHAPITRE ${chapterNum} (${chapterTitle}) :
 ${bookExcerpt}`;
 
   const models = [
-    'gemini-3.8-flash',
-    'gemini-3.7-flash',
-    'gemini-3.6-flash',
-    'gemini-3.5-flash',
-    'gemini-3.1-flash-lite',
-    'gemini-3.5-flash-lite',
-    'gemini-3-flash-preview',
+    'gemini-2.5-flash',
+    'gemini-2.0-flash',
+    'gemini-2.5-flash-lite-preview-06-17',
+    'gemini-2.0-flash-lite',
+    'gemini-1.5-flash',
   ];
   let lastError = 'Impossible de joindre le modèle Gemini.';
   let rawJsonText = null;
 
   for (const model of models) {
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8500);
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
-      const r = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.65,
-            responseMimeType: 'application/json',
-          },
-        }),
-      });
+      let r;
+      try {
+        r = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: controller.signal,
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: [{ text: prompt }] }],
+            generationConfig: {
+              temperature: 0.65,
+              responseMimeType: 'application/json',
+              ...(model.startsWith('gemini-2.5-')
+                ? { thinkingConfig: { thinkingBudget: 0 } }
+                : {}),
+            },
+          }),
+        });
+      } finally {
+        clearTimeout(timeoutId);
+      }
       const data = await r.json().catch(() => ({}));
       if (!r.ok) {
         lastError = data?.error?.message || `Erreur Gemini (${r.status})`;
@@ -315,7 +324,7 @@ ${bookExcerpt}`;
         break;
       }
     } catch (e) {
-      lastError = e.message || lastError;
+      lastError = e?.name === 'AbortError' ? 'Délai dépassé sur le modèle IA' : e.message || lastError;
     }
   }
 
