@@ -20,6 +20,12 @@ function isStandaloneMode() {
   return false;
 }
 
+function isQuestionCorrect(q, picked) {
+  if (!Array.isArray(picked) || picked.length === 0) return false;
+  const good = (q.items || []).filter((i) => i.correct).map((i) => i.id).sort().join();
+  return good === [...picked].sort().join();
+}
+
 // Home: ask a pseudo, then pick a theme and one of its chapters.
 // `openTheme` comes from the URL (#/epaule) so "back" from a chapter lands on the chapter list.
 export default function Home({ openTheme }) {
@@ -152,13 +158,20 @@ export default function Home({ openTheme }) {
                       const qs = byChapter[c.id] || [];
                       const total = qs.length || c.fallbackCount;
                       const ans = progress[c.id]?.answers || {};
-                      const done = qs.filter((q) => ans[q.id]).length;
+                      const answeredQs = qs.filter((q) => Array.isArray(ans[q.id]) && ans[q.id].length > 0);
+                      const done = answeredQs.length;
+                      const isCompleted = qs.length > 0 && done === qs.length;
+                      const score = isCompleted
+                        ? answeredQs.filter((q) => isQuestionCorrect(q, ans[q.id])).length
+                        : 0;
+                      const passed = isCompleted && score / total >= 0.6;
+                      const statusClass = isCompleted ? (passed ? 'chapter-passed' : 'chapter-failed') : '';
                       const allReviewed = qs.length > 0 && qs.every((q) => q.reviewed);
                       return (
                         <li key={c.id} className="chapter-item">
                           {c.href ? (
                             <div className="chapter-row">
-                              <a href={c.href} className="chapter">
+                              <a href={c.href} className={`chapter ${statusClass}`}>
                                 <b>{i + 1}</b>{' '}
                                 <span className="chapter-title">
                                   {c.title}
@@ -173,7 +186,7 @@ export default function Home({ openTheme }) {
                                   )}
                                 </span>
                                 <span className="chapter-go">
-                                  {`${done}/${total}`} <Icon name="arrow" size={16} />
+                                  {isCompleted ? `${score}/${total}` : `${done}/${total}`} <Icon name="arrow" size={16} />
                                 </span>
                               </a>
                               {total > 0 && (
