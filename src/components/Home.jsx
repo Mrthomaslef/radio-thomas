@@ -125,7 +125,7 @@ export default function Home({ openTheme }) {
             <span className="chapter-reviewed-badge" aria-hidden="true">
               <Icon name="check" size={12} />
             </span>
-            <span>Relu et corrigé</span>
+            <span>Chapitre relu et corrigé</span>
           </p>
 
           {themes.map((t) => {
