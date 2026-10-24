@@ -183,19 +183,19 @@ export default function Home({ openTheme }) {
                           {c.href ? (
                             <div className="chapter-row">
                               <a href={c.href} className={`chapter ${statusClass}`}>
-                                <b>{i + 1}</b>{' '}
-                                <span className="chapter-title">
-                                  {c.title}
+                                <span className="chapter-num">
+                                  <b>{i + 1}</b>
                                   {allReviewed && (
                                     <span
                                       className="chapter-reviewed-badge"
                                       title="Chapitre entièrement relu et validé"
                                       aria-label="Chapitre entièrement relu et validé"
                                     >
-                                      <Icon name="check" size={12} />
+                                      <Icon name="check" size={11} />
                                     </span>
                                   )}
                                 </span>
+                                <span className="chapter-title">{c.title}</span>
                                 <span className="chapter-go">
                                   {isCompleted ? `${score}/${total}` : `${done}/${total}`} <Icon name="arrow" size={16} />
                                 </span>
