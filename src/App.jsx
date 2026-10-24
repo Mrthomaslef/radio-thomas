@@ -182,7 +182,7 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage, theme]);
+  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage]);
 
   return (
     <>

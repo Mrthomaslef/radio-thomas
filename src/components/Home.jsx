@@ -132,7 +132,17 @@ export default function Home({ openTheme }) {
             const open = openTheme === t.id;
             return (
               <div key={t.id} className="theme">
-                <a href={open ? '#/' : `#/${t.id}`} className={`theme-head ${open ? 'on' : ''}`} aria-expanded={open}>
+                <a
+                  href={open ? '#/' : `#/${t.id}`}
+                  className={`theme-head ${open ? 'on' : ''}`}
+                  aria-expanded={open}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const nextHash = open ? '#/' : `#/${t.id}`;
+                    window.history.replaceState(null, '', nextHash);
+                    window.dispatchEvent(new HashChangeEvent('hashchange'));
+                  }}
+                >
                   <span>{t.title}</span>
                   <span className="theme-count">{t.chapters.length} chapitres</span>
                 </a>
