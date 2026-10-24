@@ -656,6 +656,11 @@ a.chapter:hover { border-color: var(--cyan); background: rgba(56, 225, 255, 0.07
 .nav-user { color: var(--muted); font-size: 0.9rem; font-weight: 600; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .home-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
 .home-bar-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.home-reviewed-legend {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: -6px; font-size: 0.84rem; color: var(--muted);
+}
+.home-reviewed-legend .chapter-reviewed-badge { margin-left: 0; vertical-align: middle; }
 .cq-top-links { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .cq-back:hover { color: var(--cyan); }
 

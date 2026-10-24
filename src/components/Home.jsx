@@ -121,6 +121,13 @@ export default function Home({ openTheme }) {
             </div>
           </div>
 
+          <p className="home-reviewed-legend">
+            <span className="chapter-reviewed-badge" aria-hidden="true">
+              <Icon name="check" size={12} />
+            </span>
+            <span>Relue et corrigée</span>
+          </p>
+
           {themes.map((t) => {
             const open = openTheme === t.id;
             return (
