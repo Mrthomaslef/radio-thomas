@@ -248,10 +248,24 @@ export default async function handler(req, res) {
     }
   }
 
-  // Reviewer mode ('cocochin'): never call private.check_admin so we never trigger admin login lockout
+  // Reviewer mode ('cocochin'): never call private.check_admin with 'cocochin' so we never trigger admin login lockout
   if (isReviewer) {
     switch (body.action) {
       case 'list': {
+        const adminPw = await resolveAdminPasswordForReviewer(process.env);
+        if (adminPw) {
+          try {
+            const out = await rpc('admin_list_questions', { p_password: adminPw });
+            if (out?.status === 'ok' && Array.isArray(out.questions)) {
+              return res.status(200).json({
+                status: 'ok',
+                questions: out.questions.filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99'),
+              });
+            }
+          } catch {
+            // Fallback below
+          }
+        }
         try {
           const r = await fetch(
             `${SUPABASE_URL}/rest/v1/quiz_questions?select=id,chapter,position,data,updated_at,deleted_at&deleted_at=is.null&order=chapter.asc,position.asc&limit=2000`,
@@ -311,8 +325,22 @@ export default async function handler(req, res) {
       }
       case 'import':
         return res.status(200).json({ status: 'ok', imported: 0 });
-      case 'delete':
-        return res.status(403).json({ error: 'Seul l’administrateur peut supprimer une question.' });
+      case 'delete': {
+        if (!validateId(body.id)) return res.status(400).json({ error: 'Identifiant invalide' });
+        const adminPw = await resolveAdminPasswordForReviewer(process.env);
+        if (!adminPw) return res.status(502).json({ error: 'Suppression impossible pour le moment' });
+        try {
+          const out = await rpc('admin_delete_question', {
+            p_password: adminPw,
+            p_id: body.id,
+          });
+          if (out.status === 'not_found') return res.status(404).json({ error: 'Question introuvable' });
+          if (out.status !== 'ok') return res.status(400).json({ error: 'Requête refusée' });
+          return res.status(200).json({ status: 'ok' });
+        } catch {
+          return res.status(502).json({ error: 'Base de données injoignable' });
+        }
+      }
       case 'upload': {
         const MIME = { 'image/png': 'png', 'image/jpeg': 'jpeg', 'image/webp': 'webp' };
         const mime = body.mime;

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { themes } from '../data/themes.js';
 import { CHAPTERS, imageSrc, useQuestions } from '../data/useQuestions.js';
 import { readName, saveName, subscribePlayer } from '../data/player.js';
@@ -57,6 +57,12 @@ function ProposalImagePicker({ label, onPicked, disabled, multiple = false, comp
   const [busy, setBusy] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [err, setErr] = useState('');
+  const inputRef = useRef(null);
+
+  const openFilePicker = () => {
+    if (busy || disabled) return;
+    inputRef.current?.click();
+  };
 
   const handleFiles = async (fileList) => {
     const files = Array.from(fileList || []).filter(Boolean);
@@ -105,14 +111,17 @@ function ProposalImagePicker({ label, onPicked, disabled, multiple = false, comp
 
   return (
     <span className={`qa-pick ${compact ? 'is-compact' : 'is-dropzone'}`}>
-      <label
+      <button
+        type="button"
         className={`${
           compact ? 'btn btn-ghost btn-small qa-drop-compact' : 'qa-dropzone'
         }${dragging ? ' is-dragging' : ''}${busy || disabled ? ' is-disabled' : ''}`}
+        onClick={openFilePicker}
         onDragEnter={onDragOver}
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
+        disabled={busy || disabled}
       >
         {compact ? (
           <span>{busy ? 'Préparation…' : dragging ? 'Déposer l’image ici' : `${label} (ou glisser)`}</span>
@@ -126,15 +135,16 @@ function ProposalImagePicker({ label, onPicked, disabled, multiple = false, comp
             </span>
           </>
         )}
-        <input
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          multiple={multiple}
-          onChange={onChange}
-          disabled={busy || disabled}
-          hidden
-        />
-      </label>
+      </button>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/webp"
+        multiple={multiple}
+        onChange={onChange}
+        disabled={busy || disabled}
+        style={{ display: 'none' }}
+      />
       {err && <span className="admin-error" role="alert">{err}</span>}
     </span>
   );

@@ -278,7 +278,7 @@ function groupByChapter(rows) {
   }
 
   for (const b of bundledQuestions) {
-    if (!byId.has(b.id)) {
+    if (!byId.has(b.id) && rows === bundledQuestions) {
       merged.push(b);
     }
   }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { QuizPlayer } from './ChapterQuiz.jsx';
 import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, bundledById, resetQuestionsCache, imageSrc, resolveDifficulty, mergeLocalAndServerRow } from '../data/useQuestions.js';
 import { themes } from '../data/themes.js';
@@ -106,6 +106,12 @@ function ImagePicker({ password, label, onPicked, disabled, multiple = false, co
   const [busy, setBusy] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [err, setErr] = useState('');
+  const inputRef = useRef(null);
+
+  const openFilePicker = () => {
+    if (busy || disabled) return;
+    inputRef.current?.click();
+  };
 
   const handleFiles = async (fileList) => {
     const files = Array.from(fileList || []).filter(Boolean);
@@ -170,14 +176,17 @@ function ImagePicker({ password, label, onPicked, disabled, multiple = false, co
 
   return (
     <span className={`qa-pick ${compact ? 'is-compact' : 'is-dropzone'}`}>
-      <label
+      <button
+        type="button"
         className={`${
           compact ? 'btn btn-ghost btn-small qa-drop-compact' : 'qa-dropzone'
         }${dragging ? ' is-dragging' : ''}${busy || disabled ? ' is-disabled' : ''}`}
+        onClick={openFilePicker}
         onDragEnter={onDragOver}
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
+        disabled={busy || disabled}
       >
         {compact ? (
           <span>{busy ? 'Envoi…' : dragging ? 'Déposer l’image ici' : `${label} (ou glisser)`}</span>
@@ -191,15 +200,16 @@ function ImagePicker({ password, label, onPicked, disabled, multiple = false, co
             </span>
           </>
         )}
-        <input
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          multiple={multiple}
-          onChange={onChange}
-          disabled={busy || disabled}
-          hidden
-        />
-      </label>
+      </button>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/webp"
+        multiple={multiple}
+        onChange={onChange}
+        disabled={busy || disabled}
+        style={{ display: 'none' }}
+      />
       {err && <span className="admin-error" role="alert">{err}</span>}
     </span>
   );
@@ -290,6 +300,22 @@ async function call(password, payload) {
 
   if (isReviewerPass(password)) {
     if (payload.action === 'list') {
+      try {
+        const r = await fetch('/api/admin-questions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password, action: 'list' }),
+        });
+        if (r.ok) {
+          const data = await r.json().catch(() => ({}));
+          if (Array.isArray(data.questions)) {
+            rememberStamps(data.questions);
+            return { questions: data.questions };
+          }
+        }
+      } catch {
+        // Fallback below
+      }
       const r = await fetch('/api/questions');
       const data = await r.json().catch(() => ({}));
       rememberStamps(data.questions);
@@ -628,6 +654,7 @@ export default function QuestionsAdmin({
       for (const revEd of reviewerEdits || []) {
         if (revEd?.id && revEd?.data) {
           const curr = byId.get(revEd.id);
+          if (curr?.deleted_at) continue;
           if (!curr || !curr.updated_at || (revEd.updated_at && revEd.updated_at >= curr.updated_at)) {
             byId.set(revEd.id, revEd);
           }
@@ -637,6 +664,10 @@ export default function QuestionsAdmin({
       for (const [id, localEd] of Object.entries(localEditsMap)) {
         if (localEd?.id && localEd?.data) {
           const srv = serverById.get(id);
+          if (srv?.deleted_at) {
+            removeLocalReviewerEdit(id);
+            continue;
+          }
           const { row: mergedRow, removeLocal, shouldSyncToServer } = mergeLocalAndServerRow(id, localEd, srv);
           byId.set(id, mergedRow);
           if (removeLocal) {
@@ -1190,6 +1221,12 @@ export default function QuestionsAdmin({
     setBusy(true); setError(''); setNotice('');
     try {
       await call(password, { action: 'delete', id: row.id });
+      removeLocalReviewerEdit(row.id);
+      setRows((prev) =>
+        (prev || []).map((r) =>
+          r.id === row.id ? { ...r, deleted_at: new Date().toISOString() } : r
+        )
+      );
       resetQuestionsCache();
       setNotice('Question supprimée.');
       setEditing(null);

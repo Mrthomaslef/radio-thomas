@@ -711,9 +711,11 @@ a.chapter.chapter-failed .chapter-go {
 .qa-danger { color: var(--bad); border-color: var(--bad); }
 .qa-pick { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .qa-pick.is-dropzone { display: grid; width: 100%; }
-.qa-pick label.btn { cursor: pointer; }
-.qa-pick label.is-disabled { opacity: 0.5; pointer-events: none; }
+.qa-pick label.btn, .qa-pick button { cursor: pointer; }
+.qa-pick label.is-disabled, .qa-pick button.is-disabled { opacity: 0.5; pointer-events: none; }
 .qa-dropzone {
+  width: 100%;
+  font: inherit;
   display: grid;
   gap: 4px;
   justify-items: center;
