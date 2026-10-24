@@ -101,30 +101,38 @@ function prepareImage(file) {
   });
 }
 
-// Picks a file, uploads it to public.quiz_images (1400 px HD), and hands back { upload } (or { dataUrl } fallback).
-function ImagePicker({ password, label, onPicked, disabled }) {
+// Picks or drops one or more files, uploads them to public.quiz_images (1400 px HD), and hands back { upload } (or { dataUrl } fallback).
+function ImagePicker({ password, label, onPicked, disabled, multiple = false, compact = false }) {
   const [busy, setBusy] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const [err, setErr] = useState('');
-  const onChange = async (e) => {
-    const file = e.target.files?.[0];
-    e.target.value = ''; // allows picking the same file again
-    if (!file) return;
-    setBusy(true); setErr('');
+
+  const handleFiles = async (fileList) => {
+    const files = Array.from(fileList || []).filter(Boolean);
+    if (!files.length || busy || disabled) return;
+    const toProcess = multiple ? files : [files[0]];
+    setBusy(true);
+    setErr('');
     try {
-      const { mime, data, compactDataUrl } = await prepareImage(file);
-      try {
-        const out = await call(password, { action: 'upload', mime, data });
-        if (out?.id) {
-          onPicked({ upload: out.id });
-          return;
+      for (const file of toProcess) {
+        const { mime, data, compactDataUrl } = await prepareImage(file);
+        let picked = null;
+        try {
+          const out = await call(password, { action: 'upload', mime, data });
+          if (out?.id) {
+            picked = { upload: out.id };
+          }
+        } catch {
+          // Fallback to inline compactDataUrl if offline
         }
-      } catch {
-        // Fallback to inline compactDataUrl if offline
-      }
-      if (compactDataUrl && compactDataUrl.length <= 44000) {
-        onPicked({ dataUrl: compactDataUrl });
-      } else {
-        throw new Error('Impossible d’enregistrer cette image.');
+        if (!picked) {
+          if (compactDataUrl && compactDataUrl.length <= 44000) {
+            picked = { dataUrl: compactDataUrl };
+          } else {
+            throw new Error('Impossible d’enregistrer cette image.');
+          }
+        }
+        onPicked(picked);
       }
     } catch (ex) {
       setErr(ex.message);
@@ -132,11 +140,65 @@ function ImagePicker({ password, label, onPicked, disabled }) {
       setBusy(false);
     }
   };
+
+  const onChange = (e) => {
+    const files = e.target.files;
+    e.target.value = ''; // allows picking the same file again
+    handleFiles(files);
+  };
+
+  const onDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!busy && !disabled) setDragging(true);
+  };
+
+  const onDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragging(false);
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragging(false);
+    if (busy || disabled) return;
+    const files = e.dataTransfer?.files;
+    if (files?.length) handleFiles(files);
+  };
+
   return (
-    <span className="qa-pick">
-      <label className={`btn btn-ghost btn-small${busy || disabled ? ' is-disabled' : ''}`}>
-        {busy ? 'Envoi…' : label}
-        <input type="file" accept="image/png,image/jpeg,image/webp" onChange={onChange} disabled={busy || disabled} hidden />
+    <span className={`qa-pick ${compact ? 'is-compact' : 'is-dropzone'}`}>
+      <label
+        className={`${
+          compact ? 'btn btn-ghost btn-small qa-drop-compact' : 'qa-dropzone'
+        }${dragging ? ' is-dragging' : ''}${busy || disabled ? ' is-disabled' : ''}`}
+        onDragEnter={onDragOver}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+      >
+        {compact ? (
+          <span>{busy ? 'Envoi…' : dragging ? 'Déposer l’image ici' : `${label} (ou glisser)`}</span>
+        ) : (
+          <>
+            <span className="qa-dropzone-title">
+              {busy ? 'Envoi de l’image…' : dragging ? 'Relâchez pour déposer l’image' : label}
+            </span>
+            <span className="qa-dropzone-hint">
+              Glissez-déposez {multiple ? 'une ou plusieurs images' : 'une image'} ici ou cliquez pour parcourir (PNG, JPEG, WebP)
+            </span>
+          </>
+        )}
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+          multiple={multiple}
+          onChange={onChange}
+          disabled={busy || disabled}
+          hidden
+        />
       </label>
       {err && <span className="admin-error" role="alert">{err}</span>}
     </span>
@@ -1728,15 +1790,34 @@ function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndRev
                   onChange={(e) => set({ enonce_image: { ...q.enonce_image, alt: e.target.value } })} />
               </label>
               <div className="qa-fig-actions">
-                <ImagePicker password={password} label="Remplacer l’image" disabled={busy}
-                  onPicked={(picked) => set({ enonce_image: { ...picked, alt: q.enonce_image.alt || '' } })} />
+                <ImagePicker
+                  password={password}
+                  label="Remplacer l’image"
+                  compact
+                  disabled={busy}
+                  onPicked={(picked) =>
+                    setEditing((e) => ({
+                      ...e,
+                      q: { ...e.q, enonce_image: { ...picked, alt: e.q.enonce_image?.alt || '' } },
+                    }))
+                  }
+                />
                 <button className="link-btn" onClick={() => set({ enonce_image: null })}>Retirer l’image</button>
               </div>
             </div>
           </div>
         ) : (
-          <ImagePicker password={password} label="+ Ajouter une image avant la question" disabled={busy}
-            onPicked={(picked) => set({ enonce_image: { ...picked, alt: '' } })} />
+          <ImagePicker
+            password={password}
+            label="+ Ajouter une image avant la question"
+            disabled={busy}
+            onPicked={(picked) =>
+              setEditing((e) => ({
+                ...e,
+                q: { ...e.q, enonce_image: { ...picked, alt: '' } },
+              }))
+            }
+          />
         )}
       </fieldset>
 
@@ -1792,6 +1873,7 @@ function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndRev
                 <ImagePicker
                   password={password}
                   label="Remplacer l’image"
+                  compact
                   disabled={busy}
                   onPicked={(picked) =>
                     setFigure(i, {
@@ -1808,8 +1890,22 @@ function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndRev
             </div>
           </div>
         ))}
-        <ImagePicker password={password} label="+ Ajouter une image à la correction" disabled={busy || q.correction_figures.length >= 6}
-          onPicked={(picked) => set({ correction_figures: [...q.correction_figures, { ...picked, caption: '' }] })} />
+        <ImagePicker
+          password={password}
+          label="+ Ajouter une image à la correction"
+          multiple
+          disabled={busy || q.correction_figures.length >= 6}
+          onPicked={(picked) =>
+            setEditing((e) => {
+              const curFigs = e.q.correction_figures || [];
+              if (curFigs.length >= 6) return e;
+              return {
+                ...e,
+                q: { ...e.q, correction_figures: [...curFigs, { ...picked, caption: '' }] },
+              };
+            })
+          }
+        />
         <p className="privacy">Les captures d’écran (PNG/JPEG jusqu’à 1,45 Mo) sont conservées dans leur qualité originale sans perte. N’envoyez que des images que vous avez le droit de publier.</p>
       </fieldset>
 

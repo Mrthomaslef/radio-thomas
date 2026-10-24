@@ -53,31 +53,83 @@ function prepareProposedImage(file) {
   });
 }
 
-function ProposalImagePicker({ label, onPicked, disabled }) {
+function ProposalImagePicker({ label, onPicked, disabled, multiple = false, compact = false }) {
   const [busy, setBusy] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const [err, setErr] = useState('');
-  const onChange = async (e) => {
-    const file = e.target.files?.[0];
-    e.target.value = '';
-    if (!file) return;
+
+  const handleFiles = async (fileList) => {
+    const files = Array.from(fileList || []).filter(Boolean);
+    if (!files.length || busy || disabled) return;
+    const toProcess = multiple ? files : [files[0]];
     setBusy(true);
     setErr('');
     try {
-      const dataUrl = await prepareProposedImage(file);
-      onPicked(dataUrl);
+      for (const file of toProcess) {
+        const dataUrl = await prepareProposedImage(file);
+        onPicked(dataUrl);
+      }
     } catch (ex) {
       setErr(ex.message || 'Impossible de charger cette image.');
     } finally {
       setBusy(false);
     }
   };
+
+  const onChange = (e) => {
+    const files = e.target.files;
+    e.target.value = '';
+    handleFiles(files);
+  };
+
+  const onDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!busy && !disabled) setDragging(true);
+  };
+
+  const onDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragging(false);
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragging(false);
+    if (busy || disabled) return;
+    const files = e.dataTransfer?.files;
+    if (files?.length) handleFiles(files);
+  };
+
   return (
-    <span className="qa-pick">
-      <label className={`btn btn-ghost btn-small${busy || disabled ? ' is-disabled' : ''}`}>
-        {busy ? 'Préparation…' : label}
+    <span className={`qa-pick ${compact ? 'is-compact' : 'is-dropzone'}`}>
+      <label
+        className={`${
+          compact ? 'btn btn-ghost btn-small qa-drop-compact' : 'qa-dropzone'
+        }${dragging ? ' is-dragging' : ''}${busy || disabled ? ' is-disabled' : ''}`}
+        onDragEnter={onDragOver}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+      >
+        {compact ? (
+          <span>{busy ? 'Préparation…' : dragging ? 'Déposer l’image ici' : `${label} (ou glisser)`}</span>
+        ) : (
+          <>
+            <span className="qa-dropzone-title">
+              {busy ? 'Préparation de l’image…' : dragging ? 'Relâchez pour déposer l’image' : label}
+            </span>
+            <span className="qa-dropzone-hint">
+              Glissez-déposez {multiple ? 'une ou plusieurs images' : 'une image'} ici ou cliquez pour parcourir (PNG, JPEG, WebP)
+            </span>
+          </>
+        )}
         <input
           type="file"
           accept="image/png,image/jpeg,image/webp"
+          multiple={multiple}
           onChange={onChange}
           disabled={busy || disabled}
           hidden
@@ -464,9 +516,13 @@ export default function ProposeQuestionPage() {
                 <div className="qa-fig-actions">
                   <ProposalImagePicker
                     label="Remplacer l’image"
+                    compact
                     disabled={busy}
                     onPicked={(dataUrl) =>
-                      setField({ enonce_image: { dataUrl, alt: q.enonce_image.alt || '' } })
+                      setQ((prev) => ({
+                        ...prev,
+                        enonce_image: { dataUrl, alt: prev.enonce_image?.alt || '' },
+                      }))
                     }
                   />
                   <button
@@ -483,7 +539,12 @@ export default function ProposeQuestionPage() {
             <ProposalImagePicker
               label="+ Ajouter une image avant la question"
               disabled={busy}
-              onPicked={(dataUrl) => setField({ enonce_image: { dataUrl, alt: '' } })}
+              onPicked={(dataUrl) =>
+                setQ((prev) => ({
+                  ...prev,
+                  enonce_image: { dataUrl, alt: '' },
+                }))
+              }
             />
           )}
           <p className="privacy">
@@ -612,10 +673,15 @@ export default function ProposeQuestionPage() {
           ))}
           <ProposalImagePicker
             label="+ Ajouter une image à la correction"
+            multiple
             disabled={busy || q.correction_figures.length >= 4}
             onPicked={(dataUrl) =>
-              setField({
-                correction_figures: [...q.correction_figures, { dataUrl, caption: '' }],
+              setQ((prev) => {
+                if ((prev.correction_figures || []).length >= 4) return prev;
+                return {
+                  ...prev,
+                  correction_figures: [...(prev.correction_figures || []), { dataUrl, caption: '' }],
+                };
               })
             }
           />

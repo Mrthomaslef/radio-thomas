@@ -710,8 +710,40 @@ a.chapter.chapter-failed .chapter-go {
 .qa-actions { display: flex; flex-wrap: wrap; gap: 10px; position: sticky; bottom: 0; padding: 12px 0; background: linear-gradient(transparent, var(--bg) 30%); }
 .qa-danger { color: var(--bad); border-color: var(--bad); }
 .qa-pick { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.qa-pick.is-dropzone { display: grid; width: 100%; }
 .qa-pick label.btn { cursor: pointer; }
 .qa-pick label.is-disabled { opacity: 0.5; pointer-events: none; }
+.qa-dropzone {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  text-align: center;
+  padding: 18px 16px;
+  border-radius: 12px;
+  border: 2px dashed rgba(56, 225, 255, 0.35);
+  background: rgba(56, 225, 255, 0.04);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+.qa-dropzone:hover {
+  border-color: var(--cyan);
+  background: rgba(56, 225, 255, 0.09);
+}
+.qa-dropzone.is-dragging,
+.qa-drop-compact.is-dragging {
+  border-color: var(--cyan);
+  background: rgba(56, 225, 255, 0.18);
+  box-shadow: 0 0 0 2px rgba(56, 225, 255, 0.35);
+}
+.qa-dropzone-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--cyan);
+}
+.qa-dropzone-hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
 
 /* image above the statement in the public quiz (iconography questions) */
 .cq-fig-top { margin-bottom: 14px; }
