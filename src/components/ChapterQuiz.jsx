@@ -179,6 +179,7 @@ export function QuizPlayer({
   const [bookmarks, setBookmarks] = useState(() => (preview ? {} : readBookmarks()));
   const [picked, setPicked] = useState([]);
   const [showCorrection, setShowCorrection] = useState(false);
+  const [reviewing, setReviewing] = useState(false);
   const [zoom, setZoom] = useState(null);
   const [saveState, setSaveState] = useState('idle');
   const [reportOpen, setReportOpen] = useState(false);
@@ -247,7 +248,7 @@ export function QuizPlayer({
   const goTo = (i) => {
     setIdx(i);
     setPicked([]);
-    setShowCorrection(false);
+    setShowCorrection(Boolean(reviewing && answers[questions[i]?.id]));
     resetReportBox();
   };
 
@@ -282,12 +283,23 @@ export function QuizPlayer({
 
   const next = () => {
     if (idx + 1 < questions.length) {
-      setIdx(idx + 1);
+      const nextIdx = idx + 1;
+      setIdx(nextIdx);
+      setShowCorrection(Boolean(reviewing && answers[questions[nextIdx]?.id]));
     } else {
       setIdx(firstOpen(questions, answers));
+      setShowCorrection(false);
     }
     setPicked([]);
-    setShowCorrection(false);
+    resetReportBox();
+    topRef.current?.scrollIntoView({ block: 'start' });
+  };
+
+  const reviewCorrections = () => {
+    setReviewing(true);
+    setPicked([]);
+    setIdx(0);
+    setShowCorrection(true);
     resetReportBox();
     topRef.current?.scrollIntoView({ block: 'start' });
   };
@@ -305,6 +317,7 @@ export function QuizPlayer({
     recordedHistoryRef.current = false;
     wasRestartedRef.current = true;
     setHistoryRecorded(false);
+    setReviewing(false);
     setAnswers({});
     setSent(false);
     setPicked([]);
@@ -456,10 +469,13 @@ export function QuizPlayer({
             </p>
           )}
           <div className="cq-end-actions">
+            <button className="btn" onClick={reviewCorrections}>
+              Revoir les corrections
+            </button>
             <button className="btn btn-ghost" onClick={restart}>
               {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
             </button>
-            <a className="btn" href={backHref}>
+            <a className="btn btn-ghost" href={backHref}>
               {randomMode && key === 'quiz-aleatoire' ? 'Configurer un autre quiz' : 'Autres chapitres'}
             </a>
           </div>
