@@ -71,7 +71,7 @@ export default function LeaderboardPage() {
       <header className="prog-head">
         <div className="cq-top-links">
           <a href="#/" className="cq-back">← Accueil</a>
-          <a href="#/progression" className="cq-back">Ma progression →</a>
+          <a href="#/progression" className="cq-back">Progression →</a>
         </div>
         <h1>
           <span className="grad">Leaderboard</span>
@@ -129,19 +129,27 @@ export default function LeaderboardPage() {
             </button>
           </form>
         ) : pseudo ? (
-          <p className="home-hello">
-            Session de <strong>{pseudo}</strong> ·{' '}
-            <button type="button" className="link-btn" onClick={() => { setDraft(pseudo); setEditing(true); }}>
+          <div className="home-hello">
+            <span>Session de <strong>{pseudo}</strong></span>
+            <button
+              type="button"
+              className="pseudo-change-btn"
+              onClick={() => { setDraft(pseudo); setEditing(true); }}
+            >
               Changer de pseudo
             </button>
-          </p>
+          </div>
         ) : (
-          <p className="home-hello">
-            Aucun pseudo actif ·{' '}
-            <button type="button" className="link-btn" onClick={() => { setDraft(''); setEditing(true); }}>
+          <div className="home-hello">
+            <span>Aucun pseudo actif</span>
+            <button
+              type="button"
+              className="pseudo-change-btn"
+              onClick={() => { setDraft(''); setEditing(true); }}
+            >
               Choisir un pseudo
             </button>
-          </p>
+          </div>
         )}
       </header>
 
@@ -231,8 +239,13 @@ export default function LeaderboardPage() {
                     <span className={`lb-rank-pill ${topClass}`}>{rankBadge(idx)}</span>
                   </span>
                   <span className="lb-col-name" role="cell">
-                    <strong>{item.name}</strong>
-                    {isMe && <span className="lb-me-tag">Vous</span>}
+                    <span className="lb-name-main">
+                      <strong>{item.name}</strong>
+                      {isMe && <span className="lb-me-tag">Vous</span>}
+                    </span>
+                    <span className="lb-name-sub">
+                      {tab === 'contributors' ? contribDetails : `${item.quizzes} quiz`}
+                    </span>
                   </span>
                   <span className="lb-col-quizzes" role="cell">
                     {tab === 'contributors' ? contribDetails : `${item.quizzes} quiz`}

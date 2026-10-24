@@ -1197,6 +1197,12 @@ a.cq-dot:hover { transform: scale(1.08); }
 .lb-col-name {
   display: flex; align-items: center; gap: 10px; min-width: 0;
 }
+.lb-name-main {
+  display: inline-flex; align-items: center; gap: 8px; min-width: 0;
+}
+.lb-name-sub {
+  display: none; font-size: 0.78rem; color: var(--muted); white-space: nowrap;
+}
 .lb-col-name strong {
   color: var(--text); font-weight: 600;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
@@ -1217,9 +1223,16 @@ a.cq-dot:hover { transform: scale(1.08); }
   .nav-right { gap: 8px; }
   .nav-right .btn-small { padding: 8px 12px; font-size: 0.82rem; }
   .lb-row {
-    grid-template-columns: 54px 1fr auto;
+    grid-template-columns: 48px 1fr auto;
+    gap: 10px;
     padding: 12px 14px;
   }
+  .lb-col-name {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .lb-name-sub { display: block; }
   .lb-col-quizzes { display: none; }
 }
 
