@@ -111,15 +111,19 @@ export default function Home({ openTheme }) {
       ) : (
         <motion.div className="home-panel" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <div className="home-bar">
-            <p className="home-hello">
-              Salut <strong>{pseudo}</strong> !{' '}
-              <button className="link-btn" onClick={() => { setDraft(pseudo); setEditing(true); }}>
+            <div className="home-hello">
+              <span>Salut <strong>{pseudo}</strong> !</span>
+              <button
+                type="button"
+                className="pseudo-change-btn"
+                onClick={() => { setDraft(pseudo); setEditing(true); }}
+              >
                 Changer de pseudo
               </button>
-            </p>
+            </div>
             <div className="home-bar-actions">
               <a href="#/aleatoire" className="btn btn-small">
-                Quiz aléatoire <Icon name="arrow" size={15} />
+                Quiz aléatoire
               </a>
               <a href="#/proposer" className="btn btn-ghost btn-small">
                 Proposer une question

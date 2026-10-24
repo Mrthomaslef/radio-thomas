@@ -465,8 +465,31 @@ a.card { display: block; color: inherit; }
 .home { max-width: 720px; margin: 0 auto; min-height: 100vh; padding: calc(130px + env(safe-area-inset-top, 0px)) clamp(16px, 5vw, 40px) 60px; }
 .home h1 { font-size: clamp(2.8rem, 9vw, 5rem); text-align: center; margin-bottom: 40px; }
 .home-panel { display: grid; gap: 18px; }
-.home-hello { color: var(--muted); }
+.home-hello {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+}
 .home-hello strong { color: var(--text); }
+.pseudo-change-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.pseudo-change-btn:hover {
+  color: var(--cyan);
+  border-color: rgba(56, 225, 255, 0.45);
+  background: rgba(56, 225, 255, 0.08);
+}
 .theme { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); overflow: hidden; }
 .theme.theme-passed {
   border-color: rgba(52, 211, 153, 0.65);
