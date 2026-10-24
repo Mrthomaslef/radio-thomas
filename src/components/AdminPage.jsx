@@ -183,9 +183,7 @@ export default function AdminPage({ reviewerMode = false }) {
           );
           if (accepted.length > 0) {
             const existingEnonces = new Set(
-              dbList
-                .filter((row) => !row.deleted_at)
-                .map((row) => `${row.chapter}::${(row.data?.enonce || '').trim().toLowerCase()}`)
+              dbList.map((row) => `${row.chapter}::${(row.data?.enonce || '').trim().toLowerCase()}`)
             );
             for (const sub of accepted) {
               const chKey = sub.chapter || 'ch1';

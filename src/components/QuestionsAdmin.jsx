@@ -387,6 +387,24 @@ async function call(password, payload) {
 const REVIEW_STORAGE_KEY = 'radio-thomas:reviewed-questions';
 const REVIEWED_BY_STORAGE_KEY = 'radio-thomas:reviewed-by-questions';
 const ACTIVE_REVIEWER_KEY = 'radio-thomas:reviewer-name';
+const LOCAL_DELETED_KEY = 'radio-thomas:deleted-questions';
+
+function readLocalDeleted() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(LOCAL_DELETED_KEY) || '{}');
+    return raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeLocalDeleted(map) {
+  try {
+    localStorage.setItem(LOCAL_DELETED_KEY, JSON.stringify(map));
+  } catch {
+    // Ignore storage errors
+  }
+}
 
 function readLocalReviewed() {
   try {
@@ -584,9 +602,7 @@ export default function QuestionsAdmin({
       // 3. Ensure any accepted user-proposed question (from Propositions) is present in quiz_questions.
       if (!reviewerMode && Array.isArray(acceptedSubmissions) && acceptedSubmissions.length > 0) {
         const existingEnonces = new Set(
-          dbList
-            .filter((r) => !r.deleted_at)
-            .map((r) => `${r.chapter}::${(r.data?.enonce || '').trim().toLowerCase()}`)
+          dbList.map((r) => `${r.chapter}::${(r.data?.enonce || '').trim().toLowerCase()}`)
         );
         for (const sub of acceptedSubmissions) {
           if (!sub?.question?.enonce || !sub?.chapter) continue;
@@ -646,15 +662,33 @@ export default function QuestionsAdmin({
       }
 
       // Merge with bundledQuestions and any reviewer edits (remote or local)
+      const locDeleted = readLocalDeleted();
       const serverById = new Map(dbList.map((r) => [r.id, r]));
       const byId = new Map(dbList.map((r) => [r.id, r]));
-      for (const b of bundledQuestions) {
-        if (!byId.has(b.id)) byId.set(b.id, b);
+      if (dbList.length === 0) {
+        for (const b of bundledQuestions) {
+          if (!byId.has(b.id)) byId.set(b.id, b);
+        }
+      }
+      for (const [delId, delInfo] of Object.entries(locDeleted)) {
+        if (!delInfo?.deleted_at) continue;
+        const curr = byId.get(delId);
+        if (curr) {
+          byId.set(delId, { ...curr, deleted_at: curr.deleted_at || delInfo.deleted_at });
+        } else if (delInfo.data && delInfo.chapter) {
+          byId.set(delId, {
+            id: delId,
+            chapter: delInfo.chapter,
+            position: delInfo.position || 0,
+            data: delInfo.data,
+            deleted_at: delInfo.deleted_at,
+          });
+        }
       }
       for (const revEd of reviewerEdits || []) {
         if (revEd?.id && revEd?.data) {
           const curr = byId.get(revEd.id);
-          if (curr?.deleted_at) continue;
+          if (curr?.deleted_at || locDeleted[revEd.id]) continue;
           if (!curr || !curr.updated_at || (revEd.updated_at && revEd.updated_at >= curr.updated_at)) {
             byId.set(revEd.id, revEd);
           }
@@ -664,7 +698,7 @@ export default function QuestionsAdmin({
       for (const [id, localEd] of Object.entries(localEditsMap)) {
         if (localEd?.id && localEd?.data) {
           const srv = serverById.get(id);
-          if (srv?.deleted_at) {
+          if (srv?.deleted_at || locDeleted[id]) {
             removeLocalReviewerEdit(id);
             continue;
           }
@@ -1221,16 +1255,24 @@ export default function QuestionsAdmin({
     setBusy(true); setError(''); setNotice('');
     try {
       await call(password, { action: 'delete', id: row.id });
+      const deletedAt = new Date().toISOString();
+      const locDel = readLocalDeleted();
+      locDel[row.id] = {
+        deleted_at: deletedAt,
+        chapter: row.chapter,
+        position: row.position || 0,
+        data: row.data || row.q,
+      };
+      writeLocalDeleted(locDel);
       removeLocalReviewerEdit(row.id);
       setRows((prev) =>
         (prev || []).map((r) =>
-          r.id === row.id ? { ...r, deleted_at: new Date().toISOString() } : r
+          r.id === row.id ? { ...r, deleted_at: deletedAt } : r
         )
       );
       resetQuestionsCache();
       setNotice('Question supprimée.');
       setEditing(null);
-      await load();
     } catch (e) { setError(e.message); } finally { setBusy(false); }
   };
 
@@ -1238,6 +1280,16 @@ export default function QuestionsAdmin({
     setBusy(true); setError(''); setNotice('');
     try {
       await call(password, { action: 'save', id: row.id, chapter: row.chapter, position: row.position, question: row.data });
+      const locDel = readLocalDeleted();
+      if (locDel[row.id]) {
+        delete locDel[row.id];
+        writeLocalDeleted(locDel);
+      }
+      setRows((prev) =>
+        (prev || []).map((r) =>
+          r.id === row.id ? { ...r, deleted_at: null } : r
+        )
+      );
       resetQuestionsCache();
       setNotice('Question rétablie.');
       await load();

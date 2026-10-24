@@ -214,17 +214,26 @@ export function mergeLocalAndServerRow(id, locRow, srvRow) {
 // Group database rows by chapter; keeps only known chapters and includes any new bundled questions not yet in DB.
 function groupByChapter(rows) {
   let localReviewerMap = {};
+  let localDeletedMap = {};
   try {
     localReviewerMap = JSON.parse(localStorage.getItem('quiz-cotten:reviewer-edits:v2') || '{}') || {};
+    localDeletedMap = JSON.parse(localStorage.getItem('radio-thomas:deleted-questions') || '{}') || {};
   } catch {
     localReviewerMap = {};
+    localDeletedMap = {};
   }
 
-  const serverById = new Map(rows.map((r) => [r.id, r]));
-  const byId = new Map(rows.map((r) => [r.id, r]));
+  const activeRows = rows.filter((r) => r && !r.deleted_at && !localDeletedMap[r.id]);
+  const serverById = new Map(activeRows.map((r) => [r.id, r]));
+  const byId = new Map(activeRows.map((r) => [r.id, r]));
   let localMapChanged = false;
 
   for (const [id, revRow] of Object.entries(localReviewerMap)) {
+    if (localDeletedMap[id]) {
+      delete localReviewerMap[id];
+      localMapChanged = true;
+      continue;
+    }
     if (revRow && revRow.id && revRow.chapter && revRow.data) {
       if (rows === bundledQuestions) {
         byId.set(id, revRow);
@@ -278,7 +287,7 @@ function groupByChapter(rows) {
   }
 
   for (const b of bundledQuestions) {
-    if (!byId.has(b.id) && rows === bundledQuestions) {
+    if (!byId.has(b.id) && rows === bundledQuestions && !localDeletedMap[b.id]) {
       merged.push(b);
     }
   }
