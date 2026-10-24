@@ -105,7 +105,9 @@ export default function Footer() {
         </div>
       )}
       <footer className="footer">
-        <span className="brand"><span className="brand-mark">Q</span> QUIZ&nbsp;Cochin</span>
+        <span className="brand">
+          <img src="/apple-touch-icon.png" alt="" className="brand-logo" /> QUIZ&nbsp;Cochin
+        </span>
         <span className={`status status-${status}`}>
           <span className="dot" /> Serveur {labels[status]}
         </span>

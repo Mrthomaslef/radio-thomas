@@ -16,8 +16,9 @@ export default function Navbar() {
 
   return (
     <header className={`nav ${scrolled ? 'nav-scrolled' : ''}`}>
-      <a href="#/" className="brand">
-        <span className="brand-mark">Q</span> QUIZ&nbsp;Cochin
+      <a href="#/" className="brand" aria-label="QUIZ Cochin — Accueil">
+        <img src="/apple-touch-icon.png" alt="" className="brand-logo" />
+        <span className="brand-text">QUIZ&nbsp;Cochin</span>
       </a>
       <div className="nav-right">
         {pseudo && <span className="nav-user" title="Session active">{pseudo}</span>}
@@ -25,7 +26,7 @@ export default function Navbar() {
           Leaderboard
         </a>
         <a href="#/progression" className="btn btn-ghost btn-small nav-prog">
-          Ma progression
+          Progression
         </a>
       </div>
     </header>
