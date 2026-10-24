@@ -645,13 +645,32 @@ export function QuizPlayer({
 
       {!finished && (
         <div className="cq-bottom">
-          {!validated ? (
-            <button className="btn cq-main" onClick={validate} disabled={!picked.length}>Valider</button>
-          ) : (
-            <button className="btn cq-main" onClick={next}>
-              {idx + 1 >= questions.length && answeredAll.length === total ? 'Voir le résultat' : 'Question suivante'} <Icon name="arrow" size={18} />
-            </button>
-          )}
+          <div className="cq-bottom-inner">
+            {!validated ? (
+              <button className="btn cq-main" onClick={validate} disabled={!picked.length}>Valider</button>
+            ) : answeredAll.length === total && idx + 1 < questions.length ? (
+              <>
+                <button
+                  type="button"
+                  className="btn btn-ghost cq-main"
+                  onClick={() => {
+                    setIdx(questions.length);
+                    resetReportBox();
+                    topRef.current?.scrollIntoView({ block: 'start' });
+                  }}
+                >
+                  Voir les résultats
+                </button>
+                <button className="btn cq-main" onClick={next}>
+                  Question suivante <Icon name="arrow" size={18} />
+                </button>
+              </>
+            ) : (
+              <button className="btn cq-main" onClick={next}>
+                {idx + 1 >= questions.length && answeredAll.length === total ? 'Voir les résultats' : 'Question suivante'} <Icon name="arrow" size={18} />
+              </button>
+            )}
+          </div>
         </div>
       )}
 

@@ -612,7 +612,8 @@ a.chapter.chapter-failed .chapter-go {
 .cq-ref { padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(56, 225, 255, 0.35); background: rgba(56, 225, 255, 0.06); font-size: 0.85rem; color: #c9dbe8; }
 .cq-ref strong { display: block; color: var(--cyan); margin-bottom: 2px; }
 .cq-bottom { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); background: rgba(10, 13, 18, 0.94); backdrop-filter: blur(10px); border-top: 1px solid var(--q-line); }
-.cq-main { width: 100%; max-width: 732px; margin: 0 auto; display: flex; justify-content: center; min-height: 52px; font-size: 1.05rem; }
+.cq-bottom-inner { max-width: 732px; margin: 0 auto; display: flex; gap: 10px; }
+.cq-main { flex: 1; width: 100%; display: flex; justify-content: center; min-height: 52px; font-size: 1.05rem; }
 .cq-end { text-align: center; display: grid; gap: 12px; justify-items: center; }
 .cq-big { font-family: var(--display); font-size: 3rem; color: var(--cyan); }
 .cq-end-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
