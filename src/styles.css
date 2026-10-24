@@ -1447,6 +1447,20 @@ a.cq-dot:hover { transform: scale(1.08); }
   background: var(--cyan);
   border-color: var(--cyan);
 }
+.home-app-banner-text {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.home-app-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 225, 255, 0.45);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
 
 .footer-feedback-wrap {
   max-width: 680px;

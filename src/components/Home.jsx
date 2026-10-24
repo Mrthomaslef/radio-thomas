@@ -68,7 +68,9 @@ export default function Home({ openTheme }) {
             rel="noopener noreferrer"
             className="home-app-banner"
           >
-            <span>Mode App : Ajouter à ma page d’accueil</span>
+            <span className="home-app-banner-text">
+              Mode App <img src="/apple-touch-icon.png" alt="Logo QUIZ Cochin" className="home-app-logo" /> : Ajouter à ma page d’accueil
+            </span>
             <Icon name="arrow" size={16} />
           </a>
         </div>
