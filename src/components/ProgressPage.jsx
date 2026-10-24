@@ -156,12 +156,16 @@ export default function ProgressPage() {
             </button>
           </form>
         ) : (
-          <p className="home-hello">
-            Session de <strong>{pseudo}</strong> ·{' '}
-            <button type="button" className="link-btn" onClick={() => { setDraft(pseudo); setEditing(true); }}>
+          <div className="home-hello">
+            <span>Session de <strong>{pseudo}</strong></span>
+            <button
+              type="button"
+              className="pseudo-change-btn"
+              onClick={() => { setDraft(pseudo); setEditing(true); }}
+            >
               Changer de pseudo
             </button>
-          </p>
+          </div>
         )}
       </header>
 
@@ -267,7 +271,7 @@ export default function ProgressPage() {
                           </span>
                           <button
                             type="button"
-                            className="link-btn prog-reset"
+                            className="prog-reset-btn"
                             onClick={() => {
                               toggleQuestionBookmark(b.id, pseudo);
                               setBookmarks(readBookmarks(pseudo));
@@ -311,9 +315,20 @@ export default function ProgressPage() {
                   themeTotalQ += qs.length;
                   themeAnsweredQ += qs.filter((q) => ans[q.id]).length;
                 }
+                const themePassed =
+                  t.chapters.length > 0 &&
+                  t.chapters.every((c) => {
+                    const qs = byChapter[c.id] || [];
+                    if (qs.length === 0) return false;
+                    const ans = progress[c.id]?.answers || {};
+                    const answered = qs.filter((q) => ans[q.id]);
+                    if (answered.length !== qs.length) return false;
+                    const correct = answered.filter((q) => isPerfect(q, ans[q.id])).length;
+                    return correct / qs.length >= 0.6;
+                  });
 
                 return (
-                  <div key={t.id} className="theme prog-collapse">
+                  <div key={t.id} className={`theme prog-collapse ${themePassed ? 'theme-passed' : ''}`}>
                     <button
                       type="button"
                       className={`theme-head prog-collapse-btn ${isOpen ? 'on' : ''}`}
@@ -338,11 +353,18 @@ export default function ProgressPage() {
                           const answered = qs.filter((q) => ans[q.id]);
                           const correct = answered.filter((q) => isPerfect(q, ans[q.id])).length;
                           const pct = qs.length ? (answered.length / qs.length) * 100 : 0;
+                          const isCompleted = qs.length > 0 && answered.length === qs.length;
+                          const passed = isCompleted && correct / qs.length >= 0.6;
+                          const cardStatus = isCompleted
+                            ? passed
+                              ? 'prog-card-passed'
+                              : 'prog-card-failed'
+                            : '';
 
                           return (
-                            <article key={c.id} className="cq-card prog-card">
+                            <article key={c.id} className={`cq-card prog-card ${cardStatus}`}>
                               <div className="prog-card-head">
-                                <div>
+                                <div className="prog-card-title-wrap">
                                   <span className="prog-ch-num">Chapitre {idx + 1}</span>
                                   <h3>{c.title}</h3>
                                 </div>
@@ -350,20 +372,11 @@ export default function ProgressPage() {
                                   {answered.length > 0 && (
                                     <button
                                       type="button"
-                                      className="link-btn prog-reset"
+                                      className="prog-reset-btn"
                                       onClick={() => resetChapter(c.id, c.title)}
                                     >
                                       Réinitialiser
                                     </button>
-                                  )}
-                                  {qs.length > 0 && (
-                                    <a
-                                      href={`#/quiz/${c.id}?random=5`}
-                                      className="btn btn-ghost btn-small"
-                                      title={`5 questions aléatoires — ${c.title}`}
-                                    >
-                                      5Q
-                                    </a>
                                   )}
                                   <a href={`#/quiz/${c.id}`} className="btn btn-small">
                                     {qs.length === 0
