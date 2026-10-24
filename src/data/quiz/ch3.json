@@ -473,6 +473,252 @@
         "refs": ""
       },
       "difficulty": 2
+    },
+    {
+      "id": "c3-q11",
+      "type": "QRM",
+      "theme": "Neuropathie périphérique : Plexopathie post-radique du plexus brachial",
+      "enonce": "Quelles sont les caractéristiques sémiologiques et cliniques avérées de la plexopathie post-radique du plexus brachial en imagerie et en pratique médicale ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Elle s’observe généralement pour des doses de radiothérapie supérieures à 60 Gy.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Elle se traduit initialement par des douleurs intenses plutôt que par des troubles sensitifs, à la différence de l’infiltration tumorale.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "En IRM, le plexus brachial irradié présente un épaississement diffus ou limité à sa partie supérieure, sans syndrome de masse.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Les racines affectées sont plus souvent C5 et C6 que la partie basse du plexus brachial, et le syndrome de Claude-Bernard-Horner est rare.",
+          "correct": true
+        },
+        {
+          "id": "E",
+          "texte": "L’échographie peut objectiver un épaississement focal et asymétrique formant une volumineuse masse bien circonscrite.",
+          "correct": false
+        }
+      ],
+      "explication": "La plexopathie post-radique survient généralement pour des doses supérieures à 60 Gy et se développe le plus souvent après quelques années (jusqu’à 20 ans).\nSur le plan clinique, elle se traduit initialement par des troubles sensitifs (paresthésies, engourdissement) et une parésie plutôt que par des douleurs, ce qui constitue une distinction sémiologique importante par rapport à l’infiltration tumorale du plexus brachial.\nLes racines affectées sont plus fréquemment C5 et C6 que la partie basse du plexus, et le syndrome de Claude-Bernard-Horner y est rare.\nEn imagerie par résonance magnétique, le plexus irradié présente un épaississement diffus ou limité à sa partie supérieure, avec des contours mal délimités et l’absence de syndrome de masse.\nEn échographie, on objective un épaississement diffus et uniforme des nerfs, toujours sans syndrome de masse, et non un nodule tumoral circonscrit.",
+      "correction_figures": [
+        {
+          "upload": "7efbf687cd6b4d91af45dba3daf23013",
+          "caption": "Plexopathie post radique"
+        }
+      ],
+      "source": {
+        "page": 114,
+        "element": "Texte (Plexopathie radique)",
+        "refs": "[130, 193, 242, 300, 301]"
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c3-q12",
+      "type": "QRM",
+      "theme": "Nerf suprascapulaire : sémiologie IRM et étiologies",
+      "enonce": "Quels sont les signes et caractéristiques de l’atteinte du nerf suprascapulaire et de son exploration en imagerie ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’œdème musculaire de dénervation est visible en hypersignal T2 dès environ deux semaines et est homogène.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’involution graisseuse peut s’observer au bout de quelques semaines",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une lésion du nerf suprascapulaire située au niveau de l’échancrure spinoglénoïdale entraîne généralement une dénervation associant les muscles supra-épineux et infra-épineux.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Les kystes mucoïdes compliquant une fissure du labrum glénoïdal sont la cause la plus fréquente de compression dans l’échancrure spinoglénoïdale.",
+          "correct": true
+        }
+      ],
+      "explication": "L’œdème musculaire de dénervation apparaît dès deux semaines, est hyperintense en T2 et homogène.\nL’involution graisseuse de la dénervation se fait finement entre les fibres sans modification de l’angle de pennation, contrairement aux ruptures de coiffe. Elle débute généralement après plusieurs mois.\nUne lésion située dans l’échancrure spinoglénoïdale ne retentit que sur le muscle infra-épineux, tandis qu’une lésion au niveau de l’échancrure suprascapulaire retentit sur les deux muscles (supra- et infra-épineux).\nLes kystes mucoïdes compriment le nerf le plus souvent dans l’échancrure spinoglénoïdale.",
+      "correction_figures": [
+        {
+          "upload": "68c3efbd0f9f4a58b504f3210fecf6a9",
+          "caption": "Kyste mucoide de l’échancrure spinoglénoïdale en IRM avec oedème de dénervation"
+        },
+        {
+          "upload": "5b902fafb80640848cb061f88bdbebdd",
+          "caption": "Kyste mucoide de l’échancrure spinoglénoïdale en échographie"
+        }
+      ],
+      "source": {
+        "page": 117,
+        "element": "Texte et Figure 3.37",
+        "refs": "[28, 178, 189]"
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c3-q13",
+      "type": "QRM",
+      "theme": "Nerf suprascapulaire : microtraumatismes et variations anatomiques",
+      "enonce": "Concernant les microtraumatismes et les variations ligamentaires ou vasculaires favorisant la souffrance du nerf suprascapulaire, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’artère suprascapulaire est impliquée dans les microtraumatismes des sports de lancer : des micro-emboles peuvent être piégés dans les vasa nervorum et provoquer une ischémie du nerf.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le ligament coracoscapulaire antérieur, présent dans la moitié des cas, est systématiquement compressif et agressif pour le nerf.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Un trajet aberrant de l’artère suprascapulaire la faisant passer directement dans l’échancrure suprascapulaire (avec le nerf) constitue un élément anatomique favorisant la compression.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’étirement brutal du nerf suprascapulaire peut avoir une origine iatrogène, comme le positionnement du bras lors d’une anesthésie, une procédure de Latarjet ou une arthroscopie.",
+          "correct": true
+        }
+      ],
+      "explication": "Les microtraumatismes (sports d’armer du bras) peuvent induire une ischémie par micro-emboles artériels dans les vasa nervorum. L’artère suprascapulaire a normalement un trajet hors de l’échancrure ; son passage aberrant dans celle-ci favorise la compression. Des causes iatrogènes par étirement ou lésion directe (arthroscopie, Latarjet, position d’anesthésie) sont bien identifiées. En revanche, le ligament coracoscapulaire antérieur a normalement un rôle protecteur en surélevant le nerf du contour osseux. Il ne devient agressif que de façon exceptionnelle, s’il s’ossifie et crée un foramen.",
+      "correction_figures": [],
+      "source": {
+        "page": 116,
+        "element": "Paragraphes Traumatismes, Microtraumatismes et Éléments anatomiques favorisants",
+        "refs": ""
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c3-q14",
+      "type": "QCU",
+      "theme": "Nerf suprascapulaire : facteurs musculaires de compression",
+      "enonce": "Parmi ces causes musculaires, laquelle représente un facteur anatomique classique de compression du nerf suprascapulaire ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Un muscle subscapulaire hypertrophique recouvrant la face postérieure de l’échancrure spinoglénoïdale.",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Le développement d’un muscle surnuméraire, le subclavius posticus, étendu entre le cartilage costal de la 1re côte et le bord supérieur de la scapula.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La partie inférieure du muscle supra-épineux lors d’un mouvement d’adduction et de rotation médiale.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une atrophie sévère du fascia dans la fosse supra-épineuse due à une inactivité prolongée.",
+          "correct": false
+        }
+      ],
+      "explication": "Le nerf suprascapulaire peut être comprimé par un muscle surnuméraire appelé subclavius posticus, qui s’étend du cartilage de la 1re côte jusqu’au bord supérieur de la scapula. Le muscle subscapulaire hypertrophique recouvre la face antérieure de l’échancrure suprascapulaire (et non spinoglénoïdale). C’est la partie supérieure du muscle infra-épineux (et non supra-épineux) dans l’échancrure spinoglénoïdale lors du geste combiné d’abduction et de rotation latérale (armer du bras) qui est compressive. Enfin, c’est un épaississement (souvent post-traumatique) de son fascia qui peut comprimer le nerf, et non une atrophie.",
+      "correction_figures": [],
+      "source": {
+        "page": 116,
+        "element": "Paragraphe Éléments anatomiques favorisants (les facteurs musculaires)",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c3-q15",
+      "type": "QRM",
+      "theme": "Nerf suprascapulaire : trajet et rôle",
+      "enonce": "Concernant le trajet et le rôle du nerf suprascapulaire, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il naît du tronc supérieur (C5-C6) du plexus brachial et passe sous le ventre inférieur du muscle omohyoïdien avant de pénétrer dans l’échancrure suprascapulaire.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Dans l’échancrure suprascapulaire, le nerf et l’artère suprascapulaire passent ensemble sous le ligament scapulaire transverse supérieur.",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Il est strictement moteur, innervant les muscles supra-épineux et infra-épineux.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Après avoir traversé l’échancrure suprascapulaire, il innerve le muscle supra-épineux, puis passe dans l’échancrure spinoglénoïdale pour aller innerver le muscle infra-épineux.",
+          "correct": true
+        }
+      ],
+      "explication": "Le nerf suprascapulaire (C5-C6) passe sous le muscle omohyoïdien puis dans l’échancrure suprascapulaire (sous le ligament transverse supérieur), innerve le muscle supra-épineux, passe par l’échancrure spinoglénoïdale et se termine dans le muscle infra-épineux. À l’état normal, seul le nerf (et souvent la veine) passe sous le ligament scapulaire transverse supérieur, tandis que l’artère passe au-dessus (un trajet aberrant de l’artère dans l’échancrure est d’ailleurs un facteur de risque de compression). Le nerf suprascapulaire est mixte : il a un rôle moteur, mais aussi un rôle sensitif pour la bourse subacromiodeltoïdienne, les articulations glénohumérale et acromioclaviculaire, certains ligaments et la peau du bras.",
+      "correction_figures": [],
+      "source": {
+        "page": 116,
+        "element": "Trajet du nerf suprascapulaire",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c3-q16",
+      "type": "QRM",
+      "theme": "Nerf suprascapulaire : étiologies et facteurs favorisants",
+      "enonce": "Parmi les facteurs suivants, lesquels sont considérés comme favorisants ou responsables d’un syndrome compressif ou d’une souffrance du nerf suprascapulaire ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une échancrure suprascapulaire étroite ou transformée en foramen osseux par l’ossification du ligament scapulaire transverse supérieur.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un kyste mucoïde développé dans l’échancrure suprascapulaire ou spinoglénoïdale.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Des microtraumatismes par étirement lors de l’armer du bras (ex. : volley-ball, tennis), entraînant parfois des lésions de l’artère suprascapulaire associée.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une hypertrophie du muscle petit pectoral.",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Le syndrome de Parsonage-Turner (dont le nerf suprascapulaire est atteint dans plus de 80 % des cas).",
+          "correct": true
+        }
+      ],
+      "explication": "La souffrance du nerf suprascapulaire est plurifactorielle : une échancrure suprascapulaire étroite ou fermée par un ligament ossifié, la présence d’un kyste mucoïde ou d’une tumeur, ou les microtraumatismes sportifs lors du geste d’armer du bras avec possible micro-embolie artérielle sont des facteurs compressifs et ischémiques classiques. Le syndrome de Parsonage-Turner (névralgie amyotrophiante) touche ce nerf dans plus de 80 % des cas. L’hypertrophie musculaire peut être en cause, mais il s’agit du muscle subscapulaire, de l’infra-épineux ou de muscles surnuméraires (ex. subclavius posticus), et non du petit pectoral.",
+      "correction_figures": [],
+      "source": {
+        "page": 116,
+        "element": "Étiologies de l’atteinte du nerf suprascapulaire",
+        "refs": ""
+      },
+      "difficulty": 2
     }
   ]
 }
