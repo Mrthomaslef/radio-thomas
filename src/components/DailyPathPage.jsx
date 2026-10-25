@@ -416,17 +416,19 @@ export default function DailyPathPage() {
     window.scrollTo(0, 0);
   };
 
-  // Smooth C2-continuous S-curve geometry for the vertical winding path
+  // Smooth C1/C2 meandering spline geometry with generous horizontal loops + top continuation
   const totalStepsToShow = Math.max(8, dailyState.currentStep + 3);
   const pathLayout = useMemo(() => {
     const width = 360;
-    const rowHeight = 166;
-    const topPad = 100;
+    const rowHeight = 172;
+    const topPad = 128;
     const bottomPad = 115;
     const height = topPad + (totalStepsToShow - 1) * rowHeight + bottomPad;
 
-    // Harmonious alternating horizontal wave so every segment is a smooth S-bend
-    const xWave = [180, 260, 108, 252, 108, 260, 108, 252];
+    // Node horizontal positions + intermediate wide loop apexes between consecutive nodes
+    // so the path curves generously left and right like the reference screenshot.
+    const xWave = [176, 262, 178, 94, 180, 264, 176, 94];
+    const loopXWave = [98, 322, 28, 276, 88, 320, 32, 276];
 
     const nodes = [];
     for (let s = 1; s <= totalStepsToShow; s++) {
@@ -436,32 +438,57 @@ export default function DailyPathPage() {
       nodes.push({ step: s, x, y, isBoss: s % 4 === 0 });
     }
 
-    // Build continuous C2-smooth cubic Bézier paths:
-    // Because both control points at each node (x_i, y_i) have x = x_i and symmetric vertical tangents,
-    // the curve has zero kinks and flows like a ribbon through every single medallion.
-    const tOffset = Math.round(rowHeight * 0.56);
-    const unlockedLimit = Math.min(dailyState.currentStep, nodes.length);
-
-    let unlockedPathD = '';
+    // Build a smooth sequence of waypoints: Node_1 -> Loop_1 -> Node_2 -> Loop_2 -> ... -> TopExit
+    const waypoints = [];
+    for (let i = 0; i < nodes.length; i++) {
+      const curr = nodes[i];
+      waypoints.push({ x: curr.x, y: curr.y, step: curr.step, isNode: true });
+      if (i < nodes.length - 1) {
+        const next = nodes[i + 1];
+        const loopX = loopXWave[i % loopXWave.length];
+        const loopY = Math.round((curr.y + next.y) / 2);
+        waypoints.push({ x: loopX, y: loopY, step: next.step, isNode: false });
+      }
+    }
+    // Add a continuation waypoint above the highest node so the road disappears into the top fade
     if (nodes.length > 0) {
-      unlockedPathD = `M ${nodes[0].x} ${nodes[0].y}`;
-      for (let i = 0; i < unlockedLimit - 1; i++) {
-        const a = nodes[i];
-        const b = nodes[i + 1];
-        unlockedPathD += ` C ${a.x} ${a.y - tOffset}, ${b.x} ${b.y + tOffset}, ${b.x} ${b.y}`;
-      }
+      const topNode = nodes[nodes.length - 1];
+      const exitLoopX = loopXWave[(nodes.length - 1) % loopXWave.length];
+      waypoints.push({ x: exitLoopX, y: Math.max(42, topNode.y - 68), step: topNode.step + 1, isNode: false });
+      waypoints.push({ x: 180, y: 4, step: topNode.step + 1, isNode: false });
     }
 
-    let lockedPathD = '';
-    if (unlockedLimit >= 1 && unlockedLimit < nodes.length) {
-      const startNode = nodes[unlockedLimit - 1];
-      lockedPathD = `M ${startNode.x} ${startNode.y}`;
-      for (let i = unlockedLimit - 1; i < nodes.length - 1; i++) {
-        const a = nodes[i];
-        const b = nodes[i + 1];
-        lockedPathD += ` C ${a.x} ${a.y - tOffset}, ${b.x} ${b.y + tOffset}, ${b.x} ${b.y}`;
+    // Convert Catmull-Rom waypoints into a smooth continuous cubic Bézier SVG path string
+    const catmullRomToBezier = (pts, startIdx, endIdx) => {
+      if (endIdx <= startIdx || pts.length < 2) return '';
+      const tension = 0.34;
+      let d = `M ${pts[startIdx].x} ${pts[startIdx].y}`;
+      for (let i = startIdx; i < endIdx; i++) {
+        const p0 = pts[Math.max(0, i - 1)];
+        const p1 = pts[i];
+        const p2 = pts[i + 1];
+        const p3 = pts[Math.min(pts.length - 1, i + 2)];
+
+        const cp1x = Math.round((p1.x + (p2.x - p0.x) * tension) * 10) / 10;
+        const cp1y = Math.round((p1.y + (p2.y - p0.y) * tension) * 10) / 10;
+        const cp2x = Math.round((p2.x - (p3.x - p1.x) * tension) * 10) / 10;
+        const cp2y = Math.round((p2.y - (p3.y - p1.y) * tension) * 10) / 10;
+
+        d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
       }
-    }
+      return d;
+    };
+
+    const unlockedNodeCount = Math.min(dailyState.currentStep, nodes.length);
+    // Each node i is at waypoint index i * 2
+    const unlockedWaypointIdx = Math.max(0, (unlockedNodeCount - 1) * 2);
+
+    const unlockedPathD =
+      unlockedWaypointIdx > 0 ? catmullRomToBezier(waypoints, 0, unlockedWaypointIdx) : '';
+    const lockedPathD =
+      unlockedWaypointIdx < waypoints.length - 1
+        ? catmullRomToBezier(waypoints, unlockedWaypointIdx, waypoints.length - 1)
+        : '';
 
     return { width, height, nodes, unlockedPathD, lockedPathD };
   }, [totalStepsToShow, dailyState.currentStep]);
@@ -1031,22 +1058,32 @@ export default function DailyPathPage() {
                 className={`daily-node-wrap ${isUnlocked ? 'is-unlocked' : 'is-locked'} ${isCurrent ? 'is-current' : ''} ${isBoss ? 'is-boss' : ''}`}
                 style={{ left: leftPct, top: y }}
               >
-                {/* 3-star arch on Boss nodes and on every completed step */}
-                {(isBoss || isCompleted) && (
-                  <div className={`daily-boss-stars ${!isBoss ? 'daily-step-stars' : ''}`} aria-hidden="true">
-                    {[1, 2, 3].map((sIdx) => {
-                      const lit = stars >= sIdx;
-                      return (
-                        <span
-                          key={sIdx}
-                          className={`daily-boss-star s-${sIdx} ${lit ? 'is-lit' : ''}`}
-                        >
-                          ★
-                        </span>
-                      );
-                    })}
-                  </div>
-                )}
+                {/* 3-star arch above every step node (empty slots before completion, gold when earned) */}
+                <div
+                  className={`daily-boss-stars ${!isBoss ? 'daily-step-stars' : ''} ${!isUnlocked ? 'is-locked-stars' : ''}`}
+                  aria-hidden="true"
+                >
+                  {[1, 2, 3].map((sIdx) => {
+                    const lit = stars >= sIdx;
+                    return (
+                      <svg
+                        key={sIdx}
+                        className={`daily-star-svg s-${sIdx} ${lit ? 'is-lit' : 'is-empty'}`}
+                        width={isBoss ? (sIdx === 2 ? 30 : 25) : sIdx === 2 ? 25 : 21}
+                        height={isBoss ? (sIdx === 2 ? 30 : 25) : sIdx === 2 ? 25 : 21}
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
+                          fill={lit ? '#facc15' : 'rgba(18, 22, 31, 0.88)'}
+                          stroke={lit ? '#111318' : 'rgba(255, 255, 255, 0.52)'}
+                          strokeWidth="2.1"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    );
+                  })}
+                </div>
 
                 <button
                   type="button"

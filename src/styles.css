@@ -2036,6 +2036,20 @@ a.cq-dot:hover { transform: scale(1.08); }
   width: 100%;
   display: flex;
   justify-content: center;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0px,
+    rgba(0, 0, 0, 0.18) 38px,
+    rgba(0, 0, 0, 0.65) 105px,
+    #000000 175px
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0px,
+    rgba(0, 0, 0, 0.18) 38px,
+    rgba(0, 0, 0, 0.65) 105px,
+    #000000 175px
+  );
 }
 
 .daily-map-canvas {
@@ -2156,55 +2170,44 @@ a.cq-dot:hover { transform: scale(1.08); }
 
 .daily-boss-stars {
   position: absolute;
-  top: -20px;
+  top: -22px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: flex-end;
-  gap: 2px;
+  gap: 1px;
   z-index: 7;
   pointer-events: none;
 }
 
-.daily-boss-star {
-  font-size: 1.55rem;
-  line-height: 1;
-  color: #f8fafc;
-  text-shadow:
-    -1.5px -1.5px 0 #111318,
-     1.5px -1.5px 0 #111318,
-    -1.5px  1.5px 0 #111318,
-     1.5px  1.5px 0 #111318,
-     0 3px 0 #111318;
+.daily-boss-stars.is-locked-stars {
+  opacity: 0.42;
 }
 
-.daily-boss-star.s-1 {
+.daily-star-svg {
+  display: block;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.65));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.daily-star-svg.s-1 {
   transform: translateY(5px) rotate(-18deg);
 }
 
-.daily-boss-star.s-2 {
-  font-size: 1.85rem;
+.daily-star-svg.s-2 {
   transform: translateY(-2px);
 }
 
-.daily-boss-star.s-3 {
+.daily-star-svg.s-3 {
   transform: translateY(5px) rotate(18deg);
 }
 
-.daily-boss-star.is-lit {
-  color: #facc15;
+.daily-star-svg.is-lit {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 8px rgba(250, 204, 21, 0.45));
 }
 
 .daily-step-stars {
-  top: -17px;
-}
-
-.daily-step-stars .daily-boss-star {
-  font-size: 1.25rem;
-}
-
-.daily-step-stars .daily-boss-star.s-2 {
-  font-size: 1.48rem;
+  top: -19px;
 }
 
 /* Locked future nodes (like the dark '4' circle in the screenshot) */
