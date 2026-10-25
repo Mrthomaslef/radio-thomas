@@ -245,45 +245,54 @@ export default function ProgressPage() {
 
           {modeTab === 'daily' ? (
             <div className="prog-daily-view">
-              {/* Top KPI Summary Cards for Daily Mode */}
-              <div className="admin-summary prog-summary prog-daily-summary">
-                <div className="admin-stat prog-daily-stat">
-                  <span className="prog-daily-stat-kicker">Série actuelle</span>
-                  <strong>
-                    🔥 {dailyState.streak} jour{dailyState.streak > 1 ? 's' : ''}
-                  </strong>
-                  <span>1 étape / jour maintient la série</span>
-                </div>
-                <div className="admin-stat prog-daily-stat is-highlight">
-                  <span className="prog-daily-stat-kicker">Étoiles ce jour</span>
-                  <strong>
-                    ★ {starsToday} <small>/ {MAX_DAILY_STEPS * 3}</small>
-                  </strong>
-                  <span>
-                    {stepsToday}/{MAX_DAILY_STEPS} étape{stepsToday > 1 ? 's' : ''} validée{stepsToday > 1 ? 's' : ''} aujourd’hui
-                  </span>
-                </div>
-                <div className="admin-stat prog-daily-stat">
-                  <span className="prog-daily-stat-kicker">Total sur le chemin</span>
-                  <strong>★ {dailyState.totalStars}</strong>
-                  <span>
-                    {completedStepsTotal} étape{completedStepsTotal > 1 ? 's' : ''} terminée{completedStepsTotal > 1 ? 's' : ''}
-                  </span>
-                </div>
-              </div>
-
-              {/* 7-day Rolling Streak & Daily Stars Timeline */}
+              {/* Unified Daily Streak & 7-Day Rolling Card */}
               <div className="cq-card prog-streak-card">
-                <div className="prog-streak-head">
-                  <div>
-                    <span className="daily-goal-kicker">7 derniers jours glissants</span>
-                    <h2>Frise de série &amp; étoiles du jour</h2>
+                <div className="prog-daily-hero">
+                  <div className="prog-daily-hero-stat">
+                    <span className="prog-daily-hero-icon is-flame" aria-hidden="true">
+                      <svg width="26" height="26" viewBox="0 0 24 24">
+                        <defs>
+                          <linearGradient id="progFlameGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#38e1ff" />
+                            <stop offset="100%" stopColor="#7c8cff" />
+                          </linearGradient>
+                        </defs>
+                        <path
+                          fill="url(#progFlameGrad)"
+                          d="M12 2c1.8 3.2 5 5.6 5 10.2A5.5 5.5 0 0 1 11.5 18c2.2-1.2 2.4-3.8 1-5.5-1.2 1.4-2.5 2.4-2.5 4.3A4.2 4.2 0 0 1 6.5 12C6.5 8.2 9.8 5.2 12 2Z"
+                        />
+                        <circle cx="12" cy="16.5" r="2.2" fill="#fff" opacity="0.85" />
+                      </svg>
+                    </span>
+                    <div>
+                      <strong>
+                        {dailyState.streak} jour{dailyState.streak > 1 ? 's' : ''}
+                      </strong>
+                      <span>Série en cours</span>
+                    </div>
                   </div>
-                  <span className={`prog-today-pill ${stepsToday > 0 ? 'is-done' : ''}`}>
-                    {stepsToday > 0 ? `✓ Série validée aujourd’hui (+${starsToday}★)` : '⏳ Série du jour à valider'}
-                  </span>
+
+                  <div className="prog-daily-hero-divider" aria-hidden="true" />
+
+                  <div className="prog-daily-hero-stat">
+                    <span className="prog-daily-hero-icon is-star" aria-hidden="true">
+                      <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path
+                          fill="#facc15"
+                          d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
+                        />
+                      </svg>
+                    </span>
+                    <div>
+                      <strong>
+                        {starsToday} <small>/ {MAX_DAILY_STEPS * 3} ★</small>
+                      </strong>
+                      <span>Étoiles ce jour ({stepsToday}/{MAX_DAILY_STEPS} étapes)</span>
+                    </div>
+                  </div>
                 </div>
 
+                {/* 7-day Rolling Timeline */}
                 <div className="prog-streak-strip" role="list" aria-label="Activité sur les 7 derniers jours">
                   {rollingDays.map((d) => (
                     <div
@@ -291,7 +300,7 @@ export default function ProgressPage() {
                       role="listitem"
                       className={`prog-streak-day ${d.isStreak ? 'is-streak' : ''} ${d.isToday ? 'is-today' : ''}`}
                       title={`${d.dayName} ${d.dayNum} ${d.monthShort} : ${
-                        d.isStreak ? `${d.stars} étoile${d.stars > 1 ? 's' : ''} gagnée${d.stars > 1 ? 's' : ''}` : 'Aucune étape validée'
+                        d.isStreak ? `${d.stars} ★` : 'Aucune étape validée'
                       }`}
                     >
                       <span className="prog-streak-day-name">{d.dayName}</span>
@@ -307,62 +316,41 @@ export default function ProgressPage() {
                           <span className="prog-streak-day-num">{d.dayNum}</span>
                         )}
                       </div>
-                      <span className="prog-streak-day-date">
-                        {d.dayNum} {d.monthShort}
-                      </span>
                       <span className={`prog-streak-day-stars ${d.stars > 0 ? 'has-stars' : ''}`}>
-                        {d.stars > 0 ? `★ ${d.stars}` : '—'}
+                        {d.stars > 0 ? `${d.stars}★` : '·'}
                       </span>
                     </div>
                   ))}
                 </div>
-              </div>
 
-              {/* Current Category & Step on the Daily Path */}
-              <div className="cq-card prog-daily-cat-card">
-                <div className="daily-cal-theme-current">
-                  <img
-                    src={`/theme-logos/${themeProg.currentTheme.id}.png`}
-                    alt=""
-                    aria-hidden="true"
-                    className="daily-cal-theme-logo"
-                    draggable="false"
-                  />
-                  <div className="daily-cal-theme-body">
-                    <div className="daily-cal-theme-top">
-                      <div>
-                        <span className="daily-cal-theme-kicker">Catégorie en cours sur le chemin</span>
-                        <strong className="daily-cal-theme-title">{themeProg.currentTheme.title}</strong>
+                {/* Compact Current Category & Totals Bar */}
+                <div className="prog-daily-bottom">
+                  <div className="prog-daily-cat-mini">
+                    <img
+                      src={`/theme-logos/${themeProg.currentTheme.id}.png`}
+                      alt=""
+                      aria-hidden="true"
+                      className="prog-daily-cat-logo"
+                      draggable="false"
+                    />
+                    <div className="prog-daily-cat-info">
+                      <div className="prog-daily-cat-row">
+                        <strong>{themeProg.currentTheme.title}</strong>
+                        <span>
+                          {themeProg.completedSteps}/{themeProg.totalSteps} ({themeProg.percent}%)
+                        </span>
                       </div>
-                      <span className="daily-cal-theme-badge">
-                        {themeProg.completedSteps}/{themeProg.totalSteps} étapes · {themeProg.percent}%
-                      </span>
+                      <div className="daily-cal-theme-bar" aria-hidden="true">
+                        <div style={{ width: `${themeProg.percent}%` }} />
+                      </div>
+                      <small>
+                        Total : <b>{dailyState.totalStars} ★</b> · {completedStepsTotal} étape{completedStepsTotal > 1 ? 's' : ''} validée{completedStepsTotal > 1 ? 's' : ''}
+                      </small>
                     </div>
-                    <div className="daily-cal-theme-bar" aria-hidden="true">
-                      <div style={{ width: `${themeProg.percent}%` }} />
-                    </div>
-                    <span className="daily-cal-theme-chap">
-                      Étape actuelle #{dailyState.currentStep} : {themeProg.chapterTitle} (Boucle {themeProg.loopIndex}/{LOOPS_PER_THEME})
-                    </span>
                   </div>
-                </div>
 
-                <div className="prog-daily-cat-footer">
-                  <div className="daily-cal-theme-next" style={{ borderTop: 'none', paddingTop: 0 }}>
-                    <span className="daily-cal-theme-next-label">Prochaine catégorie :</span>
-                    <span className="daily-cal-theme-next-pill">
-                      <img
-                        src={`/theme-logos/${themeProg.nextTheme.id}.png`}
-                        alt=""
-                        aria-hidden="true"
-                        className="daily-cal-theme-next-logo"
-                        draggable="false"
-                      />
-                      <b>{themeProg.nextTheme.title}</b>
-                    </span>
-                  </div>
-                  <a href="#/" className="btn btn-small">
-                    Continuer sur le chemin <Icon name="arrow" size={15} />
+                  <a href="#/" className="btn btn-small prog-daily-cta">
+                    Continuer <Icon name="arrow" size={15} />
                   </a>
                 </div>
               </div>
