@@ -2591,13 +2591,13 @@ a.cq-dot:hover { transform: scale(1.08); }
 
 /* Onboarding Explanatory Slides */
 .daily-slide-card {
-  background: rgba(17, 23, 34, 0.94);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  padding: clamp(20px, 5vw, 30px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(180deg, rgba(15, 24, 38, 0.96) 0%, rgba(9, 15, 25, 0.96) 100%);
+  border: 1px solid rgba(56, 225, 255, 0.26);
+  border-radius: 24px;
+  padding: clamp(18px, 4.5vw, 26px);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.6);
   display: grid;
-  gap: 14px;
+  gap: 13px;
 }
 
 .daily-slide-top {
@@ -2607,47 +2607,189 @@ a.cq-dot:hover { transform: scale(1.08); }
   gap: 10px;
 }
 
+.daily-slide-step-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(160, 220, 255, 0.14);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.daily-slide-skip {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.daily-slide-skip:hover {
+  color: #ffffff;
+  border-color: rgba(56, 225, 255, 0.4);
+  background: rgba(56, 225, 255, 0.08);
+}
+
 .daily-slide-art {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 12px;
+  min-height: 92px;
+  padding: 12px 14px;
   border-radius: 18px;
-  background: radial-gradient(circle at 50% 50%, rgba(56, 225, 255, 0.08), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: radial-gradient(circle at 50% 45%, rgba(56, 225, 255, 0.1), rgba(6, 11, 19, 0.7));
+  border: 1px solid rgba(56, 225, 255, 0.16);
+}
+
+.daily-slide-art-cycles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.daily-slide-cycle-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border-radius: 14px;
+  background: rgba(11, 19, 31, 0.9);
+  border: 1px solid rgba(160, 220, 255, 0.16);
+}
+
+.daily-slide-cycle-pill.is-active {
+  border-color: var(--cyan);
+  background: rgba(56, 225, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(56, 225, 255, 0.16);
+}
+
+.daily-slide-cycle-pill.is-next {
+  opacity: 0.82;
+}
+
+.daily-slide-cycle-pill img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.daily-slide-cycle-pill strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 0.82rem;
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+.daily-slide-cycle-pill span {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--cyan);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.daily-slide-cycle-arrow {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--cyan);
+}
+
+.daily-slide-head {
+  display: grid;
+  gap: 5px;
 }
 
 .daily-slide-badge {
-   justify-self: start;
-  padding: 4px 11px;
+  justify-self: start;
+  padding: 3px 10px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: #fde047;
-  background: rgba(234, 179, 8, 0.16);
-  border: 1px solid rgba(234, 179, 8, 0.38);
+  color: var(--cyan);
+  background: rgba(56, 225, 255, 0.11);
+  border: 1px solid rgba(56, 225, 255, 0.34);
 }
 
 .daily-slide-card h2 {
   font-family: var(--display);
-  font-size: clamp(1.35rem, 5vw, 1.85rem);
-  line-height: 1.22;
+  font-size: clamp(1.25rem, 4.6vw, 1.65rem);
+  line-height: 1.2;
+  color: #ffffff;
 }
 
-.daily-slide-text {
-  color: #d6e3f0;
-  font-size: 0.96rem;
-  line-height: 1.55;
+.daily-slide-lead {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.daily-slide-points {
+  display: grid;
+  gap: 8px;
+}
+
+.daily-slide-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(160, 220, 255, 0.11);
+}
+
+.daily-slide-point-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: rgba(56, 225, 255, 0.09);
+  border: 1px solid rgba(56, 225, 255, 0.22);
+  display: grid;
+  place-items: center;
+  font-size: 0.92rem;
+  flex-shrink: 0;
+}
+
+.daily-slide-point-body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.daily-slide-point-body strong {
+  font-size: 0.86rem;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.daily-slide-point-body span {
+  font-size: 0.78rem;
+  color: #b7cadb;
+  line-height: 1.4;
 }
 
 .daily-slide-highlight {
-  padding: 12px 14px;
+  padding: 10px 13px;
   border-radius: 14px;
   background: rgba(56, 225, 255, 0.07);
-  border: 1px solid rgba(56, 225, 255, 0.28);
+  border: 1px solid rgba(56, 225, 255, 0.26);
   color: var(--text);
-  font-size: 0.86rem;
-  line-height: 1.45;
+  font-size: 0.81rem;
+  line-height: 1.42;
 }
 
 .daily-slide-dots {
@@ -2655,14 +2797,14 @@ a.cq-dot:hover { transform: scale(1.08); }
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 4px 0;
+  padding: 2px 0;
 }
 
 .daily-slide-dot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.2);
   border: none;
   padding: 0;
   cursor: pointer;
@@ -2671,7 +2813,7 @@ a.cq-dot:hover { transform: scale(1.08); }
 
 .daily-slide-dot.is-active {
   width: 26px;
-  background: #facc15;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
 }
 
 .daily-slide-actions {
@@ -2679,7 +2821,13 @@ a.cq-dot:hover { transform: scale(1.08); }
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-top: 4px;
+  margin-top: 2px;
+}
+
+.daily-slide-actions .btn {
+  white-space: nowrap;
+  padding: 11px 18px;
+  font-size: 0.9rem;
 }
 
 .daily-hud-help {
