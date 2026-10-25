@@ -11,7 +11,7 @@ import {
   submitQuizReviewNotification,
 } from '../data/reports.js';
 
-const MAX_SIDE = 1800; // high-resolution cap for very large photos; screenshots <= 1.45 MB are kept 100% lossless
+const MAX_SIDE = 1400; // high-resolution cap for medical figures and screenshots
 
 function readFileAsDataUrl(file) {
   return new Promise((resolve, reject) => {
@@ -22,58 +22,76 @@ function readFileAsDataUrl(file) {
   });
 }
 
-// Reads a picture: keeps PNG/JPEG/WebP files <= 1.45 MB 100% lossless, or resizes larger files at 1800 px HD.
+// Builds a small fallback dataUrl (<= 34 KB) ONLY if the server upload fails (offline mode).
+function buildOfflineFallbackDataUrl(file) {
+  return new Promise((resolve) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let maxSide = 960;
+      let quality = 0.82;
+      let compactDataUrl = '';
+      for (let attempt = 0; attempt < 6; attempt++) {
+        const compactScale = Math.min(1, maxSide / Math.max(img.width, img.height));
+        const c2 = document.createElement('canvas');
+        c2.width = Math.max(1, Math.round(img.width * compactScale));
+        c2.height = Math.max(1, Math.round(img.height * compactScale));
+        const ctx2 = c2.getContext('2d');
+        ctx2.fillStyle = '#fff';
+        ctx2.fillRect(0, 0, c2.width, c2.height);
+        ctx2.drawImage(img, 0, 0, c2.width, c2.height);
+        compactDataUrl = c2.toDataURL('image/jpeg', quality);
+        if (compactDataUrl.length <= 34000) break;
+        maxSide = Math.max(360, Math.round(maxSide * 0.82));
+        quality = Math.max(0.5, quality - 0.07);
+      }
+      resolve(compactDataUrl);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve('');
+    };
+    img.src = url;
+  });
+}
+
+// Fast image preparation: keeps small files (<= 380 KB) untouched and compresses larger images to crisp 1400 px JPEG (~150-300 KB) for instant upload.
 function prepareImage(file) {
   return new Promise((resolve, reject) => {
     if (file.type && !/^image\/(png|jpe?g|webp|gif|bmp|avif|heic|heif)$/i.test(file.type)) {
       reject(new Error('Format non pris en charge : utilisez une image PNG, JPEG ou WebP.'));
       return;
     }
-    const url = URL.createObjectURL(file);
-    const img = new Image();
-    img.onload = async () => {
-      URL.revokeObjectURL(url);
-      try {
-        // Build a compact fallback dataUrl (<= 34 KB) only used if the server is unreachable
-        let maxSide = 960;
-        let quality = 0.82;
-        let compactDataUrl = '';
-        for (let attempt = 0; attempt < 8; attempt++) {
-          const compactScale = Math.min(1, maxSide / Math.max(img.width, img.height));
-          const c2 = document.createElement('canvas');
-          c2.width = Math.max(1, Math.round(img.width * compactScale));
-          c2.height = Math.max(1, Math.round(img.height * compactScale));
-          const ctx2 = c2.getContext('2d');
-          ctx2.fillStyle = '#fff';
-          ctx2.fillRect(0, 0, c2.width, c2.height);
-          ctx2.drawImage(img, 0, 0, c2.width, c2.height);
-          compactDataUrl = c2.toDataURL('image/jpeg', quality);
-          if (compactDataUrl.length <= 34000) break;
-          maxSide = Math.max(360, Math.round(maxSide * 0.85));
-          quality = Math.max(0.5, quality - 0.06);
-        }
 
-        // If the original file is PNG/JPEG/WebP and <= 1.45 MB, keep the original lossless bytes!
-        const normMime =
-          file.type === 'image/jpg' ? 'image/jpeg' : file.type;
-        if (
-          (normMime === 'image/png' || normMime === 'image/jpeg' || normMime === 'image/webp') &&
-          file.size > 100 &&
-          file.size <= 1450000
-        ) {
-          const origDataUrl = await readFileAsDataUrl(file);
+    const normMime = file.type === 'image/jpg' ? 'image/jpeg' : file.type;
+    // Fast path: if the image is already small (<= 380 KB), send it directly without decoding or drawing on canvas!
+    if (
+      (normMime === 'image/png' || normMime === 'image/jpeg' || normMime === 'image/webp') &&
+      file.size > 100 &&
+      file.size <= 380000
+    ) {
+      readFileAsDataUrl(file)
+        .then((origDataUrl) => {
           const commaIdx = origDataUrl.indexOf(',');
           if (commaIdx > 0) {
             resolve({
               mime: normMime,
               data: origDataUrl.slice(commaIdx + 1),
-              compactDataUrl,
             });
-            return;
+          } else {
+            reject(new Error('Impossible de lire cette image.'));
           }
-        }
+        })
+        .catch(reject);
+      return;
+    }
 
-        // Otherwise resize at 1800 px high-quality JPEG
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      try {
         const scale = Math.min(1, MAX_SIDE / Math.max(img.width, img.height));
         const canvas = document.createElement('canvas');
         canvas.width = Math.max(1, Math.round(img.width * scale));
@@ -82,12 +100,11 @@ function prepareImage(file) {
         ctx.fillStyle = '#fff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
 
         resolve({
           mime: 'image/jpeg',
           data: dataUrl.slice(dataUrl.indexOf(',') + 1),
-          compactDataUrl,
         });
       } catch (err) {
         reject(err);
@@ -101,7 +118,7 @@ function prepareImage(file) {
   });
 }
 
-// Picks or drops one or more files, uploads them to public.quiz_images (1400 px HD), and hands back { upload } (or { dataUrl } fallback).
+// Picks or drops one or more files, uploads them in parallel to public.quiz_images, and hands back { upload }.
 function ImagePicker({ password, label, onPicked, disabled, multiple = false, compact = false }) {
   const [busy, setBusy] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -120,25 +137,31 @@ function ImagePicker({ password, label, onPicked, disabled, multiple = false, co
     setBusy(true);
     setErr('');
     try {
-      for (const file of toProcess) {
-        const { mime, data, compactDataUrl } = await prepareImage(file);
-        let picked = null;
-        try {
-          const out = await call(password, { action: 'upload', mime, data });
-          if (out?.id) {
-            picked = { upload: out.id };
+      const results = await Promise.all(
+        toProcess.map(async (file) => {
+          const { mime, data } = await prepareImage(file);
+          let picked = null;
+          try {
+            const out = await call(password, { action: 'upload', mime, data });
+            if (out?.id) {
+              picked = { upload: out.id };
+            }
+          } catch {
+            // Fallback to inline compactDataUrl if offline
           }
-        } catch {
-          // Fallback to inline compactDataUrl if offline
-        }
-        if (!picked) {
-          if (compactDataUrl && compactDataUrl.length <= 44000) {
-            picked = { dataUrl: compactDataUrl };
-          } else {
-            throw new Error('Impossible d’enregistrer cette image.');
+          if (!picked) {
+            const compactDataUrl = await buildOfflineFallbackDataUrl(file);
+            if (compactDataUrl && compactDataUrl.length <= 44000) {
+              picked = { dataUrl: compactDataUrl };
+            } else {
+              throw new Error('Impossible d’enregistrer cette image.');
+            }
           }
-        }
-        onPicked(picked);
+          return picked;
+        })
+      );
+      for (const picked of results) {
+        if (picked) onPicked(picked);
       }
     } catch (ex) {
       setErr(ex.message);
@@ -725,58 +748,73 @@ export default function QuestionsAdmin({
         }
       }
 
-      // Auto-sync any local edits or local 'reviewed' statuses to the database so phones/other devices see them
+      // Ensure local reviewed flags are reflected immediately in the displayed rows
       for (const [id, row] of byId.entries()) {
         if (!row || row.deleted_at) continue;
-        const srv = serverById.get(id);
-        const srvData = srv?.data;
         const hasLocalRev = Boolean(locRev[id]);
         const shouldBeReviewed = Boolean(row.data?.reviewed || hasLocalRev);
         const chosenRevBy = shouldBeReviewed
           ? row.data?.reviewed_by || locRevBy[id] || 'Thomas L.'
           : null;
-        const mergedData = {
-          ...row.data,
-          reviewed: shouldBeReviewed,
-          ...(chosenRevBy ? { reviewed_by: chosenRevBy } : {}),
-        };
         if (shouldBeReviewed !== Boolean(row.data?.reviewed) || chosenRevBy !== (row.data?.reviewed_by || null)) {
-          byId.set(id, { ...row, data: mergedData });
-        }
-
-        // Only the "reviewed" flag is pushed from here, and the server applies it on its own current copy:
-        // an out-of-date page can never send old question text back.
-        const isOutOfSync = shouldBeReviewed && srv && (!srvData?.reviewed || !srvData?.reviewed_by);
-
-        // A real unsynced edit (a save that failed earlier) is retried; the server still refuses it if the
-        // question changed since this list was loaded (see serverStamps / baseUpdatedAt).
-        if (idsToSync.has(id) && srv) {
-          call(password, {
-            action: 'save',
-            id: row.id,
-            chapter: row.chapter,
-            position: row.position || 0,
-            question: mergedData,
-          })
-            .then(() => removeLocalReviewerEdit(row.id))
-            .catch((e) => {
-              if (e?.code === 'conflict') removeLocalReviewerEdit(row.id);
-            });
-        } else if (isOutOfSync) {
-          call(password, {
-            action: 'set_reviewed',
-            id: row.id,
-            reviewed: true,
-            reviewedBy: chosenRevBy,
-          })
-            .then(() => {
-              removeLocalReviewerEdit(row.id);
-            })
-            .catch(() => {});
+          byId.set(id, {
+            ...row,
+            data: {
+              ...row.data,
+              reviewed: shouldBeReviewed,
+              ...(chosenRevBy ? { reviewed_by: chosenRevBy } : {}),
+            },
+          });
         }
       }
 
-      setRows([...byId.values()]);
+      // Render the question list immediately before running any background syncs
+      const initialList = [...byId.values()];
+      setRows(initialList);
+
+      // Background sync of any local edits or local 'reviewed' statuses to the database (throttled sequentially)
+      (async () => {
+        for (const [id, row] of byId.entries()) {
+          if (!row || row.deleted_at) continue;
+          const srv = serverById.get(id);
+          const srvData = srv?.data;
+          const hasLocalRev = Boolean(locRev[id]);
+          const shouldBeReviewed = Boolean(row.data?.reviewed || hasLocalRev);
+          const chosenRevBy = shouldBeReviewed
+            ? row.data?.reviewed_by || locRevBy[id] || 'Thomas L.'
+            : null;
+          const mergedData = {
+            ...row.data,
+            reviewed: shouldBeReviewed,
+            ...(chosenRevBy ? { reviewed_by: chosenRevBy } : {}),
+          };
+
+          const isOutOfSync = shouldBeReviewed && srv && (!srvData?.reviewed || !srvData?.reviewed_by);
+
+          if (idsToSync.has(id) && srv) {
+            await call(password, {
+              action: 'save',
+              id: row.id,
+              chapter: row.chapter,
+              position: row.position || 0,
+              question: mergedData,
+            })
+              .then(() => removeLocalReviewerEdit(row.id))
+              .catch((e) => {
+                if (e?.code === 'conflict') removeLocalReviewerEdit(row.id);
+              });
+          } else if (isOutOfSync) {
+            await call(password, {
+              action: 'set_reviewed',
+              id: row.id,
+              reviewed: true,
+              reviewedBy: chosenRevBy,
+            })
+              .then(() => removeLocalReviewerEdit(row.id))
+              .catch(() => {});
+          }
+        }
+      })();
     } catch (e) {
       setError(e.message);
       setRows(bundledQuestions);

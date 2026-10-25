@@ -55,8 +55,8 @@ async function hasConflict(id, baseUpdatedAt) {
   return Date.parse(row.updated_at) > base;
 }
 
-async function promoteInlineImagesToTable(questionId, rawQuestion, adminPw) {
-  if (!rawQuestion || typeof rawQuestion !== 'object' || !adminPw) return rawQuestion;
+async function promoteInlineImagesToTable(questionId, rawQuestion, adminPw, isReviewer = false) {
+  if (!rawQuestion || typeof rawQuestion !== 'object') return rawQuestion;
   const hasEnonceDataUrl = typeof rawQuestion.enonce_image?.dataUrl === 'string';
   const figs = Array.isArray(rawQuestion.correction_figures) ? rawQuestion.correction_figures : [];
   const hasFigDataUrl = figs.some((f) => typeof f?.dataUrl === 'string');
@@ -70,12 +70,21 @@ async function promoteInlineImagesToTable(questionId, rawQuestion, adminPw) {
     if (b64.length < 100 || b64.length > 2000000) return imgObj;
     try {
       const imgId = randomUUID().replace(/-/g, '');
-      const out = await rpc('admin_upload_image', {
-        p_password: adminPw,
-        p_id: imgId,
-        p_mime: mime,
-        p_b64: b64,
-      });
+      const out = isReviewer
+        ? await rpc('reviewer_upload_image', {
+            p_password: REVIEWER_PASSWORD,
+            p_id: imgId,
+            p_mime: mime,
+            p_b64: b64,
+          })
+        : adminPw
+        ? await rpc('admin_upload_image', {
+            p_password: adminPw,
+            p_id: imgId,
+            p_mime: mime,
+            p_b64: b64,
+          })
+        : null;
       if (out?.status === 'ok') {
         return {
           upload: out.id || imgId,
@@ -229,15 +238,21 @@ export default async function handler(req, res) {
       }
       const { data, error } = validateQuestion(next);
       if (error) return res.status(400).json({ error });
-      const pw = isReviewer ? await resolveAdminPasswordForReviewer(process.env) : password;
-      if (!pw) return res.status(502).json({ error: 'Enregistrement impossible pour le moment' });
-      const out = await rpc('admin_save_question', {
-        p_password: pw,
-        p_id: row.id,
-        p_chapter: row.chapter,
-        p_position: row.position,
-        p_data: data,
-      });
+      const out = isReviewer
+        ? await rpc('reviewer_save_question', {
+            p_password: REVIEWER_PASSWORD,
+            p_id: row.id,
+            p_chapter: row.chapter,
+            p_position: row.position,
+            p_data: data,
+          })
+        : await rpc('admin_save_question', {
+            p_password: password,
+            p_id: row.id,
+            p_chapter: row.chapter,
+            p_position: row.position,
+            p_data: data,
+          });
       if (out.status === 'locked') return res.status(429).json({ error: 'Trop de tentatives, réessayez plus tard' });
       if (out.status === 'bad_password') return res.status(401).json({ error: 'Mot de passe incorrect' });
       if (out.status !== 'ok') return res.status(400).json({ error: 'Requête refusée' });
@@ -248,24 +263,10 @@ export default async function handler(req, res) {
     }
   }
 
-  // Reviewer mode ('cocochin'): never call private.check_admin with 'cocochin' so we never trigger admin login lockout
+  // Reviewer mode ('cocochin'): uses fast direct reviewer_* RPCs without extra round-trips or bcrypt lockouts
   if (isReviewer) {
     switch (body.action) {
       case 'list': {
-        const adminPw = await resolveAdminPasswordForReviewer(process.env);
-        if (adminPw) {
-          try {
-            const out = await rpc('admin_list_questions', { p_password: adminPw });
-            if (out?.status === 'ok' && Array.isArray(out.questions)) {
-              return res.status(200).json({
-                status: 'ok',
-                questions: out.questions.filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99'),
-              });
-            }
-          } catch {
-            // Fallback below
-          }
-        }
         try {
           const r = await fetch(
             `${SUPABASE_URL}/rest/v1/quiz_questions?select=id,chapter,position,data,updated_at,deleted_at&deleted_at=is.null&order=chapter.asc,position.asc&limit=2000`,
@@ -301,16 +302,13 @@ export default async function handler(req, res) {
           return res.status(502).json({ error: 'Base de données injoignable' });
         }
 
-        const adminPw = await resolveAdminPasswordForReviewer(process.env);
-        const promotedQuestion = await promoteInlineImagesToTable(body.id, body.question, adminPw);
+        const promotedQuestion = await promoteInlineImagesToTable(body.id, body.question, null, true);
         const { data, error } = validateQuestion(promotedQuestion);
         if (error) return res.status(400).json({ error });
 
-        // Save directly into public.quiz_questions so all devices (phones, tablets, computers) see the edit immediately
-        if (!adminPw) return res.status(502).json({ error: 'Enregistrement impossible pour le moment' });
         try {
-          const out = await rpc('admin_save_question', {
-            p_password: adminPw,
+          const out = await rpc('reviewer_save_question', {
+            p_password: REVIEWER_PASSWORD,
             p_id: body.id,
             p_chapter: body.chapter,
             p_position: position,
@@ -327,11 +325,9 @@ export default async function handler(req, res) {
         return res.status(200).json({ status: 'ok', imported: 0 });
       case 'delete': {
         if (!validateId(body.id)) return res.status(400).json({ error: 'Identifiant invalide' });
-        const adminPw = await resolveAdminPasswordForReviewer(process.env);
-        if (!adminPw) return res.status(502).json({ error: 'Suppression impossible pour le moment' });
         try {
-          const out = await rpc('admin_delete_question', {
-            p_password: adminPw,
+          const out = await rpc('reviewer_delete_question', {
+            p_password: REVIEWER_PASSWORD,
             p_id: body.id,
           });
           if (out.status === 'not_found') return res.status(404).json({ error: 'Question introuvable' });
@@ -356,22 +352,19 @@ export default async function handler(req, res) {
         const real = { png: isPng, jpeg: isJpeg, webp: isWebp }[MIME[mime]];
         if (!real) return res.status(400).json({ error: 'Le fichier n’est pas une vraie image' });
 
-        const adminPw = await resolveAdminPasswordForReviewer(process.env);
-        if (adminPw) {
-          try {
-            const imgId = randomUUID().replace(/-/g, '');
-            const out = await rpc('admin_upload_image', {
-              p_password: adminPw,
-              p_id: imgId,
-              p_mime: mime,
-              p_b64: b64,
-            });
-            if (out?.status === 'ok') {
-              return res.status(200).json({ status: 'ok', id: out.id || imgId });
-            }
-          } catch {
-            // Fallback below
+        try {
+          const imgId = randomUUID().replace(/-/g, '');
+          const out = await rpc('reviewer_upload_image', {
+            p_password: REVIEWER_PASSWORD,
+            p_id: imgId,
+            p_mime: mime,
+            p_b64: b64,
+          });
+          if (out?.status === 'ok') {
+            return res.status(200).json({ status: 'ok', id: out.id || imgId });
           }
+        } catch {
+          // Fallback below
         }
         return res.status(400).json({ error: 'Utilisez le mode image intégrée' });
       }
