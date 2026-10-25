@@ -2075,11 +2075,20 @@ a.cq-dot:hover { transform: scale(1.08); }
   transform: translate(-50%, -50%) rotate(var(--deco-rot, 0deg));
   pointer-events: none;
   z-index: 1;
-  opacity: 0.38;
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
+  transition: opacity 0.35s ease, filter 0.35s ease;
+}
+
+.daily-deco.is-uncolored {
+  opacity: 0.16;
+  filter: grayscale(1) brightness(0.75) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
+}
+
+.daily-deco.is-colored {
+  opacity: 0.42;
+  filter: grayscale(0) drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
 }
 
 .daily-deco-img {
@@ -2103,9 +2112,11 @@ a.cq-dot:hover { transform: scale(1.08); }
   width: 78px;
   height: 78px;
   border-radius: 50%;
-  background: var(--node-bg, #f08c1a);
-  border: 2.5px solid #111318;
-  box-shadow: 0 6px 0 #0b0d11, 0 10px 22px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(135deg, var(--cyan) 0%, #6aa8ff 52%, var(--violet) 100%);
+  border: 2.5px solid #05090f;
+  box-shadow:
+    0 6px 0 #071929,
+    0 10px 24px rgba(56, 225, 255, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2120,7 +2131,7 @@ a.cq-dot:hover { transform: scale(1.08); }
 
 .daily-node-btn:active:not(:disabled) {
   transform: translateY(2px);
-  box-shadow: 0 2px 0 #0b0d11, 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 0 #071929, 0 4px 12px rgba(56, 225, 255, 0.22);
 }
 
 .daily-node-wrap.is-current .daily-node-btn {
@@ -2129,57 +2140,38 @@ a.cq-dot:hover { transform: scale(1.08); }
 
 @keyframes daily-node-pulse {
   0%, 100% {
-    box-shadow: 0 6px 0 #0b0d11, 0 0 0 0 rgba(250, 204, 21, 0.55), 0 10px 24px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 0 #071929, 0 0 0 0 rgba(56, 225, 255, 0.55), 0 10px 26px rgba(56, 225, 255, 0.35);
   }
   50% {
-    box-shadow: 0 6px 0 #0b0d11, 0 0 0 12px rgba(250, 204, 21, 0), 0 10px 24px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 0 #071929, 0 0 0 12px rgba(56, 225, 255, 0), 0 10px 26px rgba(56, 225, 255, 0.35);
   }
 }
 
-.daily-node-num {
-  position: absolute;
-  bottom: -9px;
-  left: 50%;
-  transform: translateX(-50%);
+.daily-node-center-num {
   font-family: var(--display);
-  font-size: 1.25rem;
-  font-weight: 900;
-  color: #ffffff;
-  text-shadow:
-    -2px -2px 0 #0b0d11,
-     2px -2px 0 #0b0d11,
-    -2px  2px 0 #0b0d11,
-     2px  2px 0 #0b0d11,
-     0px  3px 0 #0b0d11;
+  font-size: 1.95rem;
+  font-weight: 800;
+  color: #04202a;
   line-height: 1;
+  letter-spacing: -0.02em;
   pointer-events: none;
 }
 
-/* Boss "Quiz" Purple Double-Ring Node with 3 Arched Stars */
+/* Boss Step Node in Quiz Cochin DA (violet -> cyan double ring, number centered) */
 .daily-node-boss {
-  width: 92px;
-  height: 92px;
-  background: radial-gradient(circle at 50% 38%, #c4b5fd 0%, #a78bfa 58%, #7c3aed 100%);
-  border: 3px solid #111318;
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, var(--violet) 0%, #5b9dff 48%, var(--cyan) 100%);
+  border: 3px solid #05090f;
   box-shadow:
-    inset 0 0 0 6px #6d28d9,
-    inset 0 0 0 8.5px #111318,
-    0 7px 0 #0b0d11,
-    0 12px 26px rgba(0, 0, 0, 0.55);
+    inset 0 0 0 5px rgba(5, 9, 15, 0.38),
+    0 7px 0 #071929,
+    0 12px 26px rgba(124, 140, 255, 0.32);
 }
 
-.daily-node-quiz-text {
-  font-family: var(--display);
-  font-size: 1.38rem;
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: -0.02em;
-  text-shadow:
-    -2px -2px 0 #111318,
-     2px -2px 0 #111318,
-    -2px  2px 0 #111318,
-     2px  2px 0 #111318,
-     0px  3px 0 #111318;
+.daily-node-boss .daily-node-center-num {
+  font-size: 2.1rem;
+  color: #04202a;
 }
 
 .daily-boss-stars {
@@ -2195,7 +2187,7 @@ a.cq-dot:hover { transform: scale(1.08); }
 }
 
 .daily-boss-stars.is-locked-stars {
-  opacity: 0.42;
+  opacity: 0.36;
 }
 
 .daily-star-svg {
@@ -2217,33 +2209,36 @@ a.cq-dot:hover { transform: scale(1.08); }
 }
 
 .daily-star-svg.is-lit {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 8px rgba(250, 204, 21, 0.45));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 8px rgba(56, 225, 255, 0.5));
 }
 
 .daily-step-stars {
   top: -19px;
 }
 
-/* Locked future nodes (like the dark '4' circle in the screenshot) */
+/* Locked future nodes (uncolored slate circle with padlock icon) */
 .daily-node-locked {
-  width: 96px;
-  height: 96px;
-  background: radial-gradient(circle at 50% 35%, #2c2e33, #18191c 75%);
-  border: 3px solid #111318;
+  width: 82px;
+  height: 82px;
+  background: radial-gradient(circle at 50% 35%, #16202e, #0a111a 78%);
+  border: 2.5px solid rgba(143, 166, 184, 0.22);
   box-shadow:
-    0 0 0 8px rgba(234, 179, 8, 0.2),
-    0 8px 24px rgba(0, 0, 0, 0.65);
+    0 6px 0 #05090f,
+    0 0 0 6px rgba(143, 166, 184, 0.07),
+    0 8px 22px rgba(0, 0, 0, 0.65);
   cursor: not-allowed;
 }
 
-.daily-node-locked-num {
-  font-family: var(--display);
-  font-size: 2.15rem;
-  font-weight: 900;
-  color: rgba(255, 255, 255, 0.25);
+.daily-node-boss.daily-node-locked {
+  width: 90px;
+  height: 90px;
 }
 
-/* Side small circular badges next to unlocked nodes */
+.daily-node-lock-svg {
+  color: rgba(143, 166, 184, 0.52);
+}
+
+/* Side small circular badges next to unlocked nodes in Quiz Cochin DA */
 .daily-side-badges {
   position: absolute;
   top: 50%;
@@ -2266,20 +2261,15 @@ a.cq-dot:hover { transform: scale(1.08); }
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 35%, var(--badge-tint, #fde68a) 62%, #ffffff 64%);
-  border: 2px solid #111318;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+  background: rgba(10, 18, 29, 0.92);
+  border: 1.8px solid rgba(56, 225, 255, 0.45);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
   display: grid;
   place-items: center;
   font-family: var(--display);
-  font-size: 0.92rem;
-  font-weight: 900;
-  color: #fde68a;
-  text-shadow:
-    -1.2px -1.2px 0 #111318,
-     1.2px -1.2px 0 #111318,
-    -1.2px  1.2px 0 #111318,
-     1.2px  1.2px 0 #111318;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: var(--cyan);
 }
 
 .daily-side-badge-secondary {
@@ -2288,16 +2278,16 @@ a.cq-dot:hover { transform: scale(1.08); }
 
 .daily-current-cta {
   margin-top: 12px;
-  padding: 5px 14px;
+  padding: 6px 15px;
   border-radius: 999px;
-  background: linear-gradient(135deg, #facc15, #f59e0b);
-  color: #111318;
-  border: 2px solid #111318;
+  background: linear-gradient(135deg, var(--cyan), #6aa8ff);
+  color: #04202a;
+  border: 2px solid #05090f;
   font-family: var(--display);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.02em;
-  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35);
+  box-shadow: 0 6px 18px rgba(56, 225, 255, 0.38);
   cursor: pointer;
   white-space: nowrap;
 }

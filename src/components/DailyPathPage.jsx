@@ -69,15 +69,6 @@ const GOAL_OPTIONS = [
   },
 ];
 
-const NODE_PALETTES = [
-  { bg: '#f08c1a', border: '#111318', shadow: '#8c4d06', badgeBg: '#f9a8d4' },
-  { bg: '#38b27c', border: '#111318', shadow: '#1b6545', badgeBg: '#a7f3d0' },
-  { bg: '#f28b66', border: '#111318', shadow: '#8f4428', badgeBg: '#fed7aa' },
-  { bg: '#8b5cf6', border: '#111318', shadow: '#4c1d95', badgeBg: '#ddd6fe' },
-  { bg: '#38bdf8', border: '#111318', shadow: '#0369a1', badgeBg: '#bae6fd' },
-  { bg: '#ec4899', border: '#111318', shadow: '#831843', badgeBg: '#fbcfe8' },
-];
-
 function hashSeed(str) {
   let h = 2166136261 >>> 0;
   for (let i = 0; i < str.length; i++) {
@@ -253,57 +244,24 @@ function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter
   };
 }
 
-function StepNodeArt({ step, isBossNode }) {
-  if (isBossNode) {
-    return <span className="daily-node-quiz-text">Quiz</span>;
-  }
-  const mod = (step - 1) % 5;
-  if (mod === 0) {
-    return (
-      <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-        <rect x="6" y="7" width="24" height="20" rx="4" fill="#1e2430" stroke="#0d1017" strokeWidth="2" />
-        <circle cx="14" cy="17" r="4.5" fill="#4b5563" stroke="#9ca3af" strokeWidth="1.5" />
-        <circle cx="23" cy="15" r="3" fill="#60a5fa" />
-        <path d="M12 27l-2 4h16l-2-4" stroke="#1e2430" strokeWidth="2.5" strokeLinecap="round" />
-      </svg>
-    );
-  }
-  if (mod === 1) {
-    return (
-      <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-        <rect x="8" y="8" width="20" height="14" rx="2" fill="#111827" stroke="#374151" strokeWidth="1.8" />
-        <path d="M13 15h4l2-3 2 6 2-3h3" stroke="#34d399" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M5 22h26l-2 5H7l-2-5Z" fill="#9ca3af" stroke="#1f2937" strokeWidth="1.5" />
-      </svg>
-    );
-  }
-  if (mod === 2) {
-    return (
-      <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-        <path d="M18 6L6 13h24L18 6Z" fill="#e5e7eb" stroke="#374151" strokeWidth="1.6" />
-        <rect x="9" y="13" width="3.5" height="12" fill="#d1d5db" stroke="#374151" strokeWidth="1.2" />
-        <rect x="16.25" y="13" width="3.5" height="12" fill="#d1d5db" stroke="#374151" strokeWidth="1.2" />
-        <rect x="23.5" y="13" width="3.5" height="12" fill="#d1d5db" stroke="#374151" strokeWidth="1.2" />
-        <rect x="6" y="25" width="24" height="3.5" rx="1" fill="#9ca3af" stroke="#374151" strokeWidth="1.4" />
-      </svg>
-    );
-  }
-  if (mod === 3) {
-    return (
-      <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-        <path
-          d="M11 9a3.5 3.5 0 0 0-3.2 4.8A3.5 3.5 0 0 0 10 20l6 6a3.5 3.5 0 0 0 6.2 2A3.5 3.5 0 0 0 27 23a3.5 3.5 0 0 0-2-6.2l-6-6A3.5 3.5 0 0 0 11 9Z"
-          fill="#fef3c7"
-          stroke="#1f2937"
-          strokeWidth="2"
-        />
-      </svg>
-    );
-  }
+function LockIcon({ isBoss }) {
+  const size = isBoss ? 32 : 28;
   return (
-    <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-      <circle cx="18" cy="18" r="10" fill="#1e293b" stroke="#f8fafc" strokeWidth="2" />
-      <circle cx="18" cy="18" r="4.5" fill="#38bdf8" />
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="daily-node-lock-svg"
+      aria-hidden="true"
+    >
+      <rect x="5" y="11" width="14" height="10" rx="2.5" fill="rgba(143, 166, 184, 0.12)" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+      <circle cx="12" cy="16" r="1.4" fill="currentColor" stroke="none" />
     </svg>
   );
 }
@@ -505,12 +463,14 @@ export default function DailyPathPage() {
 
     const decorations = [];
     for (const slot of sparseSlots) {
-      if (nodes[slot.nodeIndex]) {
+      const node = nodes[slot.nodeIndex];
+      if (node) {
         decorations.push({
           id: `deco-${slot.nodeIndex}`,
+          step: node.step,
           src: `/path-deco/logo-${slot.logoNum}.png`,
           x: slot.x,
-          y: nodes[slot.nodeIndex].y + slot.yOffset,
+          y: node.y + slot.yOffset,
           size: slot.size,
           rotate: slot.rotate,
         });
@@ -522,6 +482,7 @@ export default function DailyPathPage() {
       const logoNum = extraLogos[Math.floor((i - 7) / 3) % extraLogos.length];
       decorations.push({
         id: `deco-${i}`,
+        step: curr.step,
         src: `/path-deco/logo-${logoNum}.png`,
         x: onLeft ? 54 : 306,
         y: curr.y,
@@ -974,32 +935,32 @@ export default function DailyPathPage() {
             aria-hidden="true"
           >
             <defs>
-              <linearGradient id="goldRoadGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#fde047" />
-                <stop offset="50%" stopColor="#eab308" />
-                <stop offset="100%" stopColor="#ca8a04" />
+              <linearGradient id="cochinRoadGrad" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stopColor="#38e1ff" />
+                <stop offset="52%" stopColor="#6aa8ff" />
+                <stop offset="100%" stopColor="#7c8cff" />
               </linearGradient>
               <filter id="roadGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="4" stdDeviation="5" floodColor="#000000" floodOpacity="0.55" />
+                <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#38e1ff" floodOpacity="0.32" />
               </filter>
             </defs>
 
-            {/* Locked future trail (smooth dark track + golden pebbles) */}
+            {/* Unaccomplished / locked trail (monochrome slate-grey, not colored) */}
             {pathLayout.lockedPathD && (
               <g>
                 <path
                   d={pathLayout.lockedPathD}
                   fill="none"
-                  stroke="rgba(10, 14, 22, 0.9)"
-                  strokeWidth="19"
+                  stroke="rgba(12, 18, 28, 0.92)"
+                  strokeWidth="18"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
                   d={pathLayout.lockedPathD}
                   fill="none"
-                  stroke="rgba(250, 204, 21, 0.48)"
-                  strokeWidth="7.5"
+                  stroke="rgba(143, 166, 184, 0.28)"
+                  strokeWidth="6.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeDasharray="1 18"
@@ -1007,30 +968,30 @@ export default function DailyPathPage() {
               </g>
             )}
 
-            {/* Unlocked golden ribbon trail (casing + gradient road + glossy center line) */}
+            {/* Accomplished / unlocked trail in Quiz Cochin DA (cyan -> violet gradient) */}
             {pathLayout.unlockedPathD && (
               <g filter="url(#roadGlow)">
                 <path
                   d={pathLayout.unlockedPathD}
                   fill="none"
-                  stroke="#080b11"
-                  strokeWidth="23"
+                  stroke="#060c14"
+                  strokeWidth="22"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
                   d={pathLayout.unlockedPathD}
                   fill="none"
-                  stroke="url(#goldRoadGrad)"
-                  strokeWidth="14.5"
+                  stroke="url(#cochinRoadGrad)"
+                  strokeWidth="13.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
                   d={pathLayout.unlockedPathD}
                   fill="none"
-                  stroke="rgba(254, 249, 195, 0.78)"
-                  strokeWidth="3.8"
+                  stroke="rgba(232, 244, 251, 0.72)"
+                  strokeWidth="3.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -1038,29 +999,32 @@ export default function DailyPathPage() {
             )}
           </svg>
 
-          {/* Decorative musculoskeletal radiology schemas in the background (max 3 visible, large) */}
-          {pathLayout.decorations.map((deco) => (
-            <div
-              key={deco.id}
-              className="daily-deco"
-              style={{
-                top: deco.y,
-                left: `${(deco.x / pathLayout.width) * 100}%`,
-                width: deco.size,
-                height: deco.size,
-                '--deco-rot': `${deco.rotate}deg`,
-              }}
-              aria-hidden="true"
-            >
-              <img
-                src={deco.src}
-                alt=""
-                className="daily-deco-img"
-                loading="lazy"
-                draggable="false"
-              />
-            </div>
-          ))}
+          {/* Decorative musculoskeletal radiology schemas in the background (uncolored until reached) */}
+          {pathLayout.decorations.map((deco) => {
+            const isColored = Boolean(dailyState.steps[deco.step]) || dailyState.currentStep > deco.step;
+            return (
+              <div
+                key={deco.id}
+                className={`daily-deco ${isColored ? 'is-colored' : 'is-uncolored'}`}
+                style={{
+                  top: deco.y,
+                  left: `${(deco.x / pathLayout.width) * 100}%`,
+                  width: deco.size,
+                  height: deco.size,
+                  '--deco-rot': `${deco.rotate}deg`,
+                }}
+                aria-hidden="true"
+              >
+                <img
+                  src={deco.src}
+                  alt=""
+                  className="daily-deco-img"
+                  loading="lazy"
+                  draggable="false"
+                />
+              </div>
+            );
+          })}
 
           {/* Path Step Nodes */}
           {pathLayout.nodes.map((node) => {
@@ -1069,17 +1033,16 @@ export default function DailyPathPage() {
             const isCompleted = stars > 0;
             const isCurrent = step === dailyState.currentStep;
             const isUnlocked = step <= dailyState.currentStep;
-            const palette = NODE_PALETTES[(step - 1) % NODE_PALETTES.length];
             const leftPct = `${(x / pathLayout.width) * 100}%`;
 
             return (
               <div
                 key={step}
                 ref={isCurrent ? currentStepNodeRef : undefined}
-                className={`daily-node-wrap ${isUnlocked ? 'is-unlocked' : 'is-locked'} ${isCurrent ? 'is-current' : ''} ${isBoss ? 'is-boss' : ''}`}
+                className={`daily-node-wrap ${isUnlocked ? 'is-unlocked' : 'is-locked'} ${isCompleted ? 'is-completed' : ''} ${isCurrent ? 'is-current' : ''} ${isBoss ? 'is-boss' : ''}`}
                 style={{ left: leftPct, top: y }}
               >
-                {/* 3-star arch above every step node (empty slots before completion, gold when earned) */}
+                {/* 3-star arch above every step node (empty slots before completion, lit when earned) */}
                 <div
                   className={`daily-boss-stars ${!isBoss ? 'daily-step-stars' : ''} ${!isUnlocked ? 'is-locked-stars' : ''}`}
                   aria-hidden="true"
@@ -1096,9 +1059,9 @@ export default function DailyPathPage() {
                       >
                         <path
                           d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
-                          fill={lit ? '#facc15' : 'rgba(18, 22, 31, 0.88)'}
-                          stroke={lit ? '#111318' : 'rgba(255, 255, 255, 0.52)'}
-                          strokeWidth="2.1"
+                          fill={lit ? '#38e1ff' : 'rgba(15, 22, 34, 0.88)'}
+                          stroke={lit ? '#05090f' : 'rgba(143, 166, 184, 0.45)'}
+                          strokeWidth="2"
                           strokeLinejoin="round"
                         />
                       </svg>
@@ -1108,15 +1071,7 @@ export default function DailyPathPage() {
 
                 <button
                   type="button"
-                  className={`daily-node-btn ${isBoss ? 'daily-node-boss' : ''} ${!isUnlocked ? 'daily-node-locked' : ''}`}
-                  style={
-                    isUnlocked && !isBoss
-                      ? {
-                          '--node-bg': palette.bg,
-                          '--node-shadow': palette.shadow,
-                        }
-                      : undefined
-                  }
+                  className={`daily-node-btn ${isBoss ? 'daily-node-boss' : ''} ${!isUnlocked ? 'daily-node-locked' : ''} ${isCompleted ? 'daily-node-done' : ''}`}
                   disabled={!isUnlocked}
                   onClick={() => launchStep(step)}
                   aria-label={
@@ -1126,24 +1081,20 @@ export default function DailyPathPage() {
                   }
                 >
                   {isUnlocked ? (
-                    <>
-                      <StepNodeArt step={step} isBossNode={isBoss} />
-                      {!isBoss && <span className="daily-node-num">{step}</span>}
-                    </>
+                    <span className="daily-node-center-num">{step}</span>
                   ) : (
-                    <span className="daily-node-locked-num">{step}</span>
+                    <LockIcon isBoss={isBoss} />
                   )}
                 </button>
 
                 {/* Side badges */}
-                {isUnlocked && !isBoss && (
+                {isUnlocked && (
                   <div
                     className={`daily-side-badges ${x > 180 ? 'on-left' : 'on-right'}`}
                     aria-hidden="true"
                   >
                     <span
                       className="daily-side-badge"
-                      style={{ '--badge-tint': palette.badgeBg }}
                       title={isCompleted ? `${stars} étoile${stars > 1 ? 's' : ''}` : `${goal} question${goal > 1 ? 's' : ''}`}
                     >
                       <b>{isCompleted ? `${stars}★` : `${goal}Q`}</b>
