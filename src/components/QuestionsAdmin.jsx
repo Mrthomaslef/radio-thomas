@@ -328,7 +328,7 @@ async function call(password, payload) {
       } catch {
         // Fallback below
       }
-      const r = await fetch('/api/questions');
+      const r = await fetch(`/api/questions?v=${Date.now()}`);
       const data = await r.json().catch(() => ({}));
       rememberStamps(data.questions);
       return { questions: Array.isArray(data.questions) ? data.questions : [] };
@@ -378,7 +378,7 @@ async function call(password, payload) {
   }
   if (!r.ok) {
     if (r.status === 429 && payload.action === 'list') {
-      const qRes = await fetch('/api/questions');
+      const qRes = await fetch(`/api/questions?v=${Date.now()}`);
       const qData = await qRes.json().catch(() => ({}));
       return { questions: Array.isArray(qData.questions) ? qData.questions : [] };
     }

@@ -31,8 +31,9 @@ export default async function handler(req, res) {
         }
         return q;
       });
-    // Always serve fresh questions so edits made on a computer appear immediately on phones/tablets.
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    // Served from Vercel's CDN for a few seconds: ~640 KB per call and one function run per visitor would
+    // burn the free plan. Edits show up within ~20 s; the admin pages bypass the cache with ?v=<timestamp>.
+    res.setHeader('Cache-Control', 'public, s-maxage=20, stale-while-revalidate=120');
     return res.status(200).json({ questions });
   } catch {
     return res.status(502).json({ error: 'Base de données injoignable' });

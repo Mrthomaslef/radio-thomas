@@ -4,6 +4,9 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Supabase env vars missing' });
   }
 
+  // Footer status dot: no need to hit the database on every page view.
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+
   const r = await fetch(`${SUPABASE_URL}/rest/v1/hello?select=message&order=id.desc&limit=1`, {
     headers: {
       apikey: SUPABASE_PUBLISHABLE_KEY,

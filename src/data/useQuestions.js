@@ -316,13 +316,15 @@ function groupByChapter(rows) {
 
 const fallback = () => groupByChapter(bundledQuestions);
 
+const REFRESH_AFTER_MS = 60_000; // re-download the (large) question list at most once a minute per tab
 let cache = null; // shared by the home page and the quiz
 let lastFetchAt = 0;
 const listeners = new Set();
 
-function fetchLiveQuestions() {
+// `bust` skips the CDN/browser cache (used right after an admin edit); normal visits share a cached copy.
+function fetchLiveQuestions(bust = false) {
   lastFetchAt = Date.now();
-  return fetch(`/api/questions?t=${lastFetchAt}`, { cache: 'no-store' })
+  return fetch(bust === true ? `/api/questions?v=${lastFetchAt}` : '/api/questions')
     .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
     .then((json) => {
       if (!Array.isArray(json.questions) || json.questions.length === 0) throw new Error('empty');
@@ -347,25 +349,23 @@ export function useQuestions() {
 
   useEffect(() => {
     listeners.add(setState);
-    if (!cache || Date.now() - lastFetchAt > 3000) {
+    if (!cache || Date.now() - lastFetchAt > REFRESH_AFTER_MS) {
       fetchLiveQuestions();
     }
     const onRefresh = () => {
       if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return;
-      if (Date.now() - lastFetchAt > 2000) {
+      if (Date.now() - lastFetchAt > REFRESH_AFTER_MS) {
         fetchLiveQuestions();
       }
     };
     if (typeof window !== 'undefined') {
       window.addEventListener('focus', onRefresh);
-      window.addEventListener('hashchange', onRefresh);
       document.addEventListener('visibilitychange', onRefresh);
     }
     return () => {
       listeners.delete(setState);
       if (typeof window !== 'undefined') {
         window.removeEventListener('focus', onRefresh);
-        window.removeEventListener('hashchange', onRefresh);
         document.removeEventListener('visibilitychange', onRefresh);
       }
     };
@@ -373,7 +373,7 @@ export function useQuestions() {
 
   return {
     ...state,
-    reload: fetchLiveQuestions,
+    reload: () => fetchLiveQuestions(true),
   };
 }
 
@@ -381,6 +381,6 @@ export function useQuestions() {
 export function resetQuestionsCache() {
   cache = null;
   if (listeners.size > 0) {
-    fetchLiveQuestions();
+    fetchLiveQuestions(true);
   }
 }
