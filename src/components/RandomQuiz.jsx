@@ -141,7 +141,7 @@ export default function RandomQuiz() {
     };
     return (
       <div className="cq">
-        <a href="#/" className="cq-back">← Accueil</a>
+        <a href="#/chapitres" className="cq-back">← Quiz</a>
         <form className="cq-card name-step" onSubmit={onSubmit} style={{ marginTop: 14 }}>
           <label htmlFor="rnd-pseudo">Choisis un pseudo pour commencer le quiz aléatoire</label>
           <input
@@ -182,13 +182,13 @@ export default function RandomQuiz() {
           meta={{
             numero: 'Mixte',
             theme: 'mixte',
-            backHref: '#/',
+            backHref: '#/chapitres',
             titre: `Quiz aléatoire (${session.questions.length} question${session.questions.length > 1 ? 's' : ''})`,
             auteurs: 'A. Cotten',
           }}
           questions={session.questions}
           randomMode
-          backLabel="← Accueil"
+          backLabel="← Quiz"
           onRestart={startQuiz}
         />
       </div>
@@ -198,7 +198,7 @@ export default function RandomQuiz() {
   return (
     <section className="prog rnd">
       <header className="prog-head">
-        <a href="#/" className="cq-back">← Accueil</a>
+        <a href="#/chapitres" className="cq-back">← Quiz</a>
         <h1>Quiz <span className="grad">aléatoire</span></h1>
         <p className="home-hello">
           Choisis les chapitres à réviser et le nombre de questions à tirer au sort.

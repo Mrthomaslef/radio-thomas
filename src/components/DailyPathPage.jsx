@@ -1,0 +1,723 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { themes } from '../data/themes.js';
+import { CHAPTERS, useQuestions, resolveDifficulty } from '../data/useQuestions.js';
+import {
+  readName,
+  saveName,
+  readAllProgress,
+  readDailyState,
+  saveDailyGoal,
+  recordDailyQuestionAnswered,
+  recordDailyStepCompleted,
+  subscribePlayer,
+  syncProgressFromServer,
+} from '../data/player.js';
+import { QuizPlayer } from './ChapterQuiz.jsx';
+import Icon from './Icons.jsx';
+
+const GOAL_OPTIONS = [
+  {
+    count: 3,
+    label: '3 questions / jour',
+    badge: 'Tranquille',
+    desc: '2 questions faciles + 1 question Boss · ~2 min',
+  },
+  {
+    count: 5,
+    label: '5 questions / jour',
+    badge: 'Recommandé',
+    desc: '4 questions + 1 question Boss · ~4 min',
+  },
+  {
+    count: 10,
+    label: '10 questions / jour',
+    badge: 'Intensif',
+    desc: '9 questions + 1 question Boss · ~8 min',
+  },
+];
+
+const NODE_PALETTES = [
+  { bg: '#f08c1a', border: '#111318', shadow: '#8c4d06', badgeBg: '#f9a8d4' },
+  { bg: '#38b27c', border: '#111318', shadow: '#1b6545', badgeBg: '#a7f3d0' },
+  { bg: '#f28b66', border: '#111318', shadow: '#8f4428', badgeBg: '#fed7aa' },
+  { bg: '#8b5cf6', border: '#111318', shadow: '#4c1d95', badgeBg: '#ddd6fe' },
+  { bg: '#38bdf8', border: '#111318', shadow: '#0369a1', badgeBg: '#bae6fd' },
+  { bg: '#ec4899', border: '#111318', shadow: '#831843', badgeBg: '#fbcfe8' },
+];
+
+function shuffleArray(list) {
+  const arr = [...list];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function buildStepQuestions(stepNumber, goalCount, byChapter, allProgress) {
+  const count = Math.max(3, Number(goalCount) || 5);
+  const allChapters = themes.flatMap((t) => t.chapters.map((c) => c.id));
+  const fullPool = [];
+
+  for (const chKey of allChapters) {
+    const qs = byChapter[chKey] || [];
+    const meta = CHAPTERS[chKey]?.chapitre;
+    for (const q of qs) {
+      const diff = resolveDifficulty(q.id, q.difficulty);
+      const ans = allProgress?.[chKey]?.answers?.[q.id];
+      const isAnswered = Array.isArray(ans) && ans.length > 0;
+      fullPool.push({
+        ...q,
+        difficulty: diff,
+        _chapterKey: chKey,
+        _meta: meta,
+        _unanswered: !isAnswered,
+      });
+    }
+  }
+
+  if (fullPool.length === 0) return [];
+
+  const pickFrom = (candidates, needed, excludeIds) => {
+    const filtered = candidates.filter((q) => !excludeIds.has(q.id));
+    const fresh = shuffleArray(filtered.filter((q) => q._unanswered));
+    const seen = shuffleArray(filtered.filter((q) => !q._unanswered));
+    const combined = [...fresh, ...seen];
+    return combined.slice(0, needed);
+  };
+
+  const isBossStep = stepNumber % 4 === 0;
+  const usedIds = new Set();
+  const regularNeeded = Math.max(1, count - 1);
+
+  let regularCandidates;
+  let bossCandidates;
+
+  if (isBossStep) {
+    // Special "Quiz" Boss node on the path: medium & hard questions + hard final Boss
+    regularCandidates = fullPool.filter((q) => q.difficulty >= 2);
+    if (regularCandidates.length < regularNeeded) regularCandidates = fullPool;
+    bossCandidates = fullPool.filter((q) => q.difficulty === 3);
+    if (bossCandidates.length === 0) bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
+  } else if (stepNumber <= 3) {
+    // First days/steps: Easy (level 1) questions + 1 harder Boss question (level 2 or 3)
+    regularCandidates = fullPool.filter((q) => q.difficulty === 1);
+    if (regularCandidates.length < regularNeeded) {
+      regularCandidates = [
+        ...regularCandidates,
+        ...fullPool.filter((q) => q.difficulty === 2),
+      ];
+    }
+    bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
+  } else if (stepNumber <= 7) {
+    // Intermediate steps: Easy & Medium questions + 1 Hard Boss question
+    regularCandidates = fullPool.filter((q) => q.difficulty <= 2);
+    bossCandidates = fullPool.filter((q) => q.difficulty === 3);
+    if (bossCandidates.length === 0) bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
+  } else {
+    // Advanced steps: Medium questions + 1 Hard Boss question
+    regularCandidates = fullPool.filter((q) => q.difficulty === 2);
+    if (regularCandidates.length < regularNeeded) {
+      regularCandidates = fullPool.filter((q) => q.difficulty <= 2);
+    }
+    bossCandidates = fullPool.filter((q) => q.difficulty === 3);
+    if (bossCandidates.length === 0) bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
+  }
+
+  let regulars = pickFrom(regularCandidates, regularNeeded, usedIds);
+  if (regulars.length < regularNeeded) {
+    const extra = pickFrom(fullPool, regularNeeded - regulars.length, new Set([...usedIds, ...regulars.map((q) => q.id)]));
+    regulars = [...regulars, ...extra];
+  }
+  for (const q of regulars) usedIds.add(q.id);
+
+  let bossArr = pickFrom(bossCandidates, 1, usedIds);
+  if (bossArr.length === 0) {
+    bossArr = pickFrom(fullPool, 1, usedIds);
+  }
+  const finalQuestions = [
+    ...regulars.map((q) => ({ ...q, _isBoss: false })),
+    ...bossArr.map((q) => ({ ...q, _isBoss: true })),
+  ];
+
+  return finalQuestions;
+}
+
+function StepNodeArt({ step, isBossNode }) {
+  if (isBossNode) {
+    return <span className="daily-node-quiz-text">Quiz</span>;
+  }
+  const mod = (step - 1) % 5;
+  if (mod === 0) {
+    // Radiology / X-ray scanner icon
+    return (
+      <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <rect x="6" y="7" width="24" height="20" rx="4" fill="#1e2430" stroke="#0d1017" strokeWidth="2" />
+        <circle cx="14" cy="17" r="4.5" fill="#4b5563" stroke="#9ca3af" strokeWidth="1.5" />
+        <circle cx="23" cy="15" r="3" fill="#60a5fa" />
+        <path d="M12 27l-2 4h16l-2-4" stroke="#1e2430" strokeWidth="2.5" strokeLinecap="round" />
+      </svg>
+    );
+  }
+  if (mod === 1) {
+    // PACS / Medical workstation laptop icon
+    return (
+      <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <rect x="8" y="8" width="20" height="14" rx="2" fill="#111827" stroke="#374151" strokeWidth="1.8" />
+        <path d="M13 15h4l2-3 2 6 2-3h3" stroke="#34d399" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5 22h26l-2 5H7l-2-5Z" fill="#9ca3af" stroke="#1f2937" strokeWidth="1.5" />
+      </svg>
+    );
+  }
+  if (mod === 2) {
+    // Classical medical temple / academy columns (like node 3 in screenshot)
+    return (
+      <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M18 6L6 13h24L18 6Z" fill="#e5e7eb" stroke="#374151" strokeWidth="1.6" />
+        <rect x="9" y="13" width="3.5" height="12" fill="#d1d5db" stroke="#374151" strokeWidth="1.2" />
+        <rect x="16.25" y="13" width="3.5" height="12" fill="#d1d5db" stroke="#374151" strokeWidth="1.2" />
+        <rect x="23.5" y="13" width="3.5" height="12" fill="#d1d5db" stroke="#374151" strokeWidth="1.2" />
+        <rect x="6" y="25" width="24" height="3.5" rx="1" fill="#9ca3af" stroke="#374151" strokeWidth="1.4" />
+      </svg>
+    );
+  }
+  if (mod === 3) {
+    // Bone / Joint anatomy icon
+    return (
+      <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path
+          d="M11 9a3.5 3.5 0 0 0-3.2 4.8A3.5 3.5 0 0 0 10 20l6 6a3.5 3.5 0 0 0 6.2 2A3.5 3.5 0 0 0 27 23a3.5 3.5 0 0 0-2-6.2l-6-6A3.5 3.5 0 0 0 11 9Z"
+          fill="#fef3c7"
+          stroke="#1f2937"
+          strokeWidth="2"
+        />
+      </svg>
+    );
+  }
+  // MRI Magnet / Pulse icon
+  return (
+    <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <circle cx="18" cy="18" r="10" fill="#1e293b" stroke="#f8fafc" strokeWidth="2" />
+      <circle cx="18" cy="18" r="4.5" fill="#38bdf8" />
+    </svg>
+  );
+}
+
+export default function DailyPathPage() {
+  const { byChapter, loading } = useQuestions();
+  const [pseudo, setPseudo] = useState(readName);
+  const [draftPseudo, setDraftPseudo] = useState(pseudo);
+  const [editingPseudo, setEditingPseudo] = useState(!pseudo);
+  const [dailyState, setDailyState] = useState(() => readDailyState(readName()));
+  const [allProgress, setAllProgress] = useState(() => readAllProgress(readName()));
+  const [pickingGoal, setPickingGoal] = useState(false);
+  const [selectedGoalDraft, setSelectedGoalDraft] = useState(5);
+  const [activeSession, setActiveSession] = useState(null); // { stepNumber, isBossStep, questions, id }
+  const currentStepNodeRef = useRef(null);
+
+  useEffect(() => {
+    const n = readName();
+    if (n) syncProgressFromServer(n);
+    return subscribePlayer(() => {
+      const curr = readName();
+      setPseudo(curr);
+      setAllProgress(readAllProgress(curr));
+      const nextDaily = readDailyState(curr);
+      setDailyState(nextDaily);
+      if (nextDaily.goal) setSelectedGoalDraft(nextDaily.goal);
+    });
+  }, []);
+
+  // Automatically scroll to the active step node when the path is displayed
+  useEffect(() => {
+    if (!editingPseudo && dailyState.goal && !pickingGoal && !activeSession) {
+      const t = setTimeout(() => {
+        currentStepNodeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 120);
+      return () => clearTimeout(t);
+    }
+    return undefined;
+  }, [editingPseudo, dailyState.goal, dailyState.currentStep, pickingGoal, activeSession]);
+
+  const handlePseudoSubmit = (e) => {
+    e.preventDefault();
+    const clean = draftPseudo.trim().replace(/\s+/g, ' ');
+    if (!clean) return;
+    saveName(clean);
+    setPseudo(clean);
+    setEditingPseudo(false);
+    const st = readDailyState(clean);
+    setDailyState(st);
+    setAllProgress(readAllProgress(clean));
+    if (!st.goal) {
+      setSelectedGoalDraft(5);
+      setPickingGoal(true);
+    }
+  };
+
+  const handleGoalSubmit = (goalVal) => {
+    const chosen = Number(goalVal) || selectedGoalDraft || 5;
+    saveDailyGoal(chosen, pseudo);
+    setDailyState(readDailyState(pseudo));
+    setPickingGoal(false);
+  };
+
+  const launchStep = (stepNumber) => {
+    const goalCount = dailyState.goal || 5;
+    const isBossStep = stepNumber % 4 === 0;
+    const drawn = buildStepQuestions(stepNumber, goalCount, byChapter, allProgress);
+    if (drawn.length === 0) return;
+    setActiveSession({
+      id: Date.now(),
+      stepNumber,
+      isBossStep,
+      questions: drawn,
+    });
+    window.scrollTo(0, 0);
+  };
+
+  // Layout geometry for the vertical winding path (Step 1 at bottom -> higher steps at top)
+  const totalStepsToShow = Math.max(8, dailyState.currentStep + 3);
+  const pathLayout = useMemo(() => {
+    const rowHeight = 162;
+    const topPad = 95;
+    const bottomPad = 110;
+    const height = topPad + (totalStepsToShow - 1) * rowHeight + bottomPad;
+
+    // Horizontal pattern matching the screenshot's S-curve (in viewBox width 360)
+    // Step 1: center-left (172), Step 2: right (266), Step 3: center (178), Step 4 (Quiz Boss): left (96), Step 5: center (180)...
+    const xPattern = [172, 266, 178, 96, 180, 264, 174, 96];
+
+    const nodes = [];
+    for (let s = 1; s <= totalStepsToShow; s++) {
+      const idxFromTop = totalStepsToShow - s;
+      const y = topPad + idxFromTop * rowHeight;
+      const x = xPattern[(s - 1) % xPattern.length];
+      nodes.push({ step: s, x, y, isBoss: s % 4 === 0 });
+    }
+
+    // Build smooth cubic bezier segments between consecutive steps
+    const segments = [];
+    for (let i = 0; i < nodes.length - 1; i++) {
+      const a = nodes[i]; // step s
+      const b = nodes[i + 1]; // step s + 1 (above a)
+      const midY = (a.y + b.y) / 2;
+      // Exaggerate horizontal swing slightly like the screenshot
+      const swingX = a.x === b.x ? (i % 2 === 0 ? 40 : -40) : 0;
+      const d = `M ${a.x} ${a.y} C ${a.x + swingX} ${midY + 25}, ${b.x - swingX} ${midY - 25}, ${b.x} ${b.y}`;
+      const unlocked = b.step <= dailyState.currentStep;
+      segments.push({ key: `${a.step}-${b.step}`, d, unlocked });
+    }
+
+    return { width: 360, height, nodes, segments };
+  }, [totalStepsToShow, dailyState.currentStep]);
+
+  // 1) Pseudo onboarding step
+  if (!pseudo || editingPseudo) {
+    return (
+      <section className="home daily-onboarding">
+        <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
+          QUIZ <span className="grad">Cochin</span>
+        </motion.h1>
+        <motion.form
+          className="home-panel name-step"
+          onSubmit={handlePseudoSubmit}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <label htmlFor="daily-pseudo">Choisis un pseudo pour commencer ton parcours quotidien</label>
+          <input
+            id="daily-pseudo"
+            className="name-input"
+            type="text"
+            value={draftPseudo}
+            onChange={(e) => setDraftPseudo(e.target.value)}
+            placeholder="Ton pseudo"
+            maxLength={80}
+            autoComplete="nickname"
+            autoFocus
+            required
+          />
+          <p className="privacy">
+            Ton pseudo sauvegarde ton objectif du jour, tes étoiles et ta progression sur tous tes appareils.
+          </p>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <button className="btn" type="submit" disabled={!draftPseudo.trim()}>
+              Continuer <Icon name="arrow" size={18} />
+            </button>
+            {pseudo && (
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => setEditingPseudo(false)}
+              >
+                Annuler
+              </button>
+            )}
+          </div>
+        </motion.form>
+      </section>
+    );
+  }
+
+  // 2) Daily Goal selection (shown automatically for every new pseudo, or when clicking the flag pill)
+  if (!dailyState.goal || pickingGoal) {
+    return (
+      <section className="home daily-onboarding">
+        <motion.div
+          className="home-panel daily-goal-card"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <span className="daily-goal-kicker"> Objectif journalier · {pseudo}</span>
+          <h2>Combien de questions veux-tu faire par jour ?</h2>
+          <p className="daily-goal-sub">
+            Les questions sont tirées au sort. Tu commences par un niveau <strong>facile</strong> les premiers jours et chaque session se termine par un <strong>Boss</strong> plus difficile !
+          </p>
+
+          <div className="daily-goal-options" role="radiogroup" aria-label="Objectif quotidien de questions">
+            {GOAL_OPTIONS.map((opt) => {
+              const active = (selectedGoalDraft || dailyState.goal || 5) === opt.count;
+              return (
+                <button
+                  key={opt.count}
+                  type="button"
+                  className={`daily-goal-option ${active ? 'is-selected' : ''}`}
+                  onClick={() => {
+                    setSelectedGoalDraft(opt.count);
+                    handleGoalSubmit(opt.count);
+                  }}
+                >
+                  <div className="daily-goal-option-top">
+                    <span className="daily-goal-option-title">{opt.label}</span>
+                    <span className="daily-goal-option-badge">{opt.badge}</span>
+                  </div>
+                  <span className="daily-goal-option-desc">{opt.desc}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {dailyState.goal && (
+            <div style={{ marginTop: 14, display: 'flex', justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                className="btn btn-ghost btn-small"
+                onClick={() => setPickingGoal(false)}
+              >
+                Retour au parcours
+              </button>
+            </div>
+          )}
+        </motion.div>
+      </section>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="cq">
+        <p className="cq-loading" role="status">Chargement de ton parcours…</p>
+      </div>
+    );
+  }
+
+  // 3) Active Daily Step Quiz Player
+  if (activeSession) {
+    const { stepNumber, isBossStep, questions } = activeSession;
+    return (
+      <div className="rnd-play daily-play">
+        <div className="rnd-play-top">
+          <button
+            type="button"
+            className="rnd-action-btn"
+            onClick={() => setActiveSession(null)}
+          >
+            ← Retour au chemin
+          </button>
+          <span className="daily-session-pill">
+            🚩 {Math.min(dailyState.todayCount, dailyState.goal)}/{dailyState.goal} aujourd’hui
+          </span>
+        </div>
+        <QuizPlayer
+          key={activeSession.id}
+          chapterKey="quiz-aleatoire"
+          meta={{
+            numero: `Étape ${stepNumber}`,
+            theme: 'mixte',
+            backHref: '#/',
+            titre: isBossStep
+              ? `Défi Boss — Étape ${stepNumber}`
+              : `Parcours du jour — Étape ${stepNumber}`,
+            auteurs: 'A. Cotten',
+          }}
+          questions={questions}
+          randomMode
+          backLabel="← Chemin"
+          onQuestionValidated={() => {
+            recordDailyQuestionAnswered(pseudo);
+            setDailyState(readDailyState(pseudo));
+          }}
+          onQuizCompleted={({ score, total }) => {
+            const ratio = total > 0 ? score / total : 0;
+            const stars = ratio >= 0.9 ? 3 : ratio >= 0.6 ? 2 : 1;
+            recordDailyStepCompleted(stepNumber, stars, pseudo);
+            setDailyState(readDailyState(pseudo));
+          }}
+          dailyMode={{
+            stepNumber,
+            isBossStep,
+            onContinuePath: () => {
+              setDailyState(readDailyState(pseudo));
+              setActiveSession(null);
+            },
+          }}
+          onRestart={() => launchStep(stepNumber)}
+        />
+      </div>
+    );
+  }
+
+  const goal = dailyState.goal || 5;
+  const goalReached = dailyState.todayCount >= goal;
+
+  // 4) Winding Daily Progression Path View
+  return (
+    <section className="daily-page" aria-label="Parcours de progression journalière">
+      {/* Top Floating HUD matching the screenshot */}
+      <div className="daily-hud">
+        <div className="daily-hud-pill daily-hud-left">
+          <span className="daily-hud-item" title="Jours d’activité consécutifs">
+            <svg className="daily-flame-icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <defs>
+                <linearGradient id="flameGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#ff8fab" />
+                  <stop offset="100%" stopColor="#fb5607" />
+                </linearGradient>
+              </defs>
+              <path
+                fill="url(#flameGrad)"
+                d="M12 2c1.8 3.2 5 5.6 5 10.2A5.5 5.5 0 0 1 11.5 18c2.2-1.2 2.4-3.8 1-5.5-1.2 1.4-2.5 2.4-2.5 4.3A4.2 4.2 0 0 1 6.5 12C6.5 8.2 9.8 5.2 12 2Z"
+              />
+              <circle cx="12" cy="16.5" r="2.3" fill="#fff" opacity="0.85" />
+            </svg>
+            <b>{dailyState.streak}</b>
+          </span>
+
+          <button
+            type="button"
+            className={`daily-hud-item daily-hud-flag-btn ${goalReached ? 'is-done' : ''}`}
+            onClick={() => {
+              setSelectedGoalDraft(goal);
+              setPickingGoal(true);
+            }}
+            title="Modifier mon objectif journalier (3, 5 ou 10 questions)"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 21V4" />
+              <path d="M5 4h13l-2.5 4.5L18 13H5" />
+            </svg>
+            <b>{dailyState.todayCount}/{goal}</b>
+          </button>
+        </div>
+
+        <div className="daily-hud-right-group">
+          <button
+            type="button"
+            className="daily-hud-pill daily-hud-pseudo"
+            onClick={() => {
+              setDraftPseudo(pseudo);
+              setEditingPseudo(true);
+            }}
+            title="Changer de pseudo"
+          >
+            {pseudo}
+          </button>
+
+          <div className="daily-hud-pill daily-hud-stars" title="Total d’étoiles gagnées sur le parcours">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="#facc15"
+                stroke="#fef08a"
+                strokeWidth="1.2"
+                d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"
+              />
+            </svg>
+            <b>{dailyState.totalStars}</b>
+          </div>
+        </div>
+      </div>
+
+      {/* Winding Path Canvas */}
+      <div className="daily-map-scroll">
+        <div
+          className="daily-map-canvas"
+          style={{ height: pathLayout.height }}
+        >
+          <svg
+            className="daily-map-svg"
+            viewBox={`0 0 ${pathLayout.width} ${pathLayout.height}`}
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            {pathLayout.segments.map((seg) => (
+              <path
+                key={seg.key}
+                d={seg.d}
+                fill="none"
+                stroke={seg.unlocked ? '#eab308' : 'rgba(234, 179, 8, 0.25)'}
+                strokeWidth={seg.unlocked ? '9' : '7'}
+                strokeLinecap="round"
+                strokeDasharray={seg.unlocked ? undefined : '10 10'}
+              />
+            ))}
+          </svg>
+
+          {/* Decorative floating illustrations along the path (like the book & pencil in the screenshot) */}
+          {pathLayout.nodes[1] && (
+            <div
+              className="daily-deco daily-deco-book"
+              style={{ top: pathLayout.nodes[1].y + 8, left: '6%' }}
+              aria-hidden="true"
+            >
+              <svg width="96" height="76" viewBox="0 0 110 86" fill="none">
+                <path d="M18 14l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" fill="#f8fafc" />
+                <path d="M35 4l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z" fill="#e2e8f0" />
+                <path d="M14 50L50 32l38 14-36 22L14 50Z" fill="#2563eb" stroke="#0f172a" strokeWidth="3" />
+                <path d="M16 46C28 36 40 34 52 38L88 26c-10 12-22 22-36 30-12-4-24-2-36-10Z" fill="#ffffff" stroke="#0f172a" strokeWidth="2.6" />
+                <path d="M52 38v20" stroke="#94a3b8" strokeWidth="2" />
+              </svg>
+            </div>
+          )}
+
+          {pathLayout.nodes[2] && (
+            <div
+              className="daily-deco daily-deco-pencil"
+              style={{ top: pathLayout.nodes[2].y - 95, right: '2%' }}
+              aria-hidden="true"
+            >
+              <svg width="104" height="96" viewBox="0 0 110 100" fill="none">
+                <circle cx="80" cy="22" r="7" fill="#eab308" stroke="#0f172a" strokeWidth="2" />
+                <g transform="rotate(-25 56 42)">
+                  <rect x="46" y="18" width="16" height="42" rx="2" fill="#facc15" stroke="#0f172a" strokeWidth="2.5" />
+                  <line x1="51" y1="18" x2="51" y2="60" stroke="#0f172a" strokeWidth="1.8" />
+                  <line x1="57" y1="18" x2="57" y2="60" stroke="#0f172a" strokeWidth="1.8" />
+                  <path d="M46 18l8-14 8 14H46Z" fill="#fed7aa" stroke="#0f172a" strokeWidth="2.5" />
+                  <path d="M51 9l3-5 3 5h-6Z" fill="#0f172a" />
+                  <rect x="46" y="60" width="16" height="9" rx="2" fill="#ef4444" stroke="#0f172a" strokeWidth="2.5" />
+                </g>
+                <path
+                  d="M36 82h64c0-10-8-17-18-16-4-9-16-13-25-7-8-3-17 3-17 12-4 1-6 5-4 11Z"
+                  fill="#ffffff"
+                  stroke="#0f172a"
+                  strokeWidth="2.5"
+                />
+              </svg>
+            </div>
+          )}
+
+          {/* Path Step Nodes */}
+          {pathLayout.nodes.map((node) => {
+            const { step, x, y, isBoss } = node;
+            const stars = dailyState.steps[step] || 0;
+            const isCompleted = stars > 0;
+            const isCurrent = step === dailyState.currentStep;
+            const isUnlocked = step <= dailyState.currentStep;
+            const palette = NODE_PALETTES[(step - 1) % NODE_PALETTES.length];
+            const leftPct = `${(x / pathLayout.width) * 100}%`;
+
+            return (
+              <div
+                key={step}
+                ref={isCurrent ? currentStepNodeRef : undefined}
+                className={`daily-node-wrap ${isUnlocked ? 'is-unlocked' : 'is-locked'} ${isCurrent ? 'is-current' : ''} ${isBoss ? 'is-boss' : ''}`}
+                style={{ left: leftPct, top: y }}
+              >
+                {/* Boss 3-star arch on top of Quiz Boss nodes */}
+                {isBoss && (
+                  <div className="daily-boss-stars" aria-hidden="true">
+                    {[1, 2, 3].map((sIdx) => {
+                      const lit = stars >= sIdx;
+                      return (
+                        <span
+                          key={sIdx}
+                          className={`daily-boss-star s-${sIdx} ${lit ? 'is-lit' : ''}`}
+                        >
+                          ★
+                        </span>
+                      );
+                    })}
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  className={`daily-node-btn ${isBoss ? 'daily-node-boss' : ''} ${!isUnlocked ? 'daily-node-locked' : ''}`}
+                  style={
+                    isUnlocked && !isBoss
+                      ? {
+                          '--node-bg': palette.bg,
+                          '--node-shadow': palette.shadow,
+                        }
+                      : undefined
+                  }
+                  disabled={!isUnlocked}
+                  onClick={() => launchStep(step)}
+                  aria-label={
+                    isUnlocked
+                      ? `${isBoss ? 'Défi Boss' : 'Étape'} ${step}${isCompleted ? ` (${stars} étoiles)` : ' — Lancer'}`
+                      : `Étape ${step} verrouillée`
+                  }
+                >
+                  {isUnlocked ? (
+                    <>
+                      <StepNodeArt step={step} isBossNode={isBoss} />
+                      {!isBoss && <span className="daily-node-num">{step}</span>}
+                    </>
+                  ) : (
+                    <span className="daily-node-locked-num">{step}</span>
+                  )}
+                </button>
+
+                {/* Side badges like the small numbered circles next to steps 1, 2, 3 in the screenshot */}
+                {isUnlocked && !isBoss && (
+                  <div
+                    className={`daily-side-badges ${x > 210 ? 'on-left' : 'on-right'}`}
+                    aria-hidden="true"
+                  >
+                    <span
+                      className="daily-side-badge"
+                      style={{ '--badge-tint': palette.badgeBg }}
+                      title={isCompleted ? `${stars} étoile${stars > 1 ? 's' : ''}` : 'Questions + 1 Boss'}
+                    >
+                      <b>{isCompleted ? stars : 1}</b>
+                    </span>
+                    {step === 1 && (
+                      <span
+                        className="daily-side-badge daily-side-badge-secondary"
+                        style={{ '--badge-tint': '#fde68a' }}
+                      >
+                        <b>1</b>
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                {isCurrent && (
+                  <button
+                    type="button"
+                    className="daily-current-cta"
+                    onClick={() => launchStep(step)}
+                  >
+                    {isBoss ? '🔥 Lancer le Boss' : 'Commencer'}
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}

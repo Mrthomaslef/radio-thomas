@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Navbar from './components/Navbar.jsx';
+import BottomNav from './components/BottomNav.jsx';
+import DailyPathPage from './components/DailyPathPage.jsx';
 import Home from './components/Home.jsx';
 import Footer from './components/Footer.jsx';
 import ChapterQuiz from './components/ChapterQuiz.jsx';
@@ -12,13 +14,14 @@ import { CHAPTERS as chapters, resetQuestionsCache } from './data/useQuestions.j
 import { syncProgressFromServer } from './data/player.js';
 
 // Tiny hash router:
+// - "#/" opens the daily progression path (Accueil)
+// - "#/chapitres" or "#/<theme>" opens the chapter/theme list (Quiz tab)
 // - "#/quiz/<key>" (or "#/quiz/<key>?q=<1-based>") plays a chapter quiz
 // - "#/aleatoire" opens the random quiz builder & player
 // - "#/proposer" opens the user question proposal form
 // - "#/progression" shows the player's progress page
 // - "#/classement" (or "#/leaderboard") shows the leaderboard
 // - "#/admin" opens the password-protected trainer page
-// - "#/<theme>" opens a theme on the home page
 const isAdminRoute = () => window.location.hash === '#/admin';
 const isReviewerRoute = () => window.location.hash === '#/correcteur';
 const isProgressRoute = () => window.location.hash === '#/progression';
@@ -28,10 +31,12 @@ const isLeaderboardRoute = () =>
   window.location.hash === '#/contributeurs';
 const isRandomRoute = () => window.location.hash === '#/aleatoire';
 const isProposeRoute = () => window.location.hash === '#/proposer';
+const isChaptersListRoute = () => window.location.hash === '#/chapitres';
 const parseTheme = () => {
   const m = window.location.hash.match(/^#\/([\w-]+)$/);
   if (
     !m ||
+    m[1] === 'chapitres' ||
     m[1] === 'admin' ||
     m[1] === 'correcteur' ||
     m[1] === 'progression' ||
@@ -79,6 +84,7 @@ export default function App() {
   const [leaderboardPage, setLeaderboardPage] = useState(isLeaderboardRoute);
   const [randomPage, setRandomPage] = useState(isRandomRoute);
   const [proposePage, setProposePage] = useState(isProposeRoute);
+  const [chaptersListPage, setChaptersListPage] = useState(isChaptersListRoute);
   const [theme, setTheme] = useState(parseTheme);
   const [pullDist, setPullDist] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
@@ -94,6 +100,7 @@ export default function App() {
       setLeaderboardPage(isLeaderboardRoute());
       setRandomPage(isRandomRoute());
       setProposePage(isProposeRoute());
+      setChaptersListPage(isChaptersListRoute());
       setTheme(parseTheme());
     };
     window.addEventListener('hashchange', onHash);
@@ -182,7 +189,7 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage]);
+  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage, chaptersListPage]);
 
   return (
     <>
@@ -204,7 +211,7 @@ export default function App() {
         </div>
       )}
       <Navbar />
-      <main>
+      <main className="main-with-bottom-nav">
         {admin ? (
           <AdminPage key="admin" />
         ) : reviewer ? (
@@ -219,11 +226,14 @@ export default function App() {
           <ProposeQuestionPage />
         ) : course ? (
           <ChapterQuiz key={`${course.key}:${course.initialIdx ?? 'auto'}:${course.randomCount ?? 'all'}`} chapter={course} />
-        ) : (
+        ) : chaptersListPage || theme ? (
           <Home openTheme={theme} />
+        ) : (
+          <DailyPathPage />
         )}
       </main>
       <Footer />
+      <BottomNav />
     </>
   );
 }

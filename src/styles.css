@@ -1739,6 +1739,564 @@ a.cq-dot:hover { transform: scale(1.08); }
   }
 }
 
+/* ==========================================================================
+   Bottom Translucent Navigation Bar (Mobile & Desktop)
+   ========================================================================== */
+.main-with-bottom-nav {
+  padding-bottom: 40px;
+}
+
+.footer {
+  padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.cq {
+  padding-bottom: calc(185px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.cq-bottom {
+  bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bottom-nav-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  padding: 0 14px;
+  pointer-events: none;
+}
+
+.bottom-nav {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 440px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(28, 30, 34, 0.72);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 50px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.bottom-nav-item:hover {
+  color: #ffffff;
+}
+
+.bottom-nav-item.is-active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.17);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.bottom-nav-icon {
+  flex-shrink: 0;
+}
+
+.bottom-nav-label {
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Daily Progression Path (Accueil) & Onboarding Goal Picker
+   ========================================================================== */
+.daily-onboarding {
+  padding-top: calc(105px + env(safe-area-inset-top, 0px));
+}
+
+.daily-goal-card {
+  background: rgba(17, 23, 34, 0.92);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: clamp(20px, 5vw, 30px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.daily-goal-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cyan);
+}
+
+.daily-goal-card h2 {
+  font-family: var(--display);
+  font-size: clamp(1.45rem, 5vw, 2rem);
+  line-height: 1.2;
+  margin-top: 4px;
+}
+
+.daily-goal-sub {
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.daily-goal-options {
+  display: grid;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.daily-goal-option {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+  text-align: left;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1.5px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.15s ease;
+}
+
+.daily-goal-option:hover,
+.daily-goal-option.is-selected {
+  border-color: #eab308;
+  background: rgba(234, 179, 8, 0.1);
+  transform: translateY(-1px);
+}
+
+.daily-goal-option-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.daily-goal-option-title {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.daily-goal-option-badge {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #fde047;
+  background: rgba(234, 179, 8, 0.18);
+  border: 1px solid rgba(234, 179, 8, 0.4);
+}
+
+.daily-goal-option-desc {
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.daily-page {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: calc(78px + env(safe-area-inset-top, 0px)) 12px 24px;
+  position: relative;
+}
+
+.daily-hud {
+  position: sticky;
+  top: calc(70px + env(safe-area-inset-top, 0px));
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 4px 10px;
+  pointer-events: none;
+}
+
+.daily-hud-pill {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(34, 35, 38, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.38);
+}
+
+.daily-hud-right-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.daily-hud-pseudo {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 7px 12px;
+  cursor: pointer;
+}
+
+.daily-hud-pseudo:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.daily-hud-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.daily-hud-flag-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font: inherit;
+  padding: 2px 4px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.daily-hud-flag-btn:hover {
+  color: #fde047;
+  transform: scale(1.04);
+}
+
+.daily-hud-flag-btn.is-done {
+  color: #34d399;
+}
+
+.daily-hud-stars {
+  gap: 6px;
+  padding: 7px 13px;
+}
+
+.daily-map-scroll {
+  position: relative;
+  width: 100%;
+}
+
+.daily-map-canvas {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.daily-map-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.daily-deco {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
+}
+
+.daily-node-wrap {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.daily-node-btn {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: var(--node-bg, #f08c1a);
+  border: 2.5px solid #111318;
+  box-shadow: 0 6px 0 #0b0d11, 0 10px 22px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+
+.daily-node-btn:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.03);
+  filter: brightness(1.06);
+}
+
+.daily-node-btn:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #0b0d11, 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.daily-node-wrap.is-current .daily-node-btn {
+  animation: daily-node-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes daily-node-pulse {
+  0%, 100% {
+    box-shadow: 0 6px 0 #0b0d11, 0 0 0 0 rgba(250, 204, 21, 0.55), 0 10px 24px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 6px 0 #0b0d11, 0 0 0 12px rgba(250, 204, 21, 0), 0 10px 24px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.daily-node-num {
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow:
+    -2px -2px 0 #0b0d11,
+     2px -2px 0 #0b0d11,
+    -2px  2px 0 #0b0d11,
+     2px  2px 0 #0b0d11,
+     0px  3px 0 #0b0d11;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Boss "Quiz" Purple Double-Ring Node with 3 Arched Stars */
+.daily-node-boss {
+  width: 92px;
+  height: 92px;
+  background: radial-gradient(circle at 50% 38%, #c4b5fd 0%, #a78bfa 58%, #7c3aed 100%);
+  border: 3px solid #111318;
+  box-shadow:
+    inset 0 0 0 6px #6d28d9,
+    inset 0 0 0 8.5px #111318,
+    0 7px 0 #0b0d11,
+    0 12px 26px rgba(0, 0, 0, 0.55);
+}
+
+.daily-node-quiz-text {
+  font-family: var(--display);
+  font-size: 1.38rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  text-shadow:
+    -2px -2px 0 #111318,
+     2px -2px 0 #111318,
+    -2px  2px 0 #111318,
+     2px  2px 0 #111318,
+     0px  3px 0 #111318;
+}
+
+.daily-boss-stars {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  z-index: 7;
+  pointer-events: none;
+}
+
+.daily-boss-star {
+  font-size: 1.55rem;
+  line-height: 1;
+  color: #f8fafc;
+  text-shadow:
+    -1.5px -1.5px 0 #111318,
+     1.5px -1.5px 0 #111318,
+    -1.5px  1.5px 0 #111318,
+     1.5px  1.5px 0 #111318,
+     0 3px 0 #111318;
+}
+
+.daily-boss-star.s-1 {
+  transform: translateY(5px) rotate(-18deg);
+}
+
+.daily-boss-star.s-2 {
+  font-size: 1.85rem;
+  transform: translateY(-2px);
+}
+
+.daily-boss-star.s-3 {
+  transform: translateY(5px) rotate(18deg);
+}
+
+.daily-boss-star.is-lit {
+  color: #facc15;
+}
+
+/* Locked future nodes (like the dark '4' circle in the screenshot) */
+.daily-node-locked {
+  width: 96px;
+  height: 96px;
+  background: radial-gradient(circle at 50% 35%, #2c2e33, #18191c 75%);
+  border: 3px solid #111318;
+  box-shadow:
+    0 0 0 8px rgba(234, 179, 8, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.65);
+  cursor: not-allowed;
+}
+
+.daily-node-locked-num {
+  font-family: var(--display);
+  font-size: 2.15rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* Side small circular badges next to unlocked nodes */
+.daily-side-badges {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  pointer-events: none;
+}
+
+.daily-side-badges.on-right {
+  left: calc(100% + 10px);
+}
+
+.daily-side-badges.on-left {
+  right: calc(100% + 10px);
+}
+
+.daily-side-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, var(--badge-tint, #fde68a) 62%, #ffffff 64%);
+  border: 2px solid #111318;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+  display: grid;
+  place-items: center;
+  font-family: var(--display);
+  font-size: 0.92rem;
+  font-weight: 900;
+  color: #fde68a;
+  text-shadow:
+    -1.2px -1.2px 0 #111318,
+     1.2px -1.2px 0 #111318,
+    -1.2px  1.2px 0 #111318,
+     1.2px  1.2px 0 #111318;
+}
+
+.daily-side-badge-secondary {
+  margin-left: -8px;
+}
+
+.daily-current-cta {
+  margin-top: 12px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #facc15, #f59e0b);
+  color: #111318;
+  border: 2px solid #111318;
+  font-family: var(--display);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.daily-session-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fde047;
+  background: rgba(234, 179, 8, 0.14);
+  border: 1px solid rgba(234, 179, 8, 0.38);
+}
+
+/* Boss Question Highlight inside QuizPlayer */
+.cq-boss-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #fef08a;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.32), rgba(239, 68, 68, 0.32));
+  border: 1px solid rgba(250, 204, 21, 0.55);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.25);
+}
+
+.cq-card-boss {
+  border-color: rgba(168, 85, 247, 0.55);
+  box-shadow: 0 0 26px rgba(139, 92, 246, 0.14);
+}
+
+.daily-end-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.daily-end-star {
+  color: rgba(255, 255, 255, 0.18);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.daily-end-star.is-earned {
+  color: #facc15;
+  text-shadow: 0 0 14px rgba(250, 204, 21, 0.5);
+}
+
+
 
 
 

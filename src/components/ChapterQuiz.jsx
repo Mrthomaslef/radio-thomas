@@ -154,6 +154,9 @@ export function QuizPlayer({
   onRestart = null,
   backLabel = '← Chapitres',
   initialIdx = null,
+  onQuestionValidated = null,
+  onQuizCompleted = null,
+  dailyMode = null,
 }) {
   const saved = useMemo(
     () => (preview || randomMode ? { answers: {}, sent: false, historyRecorded: false } : readChapterProgress(key)),
@@ -260,10 +263,14 @@ export function QuizPlayer({
 
   const validate = () => {
     if (!picked.length) return;
+    const wasAlreadyAnswered = Boolean(answers[q.id]);
     setShowCorrection(false);
     setAnswers((a) => ({ ...a, [q.id]: picked }));
     if (randomMode && !preview) {
       writeQuestionAnswer(qKey, q.id, picked);
+    }
+    if (!wasAlreadyAnswered && !preview && typeof onQuestionValidated === 'function') {
+      onQuestionValidated(q, picked, isPerfect(q, picked));
     }
   };
 
@@ -389,6 +396,9 @@ export function QuizPlayer({
           { quiz: randomMode ? 'quiz-aleatoire' : key, score, total, restarted: wasRestartedRef.current },
           name
         );
+        if (typeof onQuizCompleted === 'function') {
+          onQuizCompleted({ score, total, passed: score / total >= 0.6 });
+        }
       }
       if (!sent && saveState === 'idle') sendResult();
     }
@@ -459,7 +469,23 @@ export function QuizPlayer({
 
       {finished ? (
         <section className="cq-card cq-end">
-          <h2>Quiz terminé !</h2>
+          {dailyMode ? (
+            <>
+              <div className="daily-end-stars" aria-label="Étoiles remportées">
+                {[1, 2, 3].map((s) => {
+                  const earnedStars = total > 0 && score / total >= 0.9 ? 3 : total > 0 && score / total >= 0.6 ? 2 : 1;
+                  return (
+                    <span key={s} className={`daily-end-star ${s <= earnedStars ? 'is-earned' : ''}`}>
+                      ★
+                    </span>
+                  );
+                })}
+              </div>
+              <h2>{dailyMode.isBossStep ? 'Défi Boss terminé !' : `Étape ${dailyMode.stepNumber} terminée !`}</h2>
+            </>
+          ) : (
+            <h2>Quiz terminé !</h2>
+          )}
           <p className="cq-big">{score} / {total}</p>
           {answeredAll.length === total && (
             <p className={`cq-save cq-save-${saveState}`} role="status">
@@ -469,15 +495,22 @@ export function QuizPlayer({
             </p>
           )}
           <div className="cq-end-actions">
-            <button className="btn" onClick={reviewCorrections}>
+            {dailyMode?.onContinuePath && (
+              <button className="btn" onClick={dailyMode.onContinuePath}>
+                Continuer sur le chemin <Icon name="arrow" size={18} />
+              </button>
+            )}
+            <button className={dailyMode ? 'btn btn-ghost' : 'btn'} onClick={reviewCorrections}>
               Revoir les corrections
             </button>
             <button className="btn btn-ghost" onClick={restart}>
-              {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
+              {dailyMode ? 'Rejouer cette étape' : randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
             </button>
-            <a className="btn btn-ghost" href={backHref}>
-              {randomMode && key === 'quiz-aleatoire' ? 'Configurer un autre quiz' : 'Autres chapitres'}
-            </a>
+            {!dailyMode && (
+              <a className="btn btn-ghost" href={backHref}>
+                {randomMode && key === 'quiz-aleatoire' ? 'Configurer un autre quiz' : 'Autres chapitres'}
+              </a>
+            )}
           </div>
           {!randomMode && (
             <p className="cq-restart-note">
@@ -486,13 +519,18 @@ export function QuizPlayer({
           )}
         </section>
       ) : (
-        <section className="cq-card" key={q.id}>
+        <section className={`cq-card ${q._isBoss ? 'cq-card-boss' : ''}`} key={q.id}>
           <div className="cq-meta">
             <span>
               Question {idx + 1} / {questions.length}
               {randomMode && qMeta?.titre ? ` · ${qMeta.titre}` : ''}
             </span>
             <div className="cq-meta-badges">
+              {q._isBoss && (
+                <span className="cq-boss-badge" title="Question Boss plus difficile">
+                  🔥 Question Boss
+                </span>
+              )}
               {(() => {
                 const diff = resolveDifficulty(q.id, q.difficulty);
                 return (

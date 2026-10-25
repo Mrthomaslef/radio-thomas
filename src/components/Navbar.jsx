@@ -25,9 +25,6 @@ export default function Navbar() {
         <a href="#/classement" className="btn btn-ghost btn-small nav-lb">
           Leaderboard
         </a>
-        <a href="#/progression" className="btn btn-ghost btn-small nav-prog">
-          Progression
-        </a>
       </div>
     </header>
   );

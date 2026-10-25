@@ -154,12 +154,12 @@ export default function Home({ openTheme }) {
             return (
               <div key={t.id} className={`theme ${themePassed ? 'theme-passed' : ''}`}>
                 <a
-                  href={open ? '#/' : `#/${t.id}`}
+                  href={open ? '#/chapitres' : `#/${t.id}`}
                   className={`theme-head ${open ? 'on' : ''}`}
                   aria-expanded={open}
                   onClick={(e) => {
                     e.preventDefault();
-                    const nextHash = open ? '#/' : `#/${t.id}`;
+                    const nextHash = open ? '#/chapitres' : `#/${t.id}`;
                     window.history.replaceState(null, '', nextHash);
                     window.dispatchEvent(new HashChangeEvent('hashchange'));
                   }}

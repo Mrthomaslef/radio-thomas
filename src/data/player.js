@@ -646,6 +646,164 @@ export async function syncProgressFromServer(name = readName()) {
   } catch { /* ignore network errors */ }
 }
 
+const DAILY_CHAPTER_KEY = 'ch96';
+
+function formatLocalDay(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return { iso: `${y}-${m}-${d}`, compact: `${y}${m}${d}` };
+}
+
+export function readDailyState(name = readName()) {
+  if (!name) {
+    return {
+      goal: null,
+      steps: {},
+      currentStep: 1,
+      totalStars: 0,
+      todayCount: 0,
+      streak: 0,
+    };
+  }
+  const ch96 = readChapterProgress(DAILY_CHAPTER_KEY, name);
+  const ans = ch96?.answers || {};
+
+  // 1) Daily goal: A -> 3, B -> 5, C -> 10
+  const goalCode = Array.isArray(ans['daily-goal']) ? ans['daily-goal'][0] : null;
+  const goal = goalCode === 'A' ? 3 : goalCode === 'B' ? 5 : goalCode === 'C' ? 10 : null;
+
+  // 2) Completed steps & stars: step-<N> -> A (1), B (2), C (3)
+  const steps = {};
+  let maxCompletedStep = 0;
+  let totalStars = 0;
+  for (const [k, val] of Object.entries(ans)) {
+    const m = k.match(/^step-(\d{1,4})$/);
+    if (!m || !Array.isArray(val) || !val[0]) continue;
+    const stepNum = parseInt(m[1], 10);
+    if (!stepNum || stepNum < 1) continue;
+    const starCode = val[0];
+    const stars = starCode === 'C' ? 3 : starCode === 'B' ? 2 : 1;
+    steps[stepNum] = stars;
+    totalStars += stars;
+    if (stepNum > maxCompletedStep) maxCompletedStep = stepNum;
+  }
+
+  // 3) Today's answered count: q-YYYYMMDD-<idx>
+  const { compact: todayCompact } = formatLocalDay(new Date());
+  const qPrefix = `q-${todayCompact}-`;
+  let todayCount = 0;
+  for (const [k, val] of Object.entries(ans)) {
+    if (k.startsWith(qPrefix) && Array.isArray(val) && val[0] === 'A') {
+      todayCount += 1;
+    }
+  }
+
+  // 4) Streak of consecutive active days (streak-YYYY-MM-DD or any q-YYYYMMDD-*)
+  const activeDates = new Set();
+  for (const [k, val] of Object.entries(ans)) {
+    if (!Array.isArray(val) || val[0] !== 'A') continue;
+    const ms = k.match(/^streak-(\d{4}-\d{2}-\d{2})$/);
+    if (ms) {
+      activeDates.add(ms[1]);
+      continue;
+    }
+    const mq = k.match(/^q-(\d{4})(\d{2})(\d{2})-\d+$/);
+    if (mq) {
+      activeDates.add(`${mq[1]}-${mq[2]}-${mq[3]}`);
+    }
+  }
+
+  let streak = 0;
+  const cursor = new Date();
+  cursor.setHours(12, 0, 0, 0);
+  const todayStr = formatLocalDay(cursor).iso;
+  if (!activeDates.has(todayStr)) {
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  while (activeDates.has(formatLocalDay(cursor).iso)) {
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  if (streak === 0 && (goal !== null || maxCompletedStep > 0 || todayCount > 0)) {
+    streak = 1;
+  }
+
+  return {
+    goal,
+    steps,
+    currentStep: maxCompletedStep + 1,
+    totalStars,
+    todayCount,
+    streak,
+  };
+}
+
+export function saveDailyGoal(goalNumber, name = readName()) {
+  if (!name) return;
+  const g = Number(goalNumber);
+  const code = g === 3 ? 'A' : g === 10 ? 'C' : 'B';
+  writeQuestionAnswer(DAILY_CHAPTER_KEY, 'daily-goal', [code], name);
+}
+
+export function recordDailyQuestionAnswered(name = readName()) {
+  if (!name) return;
+  const now = Date.now();
+  const { iso, compact } = formatLocalDay(new Date(now));
+  const cur = readChapterProgress(DAILY_CHAPTER_KEY, name);
+  const answers = { ...(cur.answers || {}) };
+  const answerTimestamps = { ...(cur.answerTimestamps || {}) };
+
+  const prefix = `q-${compact}-`;
+  let maxIdx = 0;
+  for (const k of Object.keys(answers)) {
+    if (k.startsWith(prefix)) {
+      const idx = parseInt(k.slice(prefix.length), 10) || 0;
+      if (idx > maxIdx) maxIdx = idx;
+    }
+  }
+  const nextKey = `${prefix}${maxIdx + 1}`;
+  const streakKey = `streak-${iso}`;
+  answers[nextKey] = ['A'];
+  answerTimestamps[nextKey] = now;
+  answers[streakKey] = ['A'];
+  answerTimestamps[streakKey] = now;
+
+  writeChapterProgress(
+    DAILY_CHAPTER_KEY,
+    { answers, answerTimestamps, sent: true, updatedAt: now },
+    name
+  );
+}
+
+export function recordDailyStepCompleted(stepNumber, stars, name = readName()) {
+  if (!name || !stepNumber || stepNumber < 1) return;
+  const now = Date.now();
+  const cur = readChapterProgress(DAILY_CHAPTER_KEY, name);
+  const answers = { ...(cur.answers || {}) };
+  const answerTimestamps = { ...(cur.answerTimestamps || {}) };
+  const stepKey = `step-${Math.floor(stepNumber)}`;
+
+  const existingCode = Array.isArray(answers[stepKey]) ? answers[stepKey][0] : null;
+  const existingStars = existingCode === 'C' ? 3 : existingCode === 'B' ? 2 : existingCode === 'A' ? 1 : 0;
+  const bestStars = Math.max(existingStars, Math.min(3, Math.max(1, Math.round(stars || 1))));
+  const nextCode = bestStars === 3 ? 'C' : bestStars === 2 ? 'B' : 'A';
+
+  const { iso } = formatLocalDay(new Date(now));
+  const streakKey = `streak-${iso}`;
+
+  answers[stepKey] = [nextCode];
+  answerTimestamps[stepKey] = now;
+  answers[streakKey] = ['A'];
+  answerTimestamps[streakKey] = now;
+
+  writeChapterProgress(
+    DAILY_CHAPTER_KEY,
+    { answers, answerTimestamps, sent: true, updatedAt: now },
+    name
+  );
+}
+
 if (typeof window !== 'undefined') {
   let lastAutoSync = 0;
   const autoSync = () => {
