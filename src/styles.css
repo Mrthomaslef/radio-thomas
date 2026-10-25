@@ -1989,8 +1989,67 @@ a.cq-dot:hover { transform: scale(1.08); }
 .daily-page {
   max-width: 500px;
   margin: 0 auto;
-  padding: calc(182px + env(safe-area-inset-top, 0px)) 12px 24px;
+  padding: calc(214px + env(safe-area-inset-top, 0px)) 12px 24px;
   position: relative;
+}
+
+.daily-app-pill-wrap {
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.daily-pseudo-page > .daily-app-pill-wrap {
+  margin-bottom: 10px;
+}
+
+.daily-app-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(15, 23, 36, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(56, 225, 255, 0.28);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  color: #e8f0f9;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: transform 0.16s ease, border-color 0.16s ease;
+}
+
+.daily-app-pill:hover {
+  transform: translateY(-1px);
+  border-color: rgba(56, 225, 255, 0.55);
+}
+
+.daily-app-pill-text strong {
+  color: var(--cyan);
+  font-weight: 800;
+}
+
+.daily-app-pill-logo {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+@media all and (display-mode: standalone), all and (display-mode: fullscreen) {
+  .daily-app-pill-wrap {
+    display: none !important;
+  }
+  .daily-page {
+    padding-top: calc(182px + env(safe-area-inset-top, 0px));
+  }
 }
 
 .daily-hud-stack {
@@ -2001,7 +2060,7 @@ a.cq-dot:hover { transform: scale(1.08); }
   width: min(calc(100% - 24px), 476px);
   z-index: 45;
   display: grid;
-  gap: 8px;
+  gap: 6px;
   padding: 4px 0;
   pointer-events: none;
 }

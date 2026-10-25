@@ -595,8 +595,37 @@ function StreakCalendarModal({ dailyState, onClose }) {
   );
 }
 
+function isStandaloneAppMode() {
+  if (typeof window === 'undefined') return false;
+  if (window.navigator?.standalone === true) return true;
+  if (window.matchMedia?.('(display-mode: standalone)')?.matches) return true;
+  if (window.matchMedia?.('(display-mode: fullscreen)')?.matches) return true;
+  if (typeof document !== 'undefined' && document.referrer.includes('android-app://')) return true;
+  return false;
+}
+
+function AppModeTopPill() {
+  return (
+    <div className="daily-app-pill-wrap">
+      <a
+        href="https://www.google.com/search?q=comment+ajouter+un+site+web+sur+l%27%C3%A9cran+d%27accueil+iPhone+et+Android+tutoriel"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="daily-app-pill"
+      >
+        <span className="daily-app-pill-text">
+          <img src="/apple-touch-icon.png" alt="" className="daily-app-pill-logo" />
+          <span><strong>Mode App</strong> : Ajouter à ma page d’accueil</span>
+        </span>
+        <Icon name="arrow" size={14} />
+      </a>
+    </div>
+  );
+}
+
 export default function DailyPathPage() {
   const { byChapter, loading } = useQuestions();
+  const [isAppMode] = useState(isStandaloneAppMode);
   const [pseudo, setPseudo] = useState(readName);
   const [draftPseudo, setDraftPseudo] = useState(pseudo);
   const [editingPseudo, setEditingPseudo] = useState(!pseudo);
@@ -827,6 +856,7 @@ export default function DailyPathPage() {
   if (!pseudo || editingPseudo) {
     return (
       <section className="home daily-onboarding">
+        {!isAppMode && <AppModeTopPill />}
         <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
           QUIZ <span className="grad">Cochin</span>
         </motion.h1>
@@ -1120,6 +1150,7 @@ export default function DailyPathPage() {
     <section className="daily-page" aria-label="Parcours de progression journalière">
       {/* Top Floating HUD */}
       <div className="daily-hud-stack">
+        {!isAppMode && <AppModeTopPill />}
         <div className="daily-hud">
           <button
             type="button"
