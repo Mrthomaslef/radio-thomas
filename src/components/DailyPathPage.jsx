@@ -93,6 +93,26 @@ const STEP_SCHEDULE = (() => {
   return list;
 })();
 
+const THEME_RANGES = (() => {
+  const ranges = [];
+  let cursor = 1;
+  for (let i = 0; i < themes.length; i++) {
+    const t = themes[i];
+    const nextT = themes[(i + 1) % themes.length];
+    const totalSteps = t.chapters.length * LOOPS_PER_THEME;
+    ranges.push({
+      theme: t,
+      nextTheme: nextT,
+      startStep: cursor,
+      endStep: cursor + totalSteps - 1,
+      totalSteps,
+      nextTotalSteps: nextT.chapters.length * LOOPS_PER_THEME,
+    });
+    cursor += totalSteps;
+  }
+  return ranges;
+})();
+
 function getStepScheduleInfo(stepNumber) {
   if (STEP_SCHEDULE.length === 0) {
     return {
@@ -105,6 +125,40 @@ function getStepScheduleInfo(stepNumber) {
   }
   const idx = Math.max(0, Math.floor(Number(stepNumber) || 1) - 1) % STEP_SCHEDULE.length;
   return STEP_SCHEDULE[idx];
+}
+
+function getThemeProgressionInfo(dailyState) {
+  const currentStep = Math.max(1, Number(dailyState?.currentStep) || 1);
+  const stepsMap = dailyState?.steps || {};
+  const cycleLen = Math.max(1, STEP_SCHEDULE.length);
+  const cycleOffset = Math.floor((currentStep - 1) / cycleLen) * cycleLen;
+  const stepInCycle = ((currentStep - 1) % cycleLen) + 1;
+
+  const range =
+    THEME_RANGES.find((r) => stepInCycle >= r.startStep && stepInCycle <= r.endStep) ||
+    THEME_RANGES[0];
+
+  const absStart = cycleOffset + range.startStep;
+  const absEnd = cycleOffset + range.endStep;
+  let completedSteps = 0;
+  for (let s = absStart; s <= absEnd; s++) {
+    if (stepsMap[s] > 0) completedSteps += 1;
+  }
+
+  const totalSteps = Math.max(1, range.totalSteps);
+  const percent = Math.min(100, Math.round((completedSteps / totalSteps) * 100));
+  const stepInfo = getStepScheduleInfo(currentStep);
+
+  return {
+    currentTheme: range.theme,
+    nextTheme: range.nextTheme,
+    completedSteps,
+    totalSteps,
+    nextTotalSteps: range.nextTotalSteps,
+    percent,
+    chapterTitle: stepInfo.chapterTitle,
+    loopIndex: stepInfo.loopIndex,
+  };
 }
 
 function buildFlatQuestionMap(byChapter, allProgress) {
@@ -321,6 +375,7 @@ function StreakCalendarModal({ dailyState, onClose }) {
   const activeSet = useMemo(() => new Set(dailyState.activeDays || []), [dailyState.activeDays]);
   const starsByDay = dailyState.starsByDay || {};
   const todayIso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const themeProg = useMemo(() => getThemeProgressionInfo(dailyState), [dailyState]);
 
   const calendarCells = useMemo(() => {
     const firstDay = new Date(viewYear, viewMonth, 1);
@@ -381,8 +436,9 @@ function StreakCalendarModal({ dailyState, onClose }) {
       >
         <div className="daily-cal-head">
           <div>
-            <span className="daily-goal-kicker">Série quotidienne</span>
+            <span className="daily-goal-kicker">Série & avancement</span>
             <h3>Calendrier de streak</h3>
+            <p className="daily-cal-sub">1 étape validée par jour suffit pour maintenir ta série</p>
           </div>
           <button
             type="button"
@@ -396,12 +452,14 @@ function StreakCalendarModal({ dailyState, onClose }) {
 
         <div className="daily-cal-summary">
           <div className="daily-cal-stat">
-            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="#38e1ff"
-                d="M12 2c1.8 3.2 5 5.6 5 10.2A5.5 5.5 0 0 1 11.5 18c2.2-1.2 2.4-3.8 1-5.5-1.2 1.4-2.5 2.4-2.5 4.3A4.2 4.2 0 0 1 6.5 12C6.5 8.2 9.8 5.2 12 2Z"
-              />
-            </svg>
+            <span className="daily-cal-stat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path
+                  fill="#38e1ff"
+                  d="M12 2c1.8 3.2 5 5.6 5 10.2A5.5 5.5 0 0 1 11.5 18c2.2-1.2 2.4-3.8 1-5.5-1.2 1.4-2.5 2.4-2.5 4.3A4.2 4.2 0 0 1 6.5 12C6.5 8.2 9.8 5.2 12 2Z"
+                />
+              </svg>
+            </span>
             <div>
               <strong>{dailyState.streak} jour{dailyState.streak > 1 ? 's' : ''}</strong>
               <span>Série en cours</span>
@@ -409,67 +467,109 @@ function StreakCalendarModal({ dailyState, onClose }) {
           </div>
 
           <div className="daily-cal-stat">
-            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="#38e1ff"
-                stroke="#05090f"
-                strokeWidth="1.2"
-                d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
-              />
-            </svg>
+            <span className="daily-cal-stat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path
+                  fill="#38e1ff"
+                  stroke="#05090f"
+                  strokeWidth="1.2"
+                  d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
+                />
+              </svg>
+            </span>
             <div>
               <strong>{dailyState.totalStars} ★</strong>
-              <span>Étoiles gagnées au total</span>
+              <span>Étoiles gagnées</span>
             </div>
           </div>
         </div>
 
-        <p className="daily-cal-rule">
-          💡 Réaliser <strong>une seule étape</strong> (3 questions) dans la journée suffit pour continuer ta série !
-        </p>
+        {/* Current category progress + Next category to study */}
+        <div className="daily-cal-theme-card">
+          <div className="daily-cal-theme-current">
+            <img
+              src={`/theme-logos/${themeProg.currentTheme.id}.png`}
+              alt=""
+              aria-hidden="true"
+              className="daily-cal-theme-logo"
+              draggable="false"
+            />
+            <div className="daily-cal-theme-body">
+              <div className="daily-cal-theme-top">
+                <div>
+                  <span className="daily-cal-theme-kicker">Catégorie en cours</span>
+                  <strong className="daily-cal-theme-title">{themeProg.currentTheme.title}</strong>
+                </div>
+                <span className="daily-cal-theme-badge">
+                  {themeProg.completedSteps}/{themeProg.totalSteps} étapes · {themeProg.percent}%
+                </span>
+              </div>
+              <div className="daily-cal-theme-bar" aria-hidden="true">
+                <div style={{ width: `${themeProg.percent}%` }} />
+              </div>
+              <span className="daily-cal-theme-chap">
+                {themeProg.chapterTitle} · Boucle {themeProg.loopIndex}/{LOOPS_PER_THEME}
+              </span>
+            </div>
+          </div>
 
-        <div className="daily-cal-nav">
-          <button type="button" className="daily-cal-nav-btn" onClick={prevMonth} aria-label="Mois précédent">
-            ‹
-          </button>
-          <strong className="daily-cal-month-label">
-            {MONTH_NAMES_FR[viewMonth]} {viewYear}
-          </strong>
-          <button type="button" className="daily-cal-nav-btn" onClick={nextMonth} aria-label="Mois suivant">
-            ›
-          </button>
-        </div>
-
-        <div className="daily-cal-weekdays">
-          {WEEKDAYS_FR.map((w) => (
-            <span key={w} className="daily-cal-weekday">
-              {w}
+          <div className="daily-cal-theme-next">
+            <span className="daily-cal-theme-next-label">Prochaine catégorie :</span>
+            <span className="daily-cal-theme-next-pill">
+              <img
+                src={`/theme-logos/${themeProg.nextTheme.id}.png`}
+                alt=""
+                aria-hidden="true"
+                className="daily-cal-theme-next-logo"
+                draggable="false"
+              />
+              <b>{themeProg.nextTheme.title}</b>
             </span>
-          ))}
+          </div>
         </div>
 
-        <div className="daily-cal-grid">
-          {calendarCells.map((cell, idx) => {
-            if (!cell) {
-              return <div key={`empty-${idx}`} className="daily-cal-cell is-empty" />;
-            }
-            const showStarLogo = cell.isStreak || cell.stars > 0;
-            const starValue = cell.stars > 0 ? cell.stars : dailyState.totalStars || 1;
-            return (
-              <div
-                key={cell.iso}
-                className={`daily-cal-cell ${cell.isStreak ? 'is-streak' : ''} ${cell.isToday ? 'is-today' : ''}`}
-                title={
-                  cell.isStreak
-                    ? `${cell.iso} · Série validée (${starValue} ★)`
-                    : cell.iso
-                }
-              >
-                {/* Star logo with stars count displayed right above the day */}
-                <div className="daily-cal-day-top" aria-hidden="true">
+        {/* Clean Calendar Board */}
+        <div className="daily-cal-board">
+          <div className="daily-cal-nav">
+            <button type="button" className="daily-cal-nav-btn" onClick={prevMonth} aria-label="Mois précédent">
+              ‹
+            </button>
+            <strong className="daily-cal-month-label">
+              {MONTH_NAMES_FR[viewMonth]} {viewYear}
+            </strong>
+            <button type="button" className="daily-cal-nav-btn" onClick={nextMonth} aria-label="Mois suivant">
+              ›
+            </button>
+          </div>
+
+          <div className="daily-cal-weekdays">
+            {WEEKDAYS_FR.map((w) => (
+              <span key={w} className="daily-cal-weekday">
+                {w}
+              </span>
+            ))}
+          </div>
+
+          <div className="daily-cal-grid">
+            {calendarCells.map((cell, idx) => {
+              if (!cell) {
+                return <div key={`empty-${idx}`} className="daily-cal-cell is-empty" />;
+              }
+              const showStarLogo = cell.isStreak || cell.stars > 0;
+              const starValue = cell.stars > 0 ? cell.stars : dailyState.totalStars || 1;
+              return (
+                <div
+                  key={cell.iso}
+                  className={`daily-cal-cell ${cell.isStreak ? 'is-streak' : ''} ${cell.isToday ? 'is-today' : ''}`}
+                  title={
+                    cell.isStreak
+                      ? `${cell.iso} · Série validée (${starValue} ★)`
+                      : cell.iso
+                  }
+                >
                   {showStarLogo && (
-                    <span className="daily-cal-star-badge">
-                      <svg width="13" height="13" viewBox="0 0 24 24">
+                    <span className="daily-cal-star-badge" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 24 24">
                         <path
                           fill="#38e1ff"
                           d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
@@ -478,11 +578,11 @@ function StreakCalendarModal({ dailyState, onClose }) {
                       <b>{starValue}</b>
                     </span>
                   )}
+                  <span className="daily-cal-day-num">{cell.day}</span>
                 </div>
-                <span className="daily-cal-day-num">{cell.day}</span>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </motion.div>
     </div>
@@ -991,6 +1091,7 @@ export default function DailyPathPage() {
   const goal = dailyState.goal || 3;
   const stepsToday = Math.min(dailyState.todayStepsCount, MAX_DAILY_STEPS);
   const dailyStepsReached = stepsToday >= MAX_DAILY_STEPS;
+  const themeProg = getThemeProgressionInfo(dailyState);
 
   // Check if currentStep has in-progress answers saved
   const currentStepSession = readDailyStepSession(dailyState.currentStep, pseudo);
@@ -1001,80 +1102,125 @@ export default function DailyPathPage() {
   return (
     <section className="daily-page" aria-label="Parcours de progression journalière">
       {/* Top Floating HUD */}
-      <div className="daily-hud">
-        <button
-          type="button"
-          className="daily-hud-pill daily-hud-left daily-hud-streak-btn"
-          onClick={() => setShowingCalendar(true)}
-          title="Voir mon calendrier de série (1 étape validée par jour suffit pour continuer la série)"
-        >
-          <span className="daily-hud-item">
-            <svg className="daily-flame-icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-              <defs>
-                <linearGradient id="flameGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#38e1ff" />
-                  <stop offset="100%" stopColor="#7c8cff" />
-                </linearGradient>
-              </defs>
-              <path
-                fill="url(#flameGrad)"
-                d="M12 2c1.8 3.2 5 5.6 5 10.2A5.5 5.5 0 0 1 11.5 18c2.2-1.2 2.4-3.8 1-5.5-1.2 1.4-2.5 2.4-2.5 4.3A4.2 4.2 0 0 1 6.5 12C6.5 8.2 9.8 5.2 12 2Z"
-              />
-              <circle cx="12" cy="16.5" r="2.3" fill="#fff" opacity="0.85" />
-            </svg>
-            <b>{dailyState.streak}</b>
-          </span>
-
-          <span className={`daily-hud-item daily-hud-flag-btn ${dailyStepsReached ? 'is-done' : ''}`}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <rect x="3" y="4" width="18" height="17" rx="3" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
-            <b>{stepsToday}/{MAX_DAILY_STEPS}</b>
-          </span>
-        </button>
-
-        <div className="daily-hud-right-group">
+      <div className="daily-hud-stack">
+        <div className="daily-hud">
           <button
             type="button"
-            className="daily-hud-pill daily-hud-help"
-            onClick={() => {
-              manualSlidesRef.current = true;
-              setSlideIdx(0);
-              setShowingSlides(true);
-            }}
-            title="Revoir comment fonctionne le parcours"
-            aria-label="Comment fonctionne le parcours"
+            className="daily-hud-pill daily-hud-left daily-hud-streak-btn"
+            onClick={() => setShowingCalendar(true)}
+            title="Voir mon calendrier de série (1 étape validée par jour suffit pour continuer la série)"
           >
-            ?
+            <span className="daily-hud-item">
+              <svg className="daily-flame-icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <defs>
+                  <linearGradient id="flameGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#38e1ff" />
+                    <stop offset="100%" stopColor="#7c8cff" />
+                  </linearGradient>
+                </defs>
+                <path
+                  fill="url(#flameGrad)"
+                  d="M12 2c1.8 3.2 5 5.6 5 10.2A5.5 5.5 0 0 1 11.5 18c2.2-1.2 2.4-3.8 1-5.5-1.2 1.4-2.5 2.4-2.5 4.3A4.2 4.2 0 0 1 6.5 12C6.5 8.2 9.8 5.2 12 2Z"
+                />
+                <circle cx="12" cy="16.5" r="2.3" fill="#fff" opacity="0.85" />
+              </svg>
+              <b>{dailyState.streak}</b>
+            </span>
+
+            <span className={`daily-hud-item daily-hud-flag-btn ${dailyStepsReached ? 'is-done' : ''}`}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="17" rx="3" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              <b>{stepsToday}/{MAX_DAILY_STEPS}</b>
+            </span>
           </button>
 
-          <button
-            type="button"
-            className="daily-hud-pill daily-hud-pseudo"
-            onClick={() => {
-              setDraftPseudo(pseudo);
-              setEditingPseudo(true);
-            }}
-            title="Changer de pseudo"
-          >
-            {pseudo}
-          </button>
+          <div className="daily-hud-right-group">
+            <button
+              type="button"
+              className="daily-hud-pill daily-hud-help"
+              onClick={() => {
+                manualSlidesRef.current = true;
+                setSlideIdx(0);
+                setShowingSlides(true);
+              }}
+              title="Revoir comment fonctionne le parcours"
+              aria-label="Comment fonctionne le parcours"
+            >
+              ?
+            </button>
 
-          <div className="daily-hud-pill daily-hud-stars" title="Total d’étoiles gagnées sur le parcours">
-            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="#38e1ff"
-                stroke="#05090f"
-                strokeWidth="1.2"
-                d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"
-              />
-            </svg>
-            <b>{dailyState.totalStars}</b>
+            <button
+              type="button"
+              className="daily-hud-pill daily-hud-pseudo"
+              onClick={() => {
+                setDraftPseudo(pseudo);
+                setEditingPseudo(true);
+              }}
+              title="Changer de pseudo"
+            >
+              {pseudo}
+            </button>
+
+            <div className="daily-hud-pill daily-hud-stars" title="Total d’étoiles gagnées sur le parcours">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="#38e1ff"
+                  stroke="#05090f"
+                  strokeWidth="1.2"
+                  d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"
+                />
+              </svg>
+              <b>{dailyState.totalStars}</b>
+            </div>
           </div>
         </div>
+
+        {/* Category currently studied + progression + next category */}
+        <button
+          type="button"
+          className="daily-theme-strip"
+          onClick={() => setShowingCalendar(true)}
+          title="Voir les détails de ma catégorie et mon calendrier de série"
+        >
+          <div className="daily-theme-strip-cur">
+            <img
+              src={`/theme-logos/${themeProg.currentTheme.id}.png`}
+              alt=""
+              aria-hidden="true"
+              className="daily-theme-strip-logo"
+              draggable="false"
+            />
+            <div className="daily-theme-strip-info">
+              <div className="daily-theme-strip-row">
+                <span className="daily-theme-strip-name">{themeProg.currentTheme.title}</span>
+                <span className="daily-theme-strip-count">
+                  {themeProg.completedSteps}/{themeProg.totalSteps} ({themeProg.percent}%)
+                </span>
+              </div>
+              <div className="daily-theme-strip-bar" aria-hidden="true">
+                <div style={{ width: `${themeProg.percent}%` }} />
+              </div>
+            </div>
+          </div>
+
+          <div className="daily-theme-strip-next">
+            <span className="daily-theme-strip-next-kicker">Suivant</span>
+            <span className="daily-theme-strip-next-val">
+              <img
+                src={`/theme-logos/${themeProg.nextTheme.id}.png`}
+                alt=""
+                aria-hidden="true"
+                className="daily-theme-strip-next-logo"
+                draggable="false"
+              />
+              <b>{themeProg.nextTheme.title}</b>
+            </span>
+          </div>
+        </button>
       </div>
 
       {showingCalendar && (
