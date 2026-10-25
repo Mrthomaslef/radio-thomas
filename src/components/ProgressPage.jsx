@@ -185,9 +185,24 @@ export default function ProgressPage() {
   return (
     <section className="prog">
       <header className="prog-head">
-        <h1>Ma <span className="grad">progression</span></h1>
+        <div className="prog-title-row">
+          <h1>Ma <span className="grad">progression</span></h1>
+          {!editing && (
+            <button
+              type="button"
+              className="daily-hud-pill daily-hud-pseudo prog-pseudo-pill"
+              onClick={() => {
+                setDraft(pseudo || '');
+                setEditing(true);
+              }}
+              title="Changer de pseudo"
+            >
+              {pseudo || 'Choisir un pseudo'}
+            </button>
+          )}
+        </div>
 
-        {editing ? (
+        {editing && (
           <form className="home-panel name-step prog-name-form" onSubmit={submitPseudo}>
             <label htmlFor="prog-pseudo">Entre ton pseudo pour retrouver ta session</label>
             <input
@@ -202,21 +217,21 @@ export default function ProgressPage() {
               autoFocus
               required
             />
-            <button className="btn btn-small" type="submit" disabled={!draft.trim()}>
-              Charger ma session <Icon name="arrow" size={16} />
-            </button>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <button className="btn btn-small" type="submit" disabled={!draft.trim()}>
+                Charger ma session <Icon name="arrow" size={16} />
+              </button>
+              {pseudo && (
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-small"
+                  onClick={() => setEditing(false)}
+                >
+                  Annuler
+                </button>
+              )}
+            </div>
           </form>
-        ) : (
-          <div className="home-hello">
-            <span>Session de <strong>{pseudo}</strong></span>
-            <button
-              type="button"
-              className="pseudo-change-btn"
-              onClick={() => { setDraft(pseudo); setEditing(true); }}
-            >
-              Changer de pseudo
-            </button>
-          </div>
         )}
       </header>
 

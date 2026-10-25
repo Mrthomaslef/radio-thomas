@@ -3798,6 +3798,29 @@ a.cq-dot:hover { transform: scale(1.08); }
 }
 
 /* Progress Page — Daily Path Tab & 7-Day Rolling Streak */
+.prog-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.prog-pseudo-pill {
+  flex-shrink: 0;
+  color: #e8f0f9;
+  font-size: 0.84rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-color: rgba(56, 225, 255, 0.28);
+  background: rgba(15, 23, 36, 0.85);
+}
+
+.prog-pseudo-pill:hover {
+  border-color: var(--cyan);
+  color: #ffffff;
+}
+
 .prog-mode-tabs {
   margin-bottom: 18px;
 }
