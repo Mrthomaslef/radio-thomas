@@ -19,6 +19,7 @@ import {
   syncProgressFromServer,
 } from '../data/player.js';
 import { QuizPlayer } from './ChapterQuiz.jsx';
+import { fetchStarsLeaderboard, getCachedLeaderboard } from '../data/leaderboard.js';
 import Icon from './Icons.jsx';
 
 const ONBOARDING_SLIDES = [
@@ -595,6 +596,139 @@ function StreakCalendarModal({ dailyState, onClose }) {
   );
 }
 
+function StarsLeaderboardModal({ pseudo, totalStars, onClose }) {
+  const [entries, setEntries] = useState(() => getCachedLeaderboard('stars') || []);
+  const [loading, setLoading] = useState(() => getCachedLeaderboard('stars') === null);
+
+  useEffect(() => {
+    let active = true;
+    fetchStarsLeaderboard()
+      .then((list) => {
+        if (active) setEntries(list);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const myKey = typeof pseudo === 'string' ? pseudo.trim().replace(/\s+/g, ' ').toLowerCase() : '';
+  const myIndex = myKey
+    ? entries.findIndex(
+        (e) => (e.name || '').trim().replace(/\s+/g, ' ').toLowerCase() === myKey
+      )
+    : -1;
+  const rankBadge = (idx) => {
+    if (idx === 0) return '🥇';
+    if (idx === 1) return '🥈';
+    if (idx === 2) return '🥉';
+    return `#${idx + 1}`;
+  };
+
+  return (
+    <div
+      className="daily-cal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Classement des étoiles"
+      onClick={onClose}
+    >
+      <motion.div
+        className="daily-cal-modal daily-stars-lb-modal"
+        initial={{ opacity: 0, scale: 0.96, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.18 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="daily-cal-head">
+          <div className="daily-cal-title-row">
+            <span className="daily-cal-flame-badge" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path
+                  fill="#38e1ff"
+                  d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"
+                />
+              </svg>
+            </span>
+            <div>
+              <h3>Classement Étoiles</h3>
+              <p className="daily-cal-sub">
+                Tes étoiles : <strong>{totalStars} ★</strong>
+                {myIndex >= 0 ? ` · Rang #${myIndex + 1}` : ''}
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="daily-cal-close"
+            onClick={onClose}
+            aria-label="Fermer"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="daily-stars-lb-body">
+          {loading && entries.length === 0 ? (
+            <p className="daily-stars-lb-empty">Chargement du classement…</p>
+          ) : entries.length === 0 ? (
+            <p className="daily-stars-lb-empty">
+              Aucune étoile enregistrée pour le moment. Termine une étape du parcours pour apparaître ici !
+            </p>
+          ) : (
+            <div className="daily-stars-lb-list">
+              {entries.slice(0, 15).map((item, idx) => {
+                const itemKey = (item.name || '').trim().replace(/\s+/g, ' ').toLowerCase();
+                const isMe = Boolean(myKey && itemKey === myKey);
+                const stepsCount = item.steps || 0;
+                return (
+                  <div
+                    key={itemKey || idx}
+                    className={`daily-stars-lb-row ${isMe ? 'is-me' : ''}`}
+                  >
+                    <span className={`daily-stars-lb-rank ${idx < 3 ? `top-${idx + 1}` : ''}`}>
+                      {rankBadge(idx)}
+                    </span>
+                    <div className="daily-stars-lb-user">
+                      <strong>{item.name}</strong>
+                      {isMe && <span className="lb-me-tag">Toi</span>}
+                      <span className="daily-stars-lb-steps">
+                        {stepsCount} {stepsCount > 1 ? 'étapes' : 'étape'}
+                      </span>
+                    </div>
+                    <span className="daily-stars-lb-val">
+                      <b>{item.points}</b> ★
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        <div className="daily-limit-modal-actions">
+          <a
+            href="#/etoiles"
+            className="btn btn-small"
+            onClick={onClose}
+          >
+            Leaderboard complet <Icon name="arrow" size={15} />
+          </a>
+          <button
+            type="button"
+            className="btn btn-ghost btn-small"
+            onClick={onClose}
+          >
+            Fermer
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 function isStandaloneAppMode() {
   if (typeof window === 'undefined') return false;
   if (window.navigator?.standalone === true) return true;
@@ -640,6 +774,7 @@ export default function DailyPathPage() {
   const [slideIdx, setSlideIdx] = useState(0);
   const [syncingPseudo, setSyncingPseudo] = useState(false);
   const [showingCalendar, setShowingCalendar] = useState(false);
+  const [showingStarsLb, setShowingStarsLb] = useState(false);
   const [activeSession, setActiveSession] = useState(null); // { stepNumber, isBossStep, questions, initialAnswers, id }
   const [limitNotice, setLimitNotice] = useState(false);
   const currentStepNodeRef = useRef(null);
@@ -1213,7 +1348,12 @@ export default function DailyPathPage() {
               {pseudo}
             </button>
 
-            <div className="daily-hud-pill daily-hud-stars" title="Total d’étoiles gagnées sur le parcours">
+            <button
+              type="button"
+              className="daily-hud-pill daily-hud-stars"
+              onClick={() => setShowingStarsLb(true)}
+              title="Voir le classement des étoiles"
+            >
               <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   fill="#38e1ff"
@@ -1223,7 +1363,7 @@ export default function DailyPathPage() {
                 />
               </svg>
               <b>{dailyState.totalStars}</b>
-            </div>
+            </button>
           </div>
         </div>
 
@@ -1275,6 +1415,14 @@ export default function DailyPathPage() {
         <StreakCalendarModal
           dailyState={dailyState}
           onClose={() => setShowingCalendar(false)}
+        />
+      )}
+
+      {showingStarsLb && (
+        <StarsLeaderboardModal
+          pseudo={pseudo}
+          totalStars={dailyState.totalStars}
+          onClose={() => setShowingStarsLb(false)}
         />
       )}
 

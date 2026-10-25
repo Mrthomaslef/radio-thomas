@@ -3,6 +3,7 @@ import { readName, saveName, subscribePlayer } from '../data/player.js';
 import {
   fetchLeaderboard,
   fetchContributorsLeaderboard,
+  fetchStarsLeaderboard,
   getCachedLeaderboard,
 } from '../data/leaderboard.js';
 import Icon from './Icons.jsx';
@@ -14,22 +15,32 @@ export default function LeaderboardPage() {
   const [draft, setDraft] = useState(pseudo);
   const [editing, setEditing] = useState(false);
   const [tab, setTab] = useState(() =>
-    window.location.hash === '#/contributeurs' ? 'contributors' : 'quiz'
+    window.location.hash === '#/contributeurs'
+      ? 'contributors'
+      : window.location.hash === '#/etoiles'
+        ? 'stars'
+        : 'quiz'
   );
   const [entries, setEntries] = useState(() => getCachedLeaderboard('quiz') || []);
   const [contributors, setContributors] = useState(() => getCachedLeaderboard('contributors') || []);
+  const [starsList, setStarsList] = useState(() => getCachedLeaderboard('stars') || []);
   const [loading, setLoading] = useState(
-    () => getCachedLeaderboard('quiz') === null && getCachedLeaderboard('contributors') === null
+    () =>
+      getCachedLeaderboard('quiz') === null &&
+      getCachedLeaderboard('contributors') === null &&
+      getCachedLeaderboard('stars') === null
   );
 
   const loadLeaderboard = useCallback(async () => {
     try {
-      const [quizList, contribList] = await Promise.all([
+      const [quizList, contribList, starEntries] = await Promise.all([
         fetchLeaderboard(),
         fetchContributorsLeaderboard(),
+        fetchStarsLeaderboard(),
       ]);
       setEntries(quizList);
       setContributors(contribList);
+      setStarsList(starEntries);
     } finally {
       setLoading(false);
     }
@@ -55,7 +66,8 @@ export default function LeaderboardPage() {
   };
 
   const myKey = normKey(pseudo);
-  const activeList = tab === 'contributors' ? contributors : entries;
+  const activeList =
+    tab === 'contributors' ? contributors : tab === 'stars' ? starsList : entries;
   const myIndex = myKey ? activeList.findIndex((e) => normKey(e.name) === myKey) : -1;
   const myEntry = myIndex >= 0 ? activeList[myIndex] : null;
 
@@ -75,7 +87,7 @@ export default function LeaderboardPage() {
         </div>
         <h1>
           <span className="grad">Leaderboard</span>
-          {tab === 'contributors' ? ' Contributeurs' : ''}
+          {tab === 'contributors' ? ' Contributeurs' : tab === 'stars' ? ' Étoiles' : ''}
         </h1>
 
         <div className="cq-chips admin-tabs" role="tablist" aria-label="Type de classement">
@@ -91,6 +103,15 @@ export default function LeaderboardPage() {
           <button
             type="button"
             role="tab"
+            aria-selected={tab === 'stars'}
+            className={tab === 'stars' ? 'on' : ''}
+            onClick={() => setTab('stars')}
+          >
+            ★ Étoiles
+          </button>
+          <button
+            type="button"
+            role="tab"
             aria-selected={tab === 'contributors'}
             className={tab === 'contributors' ? 'on' : ''}
             onClick={() => setTab('contributors')}
@@ -102,6 +123,10 @@ export default function LeaderboardPage() {
         {tab === 'quiz' ? (
           <p className="lb-rule">
             Gagnez <strong>1 point par bonne réponse</strong> lorsque vous <strong>terminez et réussissez un quiz</strong> (au moins 60&nbsp;% de bonnes réponses). Les quiz «&nbsp;À revoir&nbsp;» ne rapportent pas de points.
+          </p>
+        ) : tab === 'stars' ? (
+          <p className="lb-rule">
+            Classement des <strong>étoiles ★</strong> gagnées sur le parcours quotidien (<strong>1★</strong> en terminant une étape, <strong>2★</strong> dès &gt;&nbsp;60&nbsp;% et <strong>3★</strong> dès &gt;&nbsp;90&nbsp;%).
           </p>
         ) : (
           <p className="lb-rule">
@@ -160,20 +185,29 @@ export default function LeaderboardPage() {
             <span>votre rang ({pseudo})</span>
           </div>
           <div className="admin-stat">
-            <strong>{myEntry ? myEntry.points : 0} {myEntry && myEntry.points > 1 ? 'pts' : 'pt'}</strong>
-            <span>points cumulés</span>
+            <strong>
+              {myEntry ? myEntry.points : 0}{' '}
+              {tab === 'stars' ? '★' : myEntry && myEntry.points > 1 ? 'pts' : 'pt'}
+            </strong>
+            <span>{tab === 'stars' ? 'étoiles cumulées' : 'points cumulés'}</span>
           </div>
           <div className="admin-stat">
             <strong>
               {myEntry
                 ? tab === 'contributors'
                   ? (myEntry.submissions || 0) + (myEntry.reports || 0)
+                  : tab === 'stars'
+                  ? myEntry.steps || 0
                   : myEntry.quizzes
                 : 0}
             </strong>
             <span>
               {tab === 'contributors'
                 ? 'contributions (questions + retours)'
+                : tab === 'stars'
+                ? myEntry && (myEntry.steps || 0) > 1
+                  ? 'étapes validées'
+                  : 'étape validée'
                 : myEntry && myEntry.quizzes > 1
                 ? 'quiz réussis'
                 : 'quiz réussi'}
@@ -197,6 +231,14 @@ export default function LeaderboardPage() {
                 <a href="#/" className="btn btn-small btn-ghost">Choisir un quiz</a>
               </div>
             </>
+          ) : tab === 'stars' ? (
+            <>
+              <p>Aucune étoile enregistrée pour le moment.</p>
+              <p className="lb-empty-sub">
+                Validez votre première étape sur le parcours quotidien pour gagner vos premières étoiles&nbsp;!
+              </p>
+              <a href="#/" className="btn btn-small">Aller au parcours</a>
+            </>
           ) : (
             <>
               <p>Aucun quiz terminé et réussi pour le moment.</p>
@@ -214,21 +256,34 @@ export default function LeaderboardPage() {
               <span className="lb-col-rank" role="columnheader">Rang</span>
               <span className="lb-col-name" role="columnheader">Pseudo</span>
               <span className="lb-col-quizzes" role="columnheader">
-                {tab === 'contributors' ? 'Contributions' : 'Quiz réussis'}
+                {tab === 'contributors'
+                  ? 'Contributions'
+                  : tab === 'stars'
+                  ? 'Étapes'
+                  : 'Quiz réussis'}
               </span>
-              <span className="lb-col-points" role="columnheader">Points</span>
+              <span className="lb-col-points" role="columnheader">
+                {tab === 'stars' ? 'Étoiles' : 'Points'}
+              </span>
             </div>
             {activeList.map((item, idx) => {
               const isMe = myKey && normKey(item.name) === myKey;
               const topClass = idx < 3 ? `lb-top-${idx + 1}` : '';
               const subs = item.submissions || 0;
               const reps = item.reports || 0;
+              const stepsCount = item.steps || 0;
               const contribDetails = [
                 subs > 0 ? `${subs} ${subs > 1 ? 'questions' : 'question'}` : null,
                 reps > 0 ? `${reps} ${reps > 1 ? 'retours' : 'retour'}` : null,
               ]
                 .filter(Boolean)
                 .join(' · ') || `${item.points} pt`;
+              const subDetail =
+                tab === 'contributors'
+                  ? contribDetails
+                  : tab === 'stars'
+                  ? `${stepsCount} ${stepsCount > 1 ? 'étapes' : 'étape'}`
+                  : `${item.quizzes} quiz`;
               return (
                 <div
                   key={normKey(item.name)}
@@ -244,14 +299,15 @@ export default function LeaderboardPage() {
                       {isMe && <span className="lb-me-tag">Vous</span>}
                     </span>
                     <span className="lb-name-sub">
-                      {tab === 'contributors' ? contribDetails : `${item.quizzes} quiz`}
+                      {subDetail}
                     </span>
                   </span>
                   <span className="lb-col-quizzes" role="cell">
-                    {tab === 'contributors' ? contribDetails : `${item.quizzes} quiz`}
+                    {subDetail}
                   </span>
                   <span className="lb-col-points" role="cell">
-                    <strong>{item.points}</strong> {item.points > 1 ? 'pts' : 'pt'}
+                    <strong>{item.points}</strong>{' '}
+                    {tab === 'stars' ? '★' : item.points > 1 ? 'pts' : 'pt'}
                   </span>
                 </div>
               );

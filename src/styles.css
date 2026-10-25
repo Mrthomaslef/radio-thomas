@@ -3441,6 +3441,110 @@ a.cq-dot:hover { transform: scale(1.08); }
   margin-top: 4px;
 }
 
+.daily-hud-stars {
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.daily-hud-stars:hover {
+  transform: translateY(-1px);
+  border-color: rgba(56, 225, 255, 0.55);
+}
+
+.daily-stars-lb-modal {
+  max-width: 400px;
+}
+
+.daily-stars-lb-body {
+  max-height: 290px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.daily-stars-lb-empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.88rem;
+  padding: 18px 10px;
+}
+
+.daily-stars-lb-list {
+  display: grid;
+  gap: 7px;
+}
+
+.daily-stars-lb-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(160, 220, 255, 0.12);
+}
+
+.daily-stars-lb-row.is-me {
+  background: rgba(56, 225, 255, 0.1);
+  border-color: rgba(56, 225, 255, 0.45);
+}
+
+.daily-stars-lb-rank {
+  min-width: 30px;
+  height: 28px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--display);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.daily-stars-lb-rank.top-1,
+.daily-stars-lb-rank.top-2,
+.daily-stars-lb-rank.top-3 {
+  font-size: 1.05rem;
+  background: rgba(56, 225, 255, 0.12);
+}
+
+.daily-stars-lb-user {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.daily-stars-lb-user strong {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.daily-stars-lb-steps {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.daily-stars-lb-val {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--cyan);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+
 
 
 

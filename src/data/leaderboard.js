@@ -5,15 +5,23 @@
 const CACHE_KEYS = {
   quiz: 'quiz-cotten:lb-cache:quiz',
   contributors: 'quiz-cotten:lb-cache:contributors',
+  stars: 'quiz-cotten:lb-cache:stars',
 };
 
 const memCache = {
   quiz: null,
   contributors: null,
+  stars: null,
 };
 
+function resolveCacheKey(type) {
+  if (type === 'contributors') return 'contributors';
+  if (type === 'stars') return 'stars';
+  return 'quiz';
+}
+
 export function getCachedLeaderboard(type = 'quiz') {
-  const key = type === 'contributors' ? 'contributors' : 'quiz';
+  const key = resolveCacheKey(type);
   if (Array.isArray(memCache[key])) return memCache[key];
   try {
     const raw = sessionStorage.getItem(CACHE_KEYS[key]);
@@ -31,7 +39,7 @@ export function getCachedLeaderboard(type = 'quiz') {
 }
 
 function setCachedLeaderboard(type, entries) {
-  const key = type === 'contributors' ? 'contributors' : 'quiz';
+  const key = resolveCacheKey(type);
   memCache[key] = entries;
   try {
     sessionStorage.setItem(CACHE_KEYS[key], JSON.stringify(entries));
@@ -63,10 +71,16 @@ export function fetchContributorsLeaderboard() {
   return fetchEntries('/api/leaderboard?type=contributors', 'contributors');
 }
 
+// Stars earned on the daily progression path (1★ to 3★ per completed step).
+export function fetchStarsLeaderboard() {
+  return fetchEntries('/api/leaderboard?type=stars', 'stars');
+}
+
 // Warm the cache in the background when the app loads so opening #/classement is instantaneous
 if (typeof window !== 'undefined') {
   setTimeout(() => {
     fetchLeaderboard().catch(() => {});
     fetchContributorsLeaderboard().catch(() => {});
+    fetchStarsLeaderboard().catch(() => {});
   }, 400);
 }

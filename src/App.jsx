@@ -28,7 +28,8 @@ const isProgressRoute = () => window.location.hash === '#/progression';
 const isLeaderboardRoute = () =>
   window.location.hash === '#/classement' ||
   window.location.hash === '#/leaderboard' ||
-  window.location.hash === '#/contributeurs';
+  window.location.hash === '#/contributeurs' ||
+  window.location.hash === '#/etoiles';
 const isRandomRoute = () => window.location.hash === '#/aleatoire';
 const isProposeRoute = () => window.location.hash === '#/proposer';
 const isChaptersListRoute = () => window.location.hash === '#/chapitres';
@@ -43,6 +44,7 @@ const parseTheme = () => {
     m[1] === 'classement' ||
     m[1] === 'leaderboard' ||
     m[1] === 'contributeurs' ||
+    m[1] === 'etoiles' ||
     m[1] === 'aleatoire' ||
     m[1] === 'proposer'
   ) {

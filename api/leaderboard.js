@@ -23,10 +23,17 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Variables Supabase manquantes côté serveur.' });
   }
 
-  const isContrib = req.query?.type === 'contributors';
+  const rawType = req.query?.type;
+  const isContrib = rawType === 'contributors';
+  const isStars = rawType === 'stars';
+  const rpcName = isContrib
+    ? 'get_contributors_leaderboard'
+    : isStars
+      ? 'get_stars_leaderboard'
+      : 'get_leaderboard';
   try {
     const r = await fetch(
-      `${url}/rest/v1/rpc/${isContrib ? 'get_contributors_leaderboard' : 'get_leaderboard'}`,
+      `${url}/rest/v1/rpc/${rpcName}`,
       {
         method: 'POST',
         headers: {
@@ -44,12 +51,15 @@ export default async function handler(req, res) {
     const entries = (Array.isArray(rows) ? rows : []).map((row) => ({
       name: row.name,
       points: row.points,
-      quizzes: isContrib ? 0 : row.quizzes || 0,
+      stars: isStars ? row.stars ?? row.points ?? 0 : 0,
+      steps: isStars ? row.steps || 0 : 0,
+      quizzes: isContrib || isStars ? 0 : row.quizzes || 0,
       reports: isContrib ? row.reports || 0 : 0,
       submissions: isContrib ? row.submissions || 0 : 0,
       updatedAt: row.updatedAt || null,
     }));
-    return res.status(200).json({ type: isContrib ? 'contributors_v4' : 'quiz', entries });
+    const respType = isContrib ? 'contributors_v4' : isStars ? 'stars' : 'quiz';
+    return res.status(200).json({ type: respType, entries });
   } catch {
     return res.status(502).json({ error: 'Base de données injoignable' });
   }
