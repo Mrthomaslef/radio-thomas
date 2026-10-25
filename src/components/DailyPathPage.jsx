@@ -143,8 +143,9 @@ function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter
   const targetPool = chapterPool.length > 0 ? chapterPool : fullPool;
 
   const savedSession = readDailyStepSession(stepNumber, pseudo);
-  // Restore saved session if its questions belong to this step's assigned chapter
-  if (Array.isArray(savedSession.questionIds) && savedSession.questionIds.length > 0) {
+  const hasSavedAnswers = Object.keys(savedSession.answers || {}).length > 0;
+  // Restore saved session if the user has already started answering it and its questions belong to this chapter
+  if (hasSavedAnswers && Array.isArray(savedSession.questionIds) && savedSession.questionIds.length > 0) {
     const restored = savedSession.questionIds
       .map((qid) => byId.get(qid))
       .filter(Boolean);
@@ -193,52 +194,61 @@ function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter
     return [...fresh, ...seen].slice(0, needed);
   };
 
-  const regularNeeded = Math.max(1, count - 1);
-  let regularCandidates;
-  let bossCandidates;
-
-  if (stepInfo.loopIndex === 1 && !isBossStep) {
-    regularCandidates = targetPool.filter((q) => q.difficulty === 1);
-    if (regularCandidates.length < regularNeeded) {
-      regularCandidates = [
-        ...regularCandidates,
-        ...targetPool.filter((q) => q.difficulty === 2),
-      ];
+  const pickOneWithPriority = (diffPriorityList, tag) => {
+    for (const targetDiff of diffPriorityList) {
+      const matching = targetPool.filter((q) => q.difficulty === targetDiff && !usedIds.has(q.id));
+      if (matching.length > 0) {
+        const picked = pickFrom(matching, 1, `${tag}:d${targetDiff}`);
+        if (picked.length > 0) {
+          usedIds.add(picked[0].id);
+          return picked[0];
+        }
+      }
     }
-    if (regularCandidates.length < regularNeeded) regularCandidates = targetPool;
-    bossCandidates = targetPool.filter((q) => q.difficulty >= 2);
-    if (bossCandidates.length === 0) bossCandidates = targetPool;
-  } else if (stepInfo.loopIndex === 2 && !isBossStep) {
-    regularCandidates = targetPool.filter((q) => q.difficulty <= 2);
-    if (regularCandidates.length < regularNeeded) regularCandidates = targetPool;
-    bossCandidates = targetPool.filter((q) => q.difficulty === 3);
-    if (bossCandidates.length === 0) bossCandidates = targetPool.filter((q) => q.difficulty >= 2);
-    if (bossCandidates.length === 0) bossCandidates = targetPool;
+    const fallback = pickFrom(targetPool, 1, `${tag}:any`);
+    if (fallback.length > 0) {
+      usedIds.add(fallback[0].id);
+      return fallback[0];
+    }
+    return null;
+  };
+
+  // Progressive difficulty slots per cycle (boucle 1 -> simple, boucle 2 -> more medium/hard, boucle 3 -> mostly hard)
+  let slotPriorities;
+  if (stepInfo.loopIndex === 1) {
+    // Cycle 1: Simple questions at the start (Facile, Facile, Facile/Moyen)
+    slotPriorities = [
+      [1, 2, 3],
+      [1, 2, 3],
+      [2, 1, 3],
+    ];
+  } else if (stepInfo.loopIndex === 2) {
+    // Cycle 2: % of harder questions increases (Facile, Moyen, Difficile)
+    slotPriorities = [
+      [1, 2, 3],
+      [2, 3, 1],
+      [3, 2, 1],
+    ];
   } else {
-    regularCandidates = targetPool.filter((q) => q.difficulty >= 2);
-    if (regularCandidates.length < regularNeeded) regularCandidates = targetPool;
-    bossCandidates = targetPool.filter((q) => q.difficulty === 3);
-    if (bossCandidates.length === 0) bossCandidates = targetPool.filter((q) => q.difficulty >= 2);
-    if (bossCandidates.length === 0) bossCandidates = targetPool;
+    // Cycle 3: High % of harder questions (Moyen, Difficile, Difficile)
+    slotPriorities = [
+      [2, 3, 1],
+      [3, 2, 1],
+      [3, 2, 1],
+    ];
   }
 
-  let regulars = pickFrom(regularCandidates, regularNeeded, 'reg');
-  for (const q of regulars) usedIds.add(q.id);
-  if (regulars.length < regularNeeded) {
-    const extra = pickFrom(targetPool, regularNeeded - regulars.length, 'extra');
-    for (const q of extra) usedIds.add(q.id);
-    regulars = [...regulars, ...extra];
+  const pickedQuestions = [];
+  for (let sIdx = 0; sIdx < count; sIdx++) {
+    const prio = slotPriorities[Math.min(sIdx, slotPriorities.length - 1)];
+    const q = pickOneWithPriority(prio, `slot-${sIdx}`);
+    if (q) pickedQuestions.push(q);
   }
 
-  let bossArr = pickFrom(bossCandidates, 1, 'boss');
-  if (bossArr.length === 0) {
-    bossArr = pickFrom(targetPool, 1, 'boss-fallback');
-  }
-
-  const finalQuestions = [
-    ...regulars.map((q) => ({ ...q, _isBoss: false })),
-    ...bossArr.map((q) => ({ ...q, _isBoss: true })),
-  ];
+  const finalQuestions = pickedQuestions.map((q, idx) => ({
+    ...q,
+    _isBoss: pickedQuestions.length > 1 ? idx === pickedQuestions.length - 1 : isBossStep,
+  }));
   const questionIds = finalQuestions.map((q) => q.id);
   saveDailyStepSession(stepNumber, { questionIds, answers: {} }, pseudo);
 
