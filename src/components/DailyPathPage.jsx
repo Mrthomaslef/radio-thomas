@@ -490,7 +490,35 @@ export default function DailyPathPage() {
         ? catmullRomToBezier(waypoints, unlockedWaypointIdx, waypoints.length - 1)
         : '';
 
-    return { width, height, nodes, unlockedPathD, lockedPathD };
+    // Sparse decorative radiology logos along the path (roughly 1 every 2 steps, varied sizes, overlapping curves)
+    const decoPresets = [
+      { stepIndex: 0, x: 76, yOffset: -6, size: 84, rotate: -9, logoNum: 8 },   // Shoulder heart over left curve
+      { stepIndex: 1, x: 296, yOffset: -12, size: 66, rotate: 8, logoNum: 2 },   // Knee flexion on right loop apex
+      { stepIndex: 3, x: 256, yOffset: 6, size: 88, rotate: -6, logoNum: 10 },   // Ribcage passing over right curve
+      { stepIndex: 5, x: 68, yOffset: -8, size: 72, rotate: 10, logoNum: 5 },    // Hand X-ray over left curve
+      { stepIndex: 6, x: 288, yOffset: 4, size: 62, rotate: -7, logoNum: 1 },    // Spine emblem near top curve
+    ];
+
+    const decorations = [];
+    for (let i = 0; i < nodes.length - 1; i++) {
+      // Place decorations sparsely using preset slots (and cycle for higher step counts)
+      const preset = decoPresets.find((p) => p.stepIndex === i % 8);
+      if (!preset) continue;
+      const curr = nodes[i];
+      const next = nodes[i + 1];
+      const midY = Math.round((curr.y + next.y) / 2) + preset.yOffset;
+      const logoIndex = ((preset.logoNum - 1 + Math.floor(i / 8) * 5) % 12) + 1;
+      decorations.push({
+        id: `deco-${i}`,
+        src: `/path-deco/logo-${logoIndex}.png`,
+        x: preset.x,
+        y: midY,
+        size: preset.size,
+        rotate: preset.rotate,
+      });
+    }
+
+    return { width, height, nodes, unlockedPathD, lockedPathD, decorations };
   }, [totalStepsToShow, dailyState.currentStep]);
 
   // 1) Pseudo onboarding step
@@ -998,48 +1026,29 @@ export default function DailyPathPage() {
             )}
           </svg>
 
-          {/* Decorative floating illustrations along the path */}
-          {pathLayout.nodes[1] && (
+          {/* Decorative musculoskeletal radiology logos along the path */}
+          {pathLayout.decorations.map((deco) => (
             <div
-              className="daily-deco daily-deco-book"
-              style={{ top: pathLayout.nodes[1].y + 8, left: '3%' }}
+              key={deco.id}
+              className="daily-deco"
+              style={{
+                top: deco.y,
+                left: `${(deco.x / pathLayout.width) * 100}%`,
+                width: deco.size,
+                height: deco.size,
+                '--deco-rot': `${deco.rotate}deg`,
+              }}
               aria-hidden="true"
             >
-              <svg width="92" height="72" viewBox="0 0 110 86" fill="none">
-                <path d="M18 14l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" fill="#f8fafc" />
-                <path d="M35 4l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z" fill="#e2e8f0" />
-                <path d="M14 50L50 32l38 14-36 22L14 50Z" fill="#2563eb" stroke="#0f172a" strokeWidth="3" />
-                <path d="M16 46C28 36 40 34 52 38L88 26c-10 12-22 22-36 30-12-4-24-2-36-10Z" fill="#ffffff" stroke="#0f172a" strokeWidth="2.6" />
-                <path d="M52 38v20" stroke="#94a3b8" strokeWidth="2" />
-              </svg>
+              <img
+                src={deco.src}
+                alt=""
+                className="daily-deco-img"
+                loading="lazy"
+                draggable="false"
+              />
             </div>
-          )}
-
-          {pathLayout.nodes[2] && (
-            <div
-              className="daily-deco daily-deco-pencil"
-              style={{ top: pathLayout.nodes[2].y - 80, right: '1%' }}
-              aria-hidden="true"
-            >
-              <svg width="98" height="90" viewBox="0 0 110 100" fill="none">
-                <circle cx="80" cy="22" r="7" fill="#eab308" stroke="#0f172a" strokeWidth="2" />
-                <g transform="rotate(-25 56 42)">
-                  <rect x="46" y="18" width="16" height="42" rx="2" fill="#facc15" stroke="#0f172a" strokeWidth="2.5" />
-                  <line x1="51" y1="18" x2="51" y2="60" stroke="#0f172a" strokeWidth="1.8" />
-                  <line x1="57" y1="18" x2="57" y2="60" stroke="#0f172a" strokeWidth="1.8" />
-                  <path d="M46 18l8-14 8 14H46Z" fill="#fed7aa" stroke="#0f172a" strokeWidth="2.5" />
-                  <path d="M51 9l3-5 3 5h-6Z" fill="#0f172a" />
-                  <rect x="46" y="60" width="16" height="9" rx="2" fill="#ef4444" stroke="#0f172a" strokeWidth="2.5" />
-                </g>
-                <path
-                  d="M36 82h64c0-10-8-17-18-16-4-9-16-13-25-7-8-3-17 3-17 12-4 1-6 5-4 11Z"
-                  fill="#ffffff"
-                  stroke="#0f172a"
-                  strokeWidth="2.5"
-                />
-              </svg>
-            </div>
-          )}
+          ))}
 
           {/* Path Step Nodes */}
           {pathLayout.nodes.map((node) => {
