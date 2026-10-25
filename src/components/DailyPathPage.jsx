@@ -799,9 +799,21 @@ export default function DailyPathPage() {
     });
   }, []);
 
-  // Automatically scroll to the active step node when the path is displayed
+  // Automatically scroll to the active step node when the path is displayed,
+  // or scroll to the very top of the page when a step quiz is opened
   useEffect(() => {
-    if (!editingPseudo && !showingSlides && !activeSession) {
+    if (activeSession) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      const t = requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      });
+      return () => cancelAnimationFrame(t);
+    }
+    if (!editingPseudo && !showingSlides) {
       const t = setTimeout(() => {
         currentStepNodeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 120);

@@ -418,6 +418,14 @@ export function QuizPlayer({
   }, [answeredAll.length, total]);
 
   useEffect(() => {
+    if (!preview) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }, [preview]);
+
+  useEffect(() => {
     if (!zoom) return undefined;
     const onKey = (e) => e.key === 'Escape' && setZoom(null);
     window.addEventListener('keydown', onKey);

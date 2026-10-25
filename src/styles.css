@@ -2072,15 +2072,24 @@ a.cq-dot:hover { transform: scale(1.08); }
 .daily-page {
   max-width: 500px;
   margin: 0 auto;
-  padding: calc(214px + env(safe-area-inset-top, 0px)) 12px 24px;
+  padding: calc(182px + env(safe-area-inset-top, 0px)) 12px 24px;
   position: relative;
 }
 
 .daily-app-pill-wrap {
-  display: flex;
+  display: none;
   justify-content: center;
   width: 100%;
   pointer-events: auto;
+}
+
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  .daily-app-pill-wrap {
+    display: flex;
+  }
+  .daily-page {
+    padding-top: calc(214px + env(safe-area-inset-top, 0px));
+  }
 }
 
 .daily-onboarding > .daily-app-pill-wrap,
