@@ -16,6 +16,7 @@ import {
   recordDailyQuestionAnswered,
   recordDailyStepCompleted,
   subscribePlayer,
+  checkPseudoExists,
   syncProgressFromServer,
 } from '../data/player.js';
 import { QuizPlayer } from './ChapterQuiz.jsx';
@@ -773,11 +774,13 @@ export default function DailyPathPage() {
   });
   const [slideIdx, setSlideIdx] = useState(0);
   const [syncingPseudo, setSyncingPseudo] = useState(false);
+  const [existingPseudoConfirm, setExistingPseudoConfirm] = useState(null);
   const [showingCalendar, setShowingCalendar] = useState(false);
   const [showingStarsLb, setShowingStarsLb] = useState(false);
   const [activeSession, setActiveSession] = useState(null); // { stepNumber, isBossStep, questions, initialAnswers, id }
   const [limitNotice, setLimitNotice] = useState(false);
   const currentStepNodeRef = useRef(null);
+  const pseudoInputRef = useRef(null);
   const touchStartXRef = useRef(null);
   const manualSlidesRef = useRef(false);
 
@@ -822,11 +825,10 @@ export default function DailyPathPage() {
     return undefined;
   }, [editingPseudo, showingSlides, dailyState.currentStep, activeSession]);
 
-  const handlePseudoSubmit = async (e) => {
-    e.preventDefault();
-    const clean = draftPseudo.trim().replace(/\s+/g, ' ');
+  const confirmPseudoSelection = async (clean) => {
     if (!clean || syncingPseudo) return;
     setSyncingPseudo(true);
+    setExistingPseudoConfirm(null);
     saveName(clean);
     await syncProgressFromServer(clean);
     setPseudo(clean);
@@ -839,6 +841,20 @@ export default function DailyPathPage() {
     manualSlidesRef.current = false;
     setSlideIdx(0);
     setShowingSlides(!alreadyActive);
+  };
+
+  const handlePseudoSubmit = async (e) => {
+    e.preventDefault();
+    const clean = draftPseudo.trim().replace(/\s+/g, ' ');
+    if (!clean || syncingPseudo) return;
+    setSyncingPseudo(true);
+    const exists = await checkPseudoExists(clean);
+    if (exists) {
+      setSyncingPseudo(false);
+      setExistingPseudoConfirm(clean);
+      return;
+    }
+    await confirmPseudoSelection(clean);
   };
 
   const finishOnboardingSlides = () => {
@@ -1015,11 +1031,15 @@ export default function DailyPathPage() {
         >
           <label htmlFor="daily-pseudo">Choisis un pseudo pour commencer ton parcours quotidien</label>
           <input
+            ref={pseudoInputRef}
             id="daily-pseudo"
             className="name-input"
             type="text"
             value={draftPseudo}
-            onChange={(e) => setDraftPseudo(e.target.value)}
+            onChange={(e) => {
+              setDraftPseudo(e.target.value);
+              if (existingPseudoConfirm) setExistingPseudoConfirm(null);
+            }}
             placeholder="Ton pseudo"
             maxLength={80}
             autoComplete="nickname"
@@ -1029,20 +1049,53 @@ export default function DailyPathPage() {
           <p className="privacy">
             Ton pseudo sauvegarde ton objectif du jour, tes étoiles et ta progression sur tous tes appareils.
           </p>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <button className="btn" type="submit" disabled={!draftPseudo.trim() || syncingPseudo}>
-              {syncingPseudo ? 'Synchronisation…' : <>Continuer <Icon name="arrow" size={18} /></>}
-            </button>
-            {pseudo && !syncingPseudo && (
-              <button
-                type="button"
-                className="btn btn-ghost"
-                onClick={() => setEditingPseudo(false)}
-              >
-                Annuler
+          {existingPseudoConfirm ? (
+            <div className="pseudo-taken-box" role="alert">
+              <p className="pseudo-taken-text">
+                Le pseudo <strong>« {existingPseudoConfirm} »</strong> est déjà pris. S’agit-il de ton compte ?
+              </p>
+              <div className="pseudo-taken-actions">
+                <button
+                  type="button"
+                  className="btn btn-small"
+                  disabled={syncingPseudo}
+                  onClick={() => confirmPseudoSelection(existingPseudoConfirm)}
+                >
+                  {syncingPseudo ? 'Synchronisation…' : 'C’est moi'}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-small"
+                  disabled={syncingPseudo}
+                  onClick={() => {
+                    setExistingPseudoConfirm(null);
+                    setDraftPseudo('');
+                    setTimeout(() => pseudoInputRef.current?.focus(), 20);
+                  }}
+                >
+                  Changer de pseudo
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <button className="btn" type="submit" disabled={!draftPseudo.trim() || syncingPseudo}>
+                {syncingPseudo ? 'Vérification…' : <>Continuer <Icon name="arrow" size={18} /></>}
               </button>
-            )}
-          </div>
+              {pseudo && !syncingPseudo && (
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => {
+                    setExistingPseudoConfirm(null);
+                    setEditingPseudo(false);
+                  }}
+                >
+                  Annuler
+                </button>
+              )}
+            </div>
+          )}
         </motion.form>
       </section>
     );

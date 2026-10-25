@@ -167,11 +167,13 @@ export default async function handler(req, res) {
         headers,
         body: JSON.stringify({ p_name: name }),
       });
-      if (!r.ok) return res.status(200).json({ progress: {} });
+      if (!r.ok) return res.status(200).json({ exists: false, progress: {} });
       const data = await r.json();
-      return res.status(200).json({ progress: data?.progress || {} });
+      const prog = data?.progress && typeof data.progress === 'object' ? data.progress : {};
+      const exists = Boolean(data?.exists || Object.keys(prog).length > 0);
+      return res.status(200).json({ exists, progress: prog });
     } catch {
-      return res.status(200).json({ progress: {} });
+      return res.status(200).json({ exists: false, progress: {} });
     }
   }
 

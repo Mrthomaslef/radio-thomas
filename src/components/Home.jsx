@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { themes } from '../data/themes.js';
 import { useQuestions } from '../data/useQuestions.js';
@@ -7,6 +7,7 @@ import {
   saveName,
   readAllProgress,
   subscribePlayer,
+  checkPseudoExists,
   syncProgressFromServer,
 } from '../data/player.js';
 import Icon from './Icons.jsx';
@@ -34,8 +35,11 @@ export default function Home({ openTheme }) {
   const [pseudo, setPseudo] = useState(readName);
   const [draft, setDraft] = useState(pseudo);
   const [editing, setEditing] = useState(!pseudo);
+  const [checking, setChecking] = useState(false);
+  const [existingConfirm, setExistingConfirm] = useState(null);
   const [progress, setProgress] = useState(() => readAllProgress(readName()));
   const [isAppMode, setIsAppMode] = useState(isStandaloneMode);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const mq = window.matchMedia?.('(display-mode: standalone)');
@@ -55,15 +59,30 @@ export default function Home({ openTheme }) {
     });
   }, []);
 
-  const submit = (e) => {
-    e.preventDefault();
-    const clean = draft.trim().replace(/\s+/g, ' ');
+  const confirmLogin = async (clean) => {
     if (!clean) return;
+    setChecking(true);
+    setExistingConfirm(null);
     saveName(clean);
+    await syncProgressFromServer(clean);
     setPseudo(clean);
     setProgress(readAllProgress(clean));
+    setChecking(false);
     setEditing(false);
-    window.location.hash = '#/';
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    const clean = draft.trim().replace(/\s+/g, ' ');
+    if (!clean || checking) return;
+    setChecking(true);
+    const exists = await checkPseudoExists(clean);
+    if (exists) {
+      setChecking(false);
+      setExistingConfirm(clean);
+      return;
+    }
+    await confirmLogin(clean);
   };
 
   return (
@@ -78,11 +97,15 @@ export default function Home({ openTheme }) {
         <motion.form className="home-panel name-step" onSubmit={submit} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <label htmlFor="pseudo">Choisis un pseudo pour commencer ou reprendre ta session</label>
           <input
+            ref={inputRef}
             id="pseudo"
             className="name-input"
             type="text"
             value={draft}
-            onChange={(e) => setDraft(e.target.value)}
+            onChange={(e) => {
+              setDraft(e.target.value);
+              if (existingConfirm) setExistingConfirm(null);
+            }}
             placeholder="Ton pseudo"
             maxLength={80}
             autoComplete="nickname"
@@ -92,9 +115,53 @@ export default function Home({ openTheme }) {
           <p className="privacy">
             Ton pseudo mémorise ta progression (questions déjà répondues et scores) pour que tu puisses reprendre à tout moment.
           </p>
-          <button className="btn" type="submit" disabled={!draft.trim()}>
-            Continuer <Icon name="arrow" size={18} />
-          </button>
+          {existingConfirm ? (
+            <div className="pseudo-taken-box" role="alert">
+              <p className="pseudo-taken-text">
+                Le pseudo <strong>« {existingConfirm} »</strong> est déjà pris. S’agit-il de ton compte ?
+              </p>
+              <div className="pseudo-taken-actions">
+                <button
+                  type="button"
+                  className="btn btn-small"
+                  disabled={checking}
+                  onClick={() => confirmLogin(existingConfirm)}
+                >
+                  {checking ? 'Synchronisation…' : 'C’est moi'}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-small"
+                  disabled={checking}
+                  onClick={() => {
+                    setExistingConfirm(null);
+                    setDraft('');
+                    setTimeout(() => inputRef.current?.focus(), 20);
+                  }}
+                >
+                  Changer de pseudo
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <button className="btn" type="submit" disabled={!draft.trim() || checking}>
+                {checking ? 'Vérification…' : <>Continuer <Icon name="arrow" size={18} /></>}
+              </button>
+              {pseudo && !checking && (
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => {
+                    setExistingConfirm(null);
+                    setEditing(false);
+                  }}
+                >
+                  Annuler
+                </button>
+              )}
+            </div>
+          )}
         </motion.form>
       ) : (
         <motion.div className="home-panel" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

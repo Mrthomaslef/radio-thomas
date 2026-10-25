@@ -677,6 +677,22 @@ function applyRemoteProgressMerge(clean, remote, allowRepush = true) {
   if (allowRepush && localHasNewer) schedulePush(clean);
 }
 
+export async function checkPseudoExists(name) {
+  const clean = (name || '').trim().replace(/\s+/g, ' ');
+  if (!clean) return false;
+  const local = readRawMap(clean);
+  if (Object.keys(local).length > 0) return true;
+  try {
+    const r = await fetch(`/api/progress?name=${encodeURIComponent(clean)}`, { cache: 'no-store' });
+    if (!r.ok) return false;
+    const json = await r.json();
+    const prog = json?.progress && typeof json.progress === 'object' ? json.progress : {};
+    return Boolean(json?.exists || Object.keys(prog).length > 0);
+  } catch {
+    return false;
+  }
+}
+
 export async function syncProgressFromServer(name = readName()) {
   const clean = (name || '').trim().replace(/\s+/g, ' ');
   if (!clean) return;

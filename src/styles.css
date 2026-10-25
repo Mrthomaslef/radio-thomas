@@ -3592,6 +3592,33 @@ a.cq-dot:hover { transform: scale(1.08); }
   flex-shrink: 0;
 }
 
+.pseudo-taken-box {
+  display: grid;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(56, 225, 255, 0.08);
+  border: 1px solid rgba(56, 225, 255, 0.38);
+}
+
+.pseudo-taken-text {
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.pseudo-taken-text strong {
+  color: var(--cyan);
+}
+
+.pseudo-taken-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+
 
 
 
