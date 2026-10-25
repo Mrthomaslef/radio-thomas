@@ -68,7 +68,7 @@ export default function Navbar() {
             </div>
 
             <p className="nav-beta-text">
-              L’ensemble des questions n’a pas encore été relu et validé. La relecture médicale est en cours au fil des chapitres.
+              L’ensemble des questions n’a pas encore été relu et validé. Veuillez toujours vous référer à l’ouvrage de référence mentionné en bas des questions.
             </p>
 
             <div className="daily-limit-modal-actions">
