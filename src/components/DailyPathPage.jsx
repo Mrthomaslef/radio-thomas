@@ -7,6 +7,7 @@ import {
   saveName,
   readAllProgress,
   readDailyState,
+  markDailyOnboarded,
   saveDailyGoal,
   recordDailyQuestionAnswered,
   recordDailyStepCompleted,
@@ -15,6 +16,33 @@ import {
 } from '../data/player.js';
 import { QuizPlayer } from './ChapterQuiz.jsx';
 import Icon from './Icons.jsx';
+
+const ONBOARDING_SLIDES = [
+  {
+    step: '1 / 3',
+    badge: 'Objectif quotidien',
+    title: 'Réalise tes questions journalières',
+    text: 'Chaque jour, avance sur ton parcours en répondant à 3, 5 ou 10 questions tirées au sort. Tu commences en douceur par des questions faciles et chaque étape se termine par une question Boss plus corsée !',
+    highlight: '🔥 Garde le rythme chaque jour pour faire grandir ta série et débloquer les étapes suivantes.',
+    icon: 'daily',
+  },
+  {
+    step: '2 / 3',
+    badge: 'Révision avec le livre',
+    title: 'Révise les notions dans le bouquin',
+    text: 'Après chaque réponse, consulte l’explication complète et les figures commentées. Pour approfondir ou revoir un point dans le livre, la référence exacte est toujours écrite tout en bas de la correction.',
+    highlight: '📖 Exemple en bas de chaque correction : Chapitre, titre, numéro de page et paragraphe.',
+    icon: 'book',
+  },
+  {
+    step: '3 / 3',
+    badge: 'Sauvegarde automatique',
+    title: 'Ta progression est sauvegardée',
+    text: 'Chaque question validée et chaque étoile gagnée font avancer ta progression globale. Tout est mémorisé automatiquement avec ton pseudo, sur ton téléphone comme sur ton ordinateur.',
+    highlight: '⭐ Retrouve à tout moment tes chapitres validés et tes questions enregistrées dans « Ma progression ».',
+    icon: 'progress',
+  },
+];
 
 const GOAL_OPTIONS = [
   {
@@ -211,10 +239,16 @@ export default function DailyPathPage() {
   const [editingPseudo, setEditingPseudo] = useState(!pseudo);
   const [dailyState, setDailyState] = useState(() => readDailyState(readName()));
   const [allProgress, setAllProgress] = useState(() => readAllProgress(readName()));
+  const [showingSlides, setShowingSlides] = useState(() => {
+    const n = readName();
+    return Boolean(n && !readDailyState(n).onboarded);
+  });
+  const [slideIdx, setSlideIdx] = useState(0);
   const [pickingGoal, setPickingGoal] = useState(false);
   const [selectedGoalDraft, setSelectedGoalDraft] = useState(5);
   const [activeSession, setActiveSession] = useState(null); // { stepNumber, isBossStep, questions, id }
   const currentStepNodeRef = useRef(null);
+  const touchStartXRef = useRef(null);
 
   useEffect(() => {
     const n = readName();
@@ -231,14 +265,14 @@ export default function DailyPathPage() {
 
   // Automatically scroll to the active step node when the path is displayed
   useEffect(() => {
-    if (!editingPseudo && dailyState.goal && !pickingGoal && !activeSession) {
+    if (!editingPseudo && !showingSlides && dailyState.goal && !pickingGoal && !activeSession) {
       const t = setTimeout(() => {
         currentStepNodeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 120);
       return () => clearTimeout(t);
     }
     return undefined;
-  }, [editingPseudo, dailyState.goal, dailyState.currentStep, pickingGoal, activeSession]);
+  }, [editingPseudo, showingSlides, dailyState.goal, dailyState.currentStep, pickingGoal, activeSession]);
 
   const handlePseudoSubmit = (e) => {
     e.preventDefault();
@@ -250,6 +284,19 @@ export default function DailyPathPage() {
     const st = readDailyState(clean);
     setDailyState(st);
     setAllProgress(readAllProgress(clean));
+    // Show the explanatory slides whenever the user logs in / connects
+    setSlideIdx(0);
+    setShowingSlides(true);
+    if (!st.goal) {
+      setSelectedGoalDraft(5);
+    }
+  };
+
+  const finishOnboardingSlides = () => {
+    markDailyOnboarded(pseudo);
+    const st = readDailyState(pseudo);
+    setDailyState(st);
+    setShowingSlides(false);
     if (!st.goal) {
       setSelectedGoalDraft(5);
       setPickingGoal(true);
@@ -357,6 +404,160 @@ export default function DailyPathPage() {
             )}
           </div>
         </motion.form>
+      </section>
+    );
+  }
+
+  // 1b) Onboarding explanatory slides (3 simple & clear slides on login)
+  if (showingSlides) {
+    const slide = ONBOARDING_SLIDES[slideIdx] || ONBOARDING_SLIDES[0];
+    const isLastSlide = slideIdx === ONBOARDING_SLIDES.length - 1;
+
+    const onTouchStart = (e) => {
+      touchStartXRef.current = e.touches?.[0]?.clientX ?? null;
+    };
+    const onTouchEnd = (e) => {
+      if (touchStartXRef.current === null) return;
+      const endX = e.changedTouches?.[0]?.clientX ?? touchStartXRef.current;
+      const dx = endX - touchStartXRef.current;
+      touchStartXRef.current = null;
+      if (dx < -45) {
+        if (isLastSlide) finishOnboardingSlides();
+        else setSlideIdx((i) => Math.min(ONBOARDING_SLIDES.length - 1, i + 1));
+      } else if (dx > 45 && slideIdx > 0) {
+        setSlideIdx((i) => Math.max(0, i - 1));
+      }
+    };
+
+    return (
+      <section className="home daily-onboarding">
+        <motion.div
+          key={slideIdx}
+          className="home-panel daily-slide-card"
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.25 }}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="daily-slide-top">
+            <span className="daily-goal-kicker">
+              Bienvenue {pseudo} · {slide.step}
+            </span>
+            <button
+              type="button"
+              className="pseudo-change-btn"
+              onClick={finishOnboardingSlides}
+            >
+              Passer
+            </button>
+          </div>
+
+          <div className="daily-slide-art" aria-hidden="true">
+            {slide.icon === 'daily' && (
+              <svg width="120" height="96" viewBox="0 0 120 96" fill="none">
+                <path
+                  d="M22 76 C 42 76, 44 48, 62 48 C 80 48, 82 22, 100 22"
+                  stroke="#eab308"
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                />
+                <circle cx="24" cy="76" r="14" fill="#f08c1a" stroke="#111318" strokeWidth="2.5" />
+                <text x="24" y="81" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="900">1</text>
+                <circle cx="62" cy="48" r="14" fill="#38b27c" stroke="#111318" strokeWidth="2.5" />
+                <text x="62" y="53" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="900">2</text>
+                <circle cx="98" cy="22" r="17" fill="#8b5cf6" stroke="#111318" strokeWidth="2.5" />
+                <text x="98" y="26" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="900">Boss</text>
+              </svg>
+            )}
+            {slide.icon === 'book' && (
+              <svg width="126" height="96" viewBox="0 0 126 96" fill="none">
+                <rect x="14" y="10" width="98" height="76" rx="12" fill="#131b26" stroke="rgba(56,225,255,0.45)" strokeWidth="2" />
+                <rect x="24" y="20" width="54" height="7" rx="3.5" fill="#34d399" />
+                <rect x="24" y="33" width="78" height="5" rx="2.5" fill="rgba(255,255,255,0.28)" />
+                <rect x="24" y="43" width="66" height="5" rx="2.5" fill="rgba(255,255,255,0.22)" />
+                <rect x="22" y="56" width="82" height="22" rx="7" fill="rgba(56,225,255,0.12)" stroke="#38e1ff" strokeWidth="1.5" />
+                <text x="30" y="70" fill="#38e1ff" fontSize="9.5" fontWeight="700">Référence : Chapitre · Page</text>
+              </svg>
+            )}
+            {slide.icon === 'progress' && (
+              <svg width="120" height="96" viewBox="0 0 120 96" fill="none">
+                <path
+                  d="M32 34l4.5 9 10 1.4-7.2 7 1.7 10-9-4.7-9 4.7 1.7-10-7.2-7 10-1.4L32 34Z"
+                  fill="#facc15"
+                  stroke="#111318"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M60 20l5.5 11.2 12.3 1.8-8.9 8.6 2.1 12.3L60 48l-11 5.9 2.1-12.3-8.9-8.6 12.3-1.8L60 20Z"
+                  fill="#facc15"
+                  stroke="#111318"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M88 34l4.5 9 10 1.4-7.2 7 1.7 10-9-4.7-9 4.7 1.7-10-7.2-7 10-1.4L88 34Z"
+                  fill="#facc15"
+                  stroke="#111318"
+                  strokeWidth="2"
+                />
+                <rect x="24" y="68" width="72" height="12" rx="6" fill="rgba(52,211,153,0.2)" stroke="#34d399" strokeWidth="1.6" />
+                <rect x="26" y="70" width="52" height="8" rx="4" fill="#34d399" />
+              </svg>
+            )}
+          </div>
+
+          <span className="daily-slide-badge">{slide.badge}</span>
+          <h2>{slide.title}</h2>
+          <p className="daily-slide-text">{slide.text}</p>
+          <div className="daily-slide-highlight">{slide.highlight}</div>
+
+          <div className="daily-slide-dots" role="tablist" aria-label="Étapes de présentation">
+            {ONBOARDING_SLIDES.map((s, idx) => (
+              <button
+                key={s.step}
+                type="button"
+                role="tab"
+                aria-selected={idx === slideIdx}
+                aria-label={`Diapositive ${idx + 1}`}
+                className={`daily-slide-dot ${idx === slideIdx ? 'is-active' : ''}`}
+                onClick={() => setSlideIdx(idx)}
+              />
+            ))}
+          </div>
+
+          <div className="daily-slide-actions">
+            {slideIdx > 0 ? (
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => setSlideIdx((i) => i - 1)}
+              >
+                ← Précédent
+              </button>
+            ) : (
+              <span />
+            )}
+
+            {isLastSlide ? (
+              <button
+                type="button"
+                className="btn"
+                onClick={finishOnboardingSlides}
+              >
+                {dailyState.goal ? 'Accéder à mon parcours' : 'Choisir mon objectif'}{' '}
+                <Icon name="arrow" size={18} />
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn"
+                onClick={() => setSlideIdx((i) => i + 1)}
+              >
+                Suivant <Icon name="arrow" size={18} />
+              </button>
+            )}
+          </div>
+        </motion.div>
       </section>
     );
   }
@@ -523,6 +724,19 @@ export default function DailyPathPage() {
         </div>
 
         <div className="daily-hud-right-group">
+          <button
+            type="button"
+            className="daily-hud-pill daily-hud-help"
+            onClick={() => {
+              setSlideIdx(0);
+              setShowingSlides(true);
+            }}
+            title="Revoir comment fonctionne le parcours"
+            aria-label="Comment fonctionne le parcours"
+          >
+            ?
+          </button>
+
           <button
             type="button"
             className="daily-hud-pill daily-hud-pseudo"

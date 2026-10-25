@@ -2296,6 +2296,117 @@ a.cq-dot:hover { transform: scale(1.08); }
   text-shadow: 0 0 14px rgba(250, 204, 21, 0.5);
 }
 
+/* Onboarding Explanatory Slides */
+.daily-slide-card {
+  background: rgba(17, 23, 34, 0.94);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: clamp(20px, 5vw, 30px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  display: grid;
+  gap: 14px;
+}
+
+.daily-slide-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.daily-slide-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px;
+  border-radius: 18px;
+  background: radial-gradient(circle at 50% 50%, rgba(56, 225, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.daily-slide-badge {
+   justify-self: start;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fde047;
+  background: rgba(234, 179, 8, 0.16);
+  border: 1px solid rgba(234, 179, 8, 0.38);
+}
+
+.daily-slide-card h2 {
+  font-family: var(--display);
+  font-size: clamp(1.35rem, 5vw, 1.85rem);
+  line-height: 1.22;
+}
+
+.daily-slide-text {
+  color: #d6e3f0;
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.daily-slide-highlight {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(56, 225, 255, 0.07);
+  border: 1px solid rgba(56, 225, 255, 0.28);
+  color: var(--text);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.daily-slide-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.daily-slide-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.daily-slide-dot.is-active {
+  width: 26px;
+  background: #facc15;
+}
+
+.daily-slide-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.daily-hud-help {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  justify-content: center;
+  font-family: var(--display);
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.daily-hud-help:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+
 
 
 

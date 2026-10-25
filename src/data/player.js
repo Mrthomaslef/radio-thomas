@@ -659,6 +659,7 @@ export function readDailyState(name = readName()) {
   if (!name) {
     return {
       goal: null,
+      onboarded: false,
       steps: {},
       currentStep: 1,
       totalStars: 0,
@@ -672,6 +673,7 @@ export function readDailyState(name = readName()) {
   // 1) Daily goal: A -> 3, B -> 5, C -> 10
   const goalCode = Array.isArray(ans['daily-goal']) ? ans['daily-goal'][0] : null;
   const goal = goalCode === 'A' ? 3 : goalCode === 'B' ? 5 : goalCode === 'C' ? 10 : null;
+  const onboarded = Array.isArray(ans['onboarded']) && ans['onboarded'][0] === 'A';
 
   // 2) Completed steps & stars: step-<N> -> A (1), B (2), C (3)
   const steps = {};
@@ -731,12 +733,18 @@ export function readDailyState(name = readName()) {
 
   return {
     goal,
+    onboarded,
     steps,
     currentStep: maxCompletedStep + 1,
     totalStars,
     todayCount,
     streak,
   };
+}
+
+export function markDailyOnboarded(name = readName()) {
+  if (!name) return;
+  writeQuestionAnswer(DAILY_CHAPTER_KEY, 'onboarded', ['A'], name);
 }
 
 export function saveDailyGoal(goalNumber, name = readName()) {

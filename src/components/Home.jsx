@@ -62,6 +62,7 @@ export default function Home({ openTheme }) {
     setPseudo(clean);
     setProgress(readAllProgress(clean));
     setEditing(false);
+    window.location.hash = '#/';
   };
 
   return (
