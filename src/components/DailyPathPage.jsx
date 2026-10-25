@@ -1213,23 +1213,9 @@ export default function DailyPathPage() {
     const { stepNumber, isBossStep, stepInfo, questions, initialAnswers } = activeSession;
     const info = stepInfo || getStepScheduleInfo(stepNumber);
     const qIds = questions.map((q) => q.id);
+    const stepsTodayCount = Math.min(dailyState.todayStepsCount, MAX_DAILY_STEPS);
     return (
-      <div className="rnd-play daily-play">
-        <div className="rnd-play-top">
-          <button
-            type="button"
-            className="rnd-action-btn"
-            onClick={() => {
-              setDailyState(readDailyState(pseudo));
-              setActiveSession(null);
-            }}
-          >
-            ← Retour au chemin
-          </button>
-          <span className="daily-session-pill">
-            🚩 {Math.min(dailyState.todayStepsCount, MAX_DAILY_STEPS)}/{MAX_DAILY_STEPS} étapes aujourd’hui
-          </span>
-        </div>
+      <div className="daily-play">
         <QuizPlayer
           key={activeSession.id}
           chapterKey="quiz-aleatoire"
@@ -1246,7 +1232,7 @@ export default function DailyPathPage() {
             saveDailyStepSession(stepNumber, { questionIds: qIds, answers: nextAns }, pseudo);
           }}
           randomMode
-          backLabel="← Chemin"
+          backLabel="← Retour au chemin"
           onQuestionValidated={() => {
             recordDailyQuestionAnswered(pseudo);
             setDailyState(readDailyState(pseudo));
@@ -1260,6 +1246,11 @@ export default function DailyPathPage() {
           dailyMode={{
             stepNumber,
             isBossStep,
+            themeId: info.themeId,
+            themeTitle: info.themeTitle,
+            loopIndex: info.loopIndex,
+            stepsToday: stepsTodayCount,
+            maxDailySteps: MAX_DAILY_STEPS,
             onContinuePath: () => {
               setDailyState(readDailyState(pseudo));
               setActiveSession(null);

@@ -451,8 +451,38 @@ export function QuizPlayer({
     <div className="cq" ref={topRef}>
       <header className="cq-head">
         <div className="cq-top-links">
-          <a href={backHref} className="cq-back">{backLabel}</a>
+          {dailyMode?.onContinuePath ? (
+            <button
+              type="button"
+              className="daily-back-pill"
+              onClick={dailyMode.onContinuePath}
+            >
+              ← Retour au chemin
+            </button>
+          ) : (
+            <a href={backHref} className="cq-back">{backLabel}</a>
+          )}
+          {dailyMode && (
+            <span className="daily-session-pill">
+              🚩 {dailyMode.stepsToday ?? 0}/{dailyMode.maxDailySteps ?? 3} étapes aujourd’hui
+            </span>
+          )}
         </div>
+        {dailyMode?.themeTitle && (
+          <div className="daily-quiz-kicker">
+            {dailyMode.themeId && (
+              <img
+                src={`/theme-logos/${dailyMode.themeId}.png`}
+                alt=""
+                aria-hidden="true"
+                className="daily-quiz-kicker-logo"
+              />
+            )}
+            <span>
+              Étape {dailyMode.stepNumber} · {dailyMode.themeTitle} (Boucle {dailyMode.loopIndex || 1}/3)
+            </span>
+          </div>
+        )}
         <h1>{c.titre}</h1>
         <div className="cq-stats" aria-live="polite">
           <span>Score <b>{score}</b> / {answeredAll.length || 0}</span>
