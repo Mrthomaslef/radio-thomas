@@ -2066,24 +2066,20 @@ a.cq-dot:hover { transform: scale(1.08); }
   height: 100%;
   overflow: visible;
   pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.72));
 }
 
 .daily-deco {
   position: absolute;
   transform: translate(-50%, -50%) rotate(var(--deco-rot, 0deg));
   pointer-events: none;
-  z-index: 3;
+  z-index: 1;
+  opacity: 0.44;
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.55));
-}
-
-.daily-deco-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  user-select: none;
+  filter: saturate(0.88) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.38));
 }
 
 .daily-node-wrap {
