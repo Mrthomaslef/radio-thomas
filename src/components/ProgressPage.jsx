@@ -185,9 +185,6 @@ export default function ProgressPage() {
   return (
     <section className="prog">
       <header className="prog-head">
-        <div className="cq-top-links">
-          <a href="#/" className="cq-back">← Accueil</a>
-        </div>
         <h1>Ma <span className="grad">progression</span></h1>
 
         {editing ? (

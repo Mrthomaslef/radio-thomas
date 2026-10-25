@@ -81,10 +81,6 @@ export default function LeaderboardPage() {
   return (
     <section className="prog lb-page">
       <header className="prog-head">
-        <div className="cq-top-links">
-          <a href="#/" className="cq-back">← Accueil</a>
-          <a href="#/progression" className="cq-back">Progression →</a>
-        </div>
         <h1>
           <span className="grad">Leaderboard</span>
           {tab === 'contributors' ? ' Contributeurs' : tab === 'stars' ? ' Étoiles' : ''}
