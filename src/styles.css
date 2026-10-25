@@ -1989,17 +1989,20 @@ a.cq-dot:hover { transform: scale(1.08); }
 .daily-page {
   max-width: 500px;
   margin: 0 auto;
-  padding: calc(78px + env(safe-area-inset-top, 0px)) 12px 24px;
+  padding: calc(182px + env(safe-area-inset-top, 0px)) 12px 24px;
   position: relative;
 }
 
 .daily-hud-stack {
-  position: sticky;
-  top: calc(70px + env(safe-area-inset-top, 0px));
-  z-index: 35;
+  position: fixed;
+  top: calc(68px + env(safe-area-inset-top, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% - 24px), 476px);
+  z-index: 45;
   display: grid;
   gap: 8px;
-  padding: 6px 4px 10px;
+  padding: 4px 0;
   pointer-events: none;
 }
 
