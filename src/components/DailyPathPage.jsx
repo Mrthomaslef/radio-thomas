@@ -803,9 +803,9 @@ export default function DailyPathPage() {
   }, []);
 
   // Automatically scroll to the active step node when the path is displayed,
-  // or scroll to the very top of the page when a step quiz is opened
+  // or scroll to the very top of the page when a step quiz, tutorial, or pseudo screen is opened
   useEffect(() => {
-    if (activeSession) {
+    if (activeSession || showingSlides || editingPseudo) {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
@@ -823,7 +823,7 @@ export default function DailyPathPage() {
       return () => clearTimeout(t);
     }
     return undefined;
-  }, [editingPseudo, showingSlides, dailyState.currentStep, activeSession]);
+  }, [editingPseudo, showingSlides, slideIdx, dailyState.currentStep, activeSession]);
 
   const confirmPseudoSelection = async (clean) => {
     if (!clean || syncingPseudo) return;
