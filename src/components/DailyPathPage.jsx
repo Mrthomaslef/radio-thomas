@@ -81,9 +81,9 @@ function seededShuffle(list, seedStr) {
   return arr;
 }
 
-const LOOPS_PER_THEME = 3;
+export const LOOPS_PER_THEME = 3;
 
-const STEP_SCHEDULE = (() => {
+export const STEP_SCHEDULE = (() => {
   const list = [];
   for (const theme of themes) {
     for (let loopIndex = 1; loopIndex <= LOOPS_PER_THEME; loopIndex++) {
@@ -101,7 +101,7 @@ const STEP_SCHEDULE = (() => {
   return list;
 })();
 
-const THEME_RANGES = (() => {
+export const THEME_RANGES = (() => {
   const ranges = [];
   let cursor = 1;
   for (let i = 0; i < themes.length; i++) {
@@ -121,7 +121,7 @@ const THEME_RANGES = (() => {
   return ranges;
 })();
 
-function getStepScheduleInfo(stepNumber) {
+export function getStepScheduleInfo(stepNumber) {
   if (STEP_SCHEDULE.length === 0) {
     return {
       themeId: 'epaule',
@@ -135,7 +135,7 @@ function getStepScheduleInfo(stepNumber) {
   return STEP_SCHEDULE[idx];
 }
 
-function getThemeProgressionInfo(dailyState) {
+export function getThemeProgressionInfo(dailyState) {
   const currentStep = Math.max(1, Number(dailyState?.currentStep) || 1);
   const stepsMap = dailyState?.steps || {};
   const cycleLen = Math.max(1, STEP_SCHEDULE.length);

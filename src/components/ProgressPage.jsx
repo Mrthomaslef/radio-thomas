@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { themes } from '../data/themes.js';
 import { useQuestions } from '../data/useQuestions.js';
 import {
+  MAX_DAILY_STEPS,
   readName,
   saveName,
   readAllProgress,
+  readDailyState,
   readQuizHistory,
   readBookmarks,
   toggleQuestionBookmark,
@@ -12,7 +14,24 @@ import {
   subscribePlayer,
   syncProgressFromServer,
 } from '../data/player.js';
+import {
+  LOOPS_PER_THEME,
+  STEP_SCHEDULE,
+  THEME_RANGES,
+  getStepScheduleInfo,
+  getThemeProgressionInfo,
+} from './DailyPathPage.jsx';
 import Icon from './Icons.jsx';
+
+const WEEKDAY_SHORT_FR = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+const MONTH_SHORT_FR = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+
+function formatLocalDayIso(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
 
 const CHAPTER_COURSE_MAP = (() => {
   const map = {
@@ -48,7 +67,9 @@ export default function ProgressPage() {
   const [draft, setDraft] = useState(pseudo);
   const [editing, setEditing] = useState(!pseudo);
   const [progress, setProgress] = useState(() => readAllProgress(readName()));
+  const [dailyState, setDailyState] = useState(() => readDailyState(readName()));
   const [bookmarks, setBookmarks] = useState(() => readBookmarks(readName()));
+  const [modeTab, setModeTab] = useState('daily'); // 'daily' | 'chapters'
   const [historyOpen, setHistoryOpen] = useState(false);
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [openThemes, setOpenThemes] = useState({});
@@ -62,6 +83,7 @@ export default function ProgressPage() {
       const n = readName();
       setPseudo(n);
       setProgress(readAllProgress(n));
+      setDailyState(readDailyState(n));
       setBookmarks(readBookmarks(n));
     };
     if (readName()) syncProgressFromServer(readName());
@@ -75,6 +97,7 @@ export default function ProgressPage() {
     saveName(clean);
     setPseudo(clean);
     setProgress(readAllProgress(clean));
+    setDailyState(readDailyState(clean));
     setBookmarks(readBookmarks(clean));
     setEditing(false);
   };
@@ -107,6 +130,37 @@ export default function ProgressPage() {
   }
 
   const history = readQuizHistory(pseudo, byChapter);
+
+  const rollingDays = useMemo(() => {
+    const activeSet = new Set(dailyState.activeDays || []);
+    const starsByDay = dailyState.starsByDay || {};
+    const days = [];
+    const base = new Date();
+    base.setHours(12, 0, 0, 0);
+    for (let offset = -6; offset <= 0; offset++) {
+      const d = new Date(base);
+      d.setDate(base.getDate() + offset);
+      const iso = formatLocalDayIso(d);
+      const stars = starsByDay[iso] || 0;
+      const isStreak = activeSet.has(iso) || stars > 0;
+      days.push({
+        iso,
+        dayName: offset === 0 ? 'Auj.' : WEEKDAY_SHORT_FR[d.getDay()],
+        dayNum: d.getDate(),
+        monthShort: MONTH_SHORT_FR[d.getMonth()],
+        isToday: offset === 0,
+        isStreak,
+        stars,
+      });
+    }
+    return days;
+  }, [dailyState.activeDays, dailyState.starsByDay]);
+
+  const todayIso = rollingDays[rollingDays.length - 1]?.iso || formatLocalDayIso(new Date());
+  const starsToday = dailyState.starsByDay?.[todayIso] || 0;
+  const stepsToday = Math.min(dailyState.todayStepsCount || 0, MAX_DAILY_STEPS);
+  const completedStepsTotal = Object.values(dailyState.steps || {}).filter((s) => s > 0).length;
+  const themeProg = useMemo(() => getThemeProgressionInfo(dailyState), [dailyState]);
 
   const bookmarkedList = [];
   for (const t of themes) {
@@ -171,20 +225,167 @@ export default function ProgressPage() {
 
       {!editing && (
         <>
-          <div className="admin-summary prog-summary">
-            <div className="admin-stat">
-              <strong>{totalAnswered} / {totalQuestions}</strong>
-              <span>questions répondues</span>
-            </div>
-            <div className="admin-stat">
-              <strong>{totalCorrect} / {totalAnswered || 0}</strong>
-              <span>bonnes réponses ({totalAnswered ? Math.round((totalCorrect / totalAnswered) * 100) : 0} %)</span>
-            </div>
-            <div className="admin-stat">
-              <strong>{completedChapters} / {activeChapters}</strong>
-              <span>chapitres terminés</span>
-            </div>
+          <div className="cq-chips admin-tabs prog-mode-tabs" role="tablist" aria-label="Mode de progression">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={modeTab === 'daily'}
+              className={modeTab === 'daily' ? 'on' : ''}
+              onClick={() => setModeTab('daily')}
+            >
+              🔥 Chemin Daily
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={modeTab === 'chapters'}
+              className={modeTab === 'chapters' ? 'on' : ''}
+              onClick={() => setModeTab('chapters')}
+            >
+              📚 Chapitres &amp; Favoris
+            </button>
           </div>
+
+          {modeTab === 'daily' ? (
+            <div className="prog-daily-view">
+              {/* Top KPI Summary Cards for Daily Mode */}
+              <div className="admin-summary prog-summary prog-daily-summary">
+                <div className="admin-stat prog-daily-stat">
+                  <span className="prog-daily-stat-kicker">Série actuelle</span>
+                  <strong>
+                    🔥 {dailyState.streak} jour{dailyState.streak > 1 ? 's' : ''}
+                  </strong>
+                  <span>1 étape / jour maintient la série</span>
+                </div>
+                <div className="admin-stat prog-daily-stat is-highlight">
+                  <span className="prog-daily-stat-kicker">Étoiles ce jour</span>
+                  <strong>
+                    ★ {starsToday} <small>/ {MAX_DAILY_STEPS * 3}</small>
+                  </strong>
+                  <span>
+                    {stepsToday}/{MAX_DAILY_STEPS} étape{stepsToday > 1 ? 's' : ''} validée{stepsToday > 1 ? 's' : ''} aujourd’hui
+                  </span>
+                </div>
+                <div className="admin-stat prog-daily-stat">
+                  <span className="prog-daily-stat-kicker">Total sur le chemin</span>
+                  <strong>★ {dailyState.totalStars}</strong>
+                  <span>
+                    {completedStepsTotal} étape{completedStepsTotal > 1 ? 's' : ''} terminée{completedStepsTotal > 1 ? 's' : ''}
+                  </span>
+                </div>
+              </div>
+
+              {/* 7-day Rolling Streak & Daily Stars Timeline */}
+              <div className="cq-card prog-streak-card">
+                <div className="prog-streak-head">
+                  <div>
+                    <span className="daily-goal-kicker">7 derniers jours glissants</span>
+                    <h2>Frise de série &amp; étoiles du jour</h2>
+                  </div>
+                  <span className={`prog-today-pill ${stepsToday > 0 ? 'is-done' : ''}`}>
+                    {stepsToday > 0 ? `✓ Série validée aujourd’hui (+${starsToday}★)` : '⏳ Série du jour à valider'}
+                  </span>
+                </div>
+
+                <div className="prog-streak-strip" role="list" aria-label="Activité sur les 7 derniers jours">
+                  {rollingDays.map((d) => (
+                    <div
+                      key={d.iso}
+                      role="listitem"
+                      className={`prog-streak-day ${d.isStreak ? 'is-streak' : ''} ${d.isToday ? 'is-today' : ''}`}
+                      title={`${d.dayName} ${d.dayNum} ${d.monthShort} : ${
+                        d.isStreak ? `${d.stars} étoile${d.stars > 1 ? 's' : ''} gagnée${d.stars > 1 ? 's' : ''}` : 'Aucune étape validée'
+                      }`}
+                    >
+                      <span className="prog-streak-day-name">{d.dayName}</span>
+                      <div className="prog-streak-day-circle">
+                        {d.isStreak ? (
+                          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                              fill="currentColor"
+                              d="M12 2c1.8 3.2 5 5.6 5 10.2A5.5 5.5 0 0 1 11.5 18c2.2-1.2 2.4-3.8 1-5.5-1.2 1.4-2.5 2.4-2.5 4.3A4.2 4.2 0 0 1 6.5 12C6.5 8.2 9.8 5.2 12 2Z"
+                            />
+                          </svg>
+                        ) : (
+                          <span className="prog-streak-day-num">{d.dayNum}</span>
+                        )}
+                      </div>
+                      <span className="prog-streak-day-date">
+                        {d.dayNum} {d.monthShort}
+                      </span>
+                      <span className={`prog-streak-day-stars ${d.stars > 0 ? 'has-stars' : ''}`}>
+                        {d.stars > 0 ? `★ ${d.stars}` : '—'}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Current Category & Step on the Daily Path */}
+              <div className="cq-card prog-daily-cat-card">
+                <div className="daily-cal-theme-current">
+                  <img
+                    src={`/theme-logos/${themeProg.currentTheme.id}.png`}
+                    alt=""
+                    aria-hidden="true"
+                    className="daily-cal-theme-logo"
+                    draggable="false"
+                  />
+                  <div className="daily-cal-theme-body">
+                    <div className="daily-cal-theme-top">
+                      <div>
+                        <span className="daily-cal-theme-kicker">Catégorie en cours sur le chemin</span>
+                        <strong className="daily-cal-theme-title">{themeProg.currentTheme.title}</strong>
+                      </div>
+                      <span className="daily-cal-theme-badge">
+                        {themeProg.completedSteps}/{themeProg.totalSteps} étapes · {themeProg.percent}%
+                      </span>
+                    </div>
+                    <div className="daily-cal-theme-bar" aria-hidden="true">
+                      <div style={{ width: `${themeProg.percent}%` }} />
+                    </div>
+                    <span className="daily-cal-theme-chap">
+                      Étape actuelle #{dailyState.currentStep} : {themeProg.chapterTitle} (Boucle {themeProg.loopIndex}/{LOOPS_PER_THEME})
+                    </span>
+                  </div>
+                </div>
+
+                <div className="prog-daily-cat-footer">
+                  <div className="daily-cal-theme-next" style={{ borderTop: 'none', paddingTop: 0 }}>
+                    <span className="daily-cal-theme-next-label">Prochaine catégorie :</span>
+                    <span className="daily-cal-theme-next-pill">
+                      <img
+                        src={`/theme-logos/${themeProg.nextTheme.id}.png`}
+                        alt=""
+                        aria-hidden="true"
+                        className="daily-cal-theme-next-logo"
+                        draggable="false"
+                      />
+                      <b>{themeProg.nextTheme.title}</b>
+                    </span>
+                  </div>
+                  <a href="#/" className="btn btn-small">
+                    Continuer sur le chemin <Icon name="arrow" size={15} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="admin-summary prog-summary">
+                <div className="admin-stat">
+                  <strong>{totalAnswered} / {totalQuestions}</strong>
+                  <span>questions répondues</span>
+                </div>
+                <div className="admin-stat">
+                  <strong>{totalCorrect} / {totalAnswered || 0}</strong>
+                  <span>bonnes réponses ({totalAnswered ? Math.round((totalCorrect / totalAnswered) * 100) : 0} %)</span>
+                </div>
+                <div className="admin-stat">
+                  <strong>{completedChapters} / {activeChapters}</strong>
+                  <span>chapitres terminés</span>
+                </div>
+              </div>
 
           <div className="theme prog-collapse">
             <button
@@ -428,6 +629,8 @@ export default function ProgressPage() {
                 );
               })}
             </div>
+          )}
+            </>
           )}
         </>
       )}

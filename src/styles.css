@@ -3797,16 +3797,206 @@ a.cq-dot:hover { transform: scale(1.08); }
   gap: 10px;
 }
 
+/* Progress Page — Daily Path Tab & 7-Day Rolling Streak */
+.prog-mode-tabs {
+  margin-bottom: 18px;
+}
 
+.prog-daily-view {
+  display: grid;
+  gap: 16px;
+}
 
+.prog-daily-stat {
+  position: relative;
+}
 
+.prog-daily-stat.is-highlight {
+  border-color: rgba(56, 225, 255, 0.45);
+  background: linear-gradient(145deg, rgba(56, 225, 255, 0.1), rgba(124, 140, 255, 0.08));
+}
 
+.prog-daily-stat-kicker {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cyan);
+  margin-bottom: 2px;
+}
 
+.prog-daily-stat strong small {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
+}
 
+.prog-streak-card {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+}
 
+.prog-streak-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
 
+.prog-streak-head h2 {
+  font-family: var(--display);
+  font-size: 1.18rem;
+  color: #ffffff;
+  margin-top: 2px;
+}
 
+.prog-today-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
 
+.prog-today-pill.is-done {
+  color: var(--cyan);
+  background: rgba(56, 225, 255, 0.12);
+  border-color: rgba(56, 225, 255, 0.42);
+}
 
+.prog-streak-strip {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.prog-streak-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 4px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.16s ease, border-color 0.16s ease;
+}
+
+.prog-streak-day.is-today {
+  border-color: rgba(56, 225, 255, 0.55);
+  background: rgba(56, 225, 255, 0.06);
+}
+
+.prog-streak-day.is-streak {
+  background: linear-gradient(155deg, rgba(56, 225, 255, 0.18), rgba(124, 140, 255, 0.18));
+  border-color: var(--cyan);
+  box-shadow: 0 6px 18px rgba(56, 225, 255, 0.14);
+}
+
+.prog-streak-day-name {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.prog-streak-day.is-today .prog-streak-day-name {
+  color: var(--cyan);
+}
+
+.prog-streak-day-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(8, 15, 25, 0.8);
+  border: 1.5px solid rgba(160, 220, 255, 0.16);
+  color: var(--muted);
+}
+
+.prog-streak-day.is-streak .prog-streak-day-circle {
+  background: radial-gradient(circle at 50% 35%, rgba(56, 225, 255, 0.32), rgba(12, 24, 42, 0.95));
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: 0 0 12px rgba(56, 225, 255, 0.35);
+}
+
+.prog-streak-day-num {
+  font-family: var(--display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.prog-streak-day-date {
+  font-size: 0.68rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.prog-streak-day-stars {
+  font-family: var(--display);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: rgba(143, 166, 184, 0.55);
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(5, 10, 18, 0.55);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.prog-streak-day-stars.has-stars {
+  color: #fde047;
+  background: rgba(250, 204, 21, 0.14);
+  border-color: rgba(250, 204, 21, 0.38);
+}
+
+.prog-daily-cat-card {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+}
+
+.prog-daily-cat-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(160, 220, 255, 0.12);
+}
+
+@media (max-width: 540px) {
+  .prog-streak-strip {
+    gap: 5px;
+  }
+  .prog-streak-day {
+    padding: 8px 2px;
+    border-radius: 13px;
+  }
+  .prog-streak-day-circle {
+    width: 32px;
+    height: 32px;
+  }
+  .prog-streak-day-date {
+    font-size: 0.62rem;
+  }
+  .prog-streak-day-stars {
+    font-size: 0.68rem;
+    padding: 1px 5px;
+  }
+}
 
 
