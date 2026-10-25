@@ -3,7 +3,7 @@
 // eslint-disable-next-line no-control-regex
 const CONTROL_CHARS = /[\u0000-\u001f\u007f]/;
 const CHAPTER_KEY = /^ch[0-9]{1,2}$/;
-const QUESTION_ID = /^[a-z0-9-]{1,40}$/;
+const QUESTION_ID = /^[a-z0-9-]{1,64}$/;
 const ITEM_ID = /^[A-F]$/;
 
 function readBody(req) {
@@ -55,7 +55,7 @@ function cleanProgress(raw) {
   return out;
 }
 
-function mergeChapterProgress(srv = {}, inc = {}) {
+function mergeChapterProgress(srv = {}, inc = {}, chKey = '') {
   const srvCleared = Number(srv?.clearedAt) || 0;
   const incCleared = Number(inc?.clearedAt) || 0;
 
@@ -93,6 +93,7 @@ function mergeChapterProgress(srv = {}, inc = {}) {
   const allQids = new Set([...Object.keys(srvAns), ...Object.keys(incAns)]);
   const mergedAnswers = {};
   const mergedTimestamps = {};
+  const isDailyChapter = chKey === 'ch96';
 
   for (const qid of allQids) {
     const hasSrv = Array.isArray(srvAns[qid]) && srvAns[qid].length > 0;
@@ -101,7 +102,15 @@ function mergeChapterProgress(srv = {}, inc = {}) {
     const iTime = Number(incTs[qid]) || incChTs;
 
     if (hasSrv && hasInc) {
-      if (iTime >= sTime) {
+      // For daily step stars (step-<N> and sd-<YYYYMMDD>-<N>), always keep the highest star rating ('C' > 'B' > 'A')
+      if (isDailyChapter && (qid.startsWith('step-') || qid.startsWith('sd-'))) {
+        const sCode = srvAns[qid][0] || 'A';
+        const iCode = incAns[qid][0] || 'A';
+        const bestCode = sCode > iCode ? sCode : iCode;
+        mergedAnswers[qid] = [bestCode];
+        const maxT = Math.max(sTime, iTime);
+        if (maxT > 0) mergedTimestamps[qid] = maxT;
+      } else if (iTime >= sTime) {
         mergedAnswers[qid] = incAns[qid];
         if (iTime > 0) mergedTimestamps[qid] = iTime;
       } else {
@@ -131,7 +140,7 @@ function mergeChapterProgress(srv = {}, inc = {}) {
 function mergeServerAndClientProgress(serverProg, clientProg) {
   const merged = { ...(serverProg && typeof serverProg === 'object' ? serverProg : {}) };
   for (const [ch, inc] of Object.entries(clientProg || {})) {
-    merged[ch] = mergeChapterProgress(merged[ch] || { answers: {}, sent: false }, inc);
+    merged[ch] = mergeChapterProgress(merged[ch] || { answers: {}, sent: false }, inc, ch);
   }
   return merged;
 }

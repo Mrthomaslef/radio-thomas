@@ -87,17 +87,40 @@ export function readChapterProgress(chapterKey, name = readName()) {
 }
 
 let pushTimer = null;
+let pendingPushName = '';
+
+function pushProgressNow(name) {
+  const clean = (name || '').trim().replace(/\s+/g, ' ');
+  if (!clean) return Promise.resolve();
+  if (pushTimer) {
+    clearTimeout(pushTimer);
+    pushTimer = null;
+  }
+  pendingPushName = '';
+  const progress = readRawMap(clean);
+  return fetch('/api/progress', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: clean, progress }),
+    keepalive: true,
+  })
+    .then(async (r) => {
+      if (!r.ok) return;
+      const json = await r.json();
+      if (json?.progress && typeof json.progress === 'object') {
+        applyRemoteProgressMerge(clean, json.progress, false);
+      }
+    })
+    .catch(() => { /* offline or table not yet created */ });
+}
+
 function schedulePush(name) {
   if (!name) return;
+  pendingPushName = name;
   if (pushTimer) clearTimeout(pushTimer);
   pushTimer = setTimeout(() => {
-    const progress = readRawMap(name);
-    fetch('/api/progress', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, progress }),
-    }).catch(() => { /* offline or table not yet created */ });
-  }, 300);
+    pushProgressNow(name);
+  }, 80);
 }
 
 export function writeChapterProgress(chapterKey, data, name = readName()) {
@@ -522,6 +545,138 @@ export async function syncUsersHistoryFromAttempts(attempts) {
   notify();
 }
 
+function applyRemoteProgressMerge(clean, remote, allowRepush = true) {
+  const local = readRawMap(clean);
+  const allChapters = new Set([...Object.keys(remote || {}), ...Object.keys(local)]);
+  const merged = {};
+  let localHasNewer = false;
+
+  for (const ch of allChapters) {
+    const locVal = local[ch] || { answers: {}, sent: false };
+    const remVal = (remote && remote[ch]) || { answers: {}, sent: false };
+    const locCleared = Number(locVal?.clearedAt) || 0;
+    const remCleared = Number(remVal?.clearedAt) || 0;
+
+    if (locCleared > remCleared) {
+      merged[ch] = {
+        answers: locVal.answers || {},
+        sent: Boolean(locVal.sent),
+        historyRecorded: Boolean(locVal.historyRecorded || locVal.sent),
+        ...(locVal.answerTimestamps && Object.keys(locVal.answerTimestamps).length > 0
+          ? { answerTimestamps: locVal.answerTimestamps }
+          : {}),
+        clearedAt: locCleared,
+        updatedAt: Math.max(Number(locVal.updatedAt) || 0, locCleared),
+      };
+      localHasNewer = true;
+      continue;
+    }
+
+    if (remCleared > locCleared) {
+      merged[ch] = {
+        answers: remVal.answers || {},
+        sent: Boolean(remVal.sent),
+        historyRecorded: Boolean(remVal.historyRecorded || remVal.sent),
+        ...(remVal.answerTimestamps && Object.keys(remVal.answerTimestamps).length > 0
+          ? { answerTimestamps: remVal.answerTimestamps }
+          : {}),
+        clearedAt: remCleared,
+        updatedAt: Math.max(Number(remVal.updatedAt) || 0, remCleared),
+      };
+      continue;
+    }
+
+    const remAns = remVal.answers || {};
+    const locAns = locVal.answers || {};
+    const remTs = remVal.answerTimestamps || {};
+    const locTs = locVal.answerTimestamps || {};
+    const remChTs = Number(remVal.updatedAt) || 0;
+    const locChTs = Number(locVal.updatedAt) || 0;
+
+    const allQids = new Set([...Object.keys(remAns), ...Object.keys(locAns)]);
+    const mergedAnswers = {};
+    const mergedTimestamps = {};
+    const isDailyCh = ch === 'ch96';
+
+    for (const qid of allQids) {
+      const hasRem = Array.isArray(remAns[qid]) && remAns[qid].length > 0;
+      const hasLoc = Array.isArray(locAns[qid]) && locAns[qid].length > 0;
+      const rTime = Number(remTs[qid]) || remChTs;
+      const lTime = Number(locTs[qid]) || locChTs;
+
+      if (hasRem && hasLoc) {
+        if (isDailyCh && (qid.startsWith('step-') || qid.startsWith('sd-'))) {
+          const rCode = remAns[qid][0] || 'A';
+          const lCode = locAns[qid][0] || 'A';
+          const bestCode = lCode > rCode ? lCode : rCode;
+          mergedAnswers[qid] = [bestCode];
+          const maxT = Math.max(rTime, lTime);
+          if (maxT > 0) mergedTimestamps[qid] = maxT;
+          if (lCode > rCode) localHasNewer = true;
+          continue;
+        }
+        const sameAns = JSON.stringify(remAns[qid]) === JSON.stringify(locAns[qid]);
+        if (sameAns) {
+          mergedAnswers[qid] = remAns[qid];
+          const maxT = Math.max(rTime, lTime);
+          if (maxT > 0) mergedTimestamps[qid] = maxT;
+        } else if (lTime > rTime) {
+          mergedAnswers[qid] = locAns[qid];
+          if (lTime > 0) mergedTimestamps[qid] = lTime;
+          localHasNewer = true;
+        } else {
+          // Remote server copy wins when equal or newer (prevents stale local storage from reverting answers)
+          mergedAnswers[qid] = remAns[qid];
+          if (rTime > 0) mergedTimestamps[qid] = rTime;
+        }
+      } else if (hasLoc) {
+        mergedAnswers[qid] = locAns[qid];
+        if (lTime > 0) mergedTimestamps[qid] = lTime;
+        localHasNewer = true;
+      } else if (hasRem) {
+        mergedAnswers[qid] = remAns[qid];
+        if (rTime > 0) mergedTimestamps[qid] = rTime;
+      }
+    }
+
+    const maxCleared = Math.max(locCleared, remCleared);
+    const maxUpdated = Math.max(remChTs, locChTs);
+    merged[ch] = {
+      answers: mergedAnswers,
+      sent: Boolean(remVal.sent || locVal.sent),
+      historyRecorded: Boolean(
+        remVal.historyRecorded || locVal.historyRecorded || remVal.sent || locVal.sent
+      ),
+      ...(Object.keys(mergedTimestamps).length > 0 ? { answerTimestamps: mergedTimestamps } : {}),
+      ...(maxCleared > 0 ? { clearedAt: maxCleared } : {}),
+      ...(maxUpdated > 0 ? { updatedAt: maxUpdated } : {}),
+    };
+  }
+
+  // Keep the local bookmarks mirror in sync with merged ch97 so stale local flags never override ch97
+  const mergedCh97 = merged[BOOKMARKS_CHAPTER_KEY];
+  if (mergedCh97?.answers) {
+    const syncedBookmarks = {};
+    const ch97Ts = mergedCh97.answerTimestamps || {};
+    for (const [qid, val] of Object.entries(mergedCh97.answers)) {
+      if (Array.isArray(val) && val.length > 0) {
+        syncedBookmarks[qid] = { on: val[0] === 'A', ts: Number(ch97Ts[qid]) || Date.now() };
+      }
+    }
+    writeLocalBookmarksMap(clean, syncedBookmarks);
+  }
+
+  // Keep the local daily steps mirror in sync with merged ch96 so cross-device steps & in-progress answers stay identical
+  const mergedCh96 = merged['ch96'];
+  if (mergedCh96?.answers) {
+    syncLocalDailyStepsFromCh96(clean, mergedCh96);
+  }
+
+  writeRawMap(clean, merged);
+  notify();
+  if (allowRepush && localHasNewer) schedulePush(clean);
+}
+
 export async function syncProgressFromServer(name = readName()) {
   const clean = (name || '').trim().replace(/\s+/g, ' ');
   if (!clean) return;
@@ -531,118 +686,7 @@ export async function syncProgressFromServer(name = readName()) {
     if (!r.ok) return;
     const json = await r.json();
     const remote = json?.progress && typeof json.progress === 'object' ? json.progress : {};
-    const local = readRawMap(clean);
-    const allChapters = new Set([...Object.keys(remote), ...Object.keys(local)]);
-    const merged = {};
-    let localHasNewer = false;
-
-    for (const ch of allChapters) {
-      const locVal = local[ch] || { answers: {}, sent: false };
-      const remVal = remote[ch] || { answers: {}, sent: false };
-      const locCleared = Number(locVal?.clearedAt) || 0;
-      const remCleared = Number(remVal?.clearedAt) || 0;
-
-      if (locCleared > remCleared) {
-        merged[ch] = {
-          answers: locVal.answers || {},
-          sent: Boolean(locVal.sent),
-          historyRecorded: Boolean(locVal.historyRecorded || locVal.sent),
-          ...(locVal.answerTimestamps && Object.keys(locVal.answerTimestamps).length > 0
-            ? { answerTimestamps: locVal.answerTimestamps }
-            : {}),
-          clearedAt: locCleared,
-          updatedAt: Math.max(Number(locVal.updatedAt) || 0, locCleared),
-        };
-        localHasNewer = true;
-        continue;
-      }
-
-      if (remCleared > locCleared) {
-        merged[ch] = {
-          answers: remVal.answers || {},
-          sent: Boolean(remVal.sent),
-          historyRecorded: Boolean(remVal.historyRecorded || remVal.sent),
-          ...(remVal.answerTimestamps && Object.keys(remVal.answerTimestamps).length > 0
-            ? { answerTimestamps: remVal.answerTimestamps }
-            : {}),
-          clearedAt: remCleared,
-          updatedAt: Math.max(Number(remVal.updatedAt) || 0, remCleared),
-        };
-        continue;
-      }
-
-      const remAns = remVal.answers || {};
-      const locAns = locVal.answers || {};
-      const remTs = remVal.answerTimestamps || {};
-      const locTs = locVal.answerTimestamps || {};
-      const remChTs = Number(remVal.updatedAt) || 0;
-      const locChTs = Number(locVal.updatedAt) || 0;
-
-      const allQids = new Set([...Object.keys(remAns), ...Object.keys(locAns)]);
-      const mergedAnswers = {};
-      const mergedTimestamps = {};
-
-      for (const qid of allQids) {
-        const hasRem = Array.isArray(remAns[qid]) && remAns[qid].length > 0;
-        const hasLoc = Array.isArray(locAns[qid]) && locAns[qid].length > 0;
-        const rTime = Number(remTs[qid]) || remChTs;
-        const lTime = Number(locTs[qid]) || locChTs;
-
-        if (hasRem && hasLoc) {
-          const sameAns = JSON.stringify(remAns[qid]) === JSON.stringify(locAns[qid]);
-          if (sameAns) {
-            mergedAnswers[qid] = remAns[qid];
-            const maxT = Math.max(rTime, lTime);
-            if (maxT > 0) mergedTimestamps[qid] = maxT;
-          } else if (lTime > rTime) {
-            mergedAnswers[qid] = locAns[qid];
-            if (lTime > 0) mergedTimestamps[qid] = lTime;
-            localHasNewer = true;
-          } else {
-            // Remote server copy wins when equal or newer (prevents stale local storage from reverting answers)
-            mergedAnswers[qid] = remAns[qid];
-            if (rTime > 0) mergedTimestamps[qid] = rTime;
-          }
-        } else if (hasLoc) {
-          mergedAnswers[qid] = locAns[qid];
-          if (lTime > 0) mergedTimestamps[qid] = lTime;
-          localHasNewer = true;
-        } else if (hasRem) {
-          mergedAnswers[qid] = remAns[qid];
-          if (rTime > 0) mergedTimestamps[qid] = rTime;
-        }
-      }
-
-      const maxCleared = Math.max(locCleared, remCleared);
-      const maxUpdated = Math.max(remChTs, locChTs);
-      merged[ch] = {
-        answers: mergedAnswers,
-        sent: Boolean(remVal.sent || locVal.sent),
-        historyRecorded: Boolean(
-          remVal.historyRecorded || locVal.historyRecorded || remVal.sent || locVal.sent
-        ),
-        ...(Object.keys(mergedTimestamps).length > 0 ? { answerTimestamps: mergedTimestamps } : {}),
-        ...(maxCleared > 0 ? { clearedAt: maxCleared } : {}),
-        ...(maxUpdated > 0 ? { updatedAt: maxUpdated } : {}),
-      };
-    }
-
-    // Keep the local bookmarks mirror in sync with merged ch97 so stale local flags never override ch97
-    const mergedCh97 = merged[BOOKMARKS_CHAPTER_KEY];
-    if (mergedCh97?.answers) {
-      const syncedBookmarks = {};
-      const ch97Ts = mergedCh97.answerTimestamps || {};
-      for (const [qid, val] of Object.entries(mergedCh97.answers)) {
-        if (Array.isArray(val) && val.length > 0) {
-          syncedBookmarks[qid] = { on: val[0] === 'A', ts: Number(ch97Ts[qid]) || Date.now() };
-        }
-      }
-      writeLocalBookmarksMap(clean, syncedBookmarks);
-    }
-
-    writeRawMap(clean, merged);
-    notify();
-    if (localHasNewer) schedulePush(clean);
+    applyRemoteProgressMerge(clean, remote, true);
   } catch { /* ignore network errors */ }
 }
 
@@ -680,45 +724,109 @@ function writeLocalDailyStepsMap(name, map) {
   }
 }
 
+function reconstructStepSessionFromCh96(sNum, ch96) {
+  const rawAns = ch96?.answers || {};
+  const tsMap = ch96?.answerTimestamps || {};
+  const sqPrefix = `sq-${sNum}-`;
+  const indexed = [];
+  let maxTs = 0;
+
+  for (const [k, val] of Object.entries(rawAns)) {
+    if (!k.startsWith(sqPrefix) || !Array.isArray(val) || val[0] !== 'A') continue;
+    const rest = k.slice(sqPrefix.length);
+    const dashIdx = rest.indexOf('-');
+    if (dashIdx === -1) continue;
+    const orderIdx = parseInt(rest.slice(0, dashIdx), 10);
+    const qid = rest.slice(dashIdx + 1);
+    if (!Number.isNaN(orderIdx) && qid) {
+      indexed.push({ orderIdx, qid });
+      const t = Number(tsMap[k]) || 0;
+      if (t > maxTs) maxTs = t;
+    }
+  }
+  indexed.sort((a, b) => a.orderIdx - b.orderIdx);
+  const questionIds = indexed.map((x) => x.qid);
+
+  const clearedTs = Number(tsMap[`sc-${sNum}`]) || 0;
+  if (clearedTs > maxTs) maxTs = clearedTs;
+
+  const saPrefix = `sa-${sNum}-`;
+  const answers = {};
+  for (const [k, val] of Object.entries(rawAns)) {
+    if (!k.startsWith(saPrefix) || !Array.isArray(val) || val.length === 0) continue;
+    const qid = k.slice(saPrefix.length);
+    const aTs = Number(tsMap[k]) || 0;
+    if (aTs > maxTs) maxTs = aTs;
+    // Ignore answers that were cleared by a later restart (`sc-<sNum>`)
+    if (clearedTs > 0 && aTs > 0 && aTs <= clearedTs) continue;
+    if (qid) {
+      answers[qid] = val;
+    }
+  }
+
+  return { questionIds, answers, clearedTs, updatedAt: maxTs };
+}
+
+function syncLocalDailyStepsFromCh96(name, ch96) {
+  const rawAns = ch96?.answers || {};
+  const stepNums = new Set();
+  for (const k of Object.keys(rawAns)) {
+    const m = k.match(/^(?:sq|sa|sc)-(\d{1,4})(?:-|$)/);
+    if (m) stepNums.add(parseInt(m[1], 10));
+  }
+  if (stepNums.size === 0) return;
+
+  const localMap = readLocalDailyStepsMap(name);
+  let changed = false;
+  for (const sNum of stepNums) {
+    if (!sNum || sNum < 1) continue;
+    const fromCh96 = reconstructStepSessionFromCh96(sNum, ch96);
+    const prevLocal = localMap[sNum] || {};
+    const localUpdated = Number(prevLocal.updatedAt) || 0;
+
+    if (fromCh96.updatedAt >= localUpdated || !prevLocal.questionIds?.length) {
+      const nextQids =
+        fromCh96.questionIds.length > 0 ? fromCh96.questionIds : prevLocal.questionIds || [];
+      const nextAns =
+        fromCh96.clearedTs > localUpdated
+          ? fromCh96.answers
+          : { ...(prevLocal.answers || {}), ...fromCh96.answers };
+      localMap[sNum] = {
+        questionIds: nextQids,
+        answers: nextAns,
+        updatedAt: Math.max(localUpdated, fromCh96.updatedAt, Date.now()),
+      };
+      changed = true;
+    }
+  }
+  if (changed) writeLocalDailyStepsMap(name, localMap);
+}
+
 export function readDailyStepSession(stepNumber, name = readName()) {
   if (!name || !stepNumber) return { questionIds: [], answers: {} };
   const sNum = Math.floor(Number(stepNumber));
   const localMap = readLocalDailyStepsMap(name);
   const localEntry = localMap[sNum] || {};
   const ch96 = readChapterProgress(DAILY_CHAPTER_KEY, name);
-  const rawAns = ch96?.answers || {};
+  const fromCh96 = reconstructStepSessionFromCh96(sNum, ch96);
 
-  // Reconstruct questionIds from ch96 (sq-<step>-<idx>-<qid>) if not in localEntry
-  let questionIds = Array.isArray(localEntry.questionIds) ? [...localEntry.questionIds] : [];
-  if (questionIds.length === 0) {
-    const sqPrefix = `sq-${sNum}-`;
-    const indexed = [];
-    for (const [k, val] of Object.entries(rawAns)) {
-      if (!k.startsWith(sqPrefix) || !Array.isArray(val) || val[0] !== 'A') continue;
-      const rest = k.slice(sqPrefix.length);
-      const dashIdx = rest.indexOf('-');
-      if (dashIdx === -1) continue;
-      const orderIdx = parseInt(rest.slice(0, dashIdx), 10);
-      const qid = rest.slice(dashIdx + 1);
-      if (!Number.isNaN(orderIdx) && qid) {
-        indexed.push({ orderIdx, qid });
-      }
-    }
-    if (indexed.length > 0) {
-      indexed.sort((a, b) => a.orderIdx - b.orderIdx);
-      questionIds = indexed.map((x) => x.qid);
-    }
-  }
+  // Prefer synced ch96 questionIds so all devices share the exact same step questions
+  const questionIds =
+    fromCh96.questionIds.length > 0
+      ? fromCh96.questionIds
+      : Array.isArray(localEntry.questionIds)
+        ? [...localEntry.questionIds]
+        : [];
 
-  // Reconstruct step answers from ch96 (sa-<step>-<qid>) merged with localEntry.answers
-  const answers = { ...(localEntry.answers && typeof localEntry.answers === 'object' ? localEntry.answers : {}) };
-  const saPrefix = `sa-${sNum}-`;
-  for (const [k, val] of Object.entries(rawAns)) {
-    if (!k.startsWith(saPrefix) || !Array.isArray(val) || val.length === 0) continue;
-    const qid = k.slice(saPrefix.length);
-    if (qid && !answers[qid]) {
-      answers[qid] = val;
-    }
+  const localUpdated = Number(localEntry.updatedAt) || 0;
+  let answers;
+  if (fromCh96.clearedTs > localUpdated) {
+    answers = { ...fromCh96.answers };
+  } else {
+    answers = {
+      ...(localEntry.answers && typeof localEntry.answers === 'object' ? localEntry.answers : {}),
+      ...fromCh96.answers,
+    };
   }
 
   return { questionIds, answers };
@@ -747,7 +855,7 @@ export function saveDailyStepSession(stepNumber, { questionIds, answers }, name 
 
   const sqPrefix = `sq-${sNum}-`;
   finalQids.forEach((qid, idx) => {
-    const key = `${sqPrefix}${idx}-${qid}`.slice(0, 40);
+    const key = `${sqPrefix}${idx}-${qid}`.slice(0, 64);
     if (!chAns[key]) {
       chAns[key] = ['A'];
       chTs[key] = now;
@@ -756,7 +864,7 @@ export function saveDailyStepSession(stepNumber, { questionIds, answers }, name 
 
   const saPrefix = `sa-${sNum}-`;
   for (const [qid, picked] of Object.entries(finalAns)) {
-    const key = `${saPrefix}${qid}`.slice(0, 40);
+    const key = `${saPrefix}${qid}`.slice(0, 64);
     if (Array.isArray(picked) && picked.length > 0) {
       chAns[key] = picked;
       chTs[key] = now;
@@ -793,6 +901,11 @@ export function clearDailyStepAnswers(stepNumber, name = readName()) {
       chTs[k] = now;
     }
   }
+  // Record a synced step-clear timestamp key so other devices also clear older in-progress answers
+  const scKey = `sc-${sNum}`;
+  chAns[scKey] = ['A'];
+  chTs[scKey] = now;
+
   writeChapterProgress(
     DAILY_CHAPTER_KEY,
     { answers: chAns, answerTimestamps: chTs, sent: true, updatedAt: now },
@@ -1014,9 +1127,28 @@ if (typeof window !== 'undefined') {
     const n = readName();
     if (n) syncProgressFromServer(n);
   };
+  const flushPending = () => {
+    const target = pendingPushName || readName();
+    if (pushTimer && target) {
+      pushProgressNow(target);
+    }
+  };
   window.addEventListener('focus', autoSync);
+  window.addEventListener('online', autoSync);
   window.addEventListener('hashchange', autoSync);
+  window.addEventListener('pagehide', flushPending);
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') autoSync();
+    if (document.visibilityState === 'visible') {
+      autoSync();
+    } else {
+      flushPending();
+    }
   });
+  // Periodic background sync when the tab is active so multi-device usage stays in real-time sync
+  setInterval(() => {
+    if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
+      const n = readName();
+      if (n && !pushTimer) syncProgressFromServer(n);
+    }
+  }, 15000);
 }

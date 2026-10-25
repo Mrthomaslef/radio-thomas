@@ -133,65 +133,39 @@ function buildFlatQuestionMap(byChapter, allProgress) {
   return { fullPool, byId };
 }
 
-function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter, allProgress) {
-  const count = Math.max(1, Number(goalCount) || 3);
-  const { fullPool, byId } = buildFlatQuestionMap(byChapter, allProgress);
-  if (fullPool.length === 0) return { questions: [], answers: {}, stepInfo: getStepScheduleInfo(stepNumber) };
-
-  const stepInfo = getStepScheduleInfo(stepNumber);
-  const chapterPool = fullPool.filter((q) => q._chapterKey === stepInfo.chapterKey);
-  const targetPool = chapterPool.length > 0 ? chapterPool : fullPool;
-
-  const savedSession = readDailyStepSession(stepNumber, pseudo);
-  const hasSavedAnswers = Object.keys(savedSession.answers || {}).length > 0;
-  // Restore saved session if the user has already started answering it and its questions belong to this chapter
-  if (hasSavedAnswers && Array.isArray(savedSession.questionIds) && savedSession.questionIds.length > 0) {
-    const restored = savedSession.questionIds
-      .map((qid) => byId.get(qid))
-      .filter(Boolean);
-    const matchesChapter =
-      restored.length === count &&
-      restored.every((q) => q._chapterKey === stepInfo.chapterKey);
-    if (matchesChapter) {
-      const withBossFlag = restored.map((q, idx) => ({
-        ...q,
-        _isBoss: restored.length > 1 ? idx === restored.length - 1 : stepNumber % 4 === 0,
-      }));
-      return {
-        questions: withBossFlag,
-        answers: savedSession.answers || {},
-        stepInfo,
-      };
-    }
+function getSlotPrioritiesForLoop(loopIndex) {
+  if (loopIndex === 1) {
+    // Cycle 1: Simple questions at the start (Facile, Facile, Facile/Moyen)
+    return [
+      [1, 2, 3],
+      [1, 2, 3],
+      [2, 1, 3],
+    ];
   }
-
-  // Otherwise, deterministically select 3 questions from this step's single chapter (stepInfo.chapterKey)
-  const seedBase = `${(pseudo || '').trim().toLowerCase()}:step-${stepNumber}:${stepInfo.chapterKey}`;
-  const isBossStep = stepNumber % 4 === 0;
-  const usedIds = new Set();
-
-  // Exclude questions already assigned in previous loops of this same chapter so the 3 loops don't repeat
-  for (let prev = 1; prev < stepNumber; prev++) {
-    const prevInfo = getStepScheduleInfo(prev);
-    if (prevInfo.chapterKey !== stepInfo.chapterKey) continue;
-    const prevSaved = readDailyStepSession(prev, pseudo);
-    for (const qid of prevSaved.questionIds || []) {
-      usedIds.add(qid);
-    }
+  if (loopIndex === 2) {
+    // Cycle 2: % of harder questions increases (Facile, Moyen, Difficile)
+    return [
+      [1, 2, 3],
+      [2, 3, 1],
+      [3, 2, 1],
+    ];
   }
+  // Cycle 3+: High % of harder questions (Moyen, Difficile, Difficile)
+  return [
+    [2, 3, 1],
+    [3, 2, 1],
+    [3, 2, 1],
+  ];
+}
+
+function pickLoopQuestionsDeterministically(targetPool, count, pseudo, chapterKey, loopIndex, usedIds) {
+  const seedBase = `${(pseudo || '').trim().toLowerCase()}:ch-${chapterKey}:loop-${loopIndex}`;
+  const slotPriorities = getSlotPrioritiesForLoop(loopIndex);
 
   const pickFrom = (candidates, needed, tag) => {
     const filtered = candidates.filter((q) => !usedIds.has(q.id));
     const poolToUse = filtered.length >= needed ? filtered : candidates;
-    const fresh = seededShuffle(
-      poolToUse.filter((q) => q._unanswered),
-      `${seedBase}:${tag}:fresh`
-    );
-    const seen = seededShuffle(
-      poolToUse.filter((q) => !q._unanswered),
-      `${seedBase}:${tag}:seen`
-    );
-    return [...fresh, ...seen].slice(0, needed);
+    return seededShuffle(poolToUse, `${seedBase}:${tag}`).slice(0, needed);
   };
 
   const pickOneWithPriority = (diffPriorityList, tag) => {
@@ -213,48 +187,90 @@ function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter
     return null;
   };
 
-  // Progressive difficulty slots per cycle (boucle 1 -> simple, boucle 2 -> more medium/hard, boucle 3 -> mostly hard)
-  let slotPriorities;
-  if (stepInfo.loopIndex === 1) {
-    // Cycle 1: Simple questions at the start (Facile, Facile, Facile/Moyen)
-    slotPriorities = [
-      [1, 2, 3],
-      [1, 2, 3],
-      [2, 1, 3],
-    ];
-  } else if (stepInfo.loopIndex === 2) {
-    // Cycle 2: % of harder questions increases (Facile, Moyen, Difficile)
-    slotPriorities = [
-      [1, 2, 3],
-      [2, 3, 1],
-      [3, 2, 1],
-    ];
-  } else {
-    // Cycle 3: High % of harder questions (Moyen, Difficile, Difficile)
-    slotPriorities = [
-      [2, 3, 1],
-      [3, 2, 1],
-      [3, 2, 1],
-    ];
-  }
-
   const pickedQuestions = [];
   for (let sIdx = 0; sIdx < count; sIdx++) {
     const prio = slotPriorities[Math.min(sIdx, slotPriorities.length - 1)];
     const q = pickOneWithPriority(prio, `slot-${sIdx}`);
     if (q) pickedQuestions.push(q);
   }
+  return pickedQuestions;
+}
+
+function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter, allProgress) {
+  const count = Math.max(1, Number(goalCount) || 3);
+  const { fullPool, byId } = buildFlatQuestionMap(byChapter, allProgress);
+  if (fullPool.length === 0) return { questions: [], answers: {}, stepInfo: getStepScheduleInfo(stepNumber) };
+
+  const stepInfo = getStepScheduleInfo(stepNumber);
+  const chapterPool = fullPool.filter((q) => q._chapterKey === stepInfo.chapterKey);
+  const targetPool = chapterPool.length > 0 ? chapterPool : fullPool;
+
+  const savedSession = readDailyStepSession(stepNumber, pseudo);
+  // Restore saved session whenever its questionIds are already assigned for this step and match its chapter
+  if (Array.isArray(savedSession.questionIds) && savedSession.questionIds.length > 0) {
+    const restored = savedSession.questionIds
+      .map((qid) => byId.get(qid))
+      .filter(Boolean);
+    const matchesChapter =
+      restored.length === count &&
+      restored.every((q) => q._chapterKey === stepInfo.chapterKey);
+    if (matchesChapter) {
+      const withBossFlag = restored.map((q, idx) => ({
+        ...q,
+        _isBoss: restored.length > 1 ? idx === restored.length - 1 : stepNumber % 4 === 0,
+      }));
+      return {
+        questions: withBossFlag,
+        answers: savedSession.answers || {},
+        stepInfo,
+      };
+    }
+  }
+
+  // Deterministically select 3 questions from this step's single chapter across all devices
+  const isBossStep = stepNumber % 4 === 0;
+  const usedIds = new Set();
+
+  // Exclude questions from previous loops of this same chapter (using saved or deterministic loop picks)
+  for (let prev = 1; prev < stepNumber; prev++) {
+    const prevInfo = getStepScheduleInfo(prev);
+    if (prevInfo.chapterKey !== stepInfo.chapterKey) continue;
+    const prevSaved = readDailyStepSession(prev, pseudo);
+    if (Array.isArray(prevSaved.questionIds) && prevSaved.questionIds.length === count) {
+      for (const qid of prevSaved.questionIds) {
+        usedIds.add(qid);
+      }
+    } else {
+      pickLoopQuestionsDeterministically(
+        targetPool,
+        count,
+        pseudo,
+        stepInfo.chapterKey,
+        prevInfo.loopIndex,
+        usedIds
+      );
+    }
+  }
+
+  const pickedQuestions = pickLoopQuestionsDeterministically(
+    targetPool,
+    count,
+    pseudo,
+    stepInfo.chapterKey,
+    stepInfo.loopIndex,
+    usedIds
+  );
 
   const finalQuestions = pickedQuestions.map((q, idx) => ({
     ...q,
     _isBoss: pickedQuestions.length > 1 ? idx === pickedQuestions.length - 1 : isBossStep,
   }));
   const questionIds = finalQuestions.map((q) => q.id);
-  saveDailyStepSession(stepNumber, { questionIds, answers: {} }, pseudo);
+  saveDailyStepSession(stepNumber, { questionIds, answers: savedSession.answers || {} }, pseudo);
 
   return {
     questions: finalQuestions,
-    answers: {},
+    answers: savedSession.answers || {},
     stepInfo,
   };
 }
@@ -482,14 +498,18 @@ export default function DailyPathPage() {
   const [allProgress, setAllProgress] = useState(() => readAllProgress(readName()));
   const [showingSlides, setShowingSlides] = useState(() => {
     const n = readName();
-    return Boolean(n && !readDailyState(n).onboarded);
+    if (!n) return false;
+    const st = readDailyState(n);
+    return Boolean(!st.onboarded && Object.keys(st.steps).length === 0);
   });
   const [slideIdx, setSlideIdx] = useState(0);
+  const [syncingPseudo, setSyncingPseudo] = useState(false);
   const [showingCalendar, setShowingCalendar] = useState(false);
   const [activeSession, setActiveSession] = useState(null); // { stepNumber, isBossStep, questions, initialAnswers, id }
   const [limitNotice, setLimitNotice] = useState(false);
   const currentStepNodeRef = useRef(null);
   const touchStartXRef = useRef(null);
+  const manualSlidesRef = useRef(false);
 
   useEffect(() => {
     const n = readName();
@@ -500,6 +520,12 @@ export default function DailyPathPage() {
       setAllProgress(readAllProgress(curr));
       const nextDaily = readDailyState(curr);
       setDailyState(nextDaily);
+      if (
+        (nextDaily.onboarded || Object.keys(nextDaily.steps).length > 0) &&
+        !manualSlidesRef.current
+      ) {
+        setShowingSlides(false);
+      }
     });
   }, []);
 
@@ -514,21 +540,27 @@ export default function DailyPathPage() {
     return undefined;
   }, [editingPseudo, showingSlides, dailyState.currentStep, activeSession]);
 
-  const handlePseudoSubmit = (e) => {
+  const handlePseudoSubmit = async (e) => {
     e.preventDefault();
     const clean = draftPseudo.trim().replace(/\s+/g, ' ');
-    if (!clean) return;
+    if (!clean || syncingPseudo) return;
+    setSyncingPseudo(true);
     saveName(clean);
+    await syncProgressFromServer(clean);
     setPseudo(clean);
     setEditingPseudo(false);
+    setSyncingPseudo(false);
     const st = readDailyState(clean);
     setDailyState(st);
     setAllProgress(readAllProgress(clean));
+    const alreadyActive = st.onboarded || Object.keys(st.steps).length > 0 || st.todayCount > 0;
+    manualSlidesRef.current = false;
     setSlideIdx(0);
-    setShowingSlides(true);
+    setShowingSlides(!alreadyActive);
   };
 
   const finishOnboardingSlides = () => {
+    manualSlidesRef.current = false;
     markDailyOnboarded(pseudo);
     const st = readDailyState(pseudo);
     setDailyState(st);
@@ -715,10 +747,10 @@ export default function DailyPathPage() {
             Ton pseudo sauvegarde ton objectif du jour, tes étoiles et ta progression sur tous tes appareils.
           </p>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <button className="btn" type="submit" disabled={!draftPseudo.trim()}>
-              Continuer <Icon name="arrow" size={18} />
+            <button className="btn" type="submit" disabled={!draftPseudo.trim() || syncingPseudo}>
+              {syncingPseudo ? 'Synchronisation…' : <>Continuer <Icon name="arrow" size={18} /></>}
             </button>
-            {pseudo && (
+            {pseudo && !syncingPseudo && (
               <button
                 type="button"
                 className="btn btn-ghost"
@@ -1010,6 +1042,7 @@ export default function DailyPathPage() {
             type="button"
             className="daily-hud-pill daily-hud-help"
             onClick={() => {
+              manualSlidesRef.current = true;
               setSlideIdx(0);
               setShowingSlides(true);
             }}
@@ -1306,14 +1339,16 @@ export default function DailyPathPage() {
                 {isCurrent && (
                   <button
                     type="button"
-                    className="daily-current-cta"
+                    className={`daily-current-cta ${dailyStepsReached ? 'is-daily-limit' : ''}`}
                     onClick={() => launchStep(step)}
                   >
-                    {currentStepAnsweredCount > 0 && currentStepAnsweredCount < currentStepTotalCount
-                      ? `Continuer (${currentStepAnsweredCount}/${currentStepTotalCount})`
-                      : isBoss
-                        ? '🔥 Lancer le Boss'
-                        : 'Commencer'}
+                    {dailyStepsReached
+                      ? '⏳ Reviens demain pour continuer'
+                      : currentStepAnsweredCount > 0 && currentStepAnsweredCount < currentStepTotalCount
+                        ? `Continuer (${currentStepAnsweredCount}/${currentStepTotalCount})`
+                        : isBoss
+                          ? '🔥 Lancer le Boss'
+                          : 'Commencer'}
                   </button>
                 )}
               </div>
