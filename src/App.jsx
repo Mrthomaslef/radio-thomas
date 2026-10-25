@@ -189,9 +189,11 @@ export default function App() {
     };
   }, []);
 
+  const isChaptersView = Boolean(chaptersListPage || theme);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage, chaptersListPage]);
+  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage, isChaptersView]);
 
   return (
     <>
