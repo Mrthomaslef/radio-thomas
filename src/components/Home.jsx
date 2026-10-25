@@ -10,6 +10,7 @@ import {
   syncProgressFromServer,
 } from '../data/player.js';
 import Icon from './Icons.jsx';
+import { AppModeTopPill } from './DailyPathPage.jsx';
 
 function isStandaloneMode() {
   if (typeof window === 'undefined') return false;
@@ -67,21 +68,7 @@ export default function Home({ openTheme }) {
 
   return (
     <section className="home" id="top">
-      {!isAppMode && (
-        <div className="home-app-wrap">
-          <a
-            href="https://www.google.com/search?q=comment+ajouter+un+site+web+sur+l%27%C3%A9cran+d%27accueil+iPhone+et+Android+tutoriel"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="home-app-banner"
-          >
-            <span className="home-app-banner-text">
-              Mode App <img src="/apple-touch-icon.png" alt="Logo QUIZ Cochin" className="home-app-logo" /> : Ajouter à ma page d’accueil
-            </span>
-            <Icon name="arrow" size={16} />
-          </a>
-        </div>
-      )}
+      {!isAppMode && <AppModeTopPill className="daily-app-pill-quiz" />}
 
       <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
         QUIZ <span className="grad">Cochin</span>

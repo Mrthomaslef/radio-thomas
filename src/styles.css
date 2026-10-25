@@ -1996,19 +1996,23 @@ a.cq-dot:hover { transform: scale(1.08); }
 .daily-app-pill-wrap {
   display: flex;
   justify-content: center;
+  width: 100%;
   pointer-events: auto;
 }
 
-.daily-pseudo-page > .daily-app-pill-wrap {
-  margin-bottom: 10px;
+.daily-onboarding > .daily-app-pill-wrap,
+.daily-app-pill-quiz {
+  margin-bottom: 14px;
 }
 
 .daily-app-pill {
-  display: inline-flex;
+  width: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 5px 12px;
+  text-align: center;
+  gap: 7px;
+  padding: 6px 14px;
   border-radius: 999px;
   background: rgba(15, 23, 36, 0.88);
   backdrop-filter: blur(12px);
@@ -2016,7 +2020,7 @@ a.cq-dot:hover { transform: scale(1.08); }
   border: 1px solid rgba(56, 225, 255, 0.28);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
   color: #e8f0f9;
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
@@ -2027,6 +2031,14 @@ a.cq-dot:hover { transform: scale(1.08); }
 .daily-app-pill:hover {
   transform: translateY(-1px);
   border-color: rgba(56, 225, 255, 0.55);
+}
+
+.daily-app-pill-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
 }
 
 .daily-app-pill-text strong {

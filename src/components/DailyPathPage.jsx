@@ -604,18 +604,18 @@ function isStandaloneAppMode() {
   return false;
 }
 
-function AppModeTopPill() {
+export function AppModeTopPill({ className = '' }) {
   return (
-    <div className="daily-app-pill-wrap">
+    <div className={`daily-app-pill-wrap ${className}`.trim()}>
       <a
         href="https://www.google.com/search?q=comment+ajouter+un+site+web+sur+l%27%C3%A9cran+d%27accueil+iPhone+et+Android+tutoriel"
         target="_blank"
         rel="noopener noreferrer"
         className="daily-app-pill"
       >
+        <img src="/apple-touch-icon.png" alt="" className="daily-app-pill-logo" />
         <span className="daily-app-pill-text">
-          <img src="/apple-touch-icon.png" alt="" className="daily-app-pill-logo" />
-          <span><strong>Mode App</strong> : Ajouter à ma page d’accueil</span>
+          <strong>Mode App</strong> : Ajouter à ma page d’accueil
         </span>
         <Icon name="arrow" size={14} />
       </a>
