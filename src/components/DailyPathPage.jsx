@@ -253,207 +253,6 @@ function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter
   };
 }
 
-function PathDecoArt({ kind }) {
-  // Simplified, 100% vector musculoskeletal radiology icons (zero white border, zero pixel aliasing)
-  // Colors: Deep Navy (#0f3562), Medium Blue (#0e76bc), Sky Cyan (#30ace4), Warm Gold (#f8c616)
-  switch (kind) {
-    case 'shoulder-heart':
-      return (
-        <svg viewBox="0 0 120 110" width="100%" height="100%" fill="none" aria-hidden="true">
-          <defs>
-            <clipPath id="heartClipL">
-              <rect x="0" y="0" width="60" height="110" />
-            </clipPath>
-            <clipPath id="heartClipR">
-              <rect x="60" y="0" width="60" height="110" />
-            </clipPath>
-          </defs>
-          <path
-            d="M60 98 C60 98 10 68 10 34 C10 16 25 6 41 6 C51 6 57 12 60 18 C63 12 69 6 79 6 C95 6 110 16 110 34 C110 68 60 98 60 98 Z"
-            fill="#0e76bc"
-            clipPath="url(#heartClipL)"
-          />
-          <path
-            d="M60 98 C60 98 10 68 10 34 C10 16 25 6 41 6 C51 6 57 12 60 18 C63 12 69 6 79 6 C95 6 110 16 110 34 C110 68 60 98 60 98 Z"
-            fill="#0f3562"
-            clipPath="url(#heartClipR)"
-          />
-          {/* Simplified clavicle */}
-          <path
-            d="M56 30 C70 25 88 26 107 30"
-            stroke="#f8c616"
-            strokeWidth="8"
-            strokeLinecap="round"
-          />
-          {/* Simplified scapula */}
-          <path
-            d="M47 36 C52 33 60 36 66 40 C72 36 77 33 81 38 C86 45 84 68 78 76 C74 80 69 72 64 62 C60 55 55 52 50 48 C45 45 43 39 47 36 Z"
-            fill="#f8c616"
-          />
-          {/* Simplified humerus head & shaft */}
-          <circle cx="48" cy="51" r="10" fill="#f8c616" />
-          <path d="M46 56 L42 86" stroke="#f8c616" strokeWidth="10" strokeLinecap="round" />
-        </svg>
-      );
-
-    case 'ribcage':
-      return (
-        <svg viewBox="0 0 120 110" width="100%" height="100%" fill="none" aria-hidden="true">
-          {/* Upper ribs (navy) */}
-          <path d="M48 32 C32 32 30 16 46 14" stroke="#0f3562" strokeWidth="7" strokeLinecap="round" />
-          <path d="M72 32 C88 32 90 16 74 14" stroke="#0f3562" strokeWidth="7" strokeLinecap="round" />
-          {/* Middle ribs (cyan) */}
-          <path d="M48 45 C24 47 22 28 32 25" stroke="#30ace4" strokeWidth="7.5" strokeLinecap="round" />
-          <path d="M72 45 C96 47 98 28 88 25" stroke="#30ace4" strokeWidth="7.5" strokeLinecap="round" />
-          {/* Lower ribs (navy) */}
-          <path d="M49 58 C24 64 20 46 26 40" stroke="#0f3562" strokeWidth="7.5" strokeLinecap="round" />
-          <path d="M71 58 C96 64 100 46 94 40" stroke="#0f3562" strokeWidth="7.5" strokeLinecap="round" />
-          <path d="M52 68 C28 80 20 64 25 56" stroke="#0f3562" strokeWidth="7.5" strokeLinecap="round" />
-          <path d="M68 68 C92 80 100 64 95 56" stroke="#0f3562" strokeWidth="7.5" strokeLinecap="round" />
-          <path d="M54 74 C36 94 24 84 27 72" stroke="#0f3562" strokeWidth="7.5" strokeLinecap="round" />
-          <path d="M66 74 C84 94 96 84 93 72" stroke="#0f3562" strokeWidth="7.5" strokeLinecap="round" />
-          {/* Clavicles (cyan) */}
-          <path d="M52 22 C40 16 28 14 18 17" stroke="#30ace4" strokeWidth="7" strokeLinecap="round" />
-          <path d="M68 22 C80 16 92 14 102 17" stroke="#30ace4" strokeWidth="7" strokeLinecap="round" />
-          {/* Sternum (gold) */}
-          <path
-            d="M52 18 H68 L66 32 L67 62 L60 76 L53 62 L54 32 Z"
-            fill="#f8c616"
-            stroke="#f8c616"
-            strokeWidth="3"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-
-    case 'knee-angle':
-      return (
-        <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none" aria-hidden="true">
-          {/* Blue leg contour */}
-          <path
-            d="M52 10 L88 32 L54 60 C48 65 48 72 52 80 L58 110 H24 L16 68 C13 55 16 44 26 35 L52 10 Z"
-            fill="#0e76bc"
-          />
-          {/* Gold femur */}
-          <path d="M66 20 L40 50" stroke="#f8c616" strokeWidth="14" strokeLinecap="round" />
-          <circle cx="37" cy="52" r="11" fill="#f8c616" />
-          {/* Gold patella */}
-          <ellipse cx="19" cy="54" rx="4.5" ry="7.5" fill="#f8c616" />
-          {/* Gold tibia & fibula */}
-          <path d="M33 69 L38 106" stroke="#f8c616" strokeWidth="12" strokeLinecap="round" />
-          <path d="M46 78 L49 106" stroke="#f8c616" strokeWidth="6" strokeLinecap="round" />
-          {/* Simplified flexion angle lines */}
-          <path d="M98 38 L58 66 L96 96" stroke="#f8c616" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M76 53 A24 24 0 0 1 76 81" stroke="#30ace4" strokeWidth="4.5" strokeLinecap="round" />
-          <path d="M62 66 H96" stroke="#30ace4" strokeWidth="4" strokeLinecap="round" strokeDasharray="8 6" />
-        </svg>
-      );
-
-    case 'hand-xray':
-      return (
-        <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none" aria-hidden="true">
-          {/* Viewfinder frame corners */}
-          <path d="M12 30 V16 C12 13 14 11 17 11 H31" stroke="#30ace4" strokeWidth="6" strokeLinecap="round" />
-          <path d="M89 11 H103 C106 11 108 13 108 16 V30" stroke="#0f3562" strokeWidth="6" strokeLinecap="round" />
-          <path d="M12 90 V104 C12 107 14 109 17 109 H31" stroke="#30ace4" strokeWidth="6" strokeLinecap="round" />
-          <path d="M89 109 H103 C106 109 108 107 108 104 V90" stroke="#30ace4" strokeWidth="6" strokeLinecap="round" />
-          {/* Simplified golden hand silhouette */}
-          <path
-            d="M48 108 V92 L35 74 L26 54 C24 49 29 45 33 49 L44 62 L42 26 C42 20 50 20 51 26 L55 52 L58 18 C58 12 67 12 67 18 L66 52 L73 24 C74 18 82 20 81 26 L77 56 L86 36 C88 31 95 34 93 40 L82 76 L76 92 V108 H48 Z"
-            fill="#f8c616"
-          />
-          {/* Simplified blue carpal & metacarpal bones */}
-          <ellipse cx="61" cy="86" rx="12" ry="7" fill="#0e76bc" />
-          <path d="M33 54 L47 76" stroke="#0f3562" strokeWidth="4.5" strokeLinecap="round" />
-          <path d="M47 28 L53 74" stroke="#0e76bc" strokeWidth="5" strokeLinecap="round" />
-          <path d="M62 20 L61 73" stroke="#0e76bc" strokeWidth="5" strokeLinecap="round" />
-          <path d="M76 28 L68 74" stroke="#0e76bc" strokeWidth="5" strokeLinecap="round" />
-          <path d="M88 40 L74 76" stroke="#0f3562" strokeWidth="4.5" strokeLinecap="round" />
-        </svg>
-      );
-
-    case 'pelvis-emblem':
-      return (
-        <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none" aria-hidden="true">
-          <circle cx="60" cy="60" r="48" fill="#0f3562" stroke="#f8c616" strokeWidth="5" />
-          {/* Iliac wings (cyan) */}
-          <path
-            d="M48 48 C36 32 20 38 24 56 C27 68 38 72 48 68 Z"
-            fill="#30ace4"
-          />
-          <path
-            d="M72 48 C84 32 100 38 96 56 C93 68 82 72 72 68 Z"
-            fill="#30ace4"
-          />
-          {/* Sacrum & femoral heads (gold) */}
-          <path d="M52 44 H68 L64 68 L60 76 L56 68 Z" fill="#f8c616" />
-          <circle cx="42" cy="76" r="6" fill="#f8c616" />
-          <circle cx="78" cy="76" r="6" fill="#f8c616" />
-          <path d="M40 80 L34 94" stroke="#f8c616" strokeWidth="6" strokeLinecap="round" />
-          <path d="M80 80 L86 94" stroke="#f8c616" strokeWidth="6" strokeLinecap="round" />
-        </svg>
-      );
-
-    case 'knee-cross':
-      return (
-        <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none" aria-hidden="true">
-          {/* Medical cross background */}
-          <path
-            d="M42 14 H78 V42 H106 V78 H78 V106 H42 V78 H14 V42 H42 V14 Z"
-            fill="#0e76bc"
-            stroke="#0f3562"
-            strokeWidth="4"
-            strokeLinejoin="round"
-          />
-          {/* Gold femur & tibia inside cross */}
-          <path d="M60 22 V46" stroke="#f8c616" strokeWidth="14" strokeLinecap="round" />
-          <circle cx="53" cy="50" r="8" fill="#f8c616" />
-          <circle cx="67" cy="50" r="8" fill="#f8c616" />
-          <path d="M48 62 H72" stroke="#30ace4" strokeWidth="4.5" strokeLinecap="round" />
-          <path d="M58 68 V98" stroke="#f8c616" strokeWidth="13" strokeLinecap="round" />
-          <path d="M70 72 V96" stroke="#f8c616" strokeWidth="5.5" strokeLinecap="round" />
-        </svg>
-      );
-
-    case 'spine-emblem':
-      return (
-        <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none" aria-hidden="true">
-          <circle cx="60" cy="60" r="46" fill="#0f3562" stroke="#30ace4" strokeWidth="5" />
-          <path d="M30 60 A30 30 0 0 1 90 60" stroke="#f8c616" strokeWidth="4" strokeLinecap="round" opacity="0.5" />
-          {[28, 41, 54, 67, 80].map((cy, idx) => (
-            <g key={cy}>
-              <rect
-                x={46 - (idx % 2) * 2}
-                y={cy}
-                width={28 + (idx % 2) * 4}
-                height="8"
-                rx="4"
-                fill={idx % 2 === 0 ? '#f8c616' : '#30ace4'}
-              />
-            </g>
-          ))}
-        </svg>
-      );
-
-    default:
-      return (
-        <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none" aria-hidden="true">
-          {/* Viewfinder + crossed bones */}
-          <path d="M16 34 V18 H32" stroke="#0f3562" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M88 18 H104 V34" stroke="#30ace4" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M16 86 V102 H32" stroke="#30ace4" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M88 102 H104 V86" stroke="#0f3562" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M34 34 L86 86" stroke="#0e76bc" strokeWidth="12" strokeLinecap="round" />
-          <circle cx="31" cy="31" r="7" fill="#0e76bc" />
-          <circle cx="89" cy="89" r="7" fill="#0e76bc" />
-          <path d="M86 34 L34 86" stroke="#f8c616" strokeWidth="12" strokeLinecap="round" />
-          <circle cx="89" cy="31" r="7" fill="#f8c616" />
-          <circle cx="31" cy="89" r="7" fill="#f8c616" />
-        </svg>
-      );
-  }
-}
-
 function StepNodeArt({ step, isBossNode }) {
   if (isBossNode) {
     return <span className="daily-node-quiz-text">Quiz</span>;
@@ -691,76 +490,44 @@ export default function DailyPathPage() {
         ? catmullRomToBezier(waypoints, unlockedWaypointIdx, waypoints.length - 1)
         : '';
 
-    // Balanced background decorations placed on the opposite side of the step nodes
-    // so they visually balance the zig-zag page layout and stay far (>150px) from every step button.
-    const kindSequence = [
-      'shoulder-heart',
-      'ribcage',
-      'knee-angle',
-      'hand-xray',
-      'pelvis-emblem',
-      'knee-cross',
-      'spine-emblem',
-      'bones-frame',
+    // Maximum 3 large background anatomical schemas visible along the 8-step path
+    // Placed in the wide-open opposite margins (>200px away from the step buttons):
+    // - Step 2 is on the right (x=262) -> Large Shoulder schema on the left (x=54)
+    // - Step 4 is on the left (x=94)   -> Large Ribcage/Thorax schema on the right (x=306)
+    // - Step 6 is on the right (x=264) -> Large Pelvis/Knee schema on the left (x=54)
+    // (And if the user unlocks further steps >8, only 1 every 2.5-3 steps)
+    const sparseSlots = [
+      { nodeIndex: 1, x: 54, yOffset: 10, size: 126, rotate: -7, logoNum: 5 },  // Shoulder anatomy (left, opposite Step 2)
+      { nodeIndex: 3, x: 306, yOffset: -6, size: 132, rotate: 6, logoNum: 10 }, // Ribcage anatomy (right, opposite Step 4)
+      { nodeIndex: 5, x: 54, yOffset: 8, size: 124, rotate: -6, logoNum: 4 },   // Pelvis anatomy (left, opposite Step 6)
     ];
-    const sizeCycle = [76, 64, 82, 68, 74, 62];
-    const rotCycle = [-8, 7, -6, 9, -7, 6];
+    const extraLogos = [2, 6, 7, 1, 8, 9];
 
     const decorations = [];
-    // 1) Bottom-left balance near the start (Step 1 is centered at x=176, Step 2 goes right to x=262, so bottom-left x=42 is wide open)
-    if (nodes[0]) {
-      decorations.push({
-        id: 'deco-start',
-        kind: kindSequence[0],
-        x: 42,
-        y: nodes[0].y - 36,
-        size: 70,
-        rotate: -7,
-      });
-    }
-
-    // 2) For every off-center node (Steps 2, 4, 6, 8...), place a logo on the opposite side of the page
-    //    (e.g. when node is at x=262 right, logo is at x=46 left -> 216px away from the button!)
-    //    Plus an intermediate opposite-side logo between center/side transitions so left & right are evenly balanced.
-    let decoIdx = 1;
-    for (let i = 1; i < nodes.length; i++) {
-      const curr = nodes[i];
-      if (curr.x > 210) {
-        // Node is on the right (x≈262) -> place background logo on the far left (x=46)
+    for (const slot of sparseSlots) {
+      if (nodes[slot.nodeIndex]) {
         decorations.push({
-          id: `deco-node-${curr.step}`,
-          kind: kindSequence[decoIdx % kindSequence.length],
-          x: 46,
-          y: curr.y + 8,
-          size: sizeCycle[decoIdx % sizeCycle.length],
-          rotate: rotCycle[decoIdx % rotCycle.length],
+          id: `deco-${slot.nodeIndex}`,
+          src: `/path-deco/logo-${slot.logoNum}.png`,
+          x: slot.x,
+          y: nodes[slot.nodeIndex].y + slot.yOffset,
+          size: slot.size,
+          rotate: slot.rotate,
         });
-        decoIdx++;
-      } else if (curr.x < 150) {
-        // Node is on the left (x≈94) -> place background logo on the far right (x=314)
-        decorations.push({
-          id: `deco-node-${curr.step}`,
-          kind: kindSequence[decoIdx % kindSequence.length],
-          x: 314,
-          y: curr.y + 6,
-          size: sizeCycle[decoIdx % sizeCycle.length],
-          rotate: rotCycle[decoIdx % rotCycle.length],
-        });
-        decoIdx++;
-      } else if (i < nodes.length - 1) {
-        // Center node (Steps 3, 5, 7... at x≈178): place a smaller logo on the open side opposite the next step
-        const next = nodes[i + 1];
-        const openSideX = next.x < 180 ? 316 : 44;
-        decorations.push({
-          id: `deco-mid-${curr.step}`,
-          kind: kindSequence[decoIdx % kindSequence.length],
-          x: openSideX,
-          y: curr.y - 34,
-          size: 60,
-          rotate: rotCycle[decoIdx % rotCycle.length],
-        });
-        decoIdx++;
       }
+    }
+    for (let i = 7; i < nodes.length; i += 3) {
+      const curr = nodes[i];
+      const onLeft = curr.x > 180;
+      const logoNum = extraLogos[Math.floor((i - 7) / 3) % extraLogos.length];
+      decorations.push({
+        id: `deco-${i}`,
+        src: `/path-deco/logo-${logoNum}.png`,
+        x: onLeft ? 54 : 306,
+        y: curr.y,
+        size: 124,
+        rotate: onLeft ? -6 : 6,
+      });
     }
 
     return { width, height, nodes, unlockedPathD, lockedPathD, decorations };
@@ -1271,7 +1038,7 @@ export default function DailyPathPage() {
             )}
           </svg>
 
-          {/* Decorative musculoskeletal radiology logos in the background */}
+          {/* Decorative musculoskeletal radiology schemas in the background (max 3 visible, large) */}
           {pathLayout.decorations.map((deco) => (
             <div
               key={deco.id}
@@ -1285,7 +1052,13 @@ export default function DailyPathPage() {
               }}
               aria-hidden="true"
             >
-              <PathDecoArt kind={deco.kind} />
+              <img
+                src={deco.src}
+                alt=""
+                className="daily-deco-img"
+                loading="lazy"
+                draggable="false"
+              />
             </div>
           ))}
 
