@@ -655,6 +655,150 @@ function formatLocalDay(date = new Date()) {
   return { iso: `${y}-${m}-${d}`, compact: `${y}${m}${d}` };
 }
 
+export const MAX_DAILY_STEPS = 3;
+const DAILY_STEPS_LOCAL_PREFIX = 'quiz-cotten:daily-steps:v1:';
+
+function readLocalDailyStepsMap(name) {
+  const k = normKey(name);
+  if (!k) return {};
+  try {
+    const raw = JSON.parse(localStorage.getItem(`${DAILY_STEPS_LOCAL_PREFIX}${k}`) || '{}');
+    return raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeLocalDailyStepsMap(name, map) {
+  const k = normKey(name);
+  if (!k) return;
+  try {
+    localStorage.setItem(`${DAILY_STEPS_LOCAL_PREFIX}${k}`, JSON.stringify(map));
+  } catch {
+    // Ignore private mode errors
+  }
+}
+
+export function readDailyStepSession(stepNumber, name = readName()) {
+  if (!name || !stepNumber) return { questionIds: [], answers: {} };
+  const sNum = Math.floor(Number(stepNumber));
+  const localMap = readLocalDailyStepsMap(name);
+  const localEntry = localMap[sNum] || {};
+  const ch96 = readChapterProgress(DAILY_CHAPTER_KEY, name);
+  const rawAns = ch96?.answers || {};
+
+  // Reconstruct questionIds from ch96 (sq-<step>-<idx>-<qid>) if not in localEntry
+  let questionIds = Array.isArray(localEntry.questionIds) ? [...localEntry.questionIds] : [];
+  if (questionIds.length === 0) {
+    const sqPrefix = `sq-${sNum}-`;
+    const indexed = [];
+    for (const [k, val] of Object.entries(rawAns)) {
+      if (!k.startsWith(sqPrefix) || !Array.isArray(val) || val[0] !== 'A') continue;
+      const rest = k.slice(sqPrefix.length);
+      const dashIdx = rest.indexOf('-');
+      if (dashIdx === -1) continue;
+      const orderIdx = parseInt(rest.slice(0, dashIdx), 10);
+      const qid = rest.slice(dashIdx + 1);
+      if (!Number.isNaN(orderIdx) && qid) {
+        indexed.push({ orderIdx, qid });
+      }
+    }
+    if (indexed.length > 0) {
+      indexed.sort((a, b) => a.orderIdx - b.orderIdx);
+      questionIds = indexed.map((x) => x.qid);
+    }
+  }
+
+  // Reconstruct step answers from ch96 (sa-<step>-<qid>) merged with localEntry.answers
+  const answers = { ...(localEntry.answers && typeof localEntry.answers === 'object' ? localEntry.answers : {}) };
+  const saPrefix = `sa-${sNum}-`;
+  for (const [k, val] of Object.entries(rawAns)) {
+    if (!k.startsWith(saPrefix) || !Array.isArray(val) || val.length === 0) continue;
+    const qid = k.slice(saPrefix.length);
+    if (qid && !answers[qid]) {
+      answers[qid] = val;
+    }
+  }
+
+  return { questionIds, answers };
+}
+
+export function saveDailyStepSession(stepNumber, { questionIds, answers }, name = readName()) {
+  if (!name || !stepNumber) return;
+  const sNum = Math.floor(Number(stepNumber));
+  const now = Date.now();
+
+  const localMap = readLocalDailyStepsMap(name);
+  const prevLocal = localMap[sNum] || {};
+  const finalQids = Array.isArray(questionIds) && questionIds.length > 0 ? questionIds : prevLocal.questionIds || [];
+  const finalAns = answers && typeof answers === 'object' ? answers : prevLocal.answers || {};
+
+  localMap[sNum] = {
+    questionIds: finalQids,
+    answers: finalAns,
+    updatedAt: now,
+  };
+  writeLocalDailyStepsMap(name, localMap);
+
+  const cur = readChapterProgress(DAILY_CHAPTER_KEY, name);
+  const chAns = { ...(cur.answers || {}) };
+  const chTs = { ...(cur.answerTimestamps || {}) };
+
+  const sqPrefix = `sq-${sNum}-`;
+  finalQids.forEach((qid, idx) => {
+    const key = `${sqPrefix}${idx}-${qid}`.slice(0, 40);
+    if (!chAns[key]) {
+      chAns[key] = ['A'];
+      chTs[key] = now;
+    }
+  });
+
+  const saPrefix = `sa-${sNum}-`;
+  for (const [qid, picked] of Object.entries(finalAns)) {
+    const key = `${saPrefix}${qid}`.slice(0, 40);
+    if (Array.isArray(picked) && picked.length > 0) {
+      chAns[key] = picked;
+      chTs[key] = now;
+    }
+  }
+
+  writeChapterProgress(
+    DAILY_CHAPTER_KEY,
+    { answers: chAns, answerTimestamps: chTs, sent: true, updatedAt: now },
+    name
+  );
+}
+
+export function clearDailyStepAnswers(stepNumber, name = readName()) {
+  if (!name || !stepNumber) return;
+  const sNum = Math.floor(Number(stepNumber));
+  const now = Date.now();
+  const localMap = readLocalDailyStepsMap(name);
+  const prevLocal = localMap[sNum] || {};
+  localMap[sNum] = {
+    questionIds: prevLocal.questionIds || [],
+    answers: {},
+    updatedAt: now,
+  };
+  writeLocalDailyStepsMap(name, localMap);
+
+  const cur = readChapterProgress(DAILY_CHAPTER_KEY, name);
+  const chAns = { ...(cur.answers || {}) };
+  const chTs = { ...(cur.answerTimestamps || {}) };
+  const saPrefix = `sa-${sNum}-`;
+  for (const k of Object.keys(chAns)) {
+    if (k.startsWith(saPrefix)) {
+      delete chAns[k];
+      chTs[k] = now;
+    }
+  }
+  writeChapterProgress(
+    DAILY_CHAPTER_KEY,
+    { answers: chAns, answerTimestamps: chTs, sent: true, updatedAt: now },
+    name
+  );
+}
+
 export function readDailyState(name = readName()) {
   if (!name) {
     return {
@@ -664,15 +808,18 @@ export function readDailyState(name = readName()) {
       currentStep: 1,
       totalStars: 0,
       todayCount: 0,
+      todayStepsCount: 0,
+      maxDailySteps: MAX_DAILY_STEPS,
       streak: 0,
     };
   }
   const ch96 = readChapterProgress(DAILY_CHAPTER_KEY, name);
   const ans = ch96?.answers || {};
 
-  // 1) Daily goal: A -> 3, B -> 5, C -> 10
+  // 1) Questions per step: D -> 1, A -> 3, B -> 5 (legacy C -> 5)
   const goalCode = Array.isArray(ans['daily-goal']) ? ans['daily-goal'][0] : null;
-  const goal = goalCode === 'A' ? 3 : goalCode === 'B' ? 5 : goalCode === 'C' ? 10 : null;
+  const goal =
+    goalCode === 'D' ? 1 : goalCode === 'A' ? 3 : goalCode === 'B' || goalCode === 'C' ? 5 : null;
   const onboarded = Array.isArray(ans['onboarded']) && ans['onboarded'][0] === 'A';
 
   // 2) Completed steps & stars: step-<N> -> A (1), B (2), C (3)
@@ -691,15 +838,21 @@ export function readDailyState(name = readName()) {
     if (stepNum > maxCompletedStep) maxCompletedStep = stepNum;
   }
 
-  // 3) Today's answered count: q-YYYYMMDD-<idx>
+  // 3) Today's answered questions & completed steps count
   const { compact: todayCompact } = formatLocalDay(new Date());
   const qPrefix = `q-${todayCompact}-`;
+  const sdPrefix = `sd-${todayCompact}-`;
   let todayCount = 0;
+  const todayStepsSet = new Set();
   for (const [k, val] of Object.entries(ans)) {
-    if (k.startsWith(qPrefix) && Array.isArray(val) && val[0] === 'A') {
+    if (!Array.isArray(val) || val[0] !== 'A') continue;
+    if (k.startsWith(qPrefix)) {
       todayCount += 1;
+    } else if (k.startsWith(sdPrefix)) {
+      todayStepsSet.add(k.slice(sdPrefix.length));
     }
   }
+  const todayStepsCount = todayStepsSet.size;
 
   // 4) Streak of consecutive active days (streak-YYYY-MM-DD or any q-YYYYMMDD-*)
   const activeDates = new Set();
@@ -738,6 +891,8 @@ export function readDailyState(name = readName()) {
     currentStep: maxCompletedStep + 1,
     totalStars,
     todayCount,
+    todayStepsCount,
+    maxDailySteps: MAX_DAILY_STEPS,
     streak,
   };
 }
@@ -750,7 +905,7 @@ export function markDailyOnboarded(name = readName()) {
 export function saveDailyGoal(goalNumber, name = readName()) {
   if (!name) return;
   const g = Number(goalNumber);
-  const code = g === 3 ? 'A' : g === 10 ? 'C' : 'B';
+  const code = g === 1 ? 'D' : g === 3 ? 'A' : 'B';
   writeQuestionAnswer(DAILY_CHAPTER_KEY, 'daily-goal', [code], name);
 }
 
@@ -790,15 +945,22 @@ export function recordDailyStepCompleted(stepNumber, stars, name = readName()) {
   const cur = readChapterProgress(DAILY_CHAPTER_KEY, name);
   const answers = { ...(cur.answers || {}) };
   const answerTimestamps = { ...(cur.answerTimestamps || {}) };
-  const stepKey = `step-${Math.floor(stepNumber)}`;
+  const sNum = Math.floor(stepNumber);
+  const stepKey = `step-${sNum}`;
 
   const existingCode = Array.isArray(answers[stepKey]) ? answers[stepKey][0] : null;
   const existingStars = existingCode === 'C' ? 3 : existingCode === 'B' ? 2 : existingCode === 'A' ? 1 : 0;
   const bestStars = Math.max(existingStars, Math.min(3, Math.max(1, Math.round(stars || 1))));
   const nextCode = bestStars === 3 ? 'C' : bestStars === 2 ? 'B' : 'A';
 
-  const { iso } = formatLocalDay(new Date(now));
+  const { iso, compact } = formatLocalDay(new Date(now));
   const streakKey = `streak-${iso}`;
+  const stepDoneTodayKey = `sd-${compact}-${sNum}`;
+
+  if (existingStars === 0) {
+    answers[stepDoneTodayKey] = ['A'];
+    answerTimestamps[stepDoneTodayKey] = now;
+  }
 
   answers[stepKey] = [nextCode];
   answerTimestamps[stepKey] = now;

@@ -2000,6 +2000,32 @@ a.cq-dot:hover { transform: scale(1.08); }
   color: #34d399;
 }
 
+.daily-hud-q-tag {
+  margin-left: 2px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #fde047;
+  background: rgba(234, 179, 8, 0.2);
+  border: 1px solid rgba(234, 179, 8, 0.4);
+}
+
+.daily-limit-banner {
+  margin: 8px 4px 12px;
+  padding: 12px 15px;
+  border-radius: 16px;
+  background: rgba(234, 179, 8, 0.12);
+  border: 1px solid rgba(234, 179, 8, 0.45);
+  color: var(--text);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .daily-hud-stars {
   gap: 6px;
   padding: 7px 13px;
@@ -2008,12 +2034,14 @@ a.cq-dot:hover { transform: scale(1.08); }
 .daily-map-scroll {
   position: relative;
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .daily-map-canvas {
   position: relative;
-  width: 100%;
-  max-width: 380px;
+  width: 360px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -2165,6 +2193,18 @@ a.cq-dot:hover { transform: scale(1.08); }
 
 .daily-boss-star.is-lit {
   color: #facc15;
+}
+
+.daily-step-stars {
+  top: -17px;
+}
+
+.daily-step-stars .daily-boss-star {
+  font-size: 1.25rem;
+}
+
+.daily-step-stars .daily-boss-star.s-2 {
+  font-size: 1.48rem;
 }
 
 /* Locked future nodes (like the dark '4' circle in the screenshot) */

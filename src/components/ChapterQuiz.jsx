@@ -154,12 +154,18 @@ export function QuizPlayer({
   onRestart = null,
   backLabel = '← Chapitres',
   initialIdx = null,
+  initialAnswers = null,
+  onAnswersChange = null,
   onQuestionValidated = null,
   onQuizCompleted = null,
   dailyMode = null,
 }) {
   const saved = useMemo(
-    () => (preview || randomMode ? { answers: {}, sent: false, historyRecorded: false } : readChapterProgress(key)),
+    () =>
+      preview || randomMode
+        ? { answers: initialAnswers && typeof initialAnswers === 'object' ? initialAnswers : {}, sent: false, historyRecorded: false }
+        : readChapterProgress(key),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [key, preview, randomMode]
   );
 
@@ -167,14 +173,15 @@ export function QuizPlayer({
 
   // If the quiz was already completed before this page load, do not record another entry on reload.
   const alreadyCompletedOnMount = useMemo(() => {
-    if (preview || randomMode) return false;
-    if (saved.sent || saved.historyRecorded) return true;
+    if (preview) return false;
     const savedAns = saved.answers || {};
-    return (
+    const allAnswered =
       rawQuestions.length > 0 &&
-      rawQuestions.every((q) => Array.isArray(savedAns[q.id]) && savedAns[q.id].length > 0)
-    );
-  }, [preview, randomMode, saved, rawQuestions]);
+      rawQuestions.every((q) => Array.isArray(savedAns[q.id]) && savedAns[q.id].length > 0);
+    if (randomMode) return Boolean(dailyMode && allAnswered);
+    if (saved.sent || saved.historyRecorded) return true;
+    return allAnswered;
+  }, [preview, randomMode, dailyMode, saved, rawQuestions]);
 
   const [answers, setAnswers] = useState(saved.answers || {}); // qid -> picked item ids
   const [sent, setSent] = useState(Boolean(alreadyCompletedOnMount));
@@ -265,7 +272,11 @@ export function QuizPlayer({
     if (!picked.length) return;
     const wasAlreadyAnswered = Boolean(answers[q.id]);
     setShowCorrection(false);
-    setAnswers((a) => ({ ...a, [q.id]: picked }));
+    const nextAns = { ...answers, [q.id]: picked };
+    setAnswers(nextAns);
+    if (typeof onAnswersChange === 'function') {
+      onAnswersChange(nextAns);
+    }
     if (randomMode && !preview) {
       writeQuestionAnswer(qKey, q.id, picked);
     }
@@ -276,11 +287,12 @@ export function QuizPlayer({
 
   const retryQuestion = () => {
     if (!q) return;
-    setAnswers((a) => {
-      const copy = { ...a };
-      delete copy[q.id];
-      return copy;
-    });
+    const copy = { ...answers };
+    delete copy[q.id];
+    setAnswers(copy);
+    if (typeof onAnswersChange === 'function') {
+      onAnswersChange(copy);
+    }
     if (randomMode && !preview) {
       writeQuestionAnswer(qKey, q.id, null);
     }
@@ -473,7 +485,8 @@ export function QuizPlayer({
             <>
               <div className="daily-end-stars" aria-label="Étoiles remportées">
                 {[1, 2, 3].map((s) => {
-                  const earnedStars = total > 0 && score / total >= 0.9 ? 3 : total > 0 && score / total >= 0.6 ? 2 : 1;
+                  const ratio = total > 0 ? score / total : 0;
+                  const earnedStars = ratio > 0.9 ? 3 : ratio > 0.6 ? 2 : 1;
                   return (
                     <span key={s} className={`daily-end-star ${s <= earnedStars ? 'is-earned' : ''}`}>
                       ★

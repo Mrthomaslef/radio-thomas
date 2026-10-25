@@ -3,10 +3,14 @@ import { motion } from 'framer-motion';
 import { themes } from '../data/themes.js';
 import { CHAPTERS, useQuestions, resolveDifficulty } from '../data/useQuestions.js';
 import {
+  MAX_DAILY_STEPS,
   readName,
   saveName,
   readAllProgress,
   readDailyState,
+  readDailyStepSession,
+  saveDailyStepSession,
+  clearDailyStepAnswers,
   markDailyOnboarded,
   saveDailyGoal,
   recordDailyQuestionAnswered,
@@ -20,10 +24,10 @@ import Icon from './Icons.jsx';
 const ONBOARDING_SLIDES = [
   {
     step: '1 / 3',
-    badge: 'Objectif quotidien',
+    badge: 'Parcours quotidien',
     title: 'Réalise tes questions journalières',
-    text: 'Chaque jour, avance sur ton parcours en répondant à 3, 5 ou 10 questions tirées au sort. Tu commences en douceur par des questions faciles et chaque étape se termine par une question Boss plus corsée !',
-    highlight: '🔥 Garde le rythme chaque jour pour faire grandir ta série et débloquer les étapes suivantes.',
+    text: 'Choisis ton rythme (1, 3 ou 5 questions par étape) et réalise jusqu’à 3 étapes par jour. Tu commences par des questions faciles et chaque étape se termine par une question Boss plus corsée !',
+    highlight: '⭐ Gagne 1★ en finissant l’étape, 2★ si > 60 % de bonnes réponses et 3★ si > 90 % !',
     icon: 'daily',
   },
   {
@@ -38,30 +42,30 @@ const ONBOARDING_SLIDES = [
     step: '3 / 3',
     badge: 'Sauvegarde automatique',
     title: 'Ta progression est sauvegardée',
-    text: 'Chaque question validée et chaque étoile gagnée font avancer ta progression globale. Tout est mémorisé automatiquement avec ton pseudo, sur ton téléphone comme sur ton ordinateur.',
-    highlight: '⭐ Retrouve à tout moment tes chapitres validés et tes questions enregistrées dans « Ma progression ».',
+    text: 'Ta progression au sein de chaque étape est conservée sans changement des questions. Tout est mémorisé automatiquement avec ton pseudo, sur ton téléphone comme sur ton ordinateur.',
+    highlight: '📈 Retrouve à tout moment tes chapitres validés et tes questions enregistrées dans « Ma progression ».',
     icon: 'progress',
   },
 ];
 
 const GOAL_OPTIONS = [
   {
+    count: 1,
+    label: '1 question / étape',
+    badge: 'Express',
+    desc: '1 question ciblée par étape · Jusqu’à 3 étapes par jour',
+  },
+  {
     count: 3,
-    label: '3 questions / jour',
-    badge: 'Tranquille',
-    desc: '2 questions faciles + 1 question Boss · ~2 min',
+    label: '3 questions / étape',
+    badge: 'Recommandé',
+    desc: '2 questions + 1 question Boss · Jusqu’à 3 étapes par jour',
   },
   {
     count: 5,
-    label: '5 questions / jour',
-    badge: 'Recommandé',
-    desc: '4 questions + 1 question Boss · ~4 min',
-  },
-  {
-    count: 10,
-    label: '10 questions / jour',
-    badge: 'Intensif',
-    desc: '9 questions + 1 question Boss · ~8 min',
+    label: '5 questions / étape',
+    badge: 'Complet',
+    desc: '4 questions + 1 question Boss · Jusqu’à 3 étapes par jour',
   },
 ];
 
@@ -74,19 +78,35 @@ const NODE_PALETTES = [
   { bg: '#ec4899', border: '#111318', shadow: '#831843', badgeBg: '#fbcfe8' },
 ];
 
-function shuffleArray(list) {
+function hashSeed(str) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function seededShuffle(list, seedStr) {
   const arr = [...list];
+  let seed = hashSeed(seedStr || 'quiz-cochin');
+  const nextRand = () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
   for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(nextRand() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
 }
 
-function buildStepQuestions(stepNumber, goalCount, byChapter, allProgress) {
-  const count = Math.max(3, Number(goalCount) || 5);
+function buildFlatQuestionMap(byChapter, allProgress) {
   const allChapters = themes.flatMap((t) => t.chapters.map((c) => c.id));
   const fullPool = [];
+  const byId = new Map();
 
   for (const chKey of allChapters) {
     const qs = byChapter[chKey] || [];
@@ -95,41 +115,97 @@ function buildStepQuestions(stepNumber, goalCount, byChapter, allProgress) {
       const diff = resolveDifficulty(q.id, q.difficulty);
       const ans = allProgress?.[chKey]?.answers?.[q.id];
       const isAnswered = Array.isArray(ans) && ans.length > 0;
-      fullPool.push({
+      const enriched = {
         ...q,
         difficulty: diff,
         _chapterKey: chKey,
         _meta: meta,
         _unanswered: !isAnswered,
-      });
+      };
+      fullPool.push(enriched);
+      byId.set(q.id, enriched);
+    }
+  }
+  return { fullPool, byId };
+}
+
+function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter, allProgress) {
+  const count = Math.max(1, Number(goalCount) || 3);
+  const { fullPool, byId } = buildFlatQuestionMap(byChapter, allProgress);
+  if (fullPool.length === 0) return { questions: [], answers: {} };
+
+  const savedSession = readDailyStepSession(stepNumber, pseudo);
+  // If questions were already assigned to this step, keep the exact same questions!
+  if (Array.isArray(savedSession.questionIds) && savedSession.questionIds.length > 0) {
+    const restored = savedSession.questionIds
+      .map((qid) => byId.get(qid))
+      .filter(Boolean);
+    if (restored.length > 0) {
+      const withBossFlag = restored.map((q, idx) => ({
+        ...q,
+        _isBoss: restored.length > 1 ? idx === restored.length - 1 : stepNumber % 4 === 0,
+      }));
+      return {
+        questions: withBossFlag,
+        answers: savedSession.answers || {},
+      };
     }
   }
 
-  if (fullPool.length === 0) return [];
-
-  const pickFrom = (candidates, needed, excludeIds) => {
-    const filtered = candidates.filter((q) => !excludeIds.has(q.id));
-    const fresh = shuffleArray(filtered.filter((q) => q._unanswered));
-    const seen = shuffleArray(filtered.filter((q) => !q._unanswered));
-    const combined = [...fresh, ...seen];
-    return combined.slice(0, needed);
-  };
-
+  // Otherwise, deterministically select questions for this (pseudo, stepNumber) and persist them immediately
+  const seedBase = `${(pseudo || '').trim().toLowerCase()}:step-${stepNumber}`;
   const isBossStep = stepNumber % 4 === 0;
   const usedIds = new Set();
-  const regularNeeded = Math.max(1, count - 1);
 
+  // Exclude questions already assigned to previous steps so steps don't repeat
+  for (let prev = 1; prev < stepNumber; prev++) {
+    const prevSaved = readDailyStepSession(prev, pseudo);
+    for (const qid of prevSaved.questionIds || []) {
+      usedIds.add(qid);
+    }
+  }
+
+  const pickFrom = (candidates, needed, tag) => {
+    const filtered = candidates.filter((q) => !usedIds.has(q.id));
+    const poolToUse = filtered.length >= needed ? filtered : candidates;
+    const fresh = seededShuffle(
+      poolToUse.filter((q) => q._unanswered),
+      `${seedBase}:${tag}:fresh`
+    );
+    const seen = seededShuffle(
+      poolToUse.filter((q) => !q._unanswered),
+      `${seedBase}:${tag}:seen`
+    );
+    return [...fresh, ...seen].slice(0, needed);
+  };
+
+  if (count === 1) {
+    let candidates;
+    if (isBossStep) {
+      candidates = fullPool.filter((q) => q.difficulty >= 2);
+    } else if (stepNumber <= 3) {
+      candidates = fullPool.filter((q) => q.difficulty === 1);
+    } else {
+      candidates = fullPool.filter((q) => q.difficulty <= 2);
+    }
+    if (candidates.length === 0) candidates = fullPool;
+    const picked = pickFrom(candidates, 1, 'single');
+    const finalQuestions = picked.map((q) => ({ ...q, _isBoss: isBossStep }));
+    const questionIds = finalQuestions.map((q) => q.id);
+    saveDailyStepSession(stepNumber, { questionIds, answers: savedSession.answers || {} }, pseudo);
+    return { questions: finalQuestions, answers: savedSession.answers || {} };
+  }
+
+  const regularNeeded = Math.max(1, count - 1);
   let regularCandidates;
   let bossCandidates;
 
   if (isBossStep) {
-    // Special "Quiz" Boss node on the path: medium & hard questions + hard final Boss
     regularCandidates = fullPool.filter((q) => q.difficulty >= 2);
     if (regularCandidates.length < regularNeeded) regularCandidates = fullPool;
     bossCandidates = fullPool.filter((q) => q.difficulty === 3);
     if (bossCandidates.length === 0) bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
   } else if (stepNumber <= 3) {
-    // First days/steps: Easy (level 1) questions + 1 harder Boss question (level 2 or 3)
     regularCandidates = fullPool.filter((q) => q.difficulty === 1);
     if (regularCandidates.length < regularNeeded) {
       regularCandidates = [
@@ -139,12 +215,10 @@ function buildStepQuestions(stepNumber, goalCount, byChapter, allProgress) {
     }
     bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
   } else if (stepNumber <= 7) {
-    // Intermediate steps: Easy & Medium questions + 1 Hard Boss question
     regularCandidates = fullPool.filter((q) => q.difficulty <= 2);
     bossCandidates = fullPool.filter((q) => q.difficulty === 3);
     if (bossCandidates.length === 0) bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
   } else {
-    // Advanced steps: Medium questions + 1 Hard Boss question
     regularCandidates = fullPool.filter((q) => q.difficulty === 2);
     if (regularCandidates.length < regularNeeded) {
       regularCandidates = fullPool.filter((q) => q.difficulty <= 2);
@@ -153,23 +227,30 @@ function buildStepQuestions(stepNumber, goalCount, byChapter, allProgress) {
     if (bossCandidates.length === 0) bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
   }
 
-  let regulars = pickFrom(regularCandidates, regularNeeded, usedIds);
+  let regulars = pickFrom(regularCandidates, regularNeeded, 'reg');
+  for (const q of regulars) usedIds.add(q.id);
   if (regulars.length < regularNeeded) {
-    const extra = pickFrom(fullPool, regularNeeded - regulars.length, new Set([...usedIds, ...regulars.map((q) => q.id)]));
+    const extra = pickFrom(fullPool, regularNeeded - regulars.length, 'extra');
+    for (const q of extra) usedIds.add(q.id);
     regulars = [...regulars, ...extra];
   }
-  for (const q of regulars) usedIds.add(q.id);
 
-  let bossArr = pickFrom(bossCandidates, 1, usedIds);
+  let bossArr = pickFrom(bossCandidates, 1, 'boss');
   if (bossArr.length === 0) {
-    bossArr = pickFrom(fullPool, 1, usedIds);
+    bossArr = pickFrom(fullPool, 1, 'boss-fallback');
   }
+
   const finalQuestions = [
     ...regulars.map((q) => ({ ...q, _isBoss: false })),
     ...bossArr.map((q) => ({ ...q, _isBoss: true })),
   ];
+  const questionIds = finalQuestions.map((q) => q.id);
+  saveDailyStepSession(stepNumber, { questionIds, answers: savedSession.answers || {} }, pseudo);
 
-  return finalQuestions;
+  return {
+    questions: finalQuestions,
+    answers: savedSession.answers || {},
+  };
 }
 
 function StepNodeArt({ step, isBossNode }) {
@@ -178,7 +259,6 @@ function StepNodeArt({ step, isBossNode }) {
   }
   const mod = (step - 1) % 5;
   if (mod === 0) {
-    // Radiology / X-ray scanner icon
     return (
       <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
         <rect x="6" y="7" width="24" height="20" rx="4" fill="#1e2430" stroke="#0d1017" strokeWidth="2" />
@@ -189,7 +269,6 @@ function StepNodeArt({ step, isBossNode }) {
     );
   }
   if (mod === 1) {
-    // PACS / Medical workstation laptop icon
     return (
       <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
         <rect x="8" y="8" width="20" height="14" rx="2" fill="#111827" stroke="#374151" strokeWidth="1.8" />
@@ -199,7 +278,6 @@ function StepNodeArt({ step, isBossNode }) {
     );
   }
   if (mod === 2) {
-    // Classical medical temple / academy columns (like node 3 in screenshot)
     return (
       <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
         <path d="M18 6L6 13h24L18 6Z" fill="#e5e7eb" stroke="#374151" strokeWidth="1.6" />
@@ -211,7 +289,6 @@ function StepNodeArt({ step, isBossNode }) {
     );
   }
   if (mod === 3) {
-    // Bone / Joint anatomy icon
     return (
       <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true">
         <path
@@ -223,7 +300,6 @@ function StepNodeArt({ step, isBossNode }) {
       </svg>
     );
   }
-  // MRI Magnet / Pulse icon
   return (
     <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true">
       <circle cx="18" cy="18" r="10" fill="#1e293b" stroke="#f8fafc" strokeWidth="2" />
@@ -245,8 +321,9 @@ export default function DailyPathPage() {
   });
   const [slideIdx, setSlideIdx] = useState(0);
   const [pickingGoal, setPickingGoal] = useState(false);
-  const [selectedGoalDraft, setSelectedGoalDraft] = useState(5);
-  const [activeSession, setActiveSession] = useState(null); // { stepNumber, isBossStep, questions, id }
+  const [selectedGoalDraft, setSelectedGoalDraft] = useState(3);
+  const [activeSession, setActiveSession] = useState(null); // { stepNumber, isBossStep, questions, initialAnswers, id }
+  const [limitNotice, setLimitNotice] = useState(false);
   const currentStepNodeRef = useRef(null);
   const touchStartXRef = useRef(null);
 
@@ -284,11 +361,10 @@ export default function DailyPathPage() {
     const st = readDailyState(clean);
     setDailyState(st);
     setAllProgress(readAllProgress(clean));
-    // Show the explanatory slides whenever the user logs in / connects
     setSlideIdx(0);
     setShowingSlides(true);
     if (!st.goal) {
-      setSelectedGoalDraft(5);
+      setSelectedGoalDraft(3);
     }
   };
 
@@ -298,66 +374,96 @@ export default function DailyPathPage() {
     setDailyState(st);
     setShowingSlides(false);
     if (!st.goal) {
-      setSelectedGoalDraft(5);
+      setSelectedGoalDraft(3);
       setPickingGoal(true);
     }
   };
 
   const handleGoalSubmit = (goalVal) => {
-    const chosen = Number(goalVal) || selectedGoalDraft || 5;
+    const chosen = Number(goalVal) || selectedGoalDraft || 3;
     saveDailyGoal(chosen, pseudo);
     setDailyState(readDailyState(pseudo));
     setPickingGoal(false);
   };
 
-  const launchStep = (stepNumber) => {
-    const goalCount = dailyState.goal || 5;
+  const launchStep = (stepNumber, forceReplay = false) => {
+    const isAlreadyCompleted = Boolean(dailyState.steps[stepNumber]);
+    if (!isAlreadyCompleted && dailyState.todayStepsCount >= MAX_DAILY_STEPS) {
+      setLimitNotice(true);
+      return;
+    }
+    setLimitNotice(false);
+    if (forceReplay) {
+      clearDailyStepAnswers(stepNumber, pseudo);
+    }
+    const goalCount = dailyState.goal || 3;
     const isBossStep = stepNumber % 4 === 0;
-    const drawn = buildStepQuestions(stepNumber, goalCount, byChapter, allProgress);
-    if (drawn.length === 0) return;
+    const { questions, answers } = resolveStepQuestionsAndAnswers(
+      stepNumber,
+      goalCount,
+      pseudo,
+      byChapter,
+      allProgress
+    );
+    if (questions.length === 0) return;
     setActiveSession({
       id: Date.now(),
       stepNumber,
       isBossStep,
-      questions: drawn,
+      questions,
+      initialAnswers: forceReplay ? {} : answers,
     });
     window.scrollTo(0, 0);
   };
 
-  // Layout geometry for the vertical winding path (Step 1 at bottom -> higher steps at top)
+  // Smooth C2-continuous S-curve geometry for the vertical winding path
   const totalStepsToShow = Math.max(8, dailyState.currentStep + 3);
   const pathLayout = useMemo(() => {
-    const rowHeight = 162;
-    const topPad = 95;
-    const bottomPad = 110;
+    const width = 360;
+    const rowHeight = 166;
+    const topPad = 100;
+    const bottomPad = 115;
     const height = topPad + (totalStepsToShow - 1) * rowHeight + bottomPad;
 
-    // Horizontal pattern matching the screenshot's S-curve (in viewBox width 360)
-    // Step 1: center-left (172), Step 2: right (266), Step 3: center (178), Step 4 (Quiz Boss): left (96), Step 5: center (180)...
-    const xPattern = [172, 266, 178, 96, 180, 264, 174, 96];
+    // Harmonious alternating horizontal wave so every segment is a smooth S-bend
+    const xWave = [180, 260, 108, 252, 108, 260, 108, 252];
 
     const nodes = [];
     for (let s = 1; s <= totalStepsToShow; s++) {
       const idxFromTop = totalStepsToShow - s;
       const y = topPad + idxFromTop * rowHeight;
-      const x = xPattern[(s - 1) % xPattern.length];
+      const x = xWave[(s - 1) % xWave.length];
       nodes.push({ step: s, x, y, isBoss: s % 4 === 0 });
     }
 
-    // Build smooth cubic bezier segments between consecutive steps
-    const segments = [];
-    for (let i = 0; i < nodes.length - 1; i++) {
-      const a = nodes[i]; // step s
-      const b = nodes[i + 1]; // step s + 1 (above a)
-      const midY = (a.y + b.y) / 2;
-      // Exaggerate horizontal swing slightly like the screenshot
-      const swingX = a.x === b.x ? (i % 2 === 0 ? 40 : -40) : 0;
-      const d = `M ${a.x} ${a.y} C ${a.x + swingX} ${midY + 25}, ${b.x - swingX} ${midY - 25}, ${b.x} ${b.y}`;
-      const unlocked = b.step <= dailyState.currentStep;
-      segments.push({ key: `${a.step}-${b.step}`, d, unlocked });
+    // Build continuous C2-smooth cubic Bézier paths:
+    // Because both control points at each node (x_i, y_i) have x = x_i and symmetric vertical tangents,
+    // the curve has zero kinks and flows like a ribbon through every single medallion.
+    const tOffset = Math.round(rowHeight * 0.56);
+    const unlockedLimit = Math.min(dailyState.currentStep, nodes.length);
+
+    let unlockedPathD = '';
+    if (nodes.length > 0) {
+      unlockedPathD = `M ${nodes[0].x} ${nodes[0].y}`;
+      for (let i = 0; i < unlockedLimit - 1; i++) {
+        const a = nodes[i];
+        const b = nodes[i + 1];
+        unlockedPathD += ` C ${a.x} ${a.y - tOffset}, ${b.x} ${b.y + tOffset}, ${b.x} ${b.y}`;
+      }
     }
 
-    return { width: 360, height, nodes, segments };
+    let lockedPathD = '';
+    if (unlockedLimit >= 1 && unlockedLimit < nodes.length) {
+      const startNode = nodes[unlockedLimit - 1];
+      lockedPathD = `M ${startNode.x} ${startNode.y}`;
+      for (let i = unlockedLimit - 1; i < nodes.length - 1; i++) {
+        const a = nodes[i];
+        const b = nodes[i + 1];
+        lockedPathD += ` C ${a.x} ${a.y - tOffset}, ${b.x} ${b.y + tOffset}, ${b.x} ${b.y}`;
+      }
+    }
+
+    return { width, height, nodes, unlockedPathD, lockedPathD };
   }, [totalStepsToShow, dailyState.currentStep]);
 
   // 1) Pseudo onboarding step
@@ -544,7 +650,7 @@ export default function DailyPathPage() {
                 className="btn"
                 onClick={finishOnboardingSlides}
               >
-                {dailyState.goal ? 'Accéder à mon parcours' : 'Choisir mon objectif'}{' '}
+                {dailyState.goal ? 'Accéder à mon parcours' : 'Choisir mon rythme'}{' '}
                 <Icon name="arrow" size={18} />
               </button>
             ) : (
@@ -562,7 +668,7 @@ export default function DailyPathPage() {
     );
   }
 
-  // 2) Daily Goal selection (shown automatically for every new pseudo, or when clicking the flag pill)
+  // 2) Daily Goal selection (1, 3 or 5 questions per step)
   if (!dailyState.goal || pickingGoal) {
     return (
       <section className="home daily-onboarding">
@@ -571,15 +677,15 @@ export default function DailyPathPage() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <span className="daily-goal-kicker"> Objectif journalier · {pseudo}</span>
-          <h2>Combien de questions veux-tu faire par jour ?</h2>
+          <span className="daily-goal-kicker">Rythme par étape · {pseudo}</span>
+          <h2>Combien de questions veux-tu par étape ?</h2>
           <p className="daily-goal-sub">
-            Les questions sont tirées au sort. Tu commences par un niveau <strong>facile</strong> les premiers jours et chaque session se termine par un <strong>Boss</strong> plus difficile !
+            Tu peux réaliser jusqu’à <strong>3 étapes par jour</strong>. À la fin de chaque étape, tu obtiens <strong>1★</strong> de base, <strong>2★</strong> si &gt; 60 % de bonnes réponses et <strong>3★</strong> si &gt; 90 % !
           </p>
 
-          <div className="daily-goal-options" role="radiogroup" aria-label="Objectif quotidien de questions">
+          <div className="daily-goal-options" role="radiogroup" aria-label="Nombre de questions par étape">
             {GOAL_OPTIONS.map((opt) => {
-              const active = (selectedGoalDraft || dailyState.goal || 5) === opt.count;
+              const active = (selectedGoalDraft || dailyState.goal || 3) === opt.count;
               return (
                 <button
                   key={opt.count}
@@ -626,19 +732,23 @@ export default function DailyPathPage() {
 
   // 3) Active Daily Step Quiz Player
   if (activeSession) {
-    const { stepNumber, isBossStep, questions } = activeSession;
+    const { stepNumber, isBossStep, questions, initialAnswers } = activeSession;
+    const qIds = questions.map((q) => q.id);
     return (
       <div className="rnd-play daily-play">
         <div className="rnd-play-top">
           <button
             type="button"
             className="rnd-action-btn"
-            onClick={() => setActiveSession(null)}
+            onClick={() => {
+              setDailyState(readDailyState(pseudo));
+              setActiveSession(null);
+            }}
           >
             ← Retour au chemin
           </button>
           <span className="daily-session-pill">
-            🚩 {Math.min(dailyState.todayCount, dailyState.goal)}/{dailyState.goal} aujourd’hui
+            🚩 {Math.min(dailyState.todayStepsCount, MAX_DAILY_STEPS)}/{MAX_DAILY_STEPS} étapes aujourd’hui
           </span>
         </div>
         <QuizPlayer
@@ -654,6 +764,10 @@ export default function DailyPathPage() {
             auteurs: 'A. Cotten',
           }}
           questions={questions}
+          initialAnswers={initialAnswers}
+          onAnswersChange={(nextAns) => {
+            saveDailyStepSession(stepNumber, { questionIds: qIds, answers: nextAns }, pseudo);
+          }}
           randomMode
           backLabel="← Chemin"
           onQuestionValidated={() => {
@@ -662,7 +776,7 @@ export default function DailyPathPage() {
           }}
           onQuizCompleted={({ score, total }) => {
             const ratio = total > 0 ? score / total : 0;
-            const stars = ratio >= 0.9 ? 3 : ratio >= 0.6 ? 2 : 1;
+            const stars = ratio > 0.9 ? 3 : ratio > 0.6 ? 2 : 1;
             recordDailyStepCompleted(stepNumber, stars, pseudo);
             setDailyState(readDailyState(pseudo));
           }}
@@ -674,19 +788,25 @@ export default function DailyPathPage() {
               setActiveSession(null);
             },
           }}
-          onRestart={() => launchStep(stepNumber)}
+          onRestart={() => launchStep(stepNumber, true)}
         />
       </div>
     );
   }
 
-  const goal = dailyState.goal || 5;
-  const goalReached = dailyState.todayCount >= goal;
+  const goal = dailyState.goal || 3;
+  const stepsToday = Math.min(dailyState.todayStepsCount, MAX_DAILY_STEPS);
+  const dailyStepsReached = stepsToday >= MAX_DAILY_STEPS;
+
+  // Check if currentStep has in-progress answers saved
+  const currentStepSession = readDailyStepSession(dailyState.currentStep, pseudo);
+  const currentStepAnsweredCount = Object.keys(currentStepSession.answers || {}).length;
+  const currentStepTotalCount = currentStepSession.questionIds?.length || goal;
 
   // 4) Winding Daily Progression Path View
   return (
     <section className="daily-page" aria-label="Parcours de progression journalière">
-      {/* Top Floating HUD matching the screenshot */}
+      {/* Top Floating HUD */}
       <div className="daily-hud">
         <div className="daily-hud-pill daily-hud-left">
           <span className="daily-hud-item" title="Jours d’activité consécutifs">
@@ -708,18 +828,19 @@ export default function DailyPathPage() {
 
           <button
             type="button"
-            className={`daily-hud-item daily-hud-flag-btn ${goalReached ? 'is-done' : ''}`}
+            className={`daily-hud-item daily-hud-flag-btn ${dailyStepsReached ? 'is-done' : ''}`}
             onClick={() => {
               setSelectedGoalDraft(goal);
               setPickingGoal(true);
             }}
-            title="Modifier mon objectif journalier (3, 5 ou 10 questions)"
+            title={`Étapes du jour (${stepsToday}/${MAX_DAILY_STEPS}) · Rythme : ${goal} question${goal > 1 ? 's' : ''}/étape (cliquer pour modifier)`}
           >
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M5 21V4" />
               <path d="M5 4h13l-2.5 4.5L18 13H5" />
             </svg>
-            <b>{dailyState.todayCount}/{goal}</b>
+            <b>{stepsToday}/{MAX_DAILY_STEPS}</b>
+            <span className="daily-hud-q-tag">{goal}Q</span>
           </button>
         </div>
 
@@ -763,7 +884,18 @@ export default function DailyPathPage() {
         </div>
       </div>
 
-      {/* Winding Path Canvas */}
+      {limitNotice && (
+        <div className="daily-limit-banner" role="status">
+          <span>
+            🎉 Tu as terminé tes <strong>{MAX_DAILY_STEPS} étapes du jour</strong> ! Reviens demain pour débloquer la suite, ou clique sur une étape déjà validée pour améliorer tes étoiles (★★ / ★★★).
+          </span>
+          <button type="button" className="pseudo-change-btn" onClick={() => setLimitNotice(false)}>
+            Fermer
+          </button>
+        </div>
+      )}
+
+      {/* Smooth Winding Path Canvas */}
       <div className="daily-map-scroll">
         <div
           className="daily-map-canvas"
@@ -772,30 +904,81 @@ export default function DailyPathPage() {
           <svg
             className="daily-map-svg"
             viewBox={`0 0 ${pathLayout.width} ${pathLayout.height}`}
-            preserveAspectRatio="none"
             aria-hidden="true"
           >
-            {pathLayout.segments.map((seg) => (
-              <path
-                key={seg.key}
-                d={seg.d}
-                fill="none"
-                stroke={seg.unlocked ? '#eab308' : 'rgba(234, 179, 8, 0.25)'}
-                strokeWidth={seg.unlocked ? '9' : '7'}
-                strokeLinecap="round"
-                strokeDasharray={seg.unlocked ? undefined : '10 10'}
-              />
-            ))}
+            <defs>
+              <linearGradient id="goldRoadGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#fde047" />
+                <stop offset="50%" stopColor="#eab308" />
+                <stop offset="100%" stopColor="#ca8a04" />
+              </linearGradient>
+              <filter id="roadGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="4" stdDeviation="5" floodColor="#000000" floodOpacity="0.55" />
+              </filter>
+            </defs>
+
+            {/* Locked future trail (smooth dark track + golden pebbles) */}
+            {pathLayout.lockedPathD && (
+              <g>
+                <path
+                  d={pathLayout.lockedPathD}
+                  fill="none"
+                  stroke="rgba(15, 20, 30, 0.78)"
+                  strokeWidth="16"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d={pathLayout.lockedPathD}
+                  fill="none"
+                  stroke="rgba(250, 204, 21, 0.34)"
+                  strokeWidth="6.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeDasharray="1 18"
+                />
+              </g>
+            )}
+
+            {/* Unlocked golden ribbon trail (casing + gradient road + glossy center line) */}
+            {pathLayout.unlockedPathD && (
+              <g filter="url(#roadGlow)">
+                <path
+                  d={pathLayout.unlockedPathD}
+                  fill="none"
+                  stroke="#0b0e15"
+                  strokeWidth="20"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d={pathLayout.unlockedPathD}
+                  fill="none"
+                  stroke="url(#goldRoadGrad)"
+                  strokeWidth="12.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d={pathLayout.unlockedPathD}
+                  fill="none"
+                  stroke="rgba(254, 249, 195, 0.65)"
+                  strokeWidth="3.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </g>
+            )}
           </svg>
 
-          {/* Decorative floating illustrations along the path (like the book & pencil in the screenshot) */}
+          {/* Decorative floating illustrations along the path */}
           {pathLayout.nodes[1] && (
             <div
               className="daily-deco daily-deco-book"
-              style={{ top: pathLayout.nodes[1].y + 8, left: '6%' }}
+              style={{ top: pathLayout.nodes[1].y + 8, left: '3%' }}
               aria-hidden="true"
             >
-              <svg width="96" height="76" viewBox="0 0 110 86" fill="none">
+              <svg width="92" height="72" viewBox="0 0 110 86" fill="none">
                 <path d="M18 14l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" fill="#f8fafc" />
                 <path d="M35 4l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z" fill="#e2e8f0" />
                 <path d="M14 50L50 32l38 14-36 22L14 50Z" fill="#2563eb" stroke="#0f172a" strokeWidth="3" />
@@ -808,10 +991,10 @@ export default function DailyPathPage() {
           {pathLayout.nodes[2] && (
             <div
               className="daily-deco daily-deco-pencil"
-              style={{ top: pathLayout.nodes[2].y - 95, right: '2%' }}
+              style={{ top: pathLayout.nodes[2].y - 80, right: '1%' }}
               aria-hidden="true"
             >
-              <svg width="104" height="96" viewBox="0 0 110 100" fill="none">
+              <svg width="98" height="90" viewBox="0 0 110 100" fill="none">
                 <circle cx="80" cy="22" r="7" fill="#eab308" stroke="#0f172a" strokeWidth="2" />
                 <g transform="rotate(-25 56 42)">
                   <rect x="46" y="18" width="16" height="42" rx="2" fill="#facc15" stroke="#0f172a" strokeWidth="2.5" />
@@ -848,9 +1031,9 @@ export default function DailyPathPage() {
                 className={`daily-node-wrap ${isUnlocked ? 'is-unlocked' : 'is-locked'} ${isCurrent ? 'is-current' : ''} ${isBoss ? 'is-boss' : ''}`}
                 style={{ left: leftPct, top: y }}
               >
-                {/* Boss 3-star arch on top of Quiz Boss nodes */}
-                {isBoss && (
-                  <div className="daily-boss-stars" aria-hidden="true">
+                {/* 3-star arch on Boss nodes and on every completed step */}
+                {(isBoss || isCompleted) && (
+                  <div className={`daily-boss-stars ${!isBoss ? 'daily-step-stars' : ''}`} aria-hidden="true">
                     {[1, 2, 3].map((sIdx) => {
                       const lit = stars >= sIdx;
                       return (
@@ -894,27 +1077,19 @@ export default function DailyPathPage() {
                   )}
                 </button>
 
-                {/* Side badges like the small numbered circles next to steps 1, 2, 3 in the screenshot */}
+                {/* Side badges */}
                 {isUnlocked && !isBoss && (
                   <div
-                    className={`daily-side-badges ${x > 210 ? 'on-left' : 'on-right'}`}
+                    className={`daily-side-badges ${x > 180 ? 'on-left' : 'on-right'}`}
                     aria-hidden="true"
                   >
                     <span
                       className="daily-side-badge"
                       style={{ '--badge-tint': palette.badgeBg }}
-                      title={isCompleted ? `${stars} étoile${stars > 1 ? 's' : ''}` : 'Questions + 1 Boss'}
+                      title={isCompleted ? `${stars} étoile${stars > 1 ? 's' : ''}` : `${goal} question${goal > 1 ? 's' : ''}`}
                     >
-                      <b>{isCompleted ? stars : 1}</b>
+                      <b>{isCompleted ? `${stars}★` : `${goal}Q`}</b>
                     </span>
-                    {step === 1 && (
-                      <span
-                        className="daily-side-badge daily-side-badge-secondary"
-                        style={{ '--badge-tint': '#fde68a' }}
-                      >
-                        <b>1</b>
-                      </span>
-                    )}
                   </div>
                 )}
 
@@ -924,7 +1099,11 @@ export default function DailyPathPage() {
                     className="daily-current-cta"
                     onClick={() => launchStep(step)}
                   >
-                    {isBoss ? '🔥 Lancer le Boss' : 'Commencer'}
+                    {currentStepAnsweredCount > 0 && currentStepAnsweredCount < currentStepTotalCount
+                      ? `Continuer (${currentStepAnsweredCount}/${currentStepTotalCount})`
+                      : isBoss
+                        ? '🔥 Lancer le Boss'
+                        : 'Commencer'}
                   </button>
                 )}
               </div>
