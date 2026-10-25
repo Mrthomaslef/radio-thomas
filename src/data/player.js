@@ -656,6 +656,7 @@ function formatLocalDay(date = new Date()) {
 }
 
 export const MAX_DAILY_STEPS = 3;
+export const QUESTIONS_PER_STEP = 3;
 const DAILY_STEPS_LOCAL_PREFIX = 'quiz-cotten:daily-steps:v1:';
 
 function readLocalDailyStepsMap(name) {
@@ -802,7 +803,7 @@ export function clearDailyStepAnswers(stepNumber, name = readName()) {
 export function readDailyState(name = readName()) {
   if (!name) {
     return {
-      goal: null,
+      goal: QUESTIONS_PER_STEP,
       onboarded: false,
       steps: {},
       currentStep: 1,
@@ -811,15 +812,16 @@ export function readDailyState(name = readName()) {
       todayStepsCount: 0,
       maxDailySteps: MAX_DAILY_STEPS,
       streak: 0,
+      activeDays: [],
+      starsByDay: {},
     };
   }
   const ch96 = readChapterProgress(DAILY_CHAPTER_KEY, name);
   const ans = ch96?.answers || {};
+  const tsMap = ch96?.answerTimestamps || {};
 
-  // 1) Questions per step: D -> 1, A -> 3, B -> 5 (legacy C -> 5)
-  const goalCode = Array.isArray(ans['daily-goal']) ? ans['daily-goal'][0] : null;
-  const goal =
-    goalCode === 'D' ? 1 : goalCode === 'A' ? 3 : goalCode === 'B' || goalCode === 'C' ? 5 : null;
+  // Unified at 3 questions per step
+  const goal = QUESTIONS_PER_STEP;
   const onboarded = Array.isArray(ans['onboarded']) && ans['onboarded'][0] === 'A';
 
   // 2) Completed steps & stars: step-<N> -> A (1), B (2), C (3)
@@ -838,37 +840,67 @@ export function readDailyState(name = readName()) {
     if (stepNum > maxCompletedStep) maxCompletedStep = stepNum;
   }
 
-  // 3) Today's answered questions & completed steps count
-  const { compact: todayCompact } = formatLocalDay(new Date());
+  // 3) Track active streak days and stars earned per day (completing 1 step suffices to continue the streak)
+  const { iso: todayIso, compact: todayCompact } = formatLocalDay(new Date());
   const qPrefix = `q-${todayCompact}-`;
   const sdPrefix = `sd-${todayCompact}-`;
   let todayCount = 0;
   const todayStepsSet = new Set();
+
+  const activeDates = new Set();
+  const starsByDay = {};
+  const countedDaySteps = new Set();
+
   for (const [k, val] of Object.entries(ans)) {
-    if (!Array.isArray(val) || val[0] !== 'A') continue;
-    if (k.startsWith(qPrefix)) {
+    if (!Array.isArray(val) || !val[0]) continue;
+    if (k.startsWith(qPrefix) && val[0] === 'A') {
       todayCount += 1;
-    } else if (k.startsWith(sdPrefix)) {
+    }
+    if (k.startsWith(sdPrefix)) {
       todayStepsSet.add(k.slice(sdPrefix.length));
     }
-  }
-  const todayStepsCount = todayStepsSet.size;
 
-  // 4) Streak of consecutive active days (streak-YYYY-MM-DD or any q-YYYYMMDD-*)
-  const activeDates = new Set();
-  for (const [k, val] of Object.entries(ans)) {
-    if (!Array.isArray(val) || val[0] !== 'A') continue;
-    const ms = k.match(/^streak-(\d{4}-\d{2}-\d{2})$/);
-    if (ms) {
-      activeDates.add(ms[1]);
+    const mSd = k.match(/^sd-(\d{4})(\d{2})(\d{2})-(\d{1,4})$/);
+    if (mSd) {
+      const dayIso = `${mSd[1]}-${mSd[2]}-${mSd[3]}`;
+      const sNum = parseInt(mSd[4], 10);
+      activeDates.add(dayIso);
+      if (sNum > 0) {
+        const keyPair = `${dayIso}:${sNum}`;
+        if (!countedDaySteps.has(keyPair)) {
+          countedDaySteps.add(keyPair);
+          const code = val[0];
+          const sdStars = code === 'C' ? 3 : code === 'B' ? 2 : 1;
+          const sStars = Math.max(sdStars, steps[sNum] || 1);
+          starsByDay[dayIso] = (starsByDay[dayIso] || 0) + sStars;
+        }
+      }
       continue;
     }
-    const mq = k.match(/^q-(\d{4})(\d{2})(\d{2})-\d+$/);
-    if (mq) {
-      activeDates.add(`${mq[1]}-${mq[2]}-${mq[3]}`);
+
+    const ms = k.match(/^streak-(\d{4}-\d{2}-\d{2})$/);
+    if (ms && val[0] === 'A') {
+      activeDates.add(ms[1]);
     }
   }
 
+  // Also attribute any completed step-<N> via its timestamp if not already in sd-YYYYMMDD-<N>
+  for (const [sNumStr, sStars] of Object.entries(steps)) {
+    const sNum = parseInt(sNumStr, 10);
+    const stepTs = Number(tsMap[`step-${sNum}`]);
+    const dayIso =
+      stepTs > 0 ? formatLocalDay(new Date(stepTs)).iso : todayIso;
+    activeDates.add(dayIso);
+    const keyPair = `${dayIso}:${sNum}`;
+    if (!countedDaySteps.has(keyPair)) {
+      countedDaySteps.add(keyPair);
+      starsByDay[dayIso] = (starsByDay[dayIso] || 0) + sStars;
+    }
+  }
+
+  const todayStepsCount = todayStepsSet.size;
+
+  // Calculate consecutive day streak (1 completed step in a day suffices to keep the streak alive)
   let streak = 0;
   const cursor = new Date();
   cursor.setHours(12, 0, 0, 0);
@@ -879,9 +911,6 @@ export function readDailyState(name = readName()) {
   while (activeDates.has(formatLocalDay(cursor).iso)) {
     streak += 1;
     cursor.setDate(cursor.getDate() - 1);
-  }
-  if (streak === 0 && (goal !== null || maxCompletedStep > 0 || todayCount > 0)) {
-    streak = 1;
   }
 
   return {
@@ -894,6 +923,8 @@ export function readDailyState(name = readName()) {
     todayStepsCount,
     maxDailySteps: MAX_DAILY_STEPS,
     streak,
+    activeDays: [...activeDates].sort(),
+    starsByDay,
   };
 }
 
@@ -912,7 +943,7 @@ export function saveDailyGoal(goalNumber, name = readName()) {
 export function recordDailyQuestionAnswered(name = readName()) {
   if (!name) return;
   const now = Date.now();
-  const { iso, compact } = formatLocalDay(new Date(now));
+  const { compact } = formatLocalDay(new Date(now));
   const cur = readChapterProgress(DAILY_CHAPTER_KEY, name);
   const answers = { ...(cur.answers || {}) };
   const answerTimestamps = { ...(cur.answerTimestamps || {}) };
@@ -926,11 +957,8 @@ export function recordDailyQuestionAnswered(name = readName()) {
     }
   }
   const nextKey = `${prefix}${maxIdx + 1}`;
-  const streakKey = `streak-${iso}`;
   answers[nextKey] = ['A'];
   answerTimestamps[nextKey] = now;
-  answers[streakKey] = ['A'];
-  answerTimestamps[streakKey] = now;
 
   writeChapterProgress(
     DAILY_CHAPTER_KEY,
@@ -958,7 +986,10 @@ export function recordDailyStepCompleted(stepNumber, stars, name = readName()) {
   const stepDoneTodayKey = `sd-${compact}-${sNum}`;
 
   if (existingStars === 0) {
-    answers[stepDoneTodayKey] = ['A'];
+    answers[stepDoneTodayKey] = [nextCode];
+    answerTimestamps[stepDoneTodayKey] = now;
+  } else if (answers[stepDoneTodayKey]) {
+    answers[stepDoneTodayKey] = [nextCode];
     answerTimestamps[stepDoneTodayKey] = now;
   }
 

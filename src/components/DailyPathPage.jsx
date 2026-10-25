@@ -4,6 +4,7 @@ import { themes } from '../data/themes.js';
 import { CHAPTERS, useQuestions, resolveDifficulty } from '../data/useQuestions.js';
 import {
   MAX_DAILY_STEPS,
+  QUESTIONS_PER_STEP,
   readName,
   saveName,
   readAllProgress,
@@ -12,7 +13,6 @@ import {
   saveDailyStepSession,
   clearDailyStepAnswers,
   markDailyOnboarded,
-  saveDailyGoal,
   recordDailyQuestionAnswered,
   recordDailyStepCompleted,
   subscribePlayer,
@@ -26,7 +26,7 @@ const ONBOARDING_SLIDES = [
     step: '1 / 3',
     badge: 'Parcours quotidien',
     title: 'Réalise tes questions journalières',
-    text: 'Choisis ton rythme (1, 3 ou 5 questions par étape) et réalise jusqu’à 3 étapes par jour. Tu commences par des questions faciles et chaque étape se termine par une question Boss plus corsée !',
+    text: 'Chaque étape comporte 3 questions (2 questions + 1 question Boss plus corsée). Tu peux réaliser jusqu’à 3 étapes par jour, et valider une seule étape suffit pour maintenir ta série (streak) !',
     highlight: '⭐ Gagne 1★ en finissant l’étape, 2★ si > 60 % de bonnes réponses et 3★ si > 90 % !',
     icon: 'daily',
   },
@@ -43,29 +43,8 @@ const ONBOARDING_SLIDES = [
     badge: 'Sauvegarde automatique',
     title: 'Ta progression est sauvegardée',
     text: 'Ta progression au sein de chaque étape est conservée sans changement des questions. Tout est mémorisé automatiquement avec ton pseudo, sur ton téléphone comme sur ton ordinateur.',
-    highlight: '📈 Retrouve à tout moment tes chapitres validés et tes questions enregistrées dans « Ma progression ».',
+    highlight: '📈 Retrouve à tout moment ton calendrier de série en haut à gauche et tes chapitres dans « Ma progression ».',
     icon: 'progress',
-  },
-];
-
-const GOAL_OPTIONS = [
-  {
-    count: 1,
-    label: '1 question / étape',
-    badge: 'Express',
-    desc: '1 question ciblée par étape · Jusqu’à 3 étapes par jour',
-  },
-  {
-    count: 3,
-    label: '3 questions / étape',
-    badge: 'Recommandé',
-    desc: '2 questions + 1 question Boss · Jusqu’à 3 étapes par jour',
-  },
-  {
-    count: 5,
-    label: '5 questions / étape',
-    badge: 'Complet',
-    desc: '4 questions + 1 question Boss · Jusqu’à 3 étapes par jour',
   },
 ];
 
@@ -266,6 +245,198 @@ function LockIcon({ isBoss }) {
   );
 }
 
+const MONTH_NAMES_FR = [
+  'Janvier',
+  'Février',
+  'Mars',
+  'Avril',
+  'Mai',
+  'Juin',
+  'Juillet',
+  'Août',
+  'Septembre',
+  'Octobre',
+  'Novembre',
+  'Décembre',
+];
+const WEEKDAYS_FR = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+
+function StreakCalendarModal({ dailyState, onClose }) {
+  const now = new Date();
+  const [viewYear, setViewYear] = useState(now.getFullYear());
+  const [viewMonth, setViewMonth] = useState(now.getMonth()); // 0..11
+
+  const activeSet = useMemo(() => new Set(dailyState.activeDays || []), [dailyState.activeDays]);
+  const starsByDay = dailyState.starsByDay || {};
+  const todayIso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+  const calendarCells = useMemo(() => {
+    const firstDay = new Date(viewYear, viewMonth, 1);
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    // Convert Sunday=0..Saturday=6 to Monday=0..Sunday=6
+    const startOffset = (firstDay.getDay() + 6) % 7;
+    const cells = [];
+    for (let i = 0; i < startOffset; i++) {
+      cells.push(null);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const iso = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const isStreak = activeSet.has(iso);
+      const dayStars = starsByDay[iso] || 0;
+      cells.push({
+        day: d,
+        iso,
+        isToday: iso === todayIso,
+        isStreak,
+        stars: dayStars,
+      });
+    }
+    return cells;
+  }, [viewYear, viewMonth, activeSet, starsByDay, todayIso]);
+
+  const prevMonth = () => {
+    if (viewMonth === 0) {
+      setViewYear((y) => y - 1);
+      setViewMonth(11);
+    } else {
+      setViewMonth((m) => m - 1);
+    }
+  };
+
+  const nextMonth = () => {
+    if (viewMonth === 11) {
+      setViewYear((y) => y + 1);
+      setViewMonth(0);
+    } else {
+      setViewMonth((m) => m + 1);
+    }
+  };
+
+  return (
+    <div
+      className="daily-cal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Calendrier des jours de série"
+      onClick={onClose}
+    >
+      <motion.div
+        className="daily-cal-modal"
+        initial={{ opacity: 0, scale: 0.95, y: 12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.18 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="daily-cal-head">
+          <div>
+            <span className="daily-goal-kicker">Série quotidienne</span>
+            <h3>Calendrier de streak</h3>
+          </div>
+          <button
+            type="button"
+            className="daily-cal-close"
+            onClick={onClose}
+            aria-label="Fermer le calendrier"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="daily-cal-summary">
+          <div className="daily-cal-stat">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="#38e1ff"
+                d="M12 2c1.8 3.2 5 5.6 5 10.2A5.5 5.5 0 0 1 11.5 18c2.2-1.2 2.4-3.8 1-5.5-1.2 1.4-2.5 2.4-2.5 4.3A4.2 4.2 0 0 1 6.5 12C6.5 8.2 9.8 5.2 12 2Z"
+              />
+            </svg>
+            <div>
+              <strong>{dailyState.streak} jour{dailyState.streak > 1 ? 's' : ''}</strong>
+              <span>Série en cours</span>
+            </div>
+          </div>
+
+          <div className="daily-cal-stat">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="#38e1ff"
+                stroke="#05090f"
+                strokeWidth="1.2"
+                d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
+              />
+            </svg>
+            <div>
+              <strong>{dailyState.totalStars} ★</strong>
+              <span>Étoiles gagnées au total</span>
+            </div>
+          </div>
+        </div>
+
+        <p className="daily-cal-rule">
+          💡 Réaliser <strong>une seule étape</strong> (3 questions) dans la journée suffit pour continuer ta série !
+        </p>
+
+        <div className="daily-cal-nav">
+          <button type="button" className="daily-cal-nav-btn" onClick={prevMonth} aria-label="Mois précédent">
+            ‹
+          </button>
+          <strong className="daily-cal-month-label">
+            {MONTH_NAMES_FR[viewMonth]} {viewYear}
+          </strong>
+          <button type="button" className="daily-cal-nav-btn" onClick={nextMonth} aria-label="Mois suivant">
+            ›
+          </button>
+        </div>
+
+        <div className="daily-cal-weekdays">
+          {WEEKDAYS_FR.map((w) => (
+            <span key={w} className="daily-cal-weekday">
+              {w}
+            </span>
+          ))}
+        </div>
+
+        <div className="daily-cal-grid">
+          {calendarCells.map((cell, idx) => {
+            if (!cell) {
+              return <div key={`empty-${idx}`} className="daily-cal-cell is-empty" />;
+            }
+            const showStarLogo = cell.isStreak || cell.stars > 0;
+            const starValue = cell.stars > 0 ? cell.stars : dailyState.totalStars || 1;
+            return (
+              <div
+                key={cell.iso}
+                className={`daily-cal-cell ${cell.isStreak ? 'is-streak' : ''} ${cell.isToday ? 'is-today' : ''}`}
+                title={
+                  cell.isStreak
+                    ? `${cell.iso} · Série validée (${starValue} ★)`
+                    : cell.iso
+                }
+              >
+                {/* Star logo with stars count displayed right above the day */}
+                <div className="daily-cal-day-top" aria-hidden="true">
+                  {showStarLogo && (
+                    <span className="daily-cal-star-badge">
+                      <svg width="13" height="13" viewBox="0 0 24 24">
+                        <path
+                          fill="#38e1ff"
+                          d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
+                        />
+                      </svg>
+                      <b>{starValue}</b>
+                    </span>
+                  )}
+                </div>
+                <span className="daily-cal-day-num">{cell.day}</span>
+              </div>
+            );
+          })}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function DailyPathPage() {
   const { byChapter, loading } = useQuestions();
   const [pseudo, setPseudo] = useState(readName);
@@ -278,8 +449,7 @@ export default function DailyPathPage() {
     return Boolean(n && !readDailyState(n).onboarded);
   });
   const [slideIdx, setSlideIdx] = useState(0);
-  const [pickingGoal, setPickingGoal] = useState(false);
-  const [selectedGoalDraft, setSelectedGoalDraft] = useState(3);
+  const [showingCalendar, setShowingCalendar] = useState(false);
   const [activeSession, setActiveSession] = useState(null); // { stepNumber, isBossStep, questions, initialAnswers, id }
   const [limitNotice, setLimitNotice] = useState(false);
   const currentStepNodeRef = useRef(null);
@@ -294,20 +464,19 @@ export default function DailyPathPage() {
       setAllProgress(readAllProgress(curr));
       const nextDaily = readDailyState(curr);
       setDailyState(nextDaily);
-      if (nextDaily.goal) setSelectedGoalDraft(nextDaily.goal);
     });
   }, []);
 
   // Automatically scroll to the active step node when the path is displayed
   useEffect(() => {
-    if (!editingPseudo && !showingSlides && dailyState.goal && !pickingGoal && !activeSession) {
+    if (!editingPseudo && !showingSlides && !activeSession) {
       const t = setTimeout(() => {
         currentStepNodeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 120);
       return () => clearTimeout(t);
     }
     return undefined;
-  }, [editingPseudo, showingSlides, dailyState.goal, dailyState.currentStep, pickingGoal, activeSession]);
+  }, [editingPseudo, showingSlides, dailyState.currentStep, activeSession]);
 
   const handlePseudoSubmit = (e) => {
     e.preventDefault();
@@ -321,9 +490,6 @@ export default function DailyPathPage() {
     setAllProgress(readAllProgress(clean));
     setSlideIdx(0);
     setShowingSlides(true);
-    if (!st.goal) {
-      setSelectedGoalDraft(3);
-    }
   };
 
   const finishOnboardingSlides = () => {
@@ -331,17 +497,6 @@ export default function DailyPathPage() {
     const st = readDailyState(pseudo);
     setDailyState(st);
     setShowingSlides(false);
-    if (!st.goal) {
-      setSelectedGoalDraft(3);
-      setPickingGoal(true);
-    }
-  };
-
-  const handleGoalSubmit = (goalVal) => {
-    const chosen = Number(goalVal) || selectedGoalDraft || 3;
-    saveDailyGoal(chosen, pseudo);
-    setDailyState(readDailyState(pseudo));
-    setPickingGoal(false);
   };
 
   const launchStep = (stepNumber, forceReplay = false) => {
@@ -354,11 +509,10 @@ export default function DailyPathPage() {
     if (forceReplay) {
       clearDailyStepAnswers(stepNumber, pseudo);
     }
-    const goalCount = dailyState.goal || 3;
     const isBossStep = stepNumber % 4 === 0;
     const { questions, answers } = resolveStepQuestionsAndAnswers(
       stepNumber,
-      goalCount,
+      QUESTIONS_PER_STEP,
       pseudo,
       byChapter,
       allProgress
@@ -678,8 +832,7 @@ export default function DailyPathPage() {
                 className="btn"
                 onClick={finishOnboardingSlides}
               >
-                {dailyState.goal ? 'Accéder à mon parcours' : 'Choisir mon rythme'}{' '}
-                <Icon name="arrow" size={18} />
+                Accéder à mon parcours <Icon name="arrow" size={18} />
               </button>
             ) : (
               <button
@@ -691,60 +844,6 @@ export default function DailyPathPage() {
               </button>
             )}
           </div>
-        </motion.div>
-      </section>
-    );
-  }
-
-  // 2) Daily Goal selection (1, 3 or 5 questions per step)
-  if (!dailyState.goal || pickingGoal) {
-    return (
-      <section className="home daily-onboarding">
-        <motion.div
-          className="home-panel daily-goal-card"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <span className="daily-goal-kicker">Rythme par étape · {pseudo}</span>
-          <h2>Combien de questions veux-tu par étape ?</h2>
-          <p className="daily-goal-sub">
-            Tu peux réaliser jusqu’à <strong>3 étapes par jour</strong>. À la fin de chaque étape, tu obtiens <strong>1★</strong> de base, <strong>2★</strong> si &gt; 60 % de bonnes réponses et <strong>3★</strong> si &gt; 90 % !
-          </p>
-
-          <div className="daily-goal-options" role="radiogroup" aria-label="Nombre de questions par étape">
-            {GOAL_OPTIONS.map((opt) => {
-              const active = (selectedGoalDraft || dailyState.goal || 3) === opt.count;
-              return (
-                <button
-                  key={opt.count}
-                  type="button"
-                  className={`daily-goal-option ${active ? 'is-selected' : ''}`}
-                  onClick={() => {
-                    setSelectedGoalDraft(opt.count);
-                    handleGoalSubmit(opt.count);
-                  }}
-                >
-                  <div className="daily-goal-option-top">
-                    <span className="daily-goal-option-title">{opt.label}</span>
-                    <span className="daily-goal-option-badge">{opt.badge}</span>
-                  </div>
-                  <span className="daily-goal-option-desc">{opt.desc}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {dailyState.goal && (
-            <div style={{ marginTop: 14, display: 'flex', justifyContent: 'flex-end' }}>
-              <button
-                type="button"
-                className="btn btn-ghost btn-small"
-                onClick={() => setPickingGoal(false)}
-              >
-                Retour au parcours
-              </button>
-            </div>
-          )}
         </motion.div>
       </section>
     );
@@ -836,13 +935,18 @@ export default function DailyPathPage() {
     <section className="daily-page" aria-label="Parcours de progression journalière">
       {/* Top Floating HUD */}
       <div className="daily-hud">
-        <div className="daily-hud-pill daily-hud-left">
-          <span className="daily-hud-item" title="Jours d’activité consécutifs">
+        <button
+          type="button"
+          className="daily-hud-pill daily-hud-left daily-hud-streak-btn"
+          onClick={() => setShowingCalendar(true)}
+          title="Voir mon calendrier de série (1 étape validée par jour suffit pour continuer la série)"
+        >
+          <span className="daily-hud-item">
             <svg className="daily-flame-icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
               <defs>
                 <linearGradient id="flameGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#ff8fab" />
-                  <stop offset="100%" stopColor="#fb5607" />
+                  <stop offset="0%" stopColor="#38e1ff" />
+                  <stop offset="100%" stopColor="#7c8cff" />
                 </linearGradient>
               </defs>
               <path
@@ -854,23 +958,16 @@ export default function DailyPathPage() {
             <b>{dailyState.streak}</b>
           </span>
 
-          <button
-            type="button"
-            className={`daily-hud-item daily-hud-flag-btn ${dailyStepsReached ? 'is-done' : ''}`}
-            onClick={() => {
-              setSelectedGoalDraft(goal);
-              setPickingGoal(true);
-            }}
-            title={`Étapes du jour (${stepsToday}/${MAX_DAILY_STEPS}) · Rythme : ${goal} question${goal > 1 ? 's' : ''}/étape (cliquer pour modifier)`}
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M5 21V4" />
-              <path d="M5 4h13l-2.5 4.5L18 13H5" />
+          <span className={`daily-hud-item daily-hud-flag-btn ${dailyStepsReached ? 'is-done' : ''}`}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="17" rx="3" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
             </svg>
             <b>{stepsToday}/{MAX_DAILY_STEPS}</b>
-            <span className="daily-hud-q-tag">{goal}Q</span>
-          </button>
-        </div>
+          </span>
+        </button>
 
         <div className="daily-hud-right-group">
           <button
@@ -901,8 +998,8 @@ export default function DailyPathPage() {
           <div className="daily-hud-pill daily-hud-stars" title="Total d’étoiles gagnées sur le parcours">
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
               <path
-                fill="#facc15"
-                stroke="#fef08a"
+                fill="#38e1ff"
+                stroke="#05090f"
                 strokeWidth="1.2"
                 d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"
               />
@@ -911,6 +1008,13 @@ export default function DailyPathPage() {
           </div>
         </div>
       </div>
+
+      {showingCalendar && (
+        <StreakCalendarModal
+          dailyState={dailyState}
+          onClose={() => setShowingCalendar(false)}
+        />
+      )}
 
       {limitNotice && (
         <div className="daily-limit-banner" role="status">
