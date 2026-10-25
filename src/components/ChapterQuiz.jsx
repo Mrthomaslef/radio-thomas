@@ -516,9 +516,11 @@ export function QuizPlayer({
             <button className={dailyMode ? 'btn btn-ghost' : 'btn'} onClick={reviewCorrections}>
               Revoir les corrections
             </button>
-            <button className="btn btn-ghost" onClick={restart}>
-              {dailyMode ? 'Rejouer cette étape' : randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
-            </button>
+            {!dailyMode && (
+              <button className="btn btn-ghost" onClick={restart}>
+                {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
+              </button>
+            )}
             {!dailyMode && (
               <a className="btn btn-ghost" href={backHref}>
                 {randomMode && key === 'quiz-aleatoire' ? 'Configurer un autre quiz' : 'Autres chapitres'}
@@ -581,22 +583,33 @@ export function QuizPlayer({
                 {isPerfect(q, validated) ? '✓ Bonne réponse !' : '✗ Mauvaise réponse.'}
               </p>
 
-              <div className="cq-post-actions">
+              <div className={`cq-post-actions ${dailyMode ? 'is-daily' : ''}`}>
                 <button
                   type="button"
-                  className="btn btn-small btn-ghost"
+                  className="btn btn-small btn-ghost cq-post-btn"
                   onClick={() => setShowCorrection((v) => !v)}
                   aria-expanded={showCorrection}
                 >
-                  {showCorrection ? 'Masquer la correction' : 'Voir la correction'}
+                  {showCorrection
+                    ? dailyMode
+                      ? 'Masquer la correction'
+                      : 'Masquer correction'
+                    : 'Voir la correction'}
                 </button>
-                <button type="button" className="btn btn-small btn-ghost" onClick={retryQuestion}>
-                  Réessayer la question
-                </button>
+                {!dailyMode && (
+                  <button
+                    type="button"
+                    className="btn btn-small btn-ghost cq-post-btn"
+                    onClick={retryQuestion}
+                    title="Réessayer la question"
+                  >
+                    ↺ Réessayer
+                  </button>
+                )}
                 {!preview && (
                   <button
                     type="button"
-                    className={`btn btn-small btn-ghost cq-bookmark-btn ${bookmarks[q.id] ? 'is-bookmarked' : ''}`}
+                    className={`btn btn-small btn-ghost cq-post-btn cq-bookmark-btn ${bookmarks[q.id] ? 'is-bookmarked' : ''}`}
                     onClick={() => {
                       toggleQuestionBookmark(q.id);
                       setBookmarks(readBookmarks());
@@ -608,7 +621,7 @@ export function QuizPlayer({
                         : 'Enregistrer cette question dans Ma progression'
                     }
                   >
-                    <Icon name="bookmark" size={16} filled={Boolean(bookmarks[q.id])} />
+                    <Icon name="bookmark" size={15} filled={Boolean(bookmarks[q.id])} />
                     {bookmarks[q.id] ? 'Enregistrée' : 'Enregistrer'}
                   </button>
                 )}

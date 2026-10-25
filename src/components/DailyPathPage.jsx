@@ -983,7 +983,6 @@ export default function DailyPathPage() {
               setActiveSession(null);
             },
           }}
-          onRestart={() => launchStep(stepNumber, true)}
         />
       </div>
     );
