@@ -1274,6 +1274,13 @@ export default function DailyPathPage() {
                       : `Étape ${step} verrouillée (${nodeInfo.themeTitle} — ${nodeInfo.chapterTitle})`
                   }
                 >
+                  <img
+                    src={`/theme-logos/${nodeInfo.themeId}.png`}
+                    alt=""
+                    aria-hidden="true"
+                    className="daily-node-bg-logo"
+                    draggable="false"
+                  />
                   {isUnlocked ? (
                     <span className="daily-node-center-num">{step}</span>
                   ) : (

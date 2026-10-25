@@ -12,6 +12,7 @@ export const themes = [
   {
     id: 'epaule',
     title: 'L’épaule',
+    logo: '/theme-logos/epaule.png',
     chapters: [
       chapter('ch1', 'Pathologies de la coiffe'),
       chapter('ch2', 'Instabilité d’épaule'),
@@ -22,6 +23,7 @@ export const themes = [
   {
     id: 'coude',
     title: 'Le coude',
+    logo: '/theme-logos/coude.png',
     chapters: [
       chapter('ch5', 'Pathologies du compartiment latéral'),
       chapter('ch6', 'Pathologies du compartiment médial'),
@@ -33,6 +35,7 @@ export const themes = [
   {
     id: 'main-poignet',
     title: 'Main et poignet',
+    logo: '/theme-logos/main-poignet.png',
     chapters: [
       chapter('ch10', 'Pathologies dégénératives du poignet'),
       chapter('ch11', 'Pathologies ligamentaires du poignet'),
@@ -44,6 +47,7 @@ export const themes = [
   {
     id: 'rachis',
     title: 'Rachis',
+    logo: '/theme-logos/rachis.png',
     chapters: [
       chapter('ch15', 'Discopathies dégénératives cervicales'),
       chapter('ch16', 'Affections mécaniques du rachis dorsolombaire'),
@@ -53,6 +57,7 @@ export const themes = [
   {
     id: 'hanche',
     title: 'La Hanche',
+    logo: '/theme-logos/hanche.png',
     chapters: [
       chapter('ch18', 'Pathologies osseuses de la hanche'),
       chapter('ch19', 'Pathologies articulaires de la hanche'),
@@ -64,6 +69,7 @@ export const themes = [
   {
     id: 'genou',
     title: 'Le Genou',
+    logo: '/theme-logos/genou.png',
     chapters: [
       chapter('ch23', 'Pathologies antérieures'),
       chapter('ch24', 'Pathologies des ménisques'),
@@ -75,6 +81,7 @@ export const themes = [
   {
     id: 'jambe-cheville-pied',
     title: 'Jambe, Cheville et Pied',
+    logo: '/theme-logos/jambe-cheville-pied.png',
     chapters: [
       chapter('ch28', 'Pathologies de la jambe'),
       chapter('ch29', 'Pathologies des tissus mous'),
@@ -84,6 +91,7 @@ export const themes = [
   {
     id: 'dysostose',
     title: 'Dysostose',
+    logo: '/theme-logos/dysostose.png',
     chapters: [
       chapter('ch31', 'Dysostoses crâniennes'),
       chapter('ch32', 'Dysostoses rachidiennes'),

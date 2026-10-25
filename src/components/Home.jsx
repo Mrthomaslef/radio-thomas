@@ -165,7 +165,17 @@ export default function Home({ openTheme }) {
                     window.dispatchEvent(new HashChangeEvent('hashchange'));
                   }}
                 >
-                  <span>{t.title}</span>
+                  <span className="theme-head-title">
+                    <img
+                      src={t.logo || `/theme-logos/${t.id}.png`}
+                      alt=""
+                      aria-hidden="true"
+                      className="theme-head-logo"
+                      loading="lazy"
+                      draggable="false"
+                    />
+                    <span>{t.title}</span>
+                  </span>
                   <span className="theme-count">{t.chapters.length} chapitres</span>
                 </a>
                 {open && (
