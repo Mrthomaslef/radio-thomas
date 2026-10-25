@@ -580,7 +580,7 @@ a.card { display: block; color: inherit; }
 .theme.theme-passed .theme-head:hover, .theme.theme-passed .theme-head.on {
   background: rgba(52, 211, 153, 0.1);
 }
-.theme-count { font-family: var(--font); font-size: 0.85rem; font-weight: 600; color: var(--cyan); }
+.theme-count { font-family: var(--font); font-size: 0.85rem; font-weight: 600; color: var(--cyan); white-space: nowrap; flex-shrink: 0; }
 .theme.theme-passed .theme-count { color: var(--good); }
 .chapters { list-style: none; display: grid; gap: 10px; padding: 0 16px 16px; }
 .chapter-row { display: flex; align-items: stretch; gap: 8px; }
@@ -651,7 +651,9 @@ a.chapter.chapter-failed .chapter-go {
 .chapter-soon .chapter-go { color: var(--muted); }
 @media (max-width: 760px) {
   .home { padding-top: calc(100px + env(safe-area-inset-top, 0px)); }
-  .theme-head { font-size: 1.25rem; padding: 16px 18px; }
+  .theme-head { font-size: 1.18rem; padding: 15px 16px; gap: 10px; }
+  .theme-head-title { gap: 10px; }
+  .theme-count { font-size: 0.8rem; }
   .chapters { padding: 0 10px 12px; gap: 8px; }
   .chapter-row { gap: 5px; }
   .chapter {
