@@ -5,6 +5,7 @@ import { submitQuestionReport } from '../data/reports.js';
 export default function Footer() {
   const [status, setStatus] = useState('checking');
   const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [refsOpen, setRefsOpen] = useState(false);
   const [feedbackText, setFeedbackText] = useState('');
   const [feedbackStatus, setFeedbackStatus] = useState('idle'); // idle | sending | sent
   const [feedbackError, setFeedbackError] = useState('');
@@ -104,6 +105,46 @@ export default function Footer() {
           </div>
         </div>
       )}
+      {refsOpen && (
+        <div className="footer-feedback-wrap">
+          <div className="cq-card footer-feedback-card footer-refs-card">
+            <div className="footer-refs-head">
+              <strong>📚 Ouvrage de référence</strong>
+              <button
+                type="button"
+                className="daily-cal-close"
+                onClick={() => setRefsOpen(false)}
+                aria-label="Fermer"
+              >
+                ✕
+              </button>
+            </div>
+            <p className="footer-refs-title">
+              Imagerie musculosquelettique – Pathologies locorégionales
+            </p>
+            <p className="footer-refs-meta">
+              Pr Anne Cotten · 2<sup>e</sup> édition, Elsevier Masson (2017) · ISBN 978-2-294-72182-3
+            </p>
+            <div className="footer-refs-actions">
+              <a
+                href="https://www.elsevier-masson.fr/imagerie-musculosquelettique-pathologies-locoregionales-9782294721823.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-small"
+              >
+                Acheter l’ouvrage →
+              </a>
+              <button
+                type="button"
+                className="btn btn-ghost btn-small"
+                onClick={() => setRefsOpen(false)}
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <footer className="footer">
         <span className="brand">
           <img src="/apple-touch-icon.png" alt="" className="brand-logo" /> QUIZ&nbsp;Cochin
@@ -118,11 +159,22 @@ export default function Footer() {
           className="admin-link"
           onClick={() => {
             setFeedbackOpen((v) => !v);
+            setRefsOpen(false);
             setFeedbackStatus('idle');
             setFeedbackError('');
           }}
         >
           Faire un retour / Signaler un bug
+        </button>
+        <button
+          type="button"
+          className="admin-link"
+          onClick={() => {
+            setRefsOpen((v) => !v);
+            setFeedbackOpen(false);
+          }}
+        >
+          Références
         </button>
         <span className="muted">© {new Date().getFullYear()} QUIZ Cochin. À but pédagogique uniquement.</span>
       </footer>

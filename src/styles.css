@@ -1820,6 +1820,39 @@ a.cq-dot:hover { transform: scale(1.08); }
   justify-content: space-between;
   gap: 12px;
 }
+.footer-refs-card {
+  display: grid;
+  gap: 8px;
+}
+.footer-refs-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.footer-refs-head strong {
+  color: var(--cyan);
+  font-size: 0.96rem;
+}
+.footer-refs-title {
+  color: var(--text);
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.footer-refs-meta {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+.footer-refs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
 
 .ptr-indicator {
   position: fixed;
