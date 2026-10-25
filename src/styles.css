@@ -2589,15 +2589,17 @@ a.cq-dot:hover { transform: scale(1.08); }
   text-shadow: 0 0 14px rgba(250, 204, 21, 0.5);
 }
 
-/* Onboarding Explanatory Slides */
+/* Onboarding Explanatory Slides (Simple & Clean) */
 .daily-slide-card {
+  max-width: 420px;
+  margin: 0 auto;
   background: linear-gradient(180deg, rgba(15, 24, 38, 0.96) 0%, rgba(9, 15, 25, 0.96) 100%);
-  border: 1px solid rgba(56, 225, 255, 0.26);
+  border: 1px solid rgba(56, 225, 255, 0.25);
   border-radius: 24px;
-  padding: clamp(18px, 4.5vw, 26px);
+  padding: 20px 18px;
   box-shadow: 0 22px 54px rgba(0, 0, 0, 0.6);
   display: grid;
-  gap: 13px;
+  gap: 14px;
 }
 
 .daily-slide-top {
@@ -2612,13 +2614,12 @@ a.cq-dot:hover { transform: scale(1.08); }
   align-items: center;
   padding: 4px 11px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.045);
-  border: 1px solid rgba(160, 220, 255, 0.14);
-  font-size: 0.72rem;
+  background: rgba(56, 225, 255, 0.1);
+  border: 1px solid rgba(56, 225, 255, 0.3);
+  font-family: var(--display);
+  font-size: 0.75rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--muted);
+  color: var(--cyan);
 }
 
 .daily-slide-skip {
@@ -2630,111 +2631,182 @@ a.cq-dot:hover { transform: scale(1.08); }
   font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 .daily-slide-skip:hover {
   color: #ffffff;
   border-color: rgba(56, 225, 255, 0.4);
-  background: rgba(56, 225, 255, 0.08);
 }
 
 .daily-slide-art {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 92px;
-  padding: 12px 14px;
+  min-height: 96px;
+  padding: 14px 12px;
   border-radius: 18px;
-  background: radial-gradient(circle at 50% 45%, rgba(56, 225, 255, 0.1), rgba(6, 11, 19, 0.7));
+  background: radial-gradient(circle at 50% 45%, rgba(56, 225, 255, 0.09), rgba(6, 11, 19, 0.72));
   border: 1px solid rgba(56, 225, 255, 0.16);
 }
 
-.daily-slide-art-cycles {
+/* Slide 1 visual: 3 step circles */
+.tuto-vis-steps {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0;
+}
+
+.tuto-vis-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.tuto-vis-stars {
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  color: var(--cyan);
+  line-height: 1;
+}
+
+.tuto-vis-stars.is-dim {
+  color: rgba(143, 166, 184, 0.45);
+}
+
+.tuto-vis-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: radial-gradient(circle at 50% 38%, #10243d 0%, #07111e 78%);
+  border: 2px solid var(--cyan);
+  box-shadow: 0 4px 12px rgba(56, 225, 255, 0.25);
+}
+
+.tuto-vis-node.is-active .tuto-vis-circle {
+  box-shadow: 0 0 0 5px rgba(56, 225, 255, 0.16), 0 4px 12px rgba(56, 225, 255, 0.3);
+}
+
+.tuto-vis-node.is-locked .tuto-vis-circle {
+  background: #0d1520;
+  border-color: rgba(143, 166, 184, 0.3);
+  color: rgba(143, 166, 184, 0.7);
+  box-shadow: none;
+}
+
+.tuto-vis-line {
+  width: 28px;
+  height: 4px;
+  margin-bottom: 18px;
+  border-radius: 999px;
+  background: rgba(143, 166, 184, 0.25);
+}
+
+.tuto-vis-line.is-lit {
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+}
+
+/* Slide 2 visual: 2 category cards with logos */
+.tuto-vis-cycles {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  width: 100%;
+  gap: 10px;
 }
 
-.daily-slide-cycle-pill {
+.tuto-vis-cat {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 8px 11px;
+  gap: 3px;
+  min-width: 96px;
+  padding: 8px 12px;
   border-radius: 14px;
-  background: rgba(11, 19, 31, 0.9);
+  background: rgba(10, 17, 28, 0.85);
   border: 1px solid rgba(160, 220, 255, 0.16);
 }
 
-.daily-slide-cycle-pill.is-active {
+.tuto-vis-cat.is-current {
   border-color: var(--cyan);
   background: rgba(56, 225, 255, 0.1);
-  box-shadow: 0 4px 16px rgba(56, 225, 255, 0.16);
 }
 
-.daily-slide-cycle-pill.is-next {
-  opacity: 0.82;
-}
-
-.daily-slide-cycle-pill img {
-  width: 30px;
-  height: 30px;
+.tuto-vis-cat img {
+  width: 28px;
+  height: 28px;
   object-fit: contain;
-  flex-shrink: 0;
 }
 
-.daily-slide-cycle-pill strong {
-  display: block;
+.tuto-vis-cat span {
   font-family: var(--display);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
+  font-weight: 700;
   color: #ffffff;
-  line-height: 1.15;
+  line-height: 1.1;
 }
 
-.daily-slide-cycle-pill span {
-  display: block;
-  font-size: 0.68rem;
-  color: var(--cyan);
+.tuto-vis-cat em {
+  font-style: normal;
+  font-size: 0.66rem;
   font-weight: 600;
-  white-space: nowrap;
+  color: var(--cyan);
 }
 
-.daily-slide-cycle-arrow {
+.tuto-vis-arrow {
   font-family: var(--display);
   font-size: 1.1rem;
   font-weight: 800;
   color: var(--cyan);
 }
 
-.daily-slide-head {
-  display: grid;
+/* Slide 3 visual: Book + Sync boxes */
+.tuto-vis-sync {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.tuto-vis-icon-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 5px;
+  min-width: 102px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(10, 17, 28, 0.85);
+  border: 1px solid rgba(56, 225, 255, 0.25);
 }
 
-.daily-slide-badge {
-  justify-self: start;
-  padding: 3px 10px;
-  border-radius: 999px;
+.tuto-vis-icon-box span {
   font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--cyan);
-  background: rgba(56, 225, 255, 0.11);
-  border: 1px solid rgba(56, 225, 255, 0.34);
+  font-weight: 600;
+  color: #d6e3f0;
+  white-space: nowrap;
 }
 
-.daily-slide-card h2 {
+.tuto-vis-plus {
   font-family: var(--display);
-  font-size: clamp(1.25rem, 4.6vw, 1.65rem);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--cyan);
+}
+
+.daily-slide-title {
+  font-family: var(--display);
+  font-size: 1.35rem;
   line-height: 1.2;
   color: #ffffff;
-}
-
-.daily-slide-lead {
-  color: var(--muted);
-  font-size: 0.86rem;
-  line-height: 1.45;
+  text-align: center;
 }
 
 .daily-slide-points {
@@ -2744,52 +2816,30 @@ a.cq-dot:hover { transform: scale(1.08); }
 
 .daily-slide-point {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  border-radius: 14px;
+  border-radius: 13px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(160, 220, 255, 0.11);
 }
 
 .daily-slide-point-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   background: rgba(56, 225, 255, 0.09);
-  border: 1px solid rgba(56, 225, 255, 0.22);
+  border: 1px solid rgba(56, 225, 255, 0.2);
   display: grid;
   place-items: center;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   flex-shrink: 0;
 }
 
-.daily-slide-point-body {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-
-.daily-slide-point-body strong {
+.daily-slide-point-text {
   font-size: 0.86rem;
-  color: #ffffff;
-  line-height: 1.25;
-}
-
-.daily-slide-point-body span {
-  font-size: 0.78rem;
-  color: #b7cadb;
-  line-height: 1.4;
-}
-
-.daily-slide-highlight {
-  padding: 10px 13px;
-  border-radius: 14px;
-  background: rgba(56, 225, 255, 0.07);
-  border: 1px solid rgba(56, 225, 255, 0.26);
-  color: var(--text);
-  font-size: 0.81rem;
-  line-height: 1.42;
+  color: #e4eef7;
+  line-height: 1.35;
 }
 
 .daily-slide-dots {
@@ -2827,7 +2877,7 @@ a.cq-dot:hover { transform: scale(1.08); }
 .daily-slide-actions .btn {
   white-space: nowrap;
   padding: 11px 18px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .daily-hud-help {

@@ -24,77 +24,32 @@ import Icon from './Icons.jsx';
 const ONBOARDING_SLIDES = [
   {
     step: '1 / 3',
-    badge: 'Rythme quotidien & Série',
-    title: 'Ton parcours en 3 étapes par jour',
-    lead: 'Avance chaque jour sur le chemin à ton rythme tout en construisant ta série quotidienne.',
-    points: [
-      {
-        icon: '🎯',
-        title: '3 questions par étape',
-        desc: '2 questions ciblées suivies d’une question Boss finale sur le chapitre de l’étape.',
-      },
-      {
-        icon: '🔥',
-        title: 'Jusqu’à 3 étapes par jour',
-        desc: 'Valider 1 seule étape dans la journée suffit pour maintenir ta série (streak) !',
-      },
-      {
-        icon: '⭐',
-        title: '1 à 3 étoiles par étape',
-        desc: '1★ en terminant l’étape · 2★ dès > 60 % de réussite · 3★ dès > 90 %.',
-      },
+    title: '3 étapes par jour',
+    items: [
+      { icon: '🎯', text: '3 questions par étape sur un chapitre précis.' },
+      { icon: '🔥', text: '1 seule étape validée par jour maintient ta série.' },
+      { icon: '⭐', text: 'Gagne 1★ en finissant, 2★ dès > 60 % et 3★ dès > 90 %.' },
     ],
-    highlight: '📚 Envie de continuer après tes 3 étapes du jour ? L’espace « Quiz » reste accessible en illimité !',
     icon: 'daily',
   },
   {
     step: '2 / 3',
-    badge: 'Cycles & Difficulté évolutive',
-    title: '3 boucles progressives par catégorie',
-    lead: 'Chaque catégorie anatomique est approfondie en 3 cycles avant de passer à la suivante.',
-    points: [
-      {
-        icon: '🔄',
-        title: '1 chapitre par étape, 3 boucles par catégorie',
-        desc: 'Tu parcours tous les chapitres d’une catégorie (ex. L’épaule) 3 fois avant d’ouvrir la suivante (Le coude).',
-      },
-      {
-        icon: '📈',
-        title: 'Difficulté croissante à chaque boucle',
-        desc: 'Questions simples au 1er tour, puis la part de questions intermédiaires et difficiles augmente aux boucles 2 et 3.',
-      },
-      {
-        icon: '🧭',
-        title: 'Suivi en direct en haut de l’écran',
-        desc: 'Visualise à tout moment ta catégorie actuelle, ton avancement et la prochaine catégorie.',
-      },
+    title: '3 boucles par catégorie',
+    items: [
+      { icon: '🔄', text: 'On parcourt chaque catégorie 3 fois avant la suivante.' },
+      { icon: '📈', text: 'La difficulté augmente à chaque nouvelle boucle.' },
+      { icon: '📚', text: 'La page Quiz reste accessible en illimité à tout moment.' },
     ],
-    highlight: '💡 Aucune question ne se répète d’une boucle à l’autre sur un même chapitre.',
     icon: 'cycles',
   },
   {
     step: '3 / 3',
-    badge: 'Livre & Multi-appareils',
-    title: 'Corrections sourcées & Synchronisation',
-    lead: 'Révise efficacement avec les références officielles et retrouve ta progression partout.',
-    points: [
-      {
-        icon: '📖',
-        title: 'Référence exacte du livre sous chaque question',
-        desc: 'Explication détaillée, figures d’imagerie commentées et numéro de page exact pour réviser dans le bouquin.',
-      },
-      {
-        icon: '🔖',
-        title: 'Questions enregistrées',
-        desc: 'Mets de côté les questions clés en un clic pour les retrouver dans « Ma progression ».',
-      },
-      {
-        icon: '☁️',
-        title: 'Synchronisé sur tous tes appareils',
-        desc: 'Avec ton pseudo, tes étapes, tes étoiles et ton calendrier te suivent sur téléphone, tablette et ordinateur.',
-      },
+    title: 'Corrections & Sauvegarde',
+    items: [
+      { icon: '📖', text: 'Correction détaillée avec la page exacte du livre.' },
+      { icon: '🔖', text: 'Enregistre les questions clés pour les revoir plus tard.' },
+      { icon: '☁️', text: 'Progression synchronisée sur tous tes appareils.' },
     ],
-    highlight: '📅 Astuce : touche ta série en haut à gauche pour ouvrir ton calendrier et voir tes étoiles gagnées par jour.',
     icon: 'sync',
   },
 ];
@@ -949,9 +904,7 @@ export default function DailyPathPage() {
           onTouchEnd={onTouchEnd}
         >
           <div className="daily-slide-top">
-            <span className="daily-slide-step-pill">
-              Guide de bienvenue · {slide.step}
-            </span>
+            <span className="daily-slide-step-pill">{slide.step}</span>
             <button
               type="button"
               className="daily-slide-skip"
@@ -963,107 +916,74 @@ export default function DailyPathPage() {
 
           <div className="daily-slide-art" aria-hidden="true">
             {slide.icon === 'daily' && (
-              <svg width="220" height="84" viewBox="0 0 220 84" fill="none">
-                <defs>
-                  <linearGradient id="tutoRoad" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#38e1ff" />
-                    <stop offset="55%" stopColor="#6aa8ff" />
-                    <stop offset="100%" stopColor="#7c8cff" />
-                  </linearGradient>
-                </defs>
-                {/* Accomplished cyan-violet road + locked dotted road */}
-                <path
-                  d="M28 52 C 62 52, 76 34, 110 34"
-                  stroke="url(#tutoRoad)"
-                  strokeWidth="8"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M110 34 C 144 34, 158 52, 192 52"
-                  stroke="rgba(143, 166, 184, 0.35)"
-                  strokeWidth="5"
-                  strokeLinecap="round"
-                  strokeDasharray="1 12"
-                />
-                {/* Node 1 (completed with 3 stars) */}
-                <g transform="translate(28, 52)">
-                  <path d="M-11 -22l2 -4 2 4 4 .6-3 3 .7 4-3.7-2-3.7 2 .7-4-3-3 4-.6Z" fill="#38e1ff" />
-                  <path d="M0 -25l2.3 -4.6 5 .7-3.6 3.5.8 5L0 -22.8l-4.5 2.4.8-5-3.6-3.5 5-.7L0 -25Z" fill="#38e1ff" />
-                  <path d="M11 -22l2 -4 2 4 4 .6-3 3 .7 4-3.7-2-3.7 2 .7-4-3-3 4-.6Z" fill="#38e1ff" />
-                  <circle r="16" fill="#0d2138" stroke="#38e1ff" strokeWidth="2.5" />
-                  <text y="5" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="800">1</text>
-                </g>
-                {/* Node 2 (current active step) */}
-                <g transform="translate(110, 34)">
-                  <circle r="21" fill="rgba(56, 225, 255, 0.14)" />
-                  <circle r="16" fill="#10243d" stroke="#38e1ff" strokeWidth="2.5" />
-                  <text y="5" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="800">2</text>
-                </g>
-                {/* Node 3 (locked padlock) */}
-                <g transform="translate(192, 52)">
-                  <circle r="16" fill="#0e1622" stroke="rgba(143, 166, 184, 0.35)" strokeWidth="2" />
-                  <rect x="-5" y="-2" width="10" height="8" rx="2" stroke="#8fa6b8" strokeWidth="1.6" />
-                  <path d="M-3 -2V-5a3 3 0 0 1 6 0v3" stroke="#8fa6b8" strokeWidth="1.6" />
-                </g>
-              </svg>
+              <div className="tuto-vis-steps">
+                <div className="tuto-vis-node is-done">
+                  <span className="tuto-vis-stars">★★★</span>
+                  <span className="tuto-vis-circle">1</span>
+                </div>
+                <span className="tuto-vis-line is-lit" />
+                <div className="tuto-vis-node is-active">
+                  <span className="tuto-vis-stars is-dim">☆☆☆</span>
+                  <span className="tuto-vis-circle">2</span>
+                </div>
+                <span className="tuto-vis-line" />
+                <div className="tuto-vis-node is-locked">
+                  <span className="tuto-vis-stars is-dim">☆☆☆</span>
+                  <span className="tuto-vis-circle">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="5" y="11" width="14" height="10" rx="2.5" />
+                      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
             )}
             {slide.icon === 'cycles' && (
-              <div className="daily-slide-art-cycles">
-                <div className="daily-slide-cycle-pill is-active">
+              <div className="tuto-vis-cycles">
+                <div className="tuto-vis-cat is-current">
                   <img src="/theme-logos/epaule.png" alt="" draggable="false" />
-                  <div>
-                    <strong>L’épaule</strong>
-                    <span>Boucle 1 → 2 → 3</span>
-                  </div>
+                  <span>L’épaule</span>
+                  <em>3 boucles</em>
                 </div>
-                <span className="daily-slide-cycle-arrow">→</span>
-                <div className="daily-slide-cycle-pill is-next">
+                <span className="tuto-vis-arrow">→</span>
+                <div className="tuto-vis-cat">
                   <img src="/theme-logos/coude.png" alt="" draggable="false" />
-                  <div>
-                    <strong>Le coude</strong>
-                    <span>Catégorie suivante</span>
-                  </div>
+                  <span>Le coude</span>
+                  <em>Suivant</em>
                 </div>
               </div>
             )}
             {slide.icon === 'sync' && (
-              <svg width="210" height="82" viewBox="0 0 210 82" fill="none">
-                {/* Book reference card */}
-                <rect x="14" y="10" width="104" height="62" rx="11" fill="#0d1826" stroke="rgba(56,225,255,0.45)" strokeWidth="1.8" />
-                <rect x="24" y="20" width="48" height="6" rx="3" fill="#34d399" />
-                <rect x="24" y="31" width="76" height="4.5" rx="2.2" fill="rgba(255,255,255,0.28)" />
-                <rect x="22" y="44" width="88" height="19" rx="6" fill="rgba(56,225,255,0.12)" stroke="#38e1ff" strokeWidth="1.2" />
-                <text x="30" y="56" fill="#38e1ff" fontSize="8.5" fontWeight="700">Réf. Livre : Chapitre · Page</text>
-                {/* Sync link */}
-                <path d="M126 41 H146" stroke="#38e1ff" strokeWidth="2" strokeDasharray="3 3" />
-                {/* Mobile device synced */}
-                <rect x="152" y="12" width="42" height="58" rx="9" fill="#0d1826" stroke="#7c8cff" strokeWidth="1.8" />
-                <circle cx="173" cy="36" r="9" fill="rgba(56,225,255,0.15)" stroke="#38e1ff" strokeWidth="1.5" />
-                <path d="M169.5 36l2.3 2.4 4.8-4.8" stroke="#38e1ff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                <rect x="163" y="53" width="20" height="4" rx="2" fill="rgba(255,255,255,0.3)" />
-              </svg>
+              <div className="tuto-vis-sync">
+                <div className="tuto-vis-icon-box">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#38e1ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                  </svg>
+                  <span>Page du livre</span>
+                </div>
+                <span className="tuto-vis-plus">+</span>
+                <div className="tuto-vis-icon-box">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7c8cff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="3" />
+                    <path d="M9 12l2 2 4-4" stroke="#38e1ff" />
+                  </svg>
+                  <span>Multi-appareils</span>
+                </div>
+              </div>
             )}
           </div>
 
-          <div className="daily-slide-head">
-            <span className="daily-slide-badge">{slide.badge}</span>
-            <h2>{slide.title}</h2>
-            <p className="daily-slide-lead">{slide.lead}</p>
-          </div>
+          <h2 className="daily-slide-title">{slide.title}</h2>
 
           <div className="daily-slide-points">
-            {slide.points.map((pt) => (
-              <div key={pt.title} className="daily-slide-point">
-                <span className="daily-slide-point-icon" aria-hidden="true">{pt.icon}</span>
-                <div className="daily-slide-point-body">
-                  <strong>{pt.title}</strong>
-                  <span>{pt.desc}</span>
-                </div>
+            {slide.items.map((item) => (
+              <div key={item.text} className="daily-slide-point">
+                <span className="daily-slide-point-icon" aria-hidden="true">{item.icon}</span>
+                <span className="daily-slide-point-text">{item.text}</span>
               </div>
             ))}
           </div>
-
-          <div className="daily-slide-highlight">{slide.highlight}</div>
 
           <div className="daily-slide-dots" role="tablist" aria-label="Étapes de présentation">
             {ONBOARDING_SLIDES.map((s, idx) => (
