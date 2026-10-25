@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import Icon from './Icons.jsx';
 import {
   readName,
@@ -518,59 +519,202 @@ export function QuizPlayer({
       </header>
 
       {finished ? (
-        <section className="cq-card cq-end">
-          {dailyMode ? (
-            <>
-              <div className="daily-end-stars" aria-label="Étoiles remportées">
+        (() => {
+          const ratio = total > 0 ? score / total : 0;
+          const pct = Math.round(ratio * 100);
+          const earnedStars = ratio > 0.9 ? 3 : ratio > 0.6 ? 2 : 1;
+          const mentionByStars = {
+            3: {
+              kicker: '🏆 Mention : Excellence · 3/3 étoiles',
+              title: dailyMode?.isBossStep
+                ? 'Boss terrassé avec brio !'
+                : 'Sans-faute remarquable !',
+              sub: 'Maîtrise parfaite de ce chapitre, félicitations !',
+              tone: 'stars-3',
+            },
+            2: {
+              kicker: '👏 Mention : Très bien · 2/3 étoiles',
+              title: dailyMode?.isBossStep
+                ? 'Défi Boss relevé !'
+                : dailyMode
+                  ? `Étape ${dailyMode.stepNumber} réussie !`
+                  : 'Très bon résultat !',
+              sub: 'L’essentiel est acquis ! Plus qu’un petit pas vers les 3 étoiles.',
+              tone: 'stars-2',
+            },
+            1: {
+              kicker: '💪 Mention : En progression · 1/3 étoile',
+              title: dailyMode
+                ? `Étape ${dailyMode.stepNumber} complétée !`
+                : 'Quiz complété !',
+              sub: 'Consulte les corrections détaillées pour consolider ces notions.',
+              tone: 'stars-1',
+            },
+          }[earnedStars];
+
+          return (
+            <motion.section
+              className={`cq-card cq-end cq-end-${mentionByStars.tone}`}
+              initial={{ opacity: 0, scale: 0.94, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.32, ease: 'easeOut' }}
+            >
+              <div className="cq-end-stars-stage" aria-label={`${earnedStars} sur 3 étoiles obtenues`}>
                 {[1, 2, 3].map((s) => {
-                  const ratio = total > 0 ? score / total : 0;
-                  const earnedStars = ratio > 0.9 ? 3 : ratio > 0.6 ? 2 : 1;
+                  const isEarned = s <= earnedStars;
+                  const delay = 0.16 + (s - 1) * 0.28;
+                  const isCenter = s === 2;
+                  const size = isCenter ? 68 : 54;
                   return (
-                    <span key={s} className={`daily-end-star ${s <= earnedStars ? 'is-earned' : ''}`}>
-                      ★
-                    </span>
+                    <div
+                      key={s}
+                      className={`cq-end-star-slot slot-${s} ${isEarned ? 'is-earned' : 'is-empty'}`}
+                    >
+                      {/* Base empty star slot */}
+                      <svg
+                        width={size}
+                        height={size}
+                        viewBox="0 0 24 24"
+                        className="cq-end-star-bg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill="rgba(15, 25, 40, 0.85)"
+                          stroke="rgba(143, 166, 184, 0.28)"
+                          strokeWidth="1.4"
+                          strokeLinejoin="round"
+                          d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
+                        />
+                      </svg>
+
+                      {/* Animated filled star + burst rays when earned */}
+                      {isEarned && (
+                        <>
+                          <motion.span
+                            className="cq-end-star-ring"
+                            initial={{ scale: 0.3, opacity: 0 }}
+                            animate={{ scale: [0.4, 1.75], opacity: [0.85, 0] }}
+                            transition={{ delay, duration: 0.65, ease: 'easeOut' }}
+                            aria-hidden="true"
+                          />
+                          <motion.div
+                            className="cq-end-star-sparks"
+                            initial={{ scale: 0.2, opacity: 0 }}
+                            animate={{ scale: [0.4, 1.45], opacity: [1, 0] }}
+                            transition={{ delay: delay + 0.04, duration: 0.6, ease: 'easeOut' }}
+                            aria-hidden="true"
+                          >
+                            <i /><i /><i /><i /><i /><i />
+                          </motion.div>
+                          <motion.svg
+                            width={size}
+                            height={size}
+                            viewBox="0 0 24 24"
+                            className="cq-end-star-fill"
+                            initial={{ scale: 0, rotate: -28, opacity: 0 }}
+                            animate={{
+                              scale: [0, 1.32, 0.92, 1.06, 1],
+                              rotate: [-28, 10, -4, 0],
+                              opacity: 1,
+                            }}
+                            transition={{
+                              delay,
+                              duration: 0.56,
+                              times: [0, 0.48, 0.72, 0.88, 1],
+                              ease: 'easeOut',
+                            }}
+                            aria-hidden="true"
+                          >
+                            <defs>
+                              <linearGradient id={`endStarGrad-${s}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#fde047" />
+                                <stop offset="55%" stopColor="#facc15" />
+                                <stop offset="100%" stopColor="#38e1ff" />
+                              </linearGradient>
+                            </defs>
+                            <path
+                              fill={`url(#endStarGrad-${s})`}
+                              stroke="#fef08a"
+                              strokeWidth="1.1"
+                              strokeLinejoin="round"
+                              d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
+                            />
+                          </motion.svg>
+                        </>
+                      )}
+                    </div>
                   );
                 })}
               </div>
-              <h2>{dailyMode.isBossStep ? 'Défi Boss terminé !' : `Étape ${dailyMode.stepNumber} terminée !`}</h2>
-            </>
-          ) : (
-            <h2>Quiz terminé !</h2>
-          )}
-          <p className="cq-big">{score} / {total}</p>
-          {answeredAll.length === total && (
-            <p className={`cq-save cq-save-${saveState}`} role="status">
-              {sent && '✓ Résultat enregistré'}
-              {saveState === 'saving' && 'Enregistrement du résultat…'}
-              {saveState === 'error' && <>Impossible d’enregistrer. <button className="link-btn" onClick={sendResult}>Réessayer</button></>}
-            </p>
-          )}
-          <div className="cq-end-actions">
-            {dailyMode?.onContinuePath && (
-              <button className="btn" onClick={dailyMode.onContinuePath}>
-                Continuer sur le chemin <Icon name="arrow" size={18} />
-              </button>
-            )}
-            <button className={dailyMode ? 'btn btn-ghost' : 'btn'} onClick={reviewCorrections}>
-              Revoir les corrections
-            </button>
-            {!dailyMode && (
-              <button className="btn btn-ghost" onClick={restart}>
-                {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
-              </button>
-            )}
-            {!dailyMode && (
-              <a className="btn btn-ghost" href={backHref}>
-                {randomMode && key === 'quiz-aleatoire' ? 'Configurer un autre quiz' : 'Autres chapitres'}
-              </a>
-            )}
-          </div>
-          {!randomMode && (
-            <p className="cq-restart-note">
-              Attention : cliquer sur « Recommencer » réinitialise vos réponses pour ces questions et les repasse en orange (non faites).
-            </p>
-          )}
-        </section>
+
+              <motion.div
+                className="cq-end-mention-wrap"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.18 + earnedStars * 0.24, duration: 0.32 }}
+              >
+                <span className={`cq-end-mention-pill ${mentionByStars.tone}`}>
+                  {mentionByStars.kicker}
+                </span>
+                <h2>{mentionByStars.title}</h2>
+                <p className="cq-end-sub">{mentionByStars.sub}</p>
+              </motion.div>
+
+              <motion.div
+                className="cq-end-score-box"
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.26 + earnedStars * 0.24, duration: 0.3 }}
+              >
+                <p className="cq-big">
+                  {score} <span>/ {total}</span>
+                </p>
+                <div className="cq-end-pct-bar" aria-hidden="true">
+                  <motion.div
+                    className="cq-end-pct-fill"
+                    initial={{ width: '0%' }}
+                    animate={{ width: `${pct}%` }}
+                    transition={{ delay: 0.32 + earnedStars * 0.24, duration: 0.55, ease: 'easeOut' }}
+                  />
+                </div>
+                <span className="cq-end-pct-label">{pct}&nbsp;% de réussite</span>
+              </motion.div>
+
+              {answeredAll.length === total && (
+                <p className={`cq-save cq-save-${saveState}`} role="status">
+                  {sent && '✓ Résultat enregistré'}
+                  {saveState === 'saving' && 'Enregistrement du résultat…'}
+                  {saveState === 'error' && <>Impossible d’enregistrer. <button className="link-btn" onClick={sendResult}>Réessayer</button></>}
+                </p>
+              )}
+              <div className="cq-end-actions">
+                {dailyMode?.onContinuePath && (
+                  <button className="btn" onClick={dailyMode.onContinuePath}>
+                    Continuer sur le chemin <Icon name="arrow" size={18} />
+                  </button>
+                )}
+                <button className={dailyMode ? 'btn btn-ghost' : 'btn'} onClick={reviewCorrections}>
+                  Revoir les corrections
+                </button>
+                {!dailyMode && (
+                  <button className="btn btn-ghost" onClick={restart}>
+                    {randomMode ? 'Nouveau tirage aléatoire' : 'Recommencer'}
+                  </button>
+                )}
+                {!dailyMode && (
+                  <a className="btn btn-ghost" href={backHref}>
+                    {randomMode && key === 'quiz-aleatoire' ? 'Configurer un autre quiz' : 'Autres chapitres'}
+                  </a>
+                )}
+              </div>
+              {!randomMode && (
+                <p className="cq-restart-note">
+                  Attention : cliquer sur « Recommencer » réinitialise vos réponses pour ces questions et les repasse en orange (non faites).
+                </p>
+              )}
+            </motion.section>
+          );
+        })()
       ) : (
         <section className={`cq-card ${q._isBoss ? 'cq-card-boss' : ''}`} key={q.id}>
           <div className="cq-meta">
