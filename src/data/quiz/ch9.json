@@ -8,6 +8,191 @@
   },
   "questions": [
     {
+      "id": "c9-q11",
+      "type": "QCU",
+      "theme": "Arthrose du coude : corps étrangers",
+      "enonce": "Quelle anomalie intra-articulaire est fréquemment retrouvée lors d’une arthrose primitive du coude ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Des corps étrangers ostéochondraux libres",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une rupture complète du triceps",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une luxation congénitale ulnaire",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une agénésie du capitulum",
+          "correct": false
+        }
+      ],
+      "explication": "L’arthrose primitive du coude s’accompagne très fréquemment de corps étrangers ostéochondraux logés dans les fosses coronoïdienne ou olécrânienne.",
+      "correction_figures": [],
+      "source": {
+        "page": 201,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c9-q12",
+      "type": "QCU",
+      "theme": "Corps étrangers intra-articulaires : imagerie",
+      "enonce": "Quel examen d’imagerie permet de détecter au mieux les corps étrangers articulaires du coude ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’arthroscanner",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La radiographie standard seule",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La scintigraphie osseuse",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’électromyogramme",
+          "correct": false
+        }
+      ],
+      "explication": "L’arthroscanner est l’examen de référence pour cartographier avec précision les corps étrangers cartilagineux et ostéocartilagineux intra-articulaires.",
+      "correction_figures": [],
+      "source": {
+        "page": 200,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c9-q13",
+      "type": "QCU",
+      "theme": "Raideur du coude : ossifications hétérotopiques",
+      "enonce": "À quel groupe d’étiologies de raideur du coude appartiennent les ossifications hétérotopiques ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Aux causes extrinsèques périarticulaires",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Aux causes intrinsèques cartilagineuses",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Aux malformations congénitales osseuses",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Aux infections mycobactériennes primitives",
+          "correct": false
+        }
+      ],
+      "explication": "Les ossifications hétérotopiques se développent dans les parties molles périarticulaires et constituent une cause extrinsèque majeure d’enraidissement.",
+      "correction_figures": [],
+      "source": {
+        "page": 200,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c9-q14",
+      "type": "QRM",
+      "theme": "Arthrose du coude : signes radiographiques",
+      "enonce": "Quels signes radiographiques élémentaires observe-t-on dans l’arthrose du coude ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une ostéophytose périarticulaire exubérante",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un pincement de l’interligne articulaire",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une condensation osseuse sous-chondrale",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une ostéolyse métaphysaire agressive",
+          "correct": false
+        }
+      ],
+      "explication": "L’arthrose du coude associe classiquement une ostéophytose marginale périarticulaire, une sclérose sous-chondrale et un pincement de l’interligne articulaire.",
+      "correction_figures": [],
+      "source": {
+        "page": 201,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c9-q15",
+      "type": "QCU",
+      "theme": "Prothèse de tête radiale : indication",
+      "enonce": "Quelle est l’indication chirurgicale habituelle d’une prothèse de tête radiale chez l’adulte ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une fracture comminutive non reconstructible",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une épicondylite latérale chronique réfractaire",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Un hygroma olécrânien mécanique récidivant",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une tendinopathie distale du biceps",
+          "correct": false
+        }
+      ],
+      "explication": "La prothèse de tête radiale est indiquée en cas de fracture comminutive irréparable de la tête radiale associée à une instabilité ligamentaire.",
+      "correction_figures": [],
+      "source": {
+        "page": 203,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
       "id": "c9-q01",
       "type": "QCU",
       "theme": "Raideur du coude : présentation clinique",

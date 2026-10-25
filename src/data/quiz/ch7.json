@@ -8,6 +8,191 @@
   },
   "questions": [
     {
+      "id": "c7-q11",
+      "type": "QCU",
+      "theme": "Anatomie fonctionnelle : biceps brachial",
+      "enonce": "Quelle est l’action biomécanique principale du muscle biceps brachial au coude ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La supination et la flexion",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’extension et la pronation",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’adduction et l’extension",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La pronation isolée",
+          "correct": false
+        }
+      ],
+      "explication": "Le muscle biceps brachial est le principal supinateur de l’avant-bras coude fléchi et un puissant fléchisseur du coude.",
+      "correction_figures": [],
+      "source": {
+        "page": 183,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c7-q12",
+      "type": "QCU",
+      "theme": "Rupture distale du biceps : terrain clinique",
+      "enonce": "Quel profil de patient présente le plus souvent une rupture distale du biceps brachial ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’homme sportif de 40 à 60 ans",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’enfant de moins de 10 ans",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La femme sédentaire âgée",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’adolescent en période de croissance",
+          "correct": false
+        }
+      ],
+      "explication": "La rupture du tendon distal du biceps survient typiquement chez l’homme d’âge moyen lors d’un effort de flexion contrariée.",
+      "correction_figures": [],
+      "source": {
+        "page": 184,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c7-q13",
+      "type": "QCU",
+      "theme": "Anatomie fonctionnelle : muscle brachial",
+      "enonce": "Quel muscle antérieur du bras est un fléchisseur pur de l’articulation du coude ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le muscle brachial",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le muscle triceps brachial",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle anconé",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le muscle coracobrachial",
+          "correct": false
+        }
+      ],
+      "explication": "Le muscle brachial s’insère sur l’ulna et agit comme un fléchisseur pur du coude, indépendamment de la pronosupination.",
+      "correction_figures": [],
+      "source": {
+        "page": 187,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c7-q14",
+      "type": "QRM",
+      "theme": "Syndrome du nerf interosseux antérieur : clinique",
+      "enonce": "Quels signes cliniques caractérisent le syndrome du nerf interosseux antérieur (NIOA) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Un déficit moteur pur",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’impossibilité de pincer en « O »",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une perte de sensibilité du pouce",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une paralysie de l’extension des doigts",
+          "correct": false
+        }
+      ],
+      "explication": "Le nerf interosseux antérieur est exclusivement moteur : son atteinte entraîne une paralysie de la pince pouce-index sans aucun trouble sensitif.",
+      "correction_figures": [],
+      "source": {
+        "page": 190,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c7-q15",
+      "type": "QCU",
+      "theme": "Bourse bicipito-radiale : anatomie",
+      "enonce": "Entre quelles structures anatomiques s’interpose la bourse synoviale bicipito-radiale ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le tendon bicipital et la tubérosité radiale",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le muscle brachial et l’olécrâne",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "L’épicondyle médial et le nerf ulnaire",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La trochlée et le capitulum",
+          "correct": false
+        }
+      ],
+      "explication": "La bourse bicipito-radiale est située entre le tendon distal du biceps brachial et la tubérosité radiale pour faciliter le glissement tendineux.",
+      "correction_figures": [],
+      "source": {
+        "page": 187,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
       "id": "c7-q01",
       "type": "QCU",
       "theme": "Anatomie : tendon distal du biceps brachial",

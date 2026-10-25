@@ -8,6 +8,191 @@
   },
   "questions": [
     {
+      "id": "c8-q11",
+      "type": "QCU",
+      "theme": "Anatomie fonctionnelle : triceps brachial",
+      "enonce": "Quelle est l’action motrice principale du muscle triceps brachial sur le coude ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’extension de l’avant-bras",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La flexion de l’avant-bras",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La supination de l’avant-bras",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La pronation de l’avant-bras",
+          "correct": false
+        }
+      ],
+      "explication": "Le muscle triceps brachial est le principal et le plus puissant extenseur de l’avant-bras sur le bras.",
+      "correction_figures": [],
+      "source": {
+        "page": 193,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c8-q12",
+      "type": "QCU",
+      "theme": "Triceps brachial : insertion distale",
+      "enonce": "Sur quelle saillie osseuse se termine le tendon distal du muscle triceps brachial ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "L’olécrâne de l’ulna",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le processus coronoïde",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La tubérosité radiale",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’épicondyle latéral",
+          "correct": false
+        }
+      ],
+      "explication": "Le tendon distal du muscle triceps brachial s’insère sur la face postérieure et supérieure de l’olécrâne ulnaire.",
+      "correction_figures": [],
+      "source": {
+        "page": 193,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c8-q13",
+      "type": "QCU",
+      "theme": "Bursite olécrânienne : siège anatomique",
+      "enonce": "Où se situe la bourse olécrânienne la plus fréquemment sujette aux bursites mécaniques ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Sous la peau en arrière de l’olécrâne",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Entre le triceps et l’humérus",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Dans l’articulation huméroradiale",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Au fond de la fosse coronoïdienne",
+          "correct": false
+        }
+      ],
+      "explication": "La bourse olécrânienne sous-cutanée superficielle est la plus vulnérable aux frottements et traumatismes directs répétés.",
+      "correction_figures": [],
+      "source": {
+        "page": 196,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c8-q14",
+      "type": "QRM",
+      "theme": "Bursite olécrânienne : étiologies fréquentes",
+      "enonce": "Quelles étiologies sont classiquement à l’origine d’une bursite olécrânienne aiguë ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Les microtraumatismes répétés par appui",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une infection bactérienne cutanée",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une arthropathie microcristalline goutteuse",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une fracture isolée du scaphoïde",
+          "correct": false
+        }
+      ],
+      "explication": "Les bursopathies olécrâniennes sont principalement mécaniques (frottements), infectieuses (staphylocoque par effraction cutanée) ou microcristallines (goutte).",
+      "correction_figures": [],
+      "source": {
+        "page": 196,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c8-q15",
+      "type": "QCU",
+      "theme": "Anatomie : muscle anconé",
+      "enonce": "Dans quel compartiment anatomique du coude se situe le muscle anconé ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le compartiment postérieur",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le compartiment antérieur",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le compartiment médial",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le canal carpien",
+          "correct": false
+        }
+      ],
+      "explication": "Le muscle anconé est un muscle accessoire du compartiment postérieur du coude, reliant l’épicondyle latéral à la face latérale de l’olécrâne.",
+      "correction_figures": [],
+      "source": {
+        "page": 193,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
       "id": "c8-q01",
       "type": "QCU",
       "theme": "Bursopathies olécrâniennes septiques",

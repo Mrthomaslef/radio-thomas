@@ -8,6 +8,191 @@
   },
   "questions": [
     {
+      "id": "c6-q11",
+      "type": "QCU",
+      "theme": "Épicondylite médiale : dénomination clinique",
+      "enonce": "Quel est le nom usuel couramment donné à l’épicondylite médiale du coude ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le coude du golfeur",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le tennis elbow",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le pulled elbow",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le coude de la nourrice",
+          "correct": false
+        }
+      ],
+      "explication": "L’épicondylite médiale est classiquement appelée « coude du golfeur » (golfer’s elbow), par opposition au tennis elbow latéral.",
+      "correction_figures": [],
+      "source": {
+        "page": 175,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c6-q12",
+      "type": "QCU",
+      "theme": "Ligament collatéral ulnaire : stabilité en valgus",
+      "enonce": "Quel faisceau du ligament collatéral ulnaire est le stabilisateur principal contre le valgus ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le faisceau antérieur",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le faisceau postérieur",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le faisceau oblique",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le ligament annulaire",
+          "correct": false
+        }
+      ],
+      "explication": "Le faisceau antérieur du ligament collatéral ulnaire (LCU) constitue le principal stabilisateur anatomique s’opposant aux contraintes en valgus du coude.",
+      "correction_figures": [],
+      "source": {
+        "page": 176,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c6-q13",
+      "type": "QCU",
+      "theme": "Nerf ulnaire : sillon rétro-épicondylien",
+      "enonce": "Quel nerf chemine dans la gouttière située en arrière de l’épicondyle médial ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le nerf ulnaire",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le nerf médian",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le nerf radial",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le nerf musculocutané",
+          "correct": false
+        }
+      ],
+      "explication": "Le nerf ulnaire chemine dans le sillon rétro-épicondylien médial avant d’entrer dans le tunnel ulnaire sous l’arcade d’Osborne.",
+      "correction_figures": [],
+      "source": {
+        "page": 179,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c6-q14",
+      "type": "QRM",
+      "theme": "Neuropathie ulnaire : sémiologie sensitive",
+      "enonce": "Quels doigts présentent des paresthésies lors d’une atteinte sensitive typique du nerf ulnaire ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le cinquième doigt en totalité",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "La moitié médiale du quatrième doigt",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Le pouce en totalité",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "L’index en totalité",
+          "correct": false
+        }
+      ],
+      "explication": "Le territoire sensitif du nerf ulnaire comprend le cinquième doigt et la moitié ulnaire (médiale) du quatrième doigt.",
+      "correction_figures": [],
+      "source": {
+        "page": 179,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c6-q15",
+      "type": "QCU",
+      "theme": "Tunnel ulnaire : arcade d’Osborne",
+      "enonce": "Entre les deux chefs de quel muscle s’insère l’arcade fibreuse d’Osborne ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le fléchisseur ulnaire du carpe",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le muscle rond pronateur",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle biceps brachial",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le muscle court supinateur",
+          "correct": false
+        }
+      ],
+      "explication": "L’arcade d’Osborne relie les chefs huméral et ulnaire du muscle fléchisseur ulnaire du carpe à l’entrée du tunnel ulnaire.",
+      "correction_figures": [],
+      "source": {
+        "page": 179,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
       "id": "c6-q01",
       "type": "QCU",
       "theme": "Épicondylite médiale : anatomie tendineuse",

@@ -8,6 +8,191 @@
   },
   "questions": [
     {
+      "id": "c5-q11",
+      "type": "QCU",
+      "theme": "Épicondylite latérale : tendon le plus touché",
+      "enonce": "Quel tendon est le plus constamment atteint dans l’épicondylite latérale du coude ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le court extenseur radial du carpe",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le long extenseur radial du carpe",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le muscle anconé",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le fléchisseur radial du carpe",
+          "correct": false
+        }
+      ],
+      "explication": "Le tendon du court extenseur radial du carpe (CERC) est le plus fréquemment et le plus sévèrement touché dans l’épicondylite latérale.",
+      "correction_figures": [],
+      "source": {
+        "page": 160,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c5-q12",
+      "type": "QCU",
+      "theme": "Anatomie : ligament annulaire",
+      "enonce": "Quelle structure osseuse est entourée et maintenue par le ligament annulaire ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La tête radiale",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’olécrâne",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "La trochlée humérale",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le processus coronoïde",
+          "correct": false
+        }
+      ],
+      "explication": "Le ligament annulaire entoure la circonférence de la tête radiale pour la maintenir appliquée contre l’incisure radiale de l’ulna.",
+      "correction_figures": [],
+      "source": {
+        "page": 164,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c5-q13",
+      "type": "QCU",
+      "theme": "Épicondylite latérale : radiographie standard",
+      "enonce": "Quelle anomalie peut être visualisée en radiographie standard lors d’une épicondylite latérale chronique ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une calcification péritendineuse de l’épicondyle latéral",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une ostéolyse massive du capitulum",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Un élargissement de l’interligne articulaire",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une luxation postérieure de la tête radiale",
+          "correct": false
+        }
+      ],
+      "explication": "La radiographie est le plus souvent normale, mais peut montrer une enthésopathie calcifiante ou un enthésophyte sur l’épicondyle latéral.",
+      "correction_figures": [],
+      "source": {
+        "page": 160,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c5-q14",
+      "type": "QRM",
+      "theme": "Ligament collatéral ulnaire latéral : anatomie et fonction",
+      "enonce": "Quelles propositions concernant le ligament collatéral ulnaire latéral (LCUL) sont exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Il s’insère distalement sur l’ulna",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Il prévient l’instabilité rotatoire postérolatérale",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Il s’insère sur l’épicondyle médial",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Il stabilise le coude en varus",
+          "correct": true
+        }
+      ],
+      "explication": "Le ligament collatéral ulnaire latéral s’insère sur la crête du supinateur de l’ulna et constitue le stabilisateur principal contre le varus et l’instabilité rotatoire postérolatérale.",
+      "correction_figures": [],
+      "source": {
+        "page": 162,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
+      "id": "c5-q15",
+      "type": "QCU",
+      "theme": "Nerf radial : arcade de Fröhse",
+      "enonce": "Quelle branche du nerf radial traverse le muscle supinateur par l’arcade de Fröhse ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le rameau profond moteur",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Le rameau superficiel sensitif",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Le nerf cutané médial de l’avant-bras",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Le nerf interosseux antérieur",
+          "correct": false
+        }
+      ],
+      "explication": "Le rameau profond moteur du nerf radial traverse l’arcade de Fröhse pour cheminer entre les deux faisceaux du muscle supinateur.",
+      "correction_figures": [],
+      "source": {
+        "page": 170,
+        "element": "Texte",
+        "refs": ""
+      },
+      "difficulty": 1
+    },
+    {
       "id": "c5-q01",
       "type": "QCU",
       "theme": "Anatomie : tendon commun des épicondyliens latéraux",
