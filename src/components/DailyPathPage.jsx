@@ -73,6 +73,40 @@ function seededShuffle(list, seedStr) {
   return arr;
 }
 
+const LOOPS_PER_THEME = 3;
+
+const STEP_SCHEDULE = (() => {
+  const list = [];
+  for (const theme of themes) {
+    for (let loopIndex = 1; loopIndex <= LOOPS_PER_THEME; loopIndex++) {
+      for (const ch of theme.chapters) {
+        list.push({
+          themeId: theme.id,
+          themeTitle: theme.title,
+          chapterKey: ch.id,
+          chapterTitle: ch.title,
+          loopIndex,
+        });
+      }
+    }
+  }
+  return list;
+})();
+
+function getStepScheduleInfo(stepNumber) {
+  if (STEP_SCHEDULE.length === 0) {
+    return {
+      themeId: 'epaule',
+      themeTitle: 'L’épaule',
+      chapterKey: 'ch1',
+      chapterTitle: 'Pathologies de la coiffe',
+      loopIndex: 1,
+    };
+  }
+  const idx = Math.max(0, Math.floor(Number(stepNumber) || 1) - 1) % STEP_SCHEDULE.length;
+  return STEP_SCHEDULE[idx];
+}
+
 function buildFlatQuestionMap(byChapter, allProgress) {
   const allChapters = themes.flatMap((t) => t.chapters.map((c) => c.id));
   const fullPool = [];
@@ -102,15 +136,22 @@ function buildFlatQuestionMap(byChapter, allProgress) {
 function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter, allProgress) {
   const count = Math.max(1, Number(goalCount) || 3);
   const { fullPool, byId } = buildFlatQuestionMap(byChapter, allProgress);
-  if (fullPool.length === 0) return { questions: [], answers: {} };
+  if (fullPool.length === 0) return { questions: [], answers: {}, stepInfo: getStepScheduleInfo(stepNumber) };
+
+  const stepInfo = getStepScheduleInfo(stepNumber);
+  const chapterPool = fullPool.filter((q) => q._chapterKey === stepInfo.chapterKey);
+  const targetPool = chapterPool.length > 0 ? chapterPool : fullPool;
 
   const savedSession = readDailyStepSession(stepNumber, pseudo);
-  // If questions were already assigned to this step, keep the exact same questions!
+  // Restore saved session if its questions belong to this step's assigned chapter
   if (Array.isArray(savedSession.questionIds) && savedSession.questionIds.length > 0) {
     const restored = savedSession.questionIds
       .map((qid) => byId.get(qid))
       .filter(Boolean);
-    if (restored.length > 0) {
+    const matchesChapter =
+      restored.length === count &&
+      restored.every((q) => q._chapterKey === stepInfo.chapterKey);
+    if (matchesChapter) {
       const withBossFlag = restored.map((q, idx) => ({
         ...q,
         _isBoss: restored.length > 1 ? idx === restored.length - 1 : stepNumber % 4 === 0,
@@ -118,17 +159,20 @@ function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter
       return {
         questions: withBossFlag,
         answers: savedSession.answers || {},
+        stepInfo,
       };
     }
   }
 
-  // Otherwise, deterministically select questions for this (pseudo, stepNumber) and persist them immediately
-  const seedBase = `${(pseudo || '').trim().toLowerCase()}:step-${stepNumber}`;
+  // Otherwise, deterministically select 3 questions from this step's single chapter (stepInfo.chapterKey)
+  const seedBase = `${(pseudo || '').trim().toLowerCase()}:step-${stepNumber}:${stepInfo.chapterKey}`;
   const isBossStep = stepNumber % 4 === 0;
   const usedIds = new Set();
 
-  // Exclude questions already assigned to previous steps so steps don't repeat
+  // Exclude questions already assigned in previous loops of this same chapter so the 3 loops don't repeat
   for (let prev = 1; prev < stepNumber; prev++) {
+    const prevInfo = getStepScheduleInfo(prev);
+    if (prevInfo.chapterKey !== stepInfo.chapterKey) continue;
     const prevSaved = readDailyStepSession(prev, pseudo);
     for (const qid of prevSaved.questionIds || []) {
       usedIds.add(qid);
@@ -149,65 +193,46 @@ function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter
     return [...fresh, ...seen].slice(0, needed);
   };
 
-  if (count === 1) {
-    let candidates;
-    if (isBossStep) {
-      candidates = fullPool.filter((q) => q.difficulty >= 2);
-    } else if (stepNumber <= 3) {
-      candidates = fullPool.filter((q) => q.difficulty === 1);
-    } else {
-      candidates = fullPool.filter((q) => q.difficulty <= 2);
-    }
-    if (candidates.length === 0) candidates = fullPool;
-    const picked = pickFrom(candidates, 1, 'single');
-    const finalQuestions = picked.map((q) => ({ ...q, _isBoss: isBossStep }));
-    const questionIds = finalQuestions.map((q) => q.id);
-    saveDailyStepSession(stepNumber, { questionIds, answers: savedSession.answers || {} }, pseudo);
-    return { questions: finalQuestions, answers: savedSession.answers || {} };
-  }
-
   const regularNeeded = Math.max(1, count - 1);
   let regularCandidates;
   let bossCandidates;
 
-  if (isBossStep) {
-    regularCandidates = fullPool.filter((q) => q.difficulty >= 2);
-    if (regularCandidates.length < regularNeeded) regularCandidates = fullPool;
-    bossCandidates = fullPool.filter((q) => q.difficulty === 3);
-    if (bossCandidates.length === 0) bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
-  } else if (stepNumber <= 3) {
-    regularCandidates = fullPool.filter((q) => q.difficulty === 1);
+  if (stepInfo.loopIndex === 1 && !isBossStep) {
+    regularCandidates = targetPool.filter((q) => q.difficulty === 1);
     if (regularCandidates.length < regularNeeded) {
       regularCandidates = [
         ...regularCandidates,
-        ...fullPool.filter((q) => q.difficulty === 2),
+        ...targetPool.filter((q) => q.difficulty === 2),
       ];
     }
-    bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
-  } else if (stepNumber <= 7) {
-    regularCandidates = fullPool.filter((q) => q.difficulty <= 2);
-    bossCandidates = fullPool.filter((q) => q.difficulty === 3);
-    if (bossCandidates.length === 0) bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
+    if (regularCandidates.length < regularNeeded) regularCandidates = targetPool;
+    bossCandidates = targetPool.filter((q) => q.difficulty >= 2);
+    if (bossCandidates.length === 0) bossCandidates = targetPool;
+  } else if (stepInfo.loopIndex === 2 && !isBossStep) {
+    regularCandidates = targetPool.filter((q) => q.difficulty <= 2);
+    if (regularCandidates.length < regularNeeded) regularCandidates = targetPool;
+    bossCandidates = targetPool.filter((q) => q.difficulty === 3);
+    if (bossCandidates.length === 0) bossCandidates = targetPool.filter((q) => q.difficulty >= 2);
+    if (bossCandidates.length === 0) bossCandidates = targetPool;
   } else {
-    regularCandidates = fullPool.filter((q) => q.difficulty === 2);
-    if (regularCandidates.length < regularNeeded) {
-      regularCandidates = fullPool.filter((q) => q.difficulty <= 2);
-    }
-    bossCandidates = fullPool.filter((q) => q.difficulty === 3);
-    if (bossCandidates.length === 0) bossCandidates = fullPool.filter((q) => q.difficulty >= 2);
+    regularCandidates = targetPool.filter((q) => q.difficulty >= 2);
+    if (regularCandidates.length < regularNeeded) regularCandidates = targetPool;
+    bossCandidates = targetPool.filter((q) => q.difficulty === 3);
+    if (bossCandidates.length === 0) bossCandidates = targetPool.filter((q) => q.difficulty >= 2);
+    if (bossCandidates.length === 0) bossCandidates = targetPool;
   }
 
   let regulars = pickFrom(regularCandidates, regularNeeded, 'reg');
   for (const q of regulars) usedIds.add(q.id);
   if (regulars.length < regularNeeded) {
-    const extra = pickFrom(fullPool, regularNeeded - regulars.length, 'extra');
+    const extra = pickFrom(targetPool, regularNeeded - regulars.length, 'extra');
     for (const q of extra) usedIds.add(q.id);
     regulars = [...regulars, ...extra];
   }
 
   let bossArr = pickFrom(bossCandidates, 1, 'boss');
   if (bossArr.length === 0) {
-    bossArr = pickFrom(fullPool, 1, 'boss-fallback');
+    bossArr = pickFrom(targetPool, 1, 'boss-fallback');
   }
 
   const finalQuestions = [
@@ -215,11 +240,12 @@ function resolveStepQuestionsAndAnswers(stepNumber, goalCount, pseudo, byChapter
     ...bossArr.map((q) => ({ ...q, _isBoss: true })),
   ];
   const questionIds = finalQuestions.map((q) => q.id);
-  saveDailyStepSession(stepNumber, { questionIds, answers: savedSession.answers || {} }, pseudo);
+  saveDailyStepSession(stepNumber, { questionIds, answers: {} }, pseudo);
 
   return {
     questions: finalQuestions,
-    answers: savedSession.answers || {},
+    answers: {},
+    stepInfo,
   };
 }
 
@@ -510,7 +536,7 @@ export default function DailyPathPage() {
       clearDailyStepAnswers(stepNumber, pseudo);
     }
     const isBossStep = stepNumber % 4 === 0;
-    const { questions, answers } = resolveStepQuestionsAndAnswers(
+    const { questions, answers, stepInfo } = resolveStepQuestionsAndAnswers(
       stepNumber,
       QUESTIONS_PER_STEP,
       pseudo,
@@ -522,6 +548,7 @@ export default function DailyPathPage() {
       id: Date.now(),
       stepNumber,
       isBossStep,
+      stepInfo,
       questions,
       initialAnswers: forceReplay ? {} : answers,
     });
@@ -859,7 +886,8 @@ export default function DailyPathPage() {
 
   // 3) Active Daily Step Quiz Player
   if (activeSession) {
-    const { stepNumber, isBossStep, questions, initialAnswers } = activeSession;
+    const { stepNumber, isBossStep, stepInfo, questions, initialAnswers } = activeSession;
+    const info = stepInfo || getStepScheduleInfo(stepNumber);
     const qIds = questions.map((q) => q.id);
     return (
       <div className="rnd-play daily-play">
@@ -882,12 +910,10 @@ export default function DailyPathPage() {
           key={activeSession.id}
           chapterKey="quiz-aleatoire"
           meta={{
-            numero: `Étape ${stepNumber}`,
-            theme: 'mixte',
+            numero: `Étape ${stepNumber} · ${info.themeTitle} (Boucle ${info.loopIndex}/${LOOPS_PER_THEME})`,
+            theme: info.themeId,
             backHref: '#/',
-            titre: isBossStep
-              ? `Défi Boss — Étape ${stepNumber}`
-              : `Parcours du jour — Étape ${stepNumber}`,
+            titre: info.chapterTitle,
             auteurs: 'A. Cotten',
           }}
           questions={questions}
@@ -1017,13 +1043,59 @@ export default function DailyPathPage() {
       )}
 
       {limitNotice && (
-        <div className="daily-limit-banner" role="status">
-          <span>
-            🎉 Tu as terminé tes <strong>{MAX_DAILY_STEPS} étapes du jour</strong> ! Reviens demain pour débloquer la suite, ou clique sur une étape déjà validée pour améliorer tes étoiles (★★ / ★★★).
-          </span>
-          <button type="button" className="pseudo-change-btn" onClick={() => setLimitNotice(false)}>
-            Fermer
-          </button>
+        <div
+          className="daily-cal-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Avancement quotidien terminé"
+          onClick={() => setLimitNotice(false)}
+        >
+          <motion.div
+            className="daily-cal-modal daily-limit-modal"
+            initial={{ opacity: 0, scale: 0.95, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.18 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="daily-cal-head">
+              <div>
+                <span className="daily-goal-kicker">Objectif du jour atteint · 3/3</span>
+                <h3>Avancement quotidien terminé !</h3>
+              </div>
+              <button
+                type="button"
+                className="daily-cal-close"
+                onClick={() => setLimitNotice(false)}
+                aria-label="Fermer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <p className="daily-limit-modal-text">
+              Bravo, tu as réalisé tes <strong>{MAX_DAILY_STEPS} étapes de la journée</strong> ! Reviens demain pour débloquer et poursuivre la suite de ton parcours quotidien.
+            </p>
+            <div className="daily-cal-rule">
+              📚 En attendant, tu peux accéder à la page <strong>Quiz</strong> pour t’entraîner librement et faire autant de quiz que tu le souhaites !
+            </div>
+
+            <div className="daily-limit-modal-actions">
+              <a
+                href="#/chapitres"
+                className="btn"
+                onClick={() => setLimitNotice(false)}
+              >
+                Aller à la page Quiz <Icon name="arrow" size={18} />
+              </a>
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => setLimitNotice(false)}
+              >
+                Fermer
+              </button>
+            </div>
+          </motion.div>
         </div>
       )}
 
@@ -1137,6 +1209,7 @@ export default function DailyPathPage() {
             const isCompleted = stars > 0;
             const isCurrent = step === dailyState.currentStep;
             const isUnlocked = step <= dailyState.currentStep;
+            const nodeInfo = getStepScheduleInfo(step);
             const leftPct = `${(x / pathLayout.width) * 100}%`;
 
             return (
@@ -1176,12 +1249,19 @@ export default function DailyPathPage() {
                 <button
                   type="button"
                   className={`daily-node-btn ${isBoss ? 'daily-node-boss' : ''} ${!isUnlocked ? 'daily-node-locked' : ''} ${isCompleted ? 'daily-node-done' : ''}`}
-                  disabled={!isUnlocked}
-                  onClick={() => launchStep(step)}
+                  disabled={!isUnlocked && !dailyStepsReached}
+                  onClick={() => {
+                    if (!isUnlocked && dailyStepsReached) {
+                      setLimitNotice(true);
+                      return;
+                    }
+                    if (isUnlocked) launchStep(step);
+                  }}
+                  title={`${nodeInfo.themeTitle} — ${nodeInfo.chapterTitle} (Boucle ${nodeInfo.loopIndex}/${LOOPS_PER_THEME})`}
                   aria-label={
                     isUnlocked
-                      ? `${isBoss ? 'Défi Boss' : 'Étape'} ${step}${isCompleted ? ` (${stars} étoiles)` : ' — Lancer'}`
-                      : `Étape ${step} verrouillée`
+                      ? `Étape ${step} : ${nodeInfo.themeTitle} — ${nodeInfo.chapterTitle}${isCompleted ? ` (${stars} étoiles)` : ' — Lancer'}`
+                      : `Étape ${step} verrouillée (${nodeInfo.themeTitle} — ${nodeInfo.chapterTitle})`
                   }
                 >
                   {isUnlocked ? (

@@ -2673,6 +2673,21 @@ a.cq-dot:hover { transform: scale(1.08); }
   font-weight: 800;
 }
 
+.daily-limit-modal-text {
+  color: #d6e3f0;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.daily-limit-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
 
 
 
