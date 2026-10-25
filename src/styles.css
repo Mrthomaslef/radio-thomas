@@ -3304,11 +3304,15 @@ a.cq-dot:hover { transform: scale(1.08); }
   justify-content: center;
   padding: 14px;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .daily-cal-modal {
   width: 100%;
   max-width: 420px;
+  max-height: calc(100dvh - 28px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border-radius: 24px;
   background: linear-gradient(180deg, rgba(14, 22, 35, 0.98) 0%, rgba(9, 15, 24, 0.98) 100%);
   border: 1px solid rgba(56, 225, 255, 0.28);
@@ -3687,6 +3691,7 @@ a.cq-dot:hover { transform: scale(1.08); }
 .daily-stars-lb-body {
   max-height: 290px;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding-right: 2px;
 }
 

@@ -825,6 +825,20 @@ export default function DailyPathPage() {
     return undefined;
   }, [editingPseudo, showingSlides, slideIdx, dailyState.currentStep, activeSession]);
 
+  // Lock background page scroll while any popup modal is open
+  useEffect(() => {
+    const modalOpen = showingCalendar || showingStarsLb || limitNotice;
+    if (!modalOpen) return undefined;
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prevBodyOverflow;
+      document.documentElement.style.overflow = prevHtmlOverflow;
+    };
+  }, [showingCalendar, showingStarsLb, limitNotice]);
+
   const confirmPseudoSelection = async (clean) => {
     if (!clean || syncingPseudo) return;
     setSyncingPseudo(true);
