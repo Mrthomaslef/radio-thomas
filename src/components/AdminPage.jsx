@@ -527,6 +527,13 @@ export default function AdminPage({ reviewerMode = false }) {
               <button
                 type="button"
                 className="btn btn-ghost btn-small"
+                onClick={() => closeQuestionEditor.close()}
+              >
+                ← Retour
+              </button>
+              <button
+                type="button"
+                className="btn btn-ghost btn-small"
                 onClick={() => closeQuestionEditor.next && closeQuestionEditor.next()}
                 disabled={!closeQuestionEditor.next}
                 title={
@@ -536,13 +543,6 @@ export default function AdminPage({ reviewerMode = false }) {
                 }
               >
                 Suivant →
-              </button>
-              <button
-                type="button"
-                className="btn btn-ghost btn-small"
-                onClick={() => closeQuestionEditor.close()}
-              >
-                ← Retour
               </button>
             </div>
           ) : (
@@ -583,6 +583,13 @@ export default function AdminPage({ reviewerMode = false }) {
             <button
               type="button"
               className="btn btn-ghost btn-small"
+              onClick={() => closeQuestionEditor.close()}
+            >
+              ← Retour
+            </button>
+            <button
+              type="button"
+              className="btn btn-ghost btn-small"
               onClick={() => closeQuestionEditor.next && closeQuestionEditor.next()}
               disabled={!closeQuestionEditor.next}
               title={
@@ -592,13 +599,6 @@ export default function AdminPage({ reviewerMode = false }) {
               }
             >
               Suivant →
-            </button>
-            <button
-              type="button"
-              className="btn btn-ghost btn-small"
-              onClick={() => closeQuestionEditor.close()}
-            >
-              ← Retour
             </button>
           </div>
         ) : (
