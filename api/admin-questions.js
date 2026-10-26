@@ -7,6 +7,27 @@ import { generateQuestionFromBook, resolveAdminPasswordForReviewer } from './_ai
 
 const REVIEWER_PASSWORD = 'cocochin';
 
+// Server-side circuit breaker & short cache for 'list' to prevent any client tab from burning Fast Origin Transfer / Supabase Egress.
+let cachedReviewerQuestions = null;
+let cachedReviewerAt = 0;
+const listHitsByIp = new Map();
+const LIST_CACHE_TTL_MS = 10000;
+const LIST_WINDOW_MS = 15000;
+const LIST_MAX_HITS_PER_WINDOW = 5;
+
+function checkListRateLimit(req) {
+  const ip = String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'anon').split(',')[0].trim();
+  const now = Date.now();
+  const entry = listHitsByIp.get(ip);
+  if (!entry || now - entry.start > LIST_WINDOW_MS) {
+    if (listHitsByIp.size > 500) listHitsByIp.clear();
+    listHitsByIp.set(ip, { start: now, count: 1 });
+    return true;
+  }
+  entry.count += 1;
+  return entry.count <= LIST_MAX_HITS_PER_WINDOW;
+}
+
 function readBody(req) {
   if (req.body && typeof req.body === 'object') return req.body;
   try {
@@ -220,6 +241,10 @@ export default async function handler(req, res) {
     return res.status(200).json({ status: 'ok' });
   }
 
+  if (body.action === 'save' || body.action === 'delete' || body.action === 'import' || body.action === 'set_reviewed') {
+    cachedReviewerAt = 0;
+  }
+
   // Flip only the "reviewed" flag of a question. The server re-reads the current row, so a stale page can
   // mark a question as reviewed without ever pushing its old text back.
   if (body.action === 'set_reviewed') {
@@ -267,6 +292,13 @@ export default async function handler(req, res) {
   if (isReviewer) {
     switch (body.action) {
       case 'list': {
+        if (!checkListRateLimit(req)) {
+          return res.status(429).json({ error: 'Trop de requêtes rapprochées' });
+        }
+        const now = Date.now();
+        if (cachedReviewerQuestions && now - cachedReviewerAt < LIST_CACHE_TTL_MS) {
+          return res.status(200).json({ status: 'ok', questions: cachedReviewerQuestions });
+        }
         try {
           const r = await fetch(
             `${SUPABASE_URL}/rest/v1/quiz_questions?select=id,chapter,position,data,updated_at,deleted_at&deleted_at=is.null&order=chapter.asc,position.asc&limit=2000`,
@@ -279,9 +311,12 @@ export default async function handler(req, res) {
           );
           if (!r.ok) return res.status(502).json({ error: `Erreur base de données (${r.status})` });
           const baseQuestions = await r.json();
+          const filtered = baseQuestions.filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99');
+          cachedReviewerQuestions = filtered;
+          cachedReviewerAt = Date.now();
           return res.status(200).json({
             status: 'ok',
-            questions: baseQuestions.filter((q) => q && q.id !== 'cfg-ai-key' && q.chapter !== 'ch99'),
+            questions: filtered,
           });
         } catch {
           return res.status(502).json({ error: 'Base de données injoignable' });

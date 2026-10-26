@@ -148,6 +148,13 @@ Rules:
 
 Quiz text is our own wording. The owner confirmed (Oct 2026) the right to publish the figures extracted from the source book (« Imagerie musculosquelettique », Elsevier Masson), so `public/figures/<chN>/` is committed and shown in corrections with their captions and the book reference. Do not add figures from other sources without the owner confirming the rights.
 
+## Quota & Anti-Loop Guardrails (Vercel & Supabase Free Tier)
+
+- **Never use inline array/object default props** (`prop = []` or `prop = {}`) in React components when those props are passed into `useEffect` or `useCallback` dependency arrays (use a module-level constant like `const EMPTY_ARRAY = []`). Inline literals create a new reference on every render and can trigger infinite `fetch()` loops that burn gigabytes of Vercel Fast Origin Transfer and Supabase Egress in minutes.
+- **No background polling (`setInterval`)**: never poll `/api/*` endpoints on a timer.
+- **Keep client & server circuit-breakers**: every high-payload endpoint (`GET /api/questions`, `POST /api/admin-questions {action:'list'}`, `GET /api/image`, `GET /api/leaderboard`) must keep its client-side cooldown/deduplication and server-side rate-limit or CDN cache headers (`s-maxage`).
+- **Proactive check**: whenever modifying data-fetching hooks (`useQuestions.js`, `QuestionsAdmin.jsx`, `AdminPage.jsx`, `player.js`), verify via Supabase `query_logs` MCP that no endpoint is being called repeatedly in a loop.
+
 ## Never
 
 - Commit `.env` files, passwords, tokens or keys.

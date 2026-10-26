@@ -296,7 +296,23 @@ const conflictError = (data) => {
   return err;
 };
 
+// Client-side circuit breaker: prevents accidental render loops from ever spamming 'list' requests.
+let lastListResult = null;
+let lastListAt = 0;
+let inFlightList = null;
+const LIST_COOLDOWN_MS = 8000;
+
 async function call(password, payload) {
+  if (payload.action === 'save' || payload.action === 'delete' || payload.action === 'import' || payload.action === 'set_reviewed') {
+    lastListAt = 0;
+  }
+  if (payload.action === 'list') {
+    const now = Date.now();
+    if (lastListResult && now - lastListAt < LIST_COOLDOWN_MS) {
+      return lastListResult;
+    }
+    if (inFlightList) return inFlightList;
+  }
   if (payload.action === 'save') {
     payload = { ...payload, baseUpdatedAt: serverStamps.get(payload.id) };
   }
@@ -335,26 +351,43 @@ async function call(password, payload) {
 
   if (isReviewerPass(password)) {
     if (payload.action === 'list') {
-      try {
-        const r = await fetch('/api/admin-questions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password, action: 'list' }),
-        });
-        if (r.ok) {
-          const data = await r.json().catch(() => ({}));
-          if (Array.isArray(data.questions)) {
-            rememberStamps(data.questions);
-            return { questions: data.questions };
+      inFlightList = (async () => {
+        try {
+          const r = await fetch('/api/admin-questions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password, action: 'list' }),
+          });
+          if (r.ok) {
+            const data = await r.json().catch(() => ({}));
+            if (Array.isArray(data.questions)) {
+              rememberStamps(data.questions);
+              lastListResult = { questions: data.questions };
+              lastListAt = Date.now();
+              return lastListResult;
+            }
           }
+          if (r.status === 429 && lastListResult) {
+            lastListAt = Date.now();
+            return lastListResult;
+          }
+        } catch {
+          // Fallback below
         }
-      } catch {
-        // Fallback below
-      }
-      const r = await fetch(`/api/questions?v=${Date.now()}`);
-      const data = await r.json().catch(() => ({}));
-      rememberStamps(data.questions);
-      return { questions: Array.isArray(data.questions) ? data.questions : [] };
+        if (lastListResult) {
+          lastListAt = Date.now();
+          return lastListResult;
+        }
+        const r = await fetch('/api/questions');
+        const data = await r.json().catch(() => ({}));
+        rememberStamps(data.questions);
+        lastListResult = { questions: Array.isArray(data.questions) ? data.questions : [] };
+        lastListAt = Date.now();
+        return lastListResult;
+      })().finally(() => {
+        inFlightList = null;
+      });
+      return inFlightList;
     }
     if (payload.action === 'save') {
       try {
@@ -394,7 +427,11 @@ async function call(password, payload) {
   const data = await r.json().catch(() => ({}));
   if (r.status === 409) throw conflictError(data);
   if (r.ok) {
-    if (payload.action === 'list') rememberStamps(data.questions);
+    if (payload.action === 'list') {
+      rememberStamps(data.questions);
+      lastListResult = data;
+      lastListAt = Date.now();
+    }
     if (data.updatedAt && (payload.action === 'save' || payload.action === 'set_reviewed')) {
       serverStamps.set(payload.id, data.updatedAt);
     }
