@@ -120,7 +120,7 @@ function schedulePush(name) {
   if (pushTimer) clearTimeout(pushTimer);
   pushTimer = setTimeout(() => {
     pushProgressNow(name);
-  }, 80);
+  }, 600);
 }
 
 export function writeChapterProgress(chapterKey, data, name = readName()) {
@@ -693,9 +693,18 @@ export async function checkPseudoExists(name) {
   }
 }
 
-export async function syncProgressFromServer(name = readName()) {
+let lastServerSyncAt = 0;
+let lastServerSyncName = '';
+
+export async function syncProgressFromServer(name = readName(), force = false) {
   const clean = (name || '').trim().replace(/\s+/g, ' ');
   if (!clean) return;
+  const now = Date.now();
+  if (!force && clean === lastServerSyncName && now - lastServerSyncAt < 30_000) {
+    return;
+  }
+  lastServerSyncName = clean;
+  lastServerSyncAt = now;
   migrateLegacyIfEmpty(clean);
   try {
     const r = await fetch(`/api/progress?name=${encodeURIComponent(clean)}`, { cache: 'no-store' });
@@ -1138,10 +1147,10 @@ if (typeof window !== 'undefined') {
   let lastAutoSync = 0;
   const autoSync = () => {
     const now = Date.now();
-    if (now - lastAutoSync < 1500) return;
+    if (now - lastAutoSync < 45_000) return;
     lastAutoSync = now;
     const n = readName();
-    if (n) syncProgressFromServer(n);
+    if (n && !pushTimer) syncProgressFromServer(n);
   };
   const flushPending = () => {
     const target = pendingPushName || readName();
@@ -1151,7 +1160,6 @@ if (typeof window !== 'undefined') {
   };
   window.addEventListener('focus', autoSync);
   window.addEventListener('online', autoSync);
-  window.addEventListener('hashchange', autoSync);
   window.addEventListener('pagehide', flushPending);
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
@@ -1160,11 +1168,4 @@ if (typeof window !== 'undefined') {
       flushPending();
     }
   });
-  // Periodic background sync when the tab is active so multi-device usage stays in real-time sync
-  setInterval(() => {
-    if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
-      const n = readName();
-      if (n && !pushTimer) syncProgressFromServer(n);
-    }
-  }, 15000);
 }
