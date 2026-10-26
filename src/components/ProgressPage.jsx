@@ -268,15 +268,16 @@ export default function ProgressPage() {
                       <svg width="26" height="26" viewBox="0 0 24 24">
                         <defs>
                           <linearGradient id="progFlameGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#38e1ff" />
-                            <stop offset="100%" stopColor="#7c8cff" />
+                            <stop offset="0%" stopColor="#fde047" />
+                            <stop offset="50%" stopColor="#f97316" />
+                            <stop offset="100%" stopColor="#ef4444" />
                           </linearGradient>
                         </defs>
                         <path
                           fill="url(#progFlameGrad)"
                           d="M12 2c1.8 3.2 5 5.6 5 10.2A5.5 5.5 0 0 1 11.5 18c2.2-1.2 2.4-3.8 1-5.5-1.2 1.4-2.5 2.4-2.5 4.3A4.2 4.2 0 0 1 6.5 12C6.5 8.2 9.8 5.2 12 2Z"
                         />
-                        <circle cx="12" cy="16.5" r="2.2" fill="#fff" opacity="0.85" />
+                        <circle cx="12" cy="16.5" r="2.2" fill="#fef08a" opacity="0.95" />
                       </svg>
                     </span>
                     <div>
@@ -323,9 +324,10 @@ export default function ProgressPage() {
                         {d.isStreak ? (
                           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
                             <path
-                              fill="currentColor"
+                              fill="url(#progFlameGrad)"
                               d="M12 2c1.8 3.2 5 5.6 5 10.2A5.5 5.5 0 0 1 11.5 18c2.2-1.2 2.4-3.8 1-5.5-1.2 1.4-2.5 2.4-2.5 4.3A4.2 4.2 0 0 1 6.5 12C6.5 8.2 9.8 5.2 12 2Z"
                             />
+                            <circle cx="12" cy="16.5" r="2.1" fill="#fef08a" opacity="0.95" />
                           </svg>
                         ) : (
                           <span className="prog-streak-day-num">{d.dayNum}</span>

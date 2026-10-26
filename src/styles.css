@@ -3887,9 +3887,9 @@ a.cq-dot:hover { transform: scale(1.08); }
 }
 
 .prog-daily-hero-icon.is-flame {
-  background: rgba(56, 225, 255, 0.12);
-  border: 1px solid rgba(56, 225, 255, 0.35);
-  box-shadow: 0 6px 18px rgba(56, 225, 255, 0.18);
+  background: rgba(239, 68, 68, 0.14);
+  border: 1px solid rgba(249, 115, 22, 0.42);
+  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.22);
 }
 
 .prog-daily-hero-icon.is-star {
