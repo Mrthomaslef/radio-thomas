@@ -523,9 +523,28 @@ export default function AdminPage({ reviewerMode = false }) {
             <h1 className="admin-title">Correction</h1>
           </div>
           {closeQuestionEditor ? (
-            <button className="btn btn-ghost btn-small" onClick={() => closeQuestionEditor()}>
-              ← Retour
-            </button>
+            <div className="admin-head-actions">
+              <button
+                type="button"
+                className="btn btn-ghost btn-small"
+                onClick={() => closeQuestionEditor.next && closeQuestionEditor.next()}
+                disabled={!closeQuestionEditor.next}
+                title={
+                  closeQuestionEditor.next
+                    ? `Passer à la question ${closeQuestionEditor.nextNum}/${closeQuestionEditor.totalInChapter}`
+                    : 'Dernière question du chapitre'
+                }
+              >
+                Suivant →
+              </button>
+              <button
+                type="button"
+                className="btn btn-ghost btn-small"
+                onClick={() => closeQuestionEditor.close()}
+              >
+                ← Retour
+              </button>
+            </div>
           ) : (
             <button className="btn btn-ghost btn-small" onClick={logout}>
               Se déconnecter
@@ -560,9 +579,28 @@ export default function AdminPage({ reviewerMode = false }) {
           <h1 className="admin-title">{titleByTab[tab] || 'Administration'}</h1>
         </div>
         {tab === 'questions' && closeQuestionEditor ? (
-          <button className="btn btn-ghost btn-small" onClick={() => closeQuestionEditor()}>
-            ← Retour
-          </button>
+          <div className="admin-head-actions">
+            <button
+              type="button"
+              className="btn btn-ghost btn-small"
+              onClick={() => closeQuestionEditor.next && closeQuestionEditor.next()}
+              disabled={!closeQuestionEditor.next}
+              title={
+                closeQuestionEditor.next
+                  ? `Passer à la question ${closeQuestionEditor.nextNum}/${closeQuestionEditor.totalInChapter}`
+                  : 'Dernière question du chapitre'
+              }
+            >
+              Suivant →
+            </button>
+            <button
+              type="button"
+              className="btn btn-ghost btn-small"
+              onClick={() => closeQuestionEditor.close()}
+            >
+              ← Retour
+            </button>
+          </div>
         ) : (
           <button className="btn btn-ghost btn-small" onClick={logout}>
             Se déconnecter

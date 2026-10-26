@@ -552,18 +552,70 @@ export default function QuestionsAdmin({
   const [editing, setEditing] = useState(null); // { id, chapter, position, q, isNew, reportContext, aiContext }
   const [preview, setPreview] = useState(false);
 
+  const isRowReviewed = useCallback(
+    (row) => {
+      if (!row) return false;
+      if (localReviewed[row.id] !== undefined) return Boolean(localReviewed[row.id]);
+      return Boolean(row.data?.reviewed || row.data?.reviewed_by);
+    },
+    [localReviewed]
+  );
+
+  const getRowReviewer = useCallback(
+    (row) => {
+      if (!row) return '';
+      if (localReviewedBy[row.id]) return localReviewedBy[row.id];
+      if (row.data?.reviewed_by) return row.data.reviewed_by;
+      if (isRowReviewed(row)) return 'Thomas L.';
+      return '';
+    },
+    [localReviewedBy, isRowReviewed]
+  );
+
   useEffect(() => {
     if (!onEditingChange) return;
     if (editing) {
-      onEditingChange(() => () => {
-        setEditing(null);
-        setPreview(false);
-        setError('');
+      const chRows = (rows || [])
+        .filter((r) => !r.deleted_at && r.chapter === editing.chapter)
+        .sort((a, b) => a.position - b.position);
+      const currIdx = chRows.findIndex((r) => r.id === editing.id);
+      const nextRow = !editing.isNew && currIdx >= 0 && currIdx + 1 < chRows.length ? chRows[currIdx + 1] : null;
+      const nextNum = nextRow ? currIdx + 2 : null;
+      onEditingChange({
+        close: () => {
+          setEditing(null);
+          setPreview(false);
+          setError('');
+        },
+        next: nextRow
+          ? () => {
+              setError('');
+              setNotice('');
+              setPreview(false);
+              setEditing({
+                id: nextRow.id,
+                chapter: nextRow.chapter,
+                position: nextRow.position,
+                q: {
+                  ...structuredClone(nextRow.data),
+                  difficulty: resolveDifficulty(nextRow.id, nextRow.data?.difficulty),
+                  reviewed: isRowReviewed(nextRow),
+                  reviewed_by: getRowReviewer(nextRow) || reviewerName || '',
+                },
+                isNew: false,
+              });
+              if (typeof window !== 'undefined') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }
+          : null,
+        nextNum,
+        totalInChapter: chRows.length,
       });
     } else {
       onEditingChange(null);
     }
-  }, [editing, onEditingChange]);
+  }, [editing, rows, onEditingChange, isRowReviewed, getRowReviewer, reviewerName]);
   const [busy, setBusy] = useState(false);
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [aiChapter, setAiChapter] = useState('ch1');
@@ -822,26 +874,6 @@ export default function QuestionsAdmin({
   }, [password, acceptedSubmissions, reviewerEdits, reviewerMode]);
 
   useEffect(() => { load(); }, [load]);
-
-  const isRowReviewed = useCallback(
-    (row) => {
-      if (!row) return false;
-      if (localReviewed[row.id] !== undefined) return Boolean(localReviewed[row.id]);
-      return Boolean(row.data?.reviewed || row.data?.reviewed_by);
-    },
-    [localReviewed]
-  );
-
-  const getRowReviewer = useCallback(
-    (row) => {
-      if (!row) return '';
-      if (localReviewedBy[row.id]) return localReviewedBy[row.id];
-      if (row.data?.reviewed_by) return row.data.reviewed_by;
-      if (isRowReviewed(row)) return 'Thomas L.';
-      return '';
-    },
-    [localReviewedBy, isRowReviewed]
-  );
 
   const toggleReviewed = async (row, nextVal = !isRowReviewed(row)) => {
     const chosenReviewer = nextVal ? reviewerName || row.data?.reviewed_by || REVIEWERS[0] : '';
