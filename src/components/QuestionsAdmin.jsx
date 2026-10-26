@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { QuizPlayer } from './ChapterQuiz.jsx';
-import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, bundledById, resetQuestionsCache, imageSrc, resolveDifficulty, mergeLocalAndServerRow } from '../data/useQuestions.js';
+import { CHAPTERS, CHAPTER_KEYS, bundledQuestions, bundledById, resetQuestionsCache, imageSrc, resolveDifficulty, cleanExplication, mergeLocalAndServerRow } from '../data/useQuestions.js';
 import { themes } from '../data/themes.js';
 import {
   REVIEWERS,
@@ -11,7 +11,7 @@ import {
   submitQuizReviewNotification,
 } from '../data/reports.js';
 
-const MAX_SIDE = 1280; // high-resolution cap for medical figures and screenshots
+const MAX_SIDE = 960; // crisp and lightweight cap for medical figures and screenshots
 
 function readFileAsDataUrl(file) {
   return new Promise((resolve, reject) => {
@@ -65,11 +65,11 @@ function prepareImage(file) {
     }
 
     const normMime = file.type === 'image/jpg' ? 'image/jpeg' : file.type;
-    // Fast path: if the image is already very small (<= 95 KB), send it directly without decoding or drawing on canvas!
+    // Fast path: if the image is already very small (<= 65 KB), send it directly without decoding or drawing on canvas!
     if (
       (normMime === 'image/png' || normMime === 'image/jpeg' || normMime === 'image/webp') &&
       file.size > 100 &&
-      file.size <= 95000
+      file.size <= 65000
     ) {
       readFileAsDataUrl(file)
         .then((origDataUrl) => {
@@ -100,7 +100,7 @@ function prepareImage(file) {
         ctx.fillStyle = '#fff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
 
         resolve({
           mime: 'image/jpeg',
@@ -598,6 +598,7 @@ export default function QuestionsAdmin({
                 position: nextRow.position,
                 q: {
                   ...structuredClone(nextRow.data),
+                  explication: cleanExplication(nextRow.data?.explication),
                   difficulty: resolveDifficulty(nextRow.id, nextRow.data?.difficulty),
                   reviewed: isRowReviewed(nextRow),
                   reviewed_by: getRowReviewer(nextRow) || reviewerName || '',
@@ -772,15 +773,6 @@ export default function QuestionsAdmin({
           });
         }
       }
-      for (const revEd of reviewerEdits || []) {
-        if (revEd?.id && revEd?.data) {
-          const curr = byId.get(revEd.id);
-          if (curr?.deleted_at || locDeleted[revEd.id]) continue;
-          if (!curr || !curr.updated_at || (revEd.updated_at && revEd.updated_at >= curr.updated_at)) {
-            byId.set(revEd.id, revEd);
-          }
-        }
-      }
       const idsToSync = new Set();
       for (const [id, localEd] of Object.entries(localEditsMap)) {
         if (localEd?.id && localEd?.data) {
@@ -800,7 +792,7 @@ export default function QuestionsAdmin({
         }
       }
 
-      // Ensure local reviewed flags are reflected immediately in the displayed rows
+      // Ensure local reviewed flags and cleaned explanations are reflected immediately in the displayed rows
       for (const [id, row] of byId.entries()) {
         if (!row || row.deleted_at) continue;
         const hasLocalRev = Boolean(locRev[id]);
@@ -808,11 +800,17 @@ export default function QuestionsAdmin({
         const chosenRevBy = shouldBeReviewed
           ? row.data?.reviewed_by || locRevBy[id] || 'Thomas L.'
           : null;
-        if (shouldBeReviewed !== Boolean(row.data?.reviewed) || chosenRevBy !== (row.data?.reviewed_by || null)) {
+        const cleanedExp = cleanExplication(row.data?.explication);
+        if (
+          shouldBeReviewed !== Boolean(row.data?.reviewed) ||
+          chosenRevBy !== (row.data?.reviewed_by || null) ||
+          cleanedExp !== row.data?.explication
+        ) {
           byId.set(id, {
             ...row,
             data: {
               ...row.data,
+              explication: cleanedExp,
               reviewed: shouldBeReviewed,
               ...(chosenRevBy ? { reviewed_by: chosenRevBy } : {}),
             },
@@ -1089,12 +1087,64 @@ export default function QuestionsAdmin({
       position: row.position,
       q: {
         ...structuredClone(row.data),
+        explication: cleanExplication(row.data?.explication),
         difficulty: resolveDifficulty(row.id, row.data?.difficulty),
         reviewed: isRowReviewed(row),
         reviewed_by: getRowReviewer(row) || reviewerName || '',
       },
       isNew: false,
     });
+
+  // Preload images for the active chapter (and prioritize the currently edited question + next 2) so editor previews appear instantaneously.
+  useEffect(() => {
+    const ch = editing?.chapter || chapter;
+    const chRows = (rows || [])
+      .filter((r) => !r.deleted_at && r.chapter === ch)
+      .sort((a, b) => a.position - b.position);
+    if (!chRows.length) return undefined;
+
+    let ordered = chRows;
+    if (editing?.id) {
+      const idx = chRows.findIndex((r) => r.id === editing.id);
+      if (idx >= 0) {
+        ordered = [...chRows.slice(idx, idx + 4), ...chRows.slice(0, idx), ...chRows.slice(idx + 4)];
+      }
+    }
+
+    const urls = [];
+    for (const r of ordered) {
+      const qData = r.data;
+      if (qData?.enonce_image) {
+        const u = imageSrc(r.chapter, qData.enonce_image);
+        if (u && !u.startsWith('data:')) urls.push(u);
+      }
+      for (const f of qData?.correction_figures || []) {
+        const u = imageSrc(r.chapter, f);
+        if (u && !u.startsWith('data:')) urls.push(u);
+      }
+    }
+
+    let cancelled = false;
+    let i = 0;
+    const step = () => {
+      if (cancelled || i >= urls.length) return;
+      const batch = urls.slice(i, i + 3);
+      i += 3;
+      for (const u of batch) {
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = u;
+      }
+      if (i < urls.length) {
+        setTimeout(step, 120);
+      }
+    };
+    const timer = setTimeout(step, 40);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [chapter, editing?.id, editing?.chapter, rows]);
   const create = () => {
     const position = live.length ? Math.max(...live.map((r) => r.position)) + 1 : 0;
     setEditing({
@@ -1295,8 +1345,11 @@ export default function QuestionsAdmin({
       if (saveOut?.question) {
         const promotedRow = {
           ...savedRow,
-          data: saveOut.question,
-          updated_at: new Date().toISOString(),
+          data: {
+            ...saveOut.question,
+            explication: cleanExplication(saveOut.question?.explication),
+          },
+          updated_at: saveOut.updatedAt || new Date().toISOString(),
         };
         setRows((prev) =>
           (prev || []).map((r) => (r.id === finalId ? promotedRow : r))
@@ -1954,7 +2007,7 @@ function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndRev
         <legend>Image avant la question (question d’iconographie)</legend>
         {q.enonce_image ? (
           <div className="qa-fig">
-            <img src={imageSrc(editing.chapter, q.enonce_image)} alt="" />
+            <img src={imageSrc(editing.chapter, q.enonce_image)} alt="" decoding="async" />
             <div className="qa-fig-body">
               <label>Description de l’image (lue par les lecteurs d’écran, ne donnez pas la réponse)
                 <input className="admin-input" value={q.enonce_image.alt || ''} maxLength={300}
@@ -2036,7 +2089,7 @@ function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndRev
         {q.correction_figures.length === 0 && <p className="admin-empty">Aucune figure.</p>}
         {q.correction_figures.map((f, i) => (
           <div key={(f.upload || f.file || 'fig') + i} className="qa-fig">
-            <img src={imageSrc(editing.chapter, f)} alt="" loading="lazy" />
+            <img src={imageSrc(editing.chapter, f)} alt="" decoding="async" />
             <div className="qa-fig-body">
               <small>{f.upload || f.dataUrl ? 'Image envoyée' : f.file}</small>
               <textarea className="admin-input" rows={3} value={f.caption} maxLength={1200} onChange={(e) => setFigure(i, { caption: e.target.value })} />
