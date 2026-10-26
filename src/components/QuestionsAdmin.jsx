@@ -11,7 +11,7 @@ import {
   submitQuizReviewNotification,
 } from '../data/reports.js';
 
-const MAX_SIDE = 1400; // high-resolution cap for medical figures and screenshots
+const MAX_SIDE = 1280; // high-resolution cap for medical figures and screenshots
 
 function readFileAsDataUrl(file) {
   return new Promise((resolve, reject) => {
@@ -65,11 +65,11 @@ function prepareImage(file) {
     }
 
     const normMime = file.type === 'image/jpg' ? 'image/jpeg' : file.type;
-    // Fast path: if the image is already small (<= 380 KB), send it directly without decoding or drawing on canvas!
+    // Fast path: if the image is already small (<= 180 KB), send it directly without decoding or drawing on canvas!
     if (
       (normMime === 'image/png' || normMime === 'image/jpeg' || normMime === 'image/webp') &&
       file.size > 100 &&
-      file.size <= 380000
+      file.size <= 180000
     ) {
       readFileAsDataUrl(file)
         .then((origDataUrl) => {
@@ -100,7 +100,7 @@ function prepareImage(file) {
         ctx.fillStyle = '#fff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
 
         resolve({
           mime: 'image/jpeg',

@@ -76,11 +76,5 @@ export function fetchStarsLeaderboard() {
   return fetchEntries('/api/leaderboard?type=stars', 'stars');
 }
 
-// Warm the cache in the background when the app loads so opening #/classement is instantaneous
-if (typeof window !== 'undefined') {
-  setTimeout(() => {
-    fetchLeaderboard().catch(() => {});
-    fetchContributorsLeaderboard().catch(() => {});
-    fetchStarsLeaderboard().catch(() => {});
-  }, 400);
-}
+// Leaderboards are fetched on demand when opening #/classement or the stars modal
+// (no background prefetch on initial page load to save serverless & database bandwidth).

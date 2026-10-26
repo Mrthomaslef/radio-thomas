@@ -31,9 +31,9 @@ export default async function handler(req, res) {
         }
         return q;
       });
-    // Served from Vercel's CDN for a few seconds: ~640 KB per call and one function run per visitor would
-    // burn the free plan. Edits show up within ~20 s; the admin pages bypass the cache with ?v=<timestamp>.
-    res.setHeader('Cache-Control', 'public, s-maxage=20, stale-while-revalidate=120');
+    // Served from Vercel's CDN to protect Supabase & Vercel bandwidth quotas.
+    // The admin/reviewer pages bypass the cache with ?v=<timestamp> right after edits.
+    res.setHeader('Cache-Control', 'public, max-age=120, s-maxage=300, stale-while-revalidate=3600');
     return res.status(200).json({ questions });
   } catch {
     return res.status(502).json({ error: 'Base de données injoignable' });

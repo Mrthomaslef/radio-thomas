@@ -30,8 +30,10 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', row.mime);
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Content-Security-Policy', "default-src 'none'; img-src 'self'");
-    // The id never points to different bytes, so the browser may keep it for a year.
-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    // The id never points to different bytes, so both browser and Vercel Edge CDN may keep it for a year.
+    res.setHeader('Cache-Control', 'public, max-age=31536000, s-maxage=31536000, immutable');
+    res.setHeader('CDN-Cache-Control', 'public, max-age=31536000, immutable');
+    res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=31536000, immutable');
     return res.status(200).send(bytes);
   } catch {
     return res.status(502).end();

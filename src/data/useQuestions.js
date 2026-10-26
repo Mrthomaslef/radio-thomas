@@ -316,7 +316,7 @@ function groupByChapter(rows) {
 
 const fallback = () => groupByChapter(bundledQuestions);
 
-const REFRESH_AFTER_MS = 60_000; // re-download the (large) question list at most once a minute per tab
+const REFRESH_AFTER_MS = 300_000; // re-download the (large) question list at most once every 5 minutes per tab
 let cache = null; // shared by the home page and the quiz
 let lastFetchAt = 0;
 const listeners = new Set();
