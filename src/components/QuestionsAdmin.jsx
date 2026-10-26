@@ -522,14 +522,16 @@ export const newId = (chapter, rows = []) => {
   return `${chapter}-${Date.now()}`;
 };
 
+const EMPTY_ARRAY = [];
+
 export default function QuestionsAdmin({
   password,
   editTarget = null,
   onClearEditTarget = null,
   onResolveReport = null,
   onResolveSubmission = null,
-  acceptedSubmissions = [],
-  reviewerEdits = [],
+  acceptedSubmissions = EMPTY_ARRAY,
+  reviewerEdits = EMPTY_ARRAY,
   activeReviewer = null,
   onChangeReviewer = null,
   reviewerMode = false,
@@ -869,9 +871,15 @@ export default function QuestionsAdmin({
       setError(e.message);
       setRows(bundledQuestions);
     }
-  }, [password, acceptedSubmissions, reviewerEdits, reviewerMode]);
+  }, [password, acceptedSubmissions, reviewerMode]);
 
-  useEffect(() => { load(); }, [load]);
+  const loadedKeyRef = useRef('');
+  useEffect(() => {
+    const key = `${password || ''}::${reviewerMode ? 'rev' : 'adm'}::${acceptedSubmissions.length}`;
+    if (loadedKeyRef.current === key) return;
+    loadedKeyRef.current = key;
+    load();
+  }, [password, reviewerMode, acceptedSubmissions.length, load]);
 
   const toggleReviewed = async (row, nextVal = !isRowReviewed(row)) => {
     const chosenReviewer = nextVal ? reviewerName || row.data?.reviewed_by || REVIEWERS[0] : '';
