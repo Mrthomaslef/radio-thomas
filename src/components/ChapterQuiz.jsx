@@ -636,7 +636,7 @@ export function QuizPlayer({
                               <linearGradient id={`endStarGrad-${s}`} x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stopColor="#fde047" />
                                 <stop offset="55%" stopColor="#facc15" />
-                                <stop offset="100%" stopColor="#38e1ff" />
+                                <stop offset="100%" stopColor="#f59e0b" />
                               </linearGradient>
                             </defs>
                             <path

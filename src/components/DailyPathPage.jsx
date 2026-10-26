@@ -478,7 +478,7 @@ function StreakCalendarModal({ dailyState, onClose }) {
             <span className="daily-cal-stat-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24">
                 <path
-                  fill="#38e1ff"
+                  fill="#facc15"
                   stroke="#05090f"
                   strokeWidth="1.2"
                   d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
@@ -579,7 +579,7 @@ function StreakCalendarModal({ dailyState, onClose }) {
                     <span className="daily-cal-star-badge" aria-hidden="true">
                       <svg width="11" height="11" viewBox="0 0 24 24">
                         <path
-                          fill="#38e1ff"
+                          fill="#facc15"
                           d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
                         />
                       </svg>
@@ -648,7 +648,7 @@ function StarsLeaderboardModal({ pseudo, totalStars, onClose }) {
             <span className="daily-cal-flame-badge" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24">
                 <path
-                  fill="#38e1ff"
+                  fill="#facc15"
                   d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"
                 />
               </svg>
@@ -1426,7 +1426,7 @@ export default function DailyPathPage() {
             >
               <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
                 <path
-                  fill="#38e1ff"
+                  fill="#facc15"
                   stroke="#05090f"
                   strokeWidth="1.2"
                   d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"
@@ -1690,7 +1690,7 @@ export default function DailyPathPage() {
                       >
                         <path
                           d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.12 6.57L12 17.26l-5.9 3.1 1.12-6.57-4.77-4.65 6.6-.96L12 2.2Z"
-                          fill={lit ? '#38e1ff' : 'rgba(15, 22, 34, 0.88)'}
+                          fill={lit ? '#facc15' : 'rgba(15, 22, 34, 0.88)'}
                           stroke={lit ? '#05090f' : 'rgba(143, 166, 184, 0.45)'}
                           strokeWidth="2"
                           strokeLinejoin="round"
@@ -1739,7 +1739,7 @@ export default function DailyPathPage() {
                     aria-hidden="true"
                   >
                     <span
-                      className="daily-side-badge"
+                      className={`daily-side-badge ${isCompleted ? 'has-stars' : ''}`}
                       title={isCompleted ? `${stars} étoile${stars > 1 ? 's' : ''}` : `${goal} question${goal > 1 ? 's' : ''}`}
                     >
                       <b>{isCompleted ? `${stars}★` : `${goal}Q`}</b>

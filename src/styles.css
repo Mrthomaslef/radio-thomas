@@ -2607,7 +2607,7 @@ a.cq-dot:hover { transform: scale(1.08); }
 }
 
 .daily-star-svg.is-lit {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 8px rgba(56, 225, 255, 0.5));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 8px rgba(250, 204, 21, 0.55));
 }
 
 .daily-step-stars {
@@ -2671,6 +2671,11 @@ a.cq-dot:hover { transform: scale(1.08); }
   font-size: 0.84rem;
   font-weight: 800;
   color: var(--cyan);
+}
+
+.daily-side-badge.has-stars {
+  color: #fde047;
+  border-color: rgba(250, 204, 21, 0.52);
 }
 
 .daily-side-badge-secondary {
@@ -3055,7 +3060,7 @@ a.cq-dot:hover { transform: scale(1.08); }
 .tuto-vis-stars {
   font-size: 0.68rem;
   letter-spacing: 1px;
-  color: var(--cyan);
+  color: #facc15;
   line-height: 1;
 }
 
@@ -3639,11 +3644,11 @@ a.cq-dot:hover { transform: scale(1.08); }
   padding: 1px 5px;
   border-radius: 999px;
   background: #060d17;
-  border: 1px solid rgba(56, 225, 255, 0.65);
+  border: 1px solid rgba(250, 204, 21, 0.65);
   font-family: var(--display);
   font-size: 0.62rem;
   font-weight: 800;
-  color: var(--cyan);
+  color: #fde047;
   line-height: 1;
   white-space: nowrap;
   z-index: 2;
@@ -3777,7 +3782,7 @@ a.cq-dot:hover { transform: scale(1.08); }
   font-family: var(--display);
   font-size: 0.95rem;
   font-weight: 800;
-  color: var(--cyan);
+  color: #fde047;
   white-space: nowrap;
   flex-shrink: 0;
 }
