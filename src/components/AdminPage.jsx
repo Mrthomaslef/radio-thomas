@@ -531,19 +531,34 @@ export default function AdminPage({ reviewerMode = false }) {
               >
                 ← Retour
               </button>
-              <button
-                type="button"
-                className="btn btn-ghost btn-small"
-                onClick={() => closeQuestionEditor.next && closeQuestionEditor.next()}
-                disabled={!closeQuestionEditor.next}
-                title={
-                  closeQuestionEditor.next
-                    ? `Passer à la question ${closeQuestionEditor.nextNum}/${closeQuestionEditor.totalInChapter}`
-                    : 'Dernière question du chapitre'
-                }
-              >
-                Suivant →
-              </button>
+              <div className="admin-head-nav-pair">
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-small"
+                  onClick={() => closeQuestionEditor.prev && closeQuestionEditor.prev()}
+                  disabled={!closeQuestionEditor.prev}
+                  title={
+                    closeQuestionEditor.prev
+                      ? `Revenir à la question ${closeQuestionEditor.prevNum}/${closeQuestionEditor.totalInChapter}`
+                      : 'Première question du chapitre'
+                  }
+                >
+                  ← Précédent
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-small"
+                  onClick={() => closeQuestionEditor.next && closeQuestionEditor.next()}
+                  disabled={!closeQuestionEditor.next}
+                  title={
+                    closeQuestionEditor.next
+                      ? `Passer à la question ${closeQuestionEditor.nextNum}/${closeQuestionEditor.totalInChapter}`
+                      : 'Dernière question du chapitre'
+                  }
+                >
+                  Suivant →
+                </button>
+              </div>
             </div>
           ) : (
             <button className="btn btn-ghost btn-small" onClick={logout}>
@@ -587,19 +602,34 @@ export default function AdminPage({ reviewerMode = false }) {
             >
               ← Retour
             </button>
-            <button
-              type="button"
-              className="btn btn-ghost btn-small"
-              onClick={() => closeQuestionEditor.next && closeQuestionEditor.next()}
-              disabled={!closeQuestionEditor.next}
-              title={
-                closeQuestionEditor.next
-                  ? `Passer à la question ${closeQuestionEditor.nextNum}/${closeQuestionEditor.totalInChapter}`
-                  : 'Dernière question du chapitre'
-              }
-            >
-              Suivant →
-            </button>
+            <div className="admin-head-nav-pair">
+              <button
+                type="button"
+                className="btn btn-ghost btn-small"
+                onClick={() => closeQuestionEditor.prev && closeQuestionEditor.prev()}
+                disabled={!closeQuestionEditor.prev}
+                title={
+                  closeQuestionEditor.prev
+                    ? `Revenir à la question ${closeQuestionEditor.prevNum}/${closeQuestionEditor.totalInChapter}`
+                    : 'Première question du chapitre'
+                }
+              >
+                ← Précédent
+              </button>
+              <button
+                type="button"
+                className="btn btn-ghost btn-small"
+                onClick={() => closeQuestionEditor.next && closeQuestionEditor.next()}
+                disabled={!closeQuestionEditor.next}
+                title={
+                  closeQuestionEditor.next
+                    ? `Passer à la question ${closeQuestionEditor.nextNum}/${closeQuestionEditor.totalInChapter}`
+                    : 'Dernière question du chapitre'
+                }
+              >
+                Suivant →
+              </button>
+            </div>
           </div>
         ) : (
           <button className="btn btn-ghost btn-small" onClick={logout}>

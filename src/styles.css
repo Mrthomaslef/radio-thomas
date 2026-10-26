@@ -405,6 +405,7 @@ a.card { display: block; color: inherit; }
 .admin-head > .btn { margin-left: auto; }
 .admin-head:has(.admin-head-actions) .admin-title { margin-bottom: 4px; }
 .admin-head-actions { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.admin-head-nav-pair { display: inline-flex; align-items: center; gap: 8px; }
 .admin-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 22px; }
 .admin-stat { padding: 18px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); }
 .admin-stat strong { display: block; font-family: var(--display); font-size: 2rem; color: var(--cyan); }
@@ -829,6 +830,7 @@ a.chapter.chapter-failed .chapter-go {
 .qa-fig-body small { color: var(--muted); word-break: break-all; }
 .qa-fig-actions { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.85rem; }
 .qa-actions { display: flex; flex-wrap: wrap; gap: 10px; position: sticky; bottom: 0; padding: 12px 0; background: linear-gradient(transparent, var(--bg) 30%); }
+.qa-bottom-nav { width: 100%; display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-top: 2px; }
 .qa-danger { color: var(--bad); border-color: var(--bad); }
 .qa-pick { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .qa-pick.is-dropzone { display: grid; width: 100%; }

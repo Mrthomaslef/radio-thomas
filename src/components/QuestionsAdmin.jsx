@@ -611,51 +611,55 @@ export default function QuestionsAdmin({
     [localReviewedBy, isRowReviewed]
   );
 
+  const editorNav = useMemo(() => {
+    if (!editing) return null;
+    const chRows = (rows || [])
+      .filter((r) => !r.deleted_at && r.chapter === editing.chapter)
+      .sort((a, b) => a.position - b.position);
+    const currIdx = chRows.findIndex((r) => r.id === editing.id);
+    const prevRow = !editing.isNew && currIdx > 0 ? chRows[currIdx - 1] : null;
+    const nextRow = !editing.isNew && currIdx >= 0 && currIdx + 1 < chRows.length ? chRows[currIdx + 1] : null;
+    const prevNum = prevRow ? currIdx : null;
+    const nextNum = nextRow ? currIdx + 2 : null;
+    const openRow = (targetRow) => {
+      setError('');
+      setNotice('');
+      setPreview(false);
+      setEditing({
+        id: targetRow.id,
+        chapter: targetRow.chapter,
+        position: targetRow.position,
+        q: {
+          ...structuredClone(targetRow.data),
+          explication: cleanExplication(targetRow.data?.explication),
+          difficulty: resolveDifficulty(targetRow.id, targetRow.data?.difficulty),
+          reviewed: isRowReviewed(targetRow),
+          reviewed_by: getRowReviewer(targetRow) || reviewerName || '',
+        },
+        isNew: false,
+      });
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+    return {
+      close: () => {
+        setEditing(null);
+        setPreview(false);
+        setError('');
+      },
+      prev: prevRow ? () => openRow(prevRow) : null,
+      next: nextRow ? () => openRow(nextRow) : null,
+      prevNum,
+      nextNum,
+      totalInChapter: chRows.length,
+    };
+  }, [editing, rows, isRowReviewed, getRowReviewer, reviewerName]);
+
   useEffect(() => {
     if (!onEditingChange) return;
-    if (editing) {
-      const chRows = (rows || [])
-        .filter((r) => !r.deleted_at && r.chapter === editing.chapter)
-        .sort((a, b) => a.position - b.position);
-      const currIdx = chRows.findIndex((r) => r.id === editing.id);
-      const nextRow = !editing.isNew && currIdx >= 0 && currIdx + 1 < chRows.length ? chRows[currIdx + 1] : null;
-      const nextNum = nextRow ? currIdx + 2 : null;
-      onEditingChange({
-        close: () => {
-          setEditing(null);
-          setPreview(false);
-          setError('');
-        },
-        next: nextRow
-          ? () => {
-              setError('');
-              setNotice('');
-              setPreview(false);
-              setEditing({
-                id: nextRow.id,
-                chapter: nextRow.chapter,
-                position: nextRow.position,
-                q: {
-                  ...structuredClone(nextRow.data),
-                  explication: cleanExplication(nextRow.data?.explication),
-                  difficulty: resolveDifficulty(nextRow.id, nextRow.data?.difficulty),
-                  reviewed: isRowReviewed(nextRow),
-                  reviewed_by: getRowReviewer(nextRow) || reviewerName || '',
-                },
-                isNew: false,
-              });
-              if (typeof window !== 'undefined') {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }
-            }
-          : null,
-        nextNum,
-        totalInChapter: chRows.length,
-      });
-    } else {
-      onEditingChange(null);
-    }
-  }, [editing, rows, onEditingChange, isRowReviewed, getRowReviewer, reviewerName]);
+    onEditingChange(editorNav);
+  }, [editorNav, onEditingChange]);
   const [busy, setBusy] = useState(false);
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [aiChapter, setAiChapter] = useState('ch1');
@@ -1496,6 +1500,7 @@ export default function QuestionsAdmin({
         password={password}
         reviewerName={reviewerName}
         setReviewerName={setReviewerName}
+        editorNav={editorNav}
       />
     );
   }
@@ -1805,7 +1810,7 @@ export default function QuestionsAdmin({
   );
 }
 
-function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndReview, onRegenerateAi, onCancel, onDelete, preview, setPreview, password, reviewerName, setReviewerName }) {
+function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndReview, onRegenerateAi, onCancel, onDelete, preview, setPreview, password, reviewerName, setReviewerName, editorNav }) {
   const q = editing.q;
   const set = (patch) => setEditing((e) => ({ ...e, q: { ...e.q, ...patch } }));
   const setItem = (i, patch) => set({ items: q.items.map((it, k) => (k === i ? { ...it, ...patch } : it)) });
@@ -2222,6 +2227,36 @@ function Editor({ editing, setEditing, busy, aiBusy, error, onSave, onSaveAndRev
           {editing.aiContext ? '✕ Supprimer / Ignorer' : 'Annuler'}
         </button>
         {onDelete && <button className="btn btn-ghost qa-danger" onClick={onDelete} disabled={busy || aiBusy}>Supprimer</button>}
+        {editorNav && (
+          <div className="qa-bottom-nav">
+            <button
+              type="button"
+              className="btn btn-ghost btn-small"
+              onClick={() => editorNav.prev && editorNav.prev()}
+              disabled={!editorNav.prev || busy || aiBusy}
+              title={
+                editorNav.prev
+                  ? `Revenir à la question ${editorNav.prevNum}/${editorNav.totalInChapter}`
+                  : 'Première question du chapitre'
+              }
+            >
+              ← Précédent
+            </button>
+            <button
+              type="button"
+              className="btn btn-ghost btn-small"
+              onClick={() => editorNav.next && editorNav.next()}
+              disabled={!editorNav.next || busy || aiBusy}
+              title={
+                editorNav.next
+                  ? `Passer à la question ${editorNav.nextNum}/${editorNav.totalInChapter}`
+                  : 'Dernière question du chapitre'
+              }
+            >
+              Suivant →
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
