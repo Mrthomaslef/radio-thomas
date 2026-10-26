@@ -65,11 +65,11 @@ function prepareImage(file) {
     }
 
     const normMime = file.type === 'image/jpg' ? 'image/jpeg' : file.type;
-    // Fast path: if the image is already small (<= 180 KB), send it directly without decoding or drawing on canvas!
+    // Fast path: if the image is already very small (<= 95 KB), send it directly without decoding or drawing on canvas!
     if (
       (normMime === 'image/png' || normMime === 'image/jpeg' || normMime === 'image/webp') &&
       file.size > 100 &&
-      file.size <= 180000
+      file.size <= 95000
     ) {
       readFileAsDataUrl(file)
         .then((origDataUrl) => {

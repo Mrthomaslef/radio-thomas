@@ -25,7 +25,9 @@ begin
     return jsonb_build_object('status', 'bad_request');
   end if;
   insert into public.quiz_images (id, mime, data_b64) values (p_id, p_mime, p_b64)
-  on conflict (id) do nothing;
+  on conflict (id) do update
+    set mime = excluded.mime,
+        data_b64 = excluded.data_b64;
   return jsonb_build_object('status', 'ok', 'id', p_id);
 end;
 $$;
