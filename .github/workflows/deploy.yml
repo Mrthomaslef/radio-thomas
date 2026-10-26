@@ -1,7 +1,10 @@
 name: Deploy site
 
-# Manual fallback deploy if needed (automatic deploys are handled natively by Vercel on Mrthomaslef/radio-thomas).
+# Every push to master deploys to production. The deploy runs as the project
+# owner (via VERCEL_TOKEN), so it works for any collaborator's commits.
 on:
+  push:
+    branches: [master]
   workflow_dispatch:
 
 concurrency:
@@ -9,8 +12,8 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  VERCEL_ORG_ID: team_NEIC7hVwjVttGbPcfootWkNM
-  VERCEL_PROJECT_ID: prj_KtBqRP9EoQdcYe1exc2x8PsBi5RH
+  VERCEL_ORG_ID: team_GuVFUHzv9fdBB9H2Y7JCvXaI
+  VERCEL_PROJECT_ID: prj_3BnpILiVEsv2zyiJ2FIHFonl5qA2
 
 jobs:
   deploy:

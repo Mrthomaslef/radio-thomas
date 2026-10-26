@@ -186,7 +186,7 @@ function localLeaderboardPlugin(target, env = {}) {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const target =
-    env.VITE_API_PROXY || 'https://radio-thomas-charlesandres-projects.vercel.app';
+    env.VITE_API_PROXY || 'https://radio-thomas-ten.vercel.app';
 
   return {
     plugins: [react(), localLeaderboardPlugin(target, env)],
