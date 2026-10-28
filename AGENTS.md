@@ -101,7 +101,7 @@ To add a theme: add it to `src/data/themes.js`. To add a chapter: add `src/data/
 
 Error messages returned by the API are in French. Functions use the **publishable** key only; they never have a secret key.
 
-## Database (Supabase, project `thomas-radio`, region eu-west-1)
+## Database (Supabase, project `tzceyyxeqhatdejnxwxs`, region eu-west-1)
 
 | Table | Access |
 |---|---|
