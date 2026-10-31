@@ -12,31 +12,31 @@
       "type": "QRM",
       "difficulty": 1,
       "theme": "Arthrose fémorotibiale : épidémiologie et physiopathogénie",
-      "enonce": "Concernant l’épidémiologie, la physiopathogénie et les facteurs de risque de l’arthrose fémorotibiale, quelles sont les propositions exactes ?",
+      "enonce": "Quelles propositions sont exactes concernant l’arthrose fémorotibiale ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "L’arthrose fémorotibiale affecte le compartiment médial dans trois quarts des cas et est bilatérale dans deux tiers des cas",
+          "texte": "Elle touche le compartiment médial dans 75 % des cas et est bilatérale dans deux tiers des cas",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "À l’état normal, c’est uniquement l’épaisseur du cartilage hyalin qui amortit la totalité des contraintes mécaniques du genou, sans participation de l’os sous-chondral",
+          "texte": "Le cartilage hyalin amortit à lui seul la totalité des contraintes mécaniques, sans rôle de l’os sous-chondral",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "L’obésité favorise l’arthrose non seulement par l’augmentation des contraintes mécaniques, mais aussi par la sécrétion d’adipokines (leptine, adiponectine)",
+          "texte": "L’obésité agit par surcharge mécanique mais aussi via la sécrétion d’adipokines (leptine, adiponectine)",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "La présence d’un œdème de l’os sous-chondral en IRM multiplie quasiment par 4 le risque de développer une lésion cartilagineuse adjacente dans les 2 ans",
+          "texte": "Un œdème de l’os sous-chondral en IRM multiplie par près de 4 le risque de perte cartilagineuse à 2 ans",
           "correct": true
         }
       ],
-      "explication": "L’arthrose fémorotibiale touche le compartiment médial dans 75 % des cas (qui reçoit normalement 60 à 80 % des forces de compression) et est bilatérale dans deux tiers des cas. En revanche, le cartilage est trop fin pour dissiper seul les contraintes ; c’est essentiellement l’os trabéculaire sous-chondral qui les amortit (sa rigidification après microfractures expose secondairement le cartilage à une dégradation accélérée de 4 à 6 % par an contre 0,3 à 0,5 % physiologiquement). L’obésité agit de façon mécanique et métabolique via la leptine et l’adiponectine, et l’œdème sous-chondral multiplie par près de 4 le risque de perte cartilagineuse à 2 ans.",
+      "explication": "L’arthrose fémorotibiale affecte le compartiment médial dans 75 % des cas et est bilatérale dans deux tiers des cas. Le cartilage étant fin, c’est essentiellement l’os trabéculaire sous-chondral qui amortit les contraintes mécaniques. L’obésité agit par voie mécanique et métabolique (adipokines), et l’œdème sous-chondral multiplie par près de 4 le risque de dégradation cartilagineuse adjacente à 2 ans.",
       "correction_figures": [],
       "source": {
         "page": 745,
@@ -49,31 +49,31 @@
       "type": "QCU",
       "difficulty": 2,
       "theme": "Radiographie en schuss et gonarthrose",
-      "enonce": "Pourquoi l’incidence radiographique dite « en schuss » (en charge à 15-30° de flexion avec rayon postéroantérieur horizontal ou descendant de 10°) est-elle plus sensible que le cliché de face en extension complète pour dépister une gonarthrose débutante ?",
+      "enonce": "Pourquoi le cliché de face « en schuss » (15–30° de flexion) est-il plus sensible que le cliché en extension pour dépister une gonarthrose débutante ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Parce qu’en extension complète, les ménisques s’interposent devant la patella et masquent la trochlée",
+          "texte": "Il dégage la patella de l’échancrure intercondylaire",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Parce qu’en légère flexion, les contraintes mécaniques se concentrent à la jonction tiers moyen - tiers postérieur des condyles fémoraux (siège électif de la chondrolyse précoce), alors qu’en extension elles se répartissent sur une large surface nécessitant une usure beaucoup plus étendue pour être visible",
+          "texte": "Il explore la zone postérieure des condyles, siège initial de l’usure cartilagineuse",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Parce que l’interligne fémorotibial médial mesure normalement plus de 10 mm en schuss chez le sujet sain",
+          "texte": "Il élargit artificiellement l’interligne fémorotibial médial",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Parce qu’elle évite d’avoir à superposer les bords antérieur et postérieur du plateau tibial médial",
+          "texte": "Il évite d’avoir à superposer les bords du plateau tibial médial",
           "correct": false
         }
       ],
-      "explication": "En position debout en extension, les charges se répartissent sur une large surface articulaire ; il faut donc une chondrolyse étendue pour objectiver un pincement (< 3 mm de face en extension). En légère flexion (15-30°), les condyles fémoraux n’étant pas parfaitement ronds, les contraintes s’accumulent à la jonction tiers moyen - tiers postérieur où débute l’usure cartilagineuse, rendant le cliché en schuss plus sensible et reproductible (sous réserve d’une superposition stricte des rebords antérieur et postérieur du plateau tibial médial). Attention toutefois : le cartilage étant physiologiquement plus mince en arrière, une discrète diminution globale de hauteur des deux interlignes peut s’observer normalement en schuss.",
+      "explication": "En légère flexion (15–30°), les contraintes mécaniques se concentrent à la jonction tiers moyen – tiers postérieur des condyles fémoraux, où débute électivement la chondrolyse. En extension complète, les charges se répartissent sur une plus large surface et l’usure doit être beaucoup plus étendue pour pincer l’interligne.",
       "correction_figures": [],
       "source": {
         "page": 747,
@@ -84,33 +84,33 @@
     {
       "id": "c27-q03",
       "type": "QCU",
-      "difficulty": 3,
-      "theme": "Goniométrie et troubles statiques des membres inférieurs",
-      "enonce": "Vous réalisez une goniométrie des membres inférieurs en appui bipodal (pangonogramme EOS) chez une patiente dans le cadre du bilan préopératoire d’une gonarthrose fémorotibiale médiale. L’angle mesuré entre l’axe mécanique du fémur et l’axe mécanique du tibia objective une déviation en varus de 10° (soit un angle interne de 170°). Sachant qu’il existe à l’état normal un genu valgum physiologique, quelle est la valeur exacte de l’angle de déviation angulaire corrigé chez cette patiente, et quelle est l’origine anatomique habituelle d’un genu varum primitif comparativement à un genu valgum idiopathique ?",
+      "difficulty": 2,
+      "theme": "Goniométrie : angle de déviation corrigé",
+      "enonce": "Sur une goniométrie des membres inférieurs chez une femme présentant un genu varum mesuré à 10°, quelle est la valeur de l’angle de déviation corrigé (sachant que le valgum physiologique féminin est de 3°) ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Angle corrigé de 7° ; le genu varum primitif est d’origine fémorale et le genu valgum d’origine tibiale",
+          "texte": "7°",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Angle corrigé de 13° ; le genu varum primitif (plus fréquent chez l’homme) est le plus souvent d’origine tibiale (dystrophie métaphysaire médiale), tandis que le genu valgum idiopathique (plus fréquent chez la femme) est en général d’origine fémorale (hypoplasie du condyle fémoral latéral)",
+          "texte": "13°",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Angle corrigé de 12° ; les deux déformations proviennent exclusivement d’une usure méniscale sans anomalie osseuse",
+          "texte": "10° (aucune correction ne s’applique)",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Angle corrigé de 10° car aucune correction ne s’applique chez la femme",
+          "texte": "15°",
           "correct": false
         }
       ],
-      "explication": "À l’état normal, il existe un genu valgum physiologique de 2° chez l’homme et de 3° chez la femme. Pour obtenir l’angle de déviation angulaire corrigé, il faut ajouter la valeur de ce valgum physiologique en cas de genu varum (ici 10° + 3° = 13°, comme sur la figure 27.7 où 24° deviennent 27° chez une femme) et la retrancher en cas de genu valgum. Le genu varum primitif est le plus souvent d’origine tibiale (dystrophie tibiale métaphysaire médiale : angle entre tangente aux plateaux tibiaux et axe mécanique tibial < 90° du côté médial), tandis que le genu valgum idiopathique est généralement secondaire à une hypoplasie du condyle fémoral latéral (angle entre tangente bicondylienne et axe mécanique fémoral < 90° du côté latéral).",
+      "explication": "À l’état normal, il existe un genu valgum physiologique de 2° chez l’homme et de 3° chez la femme. Pour obtenir l’angle de déviation angulaire corrigé, on ajoute la valeur de ce valgum physiologique en cas de genu varum (10° + 3° = 13° chez la femme) et on la retranche en cas de genu valgum.",
       "correction_figures": [],
       "source": {
         "page": 750,
@@ -119,35 +119,72 @@
       }
     },
     {
-      "id": "c27-q04",
-      "type": "QRM",
+      "id": "c27-q16",
+      "type": "QCU",
       "difficulty": 2,
-      "theme": "IRM du cartilage, os sous-chondral et artefacts",
-      "enonce": "Lors de l’analyse IRM du cartilage articulaire et de l’os sous-chondral dans la gonarthrose, quelles affirmations concernant la sémiologie et les artefacts techniques sont exactes ?",
+      "theme": "Origine anatomique du genu varum et du genu valgum",
+      "enonce": "Quelle est l’origine osseuse habituelle d’un genu varum primitif comparativement à un genu valgum idiopathique ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Selon la classification de Broderick / Outerbridge, une ulcération cartilagineuse focale atteignant plus de 50 % de l’épaisseur du cartilage sans mettre à nu l’os sous-chondral correspond à un grade 3 (le grade 4 correspondant à la mise à nu de l’os sous-chondral)",
-          "correct": true
+          "texte": "Fémorale pour le genu varum ; tibiale pour le genu valgum",
+          "correct": false
         },
         {
           "id": "B",
-          "texte": "L’artefact de troncature se traduit sur les séquences 3D SPGR fat-sat ou DP fat-sat par un hyposignal linéaire au centre du cartilage (donnant un faux aspect plurilamellaire), notamment à la trochlée et à la partie postérieure des condyles fémoraux",
+          "texte": "Tibiale (métaphyse médiale) pour le genu varum ; fémorale (hypoplasie du condyle latéral) pour le genu valgum",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "L’artefact de déplacement chimique (supprimé par les séquences avec saturation de la graisse) peut simuler un épaississement hypo-intense de la lame osseuse sous-chondrale et un pseudo-amincissement du cartilage en regard",
+          "texte": "Exclusivement tibiale pour les deux déformations",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Exclusivement méniscale sans anomalie osseuse",
+          "correct": false
+        }
+      ],
+      "explication": "Le genu varum primitif (plus fréquent chez l’homme) est le plus souvent d’origine tibiale par dystrophie métaphysaire médiale. Le genu valgum idiopathique (plus fréquent chez la femme) est en général d’origine fémorale par hypoplasie du condyle fémoral latéral.",
+      "correction_figures": [],
+      "source": {
+        "page": 751,
+        "element": "Pages 750 et 751",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c27-q04",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "IRM du cartilage et artefacts",
+      "enonce": "Quelles propositions sont exactes concernant l’analyse IRM du cartilage articulaire et de l’os sous-chondral ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une ulcération cartilagineuse > 50 % de l’épaisseur sans os à nu correspond à un grade 3 (et avec os à nu à un grade 4)",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’artefact de troncature peut créer une ligne centrale hypo-intense dans le cartilage (faux aspect trilamellaire)",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’artefact de déplacement chimique (sans fat-sat) peut simuler un épaississement de la lame osseuse sous-chondrale",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Les plages dites « d’œdème médullaire sous-chondral » (hyposignal T1, hypersignal T2 mal limité) correspondent histologiquement à un œdème liquidien pur à 100 %, sans jamais de nécrose, de fibrose ni de remodelage trabéculaire",
+          "texte": "Les plages dites d’« œdème sous-chondral » correspondent histologiquement à du liquide pur sans nécrose ni fibrose",
           "correct": false
         }
       ],
-      "explication": "Dans la classification de Broderick/Outerbridge : grade 0 = normal ; grade 1 = anomalie de signal sans anomalie de contour (ramollissement/œdème) ; grade 2 = irrégularité ou ulcération < 50 % ; grade 3 = ulcération ≥ 50 % sans atteindre l’os ; grade 4 = ulcération complète avec os sous-chondral à nu. Parmi les pièges IRM, l’artefact de troncature crée un faux aspect trilamellaire par ligne centrale hypo-intense en DP FS / 3D SPGR FS, l’artefact de déplacement chimique épaissit faussement l’os sous-chondral aux dépens du cartilage sur les séquences sans fat-sat, et une diminution d’épaisseur du cartilage du condyle latéral en regard de la corne antérieure du ménisque latéral est une variante normale fréquente. En revanche, histologiquement, l’aspect « d’œdème sous-chondral » correspond surtout à de la nécrose médullaire, de la fibrose et du remodelage trabéculaire anormal, avec seulement une faible part d’œdème vrai.",
+      "explication": "Dans la classification de Broderick/Outerbridge : grade 2 = ulcération < 50 %, grade 3 = ulcération ≥ 50 % sans os exposé, grade 4 = os sous-chondral à nu. L’artefact de troncature donne un faux aspect plurilamellaire et le déplacement chimique épaissit faussement l’os sous-chondral. Histologiquement, l’« œdème sous-chondral » correspond surtout à de la nécrose médullaire, de la fibrose et un remodelage trabéculaire.",
       "correction_figures": [],
       "source": {
         "page": 752,
@@ -160,34 +197,34 @@
       "type": "QCU",
       "difficulty": 2,
       "theme": "Gonarthrose destructrice rapide (GDR)",
-      "enonce": "Une femme de 62 ans en léger surpoids consulte pour des gonalgies médiales intenses évoluant depuis un an, accompagnées d’un épanchement mécanique chronique résistant aux infiltrations de corticoïdes. Les radiographies successives montrent un pincement de l’interligne fémorotibial médial ayant atteint 50 % en 1 an puis 100 % en 2 ans, contrastant avec une absence quasi complète d’ostéophytes. Quel diagnostic devez-vous évoquer et quels facteurs favorisants sous-jacents devez-vous rechercher ?",
+      "enonce": "Quel diagnostic évoque un pincement fémorotibial médial atteignant 50 % en 1 an puis 100 % en 2 ans, avec hydarthrose chronique et absence quasi complète d’ostéophytes ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Une arthrose métabolique lente de groupe 1 ; rechercher une maladie de Blount infantile",
+          "texte": "Une arthrose métabolique lente",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Une gonarthrose destructrice rapide (GDR) ; rechercher un antécédent de méniscectomie sous arthroscopie, une chondrocalcinose ou une ostéonécrose mécanique associée",
+          "texte": "Une gonarthrose destructrice rapide (GDR)",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Un syndrome douloureux régional complexe de type 1 (SDRC 1), qui se caractérise toujours par un pincement complet de l’interligne en moins d’un an",
+          "texte": "Un syndrome douloureux régional complexe de type 1 (SDRC 1)",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Une arthrose fémorofabellaire isolée comprimant le nerf tibial",
+          "texte": "Une ostéochondrite disséquante juvénile",
           "correct": false
         }
       ],
-      "explication": "La gonarthrose destructrice rapide (GDR) touche surtout la femme en surpoids modéré au compartiment médial et se définit par une chondrolyse fulgurante (pincement de 50 % en 1 an et 100 % en 2 ans) avec hydarthrose chronique réfractaire et contraste frappant entre l’effondrement de l’interligne et la rareté ou l’absence d’ostéophytes (à l’inverse, une ostéophytose floride témoigne d’une évolution lente). Elle impose de rechercher une méniscectomie antérieure, une chondrocalcinose ou une ostéonécrose sous-jacente ; un lavage articulaire associé à une infiltration cortisonée peut aider à retarder la prothèse. Le SDRC 1 ne donne jamais de pincement de l’interligne.",
+      "explication": "La gonarthrose destructrice rapide (GDR) touche surtout la femme d’âge moyen en surpoids modéré et se définit par une chondrolyse fulgurante (50 % en 1 an, 100 % en 2 ans) contrastant avec la rareté ou l’absence d’ostéophytes. Elle impose de rechercher un antécédent de méniscectomie, une chondrocalcinose ou une ostéonécrose mécanique sous-jacente.",
       "correction_figures": [],
       "source": {
-        "page": 750,
+        "page": 756,
         "element": "Pages 750 et 756",
         "refs": ""
       }
@@ -196,36 +233,73 @@
       "id": "c27-q06",
       "type": "QCU",
       "difficulty": 3,
-      "theme": "Fracture de contrainte épiphysaire et ostéonécrose mécanique",
-      "enonce": "Deux patients âgés de 66 ans consultent pour une douleur mécanique brutale non traumatique du compartiment médial du genou. Chez les deux patients, l’IRM montre un vaste œdème médullaire intéressant plus des deux tiers du condyle fémoral médial ainsi qu’une fissure radiaire du frein postérieur du ménisque médial avec extrusion méniscale. Chez le patient A, on observe une fine strie linéaire hypo-intense sous-chondrale parallèle à la surface articulaire, mais la bande d’os sous-chondral située entre cette strie et le cartilage présente un signal œdémateux (hyperintense en DP FS) et se rehausse après injection de gadolinium. Chez le patient B, il existe une bande sous-chondrale de 4,5 mm d’épaisseur et de 16 mm de long, fortement hypo-intense sur toutes les séquences (T1 et DP/T2) et totalement avasculaire après injection, avec un début de méplat du contour condylien. Que pouvez-vous conclure sur le diagnostic et le pronostic de ces deux patients ?",
+      "theme": "Fracture de contrainte épiphysaire sous-chondrale",
+      "enonce": "En IRM, quel signe caractérise une fracture de contrainte épiphysaire sous-chondrale non compliquée (réversible sous décharge) ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Le patient A présente une ostéonécrose systémique sur corticothérapie et le patient B une ostéochondrite disséquante juvénile stable",
+          "texte": "Une épaisse bande sous-chondrale avasculaire (> 4 mm) sans rehaussement au gadolinium",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Le patient A présente une fracture de contrainte épiphysaire sous-chondrale non compliquée (dont l’évolution est habituellement favorable en quelques semaines sous décharge), tandis que le patient B présente une ostéonécrose mécanique (ou spontanée) constituée avec des critères péjoratifs d’irréversibilité (épaisseur > 4 mm, longueur > 14 mm, méplat) à haut risque d’effondrement arthrogène",
+          "texte": "Une fine strie linéaire hypo-intense sous-chondrale avec viabilité conservée de l’os situé entre la strie et le cartilage",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Les deux patients présentent un SDRC 1 nécessitant une mobilisation intensive immédiate en charge complète",
+          "texte": "Un infarctus métaphysaire en « carte de géographie » à centre graisseux",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Le patient A nécessite une prothèse totale d’emblée alors que la lésion du patient B guérit toujours sans séquelle en 15 jours",
+          "texte": "Un effondrement majeur du contour condylien dès le premier jour",
           "correct": false
         }
       ],
-      "explication": "Ces deux entités partagent le même terrain (60-70 ans, ostéopénie, surcharge mécanique sur lésion du frein postérieur / méniscectomie médiale) et constituent un continuum physiopathologique. Dans la fracture de contrainte épiphysaire (patient A), la fine strie de fracture trabéculaire est entourée d’un œdème étendu (débordant souvent dans les parties molles adjacentes), mais la moelle osseuse située entre la fracture et le cartilage reste viable (signal normal ou œdémateux/hyperhémié) : mise en décharge, elle consolide en quelques semaines. À l’inverse, l’ostéonécrose mécanique (patient B, touchant 3 fois sur 4 une femme et dans > 90 % des cas le condyle fémoral médial) correspond à la décompensation ischémique de l’espace situé entre la fracture et le cartilage : elle se traduit par une bande sous-chondrale fortement hypo-intense sur toutes les séquences et non rehaussée. Une épaisseur > 4 mm, une longueur > 14 mm, une surface > 5 cm² (ou > 40-50 % de la largeur du condyle) et une déformation du contour signent le caractère irréversible à haut risque de collapsus et d’arthrose rapide.",
+      "explication": "Dans la fracture de contrainte épiphysaire sous-chondrale, la fine strie de fracture trabéculaire est entourée d’un vaste œdème médullaire, mais l’os sous-chondral situé entre cette strie et le cartilage reste viable (signal œdémateux et rehaussement conservé après injection) : mise en décharge, elle consolide habituellement sans séquelle.",
       "correction_figures": [],
       "source": {
         "page": 757,
-        "element": "Pages 757 à 763",
+        "element": "Pages 757 à 760",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c27-q17",
+      "type": "QRM",
+      "difficulty": 3,
+      "theme": "Ostéonécrose mécanique du condyle fémoral : critères pronostiques",
+      "enonce": "En IRM, quels signes traduisent le passage à une ostéonécrose mécanique irréversible à haut risque d’effondrement arthrogène ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une bande sous-chondrale fortement hypo-intense sur toutes les séquences et avasculaire après injection",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une épaisseur de la zone nécrosée > 4 mm et une longueur > 14 mm",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’apparition d’un méplat ou d’une déformation du contour condylien",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Un rehaussement intense et homogène de l’espace sous-chondral au gadolinium",
+          "correct": false
+        }
+      ],
+      "explication": "L’ostéonécrose mécanique (qui touche dans > 90 % des cas le condyle fémoral médial, souvent sur rupture du frein méniscal postérieur) correspond à la nécrose de la bande osseuse située entre le trait de fracture et le cartilage : elle devient avasculaire et hypo-intense sur toutes les séquences. Une épaisseur > 4 mm, une longueur > 14 mm et un méplat condylien signent l’irréversibilité.",
+      "correction_figures": [],
+      "source": {
+        "page": 760,
+        "element": "Pages 760 à 763",
         "refs": ""
       }
     },
@@ -234,31 +308,31 @@
       "type": "QRM",
       "difficulty": 1,
       "theme": "Ostéonécrose systémique (ONS)",
-      "enonce": "Quelles caractéristiques permettent de différencier une ostéonécrose systémique (ONS) du genou d’une ostéonécrose mécanique (ONM) ?",
+      "enonce": "Quelles caractéristiques distinguent une ostéonécrose systémique (ONS) du genou d’une ostéonécrose mécanique ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "L’ONS survient habituellement chez des sujets plus jeunes (< 45 ans, avec prédominance féminine), est bilatérale dans plus de 80 % des cas et souvent plurifocale (hanche, épaule)",
+          "texte": "Elle survient chez des sujets plus jeunes (< 45 ans), souvent sous corticoïdes, et est bilatérale dans > 80 % des cas",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Contrairement à l’ONM qui est strictement épiphysaire sous-chondrale, l’ONS peut affecter aussi bien la diaphyse et la métaphyse que l’épiphyse (touchant le fémur mais aussi le tibia dans 40 % des cas)",
+          "texte": "Elle peut toucher la métaphyse et la diaphyse aussi bien que l’épiphyse",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "En IRM, l’ONS se présente sous la forme de plages en « carte de géographie » conservant un centre de signal graisseux, entourées d’un liseré serpigineux en hyposignal T1 et d’un « double contour » en T2 (hypersignal interne du tissu de granulation et hyposignal externe de sclérose, lié notamment à un artefact de déplacement chimique)",
+          "texte": "En IRM, elle dessine des plages en « carte de géographie » à centre graisseux bordées d’un double liseré en T2",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Les localisations métaphysaires et diaphysaires d’ONS évoluent systématiquement vers un collapsus articulaire destructeur",
+          "texte": "Les localisations métaphysodiaphysaires évoluent systématiquement vers un collapsus articulaire",
           "correct": false
         }
       ],
-      "explication": "Le genou est la 3e localisation d’ONS après la hanche et l’épaule. Contrairement à l’ONM (sujet > 50-65 ans, unilatérale, confinée à l’os sous-chondral épiphysaire du condyle fémoral médial), l’ONS touche des sujets < 45 ans ayant des facteurs de risque généraux (corticoïdes, etc.), est bilatérale dans > 80 % des cas, plurifocale, et atteint l’épiphyse, la métaphyse ou la diaphyse sous forme d’infarctus osseux en « carte de géographie » à centre graisseux et double liseré T2. En revanche, seules les lésions épiphysaires étendues (> 1/3 du condyle en frontal ou tiers moyen/postérieur en sagittal) risquent le collapsus articulaire, tandis que les lésions métaphysodiaphysaires (et les lésions tibiales) ont un bon pronostic sans risque d’effondrement articulaire.",
+      "explication": "Contrairement à l’ostéonécrose mécanique (sujet > 60 ans, unilatérale, strictement épiphysaire sous-chondrale), l’ONS touche des sujets < 45 ans avec facteurs de risque généraux, est bilatérale (> 80 %) et atteint épiphyse, métaphyse ou diaphyse sous forme d’infarctus en « carte de géographie ». Seules les atteintes épiphysaires étendues exposent au collapsus articulaire.",
       "correction_figures": [],
       "source": {
         "page": 763,
@@ -268,71 +342,108 @@
     },
     {
       "id": "c27-q08",
-      "type": "QRM",
+      "type": "QCU",
       "difficulty": 2,
-      "theme": "Fractures de contrainte métaphysaires et SDRC 1",
-      "enonce": "Concernant les fractures de contrainte métaphysaires du genou et le syndrome douloureux régional complexe de type 1 (SDRC 1), quelles sont les propositions exactes ?",
+      "theme": "Fracture de contrainte métaphysaire du genou",
+      "enonce": "Quelle est la localisation élective des fractures de fatigue/contrainte métaphysaires du genou ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Les fractures de contrainte métaphysaires affectent principalement la partie postéromédiale de la métaphyse tibiale proximale (zone de contrainte maximale en charge) et se traduisent en radiographie après 3 à 4 semaines par une bande horizontale de sclérose trabéculaire (et en IRM par une strie horizontale hypo-intense au sein d’un œdème médullaire)",
+          "texte": "Le versant postéromédial de la métaphyse tibiale proximale",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Dans le SDRC 1, le terrain psychologique anxiodépressif est désormais considéré comme le facteur étiologique principal et constant",
+          "texte": "La corticale antérieure de la diaphyse fémorale",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "En radiographie, le SDRC 1 se traduit avec un décalage de 4 à 8 semaines par une hypertransparence osseuse hétérogène mouchetée à prédominance sous-chondrale, mais avec un interligne articulaire toujours strictement conservé et sans érosion",
+          "texte": "Le col de la fibula",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La tubérosité tibiale antérieure",
+          "correct": false
+        }
+      ],
+      "explication": "Les fractures de contrainte métaphysaires siègent électivement à la partie postéromédiale de la métaphyse tibiale proximale (zone de contrainte maximale en charge). Elles se traduisent en IRM par une strie horizontale hypo-intense au sein d’un œdème médullaire, et en radiographie (après 3–4 semaines) par une bande horizontale de sclérose trabéculaire.",
+      "correction_figures": [],
+      "source": {
+        "page": 758,
+        "element": "Pages 758 et 759",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c27-q18",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Syndrome douloureux régional complexe de type 1 (SDRC 1)",
+      "enonce": "Quelles propositions sont exactes concernant l’imagerie du syndrome douloureux régional complexe de type 1 (SDRC 1) du genou ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "En radiographie, la déminéralisation sous-chondrale mouchetée apparaît avec un retard de 4 à 8 semaines",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’interligne articulaire reste toujours strictement conservé, sans érosion",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "En IRM, l’œdème médullaire est volontiers migratoire d’un compartiment à l’autre sur les examens successifs",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "En IRM, l’œdème médullaire du SDRC 1 apparaît et disparaît avant la déminéralisation radiographique, et son caractère migratoire sur des examens successifs (d’un condyle à l’autre, à la patella ou vers une autre articulation) constitue un argument diagnostique majeur",
-          "correct": true
+          "texte": "Il entraîne un pincement complet de l’interligne en moins de 6 mois",
+          "correct": false
         }
       ],
-      "explication": "Les fractures de fatigue/contrainte métaphysaires siègent électivement au versant postéromédial de la métaphyse tibiale proximale (militaires, coureurs, post-partum), donnant une douleur exquise circonscrite à la palpation avec genou sec ; le signe IRM le plus précoce (mais non spécifique) est l’œdème endosté, et le plus spécifique est la bande horizontale hypo-intense. Dans le SDRC 1 (qui évolue en trois phases : chaude inflammatoire, dystrophique, puis froide atrophique), il n’est plus reconnu de facteur psychologique prédisposant. La radiographie montre une raréfaction sous-chondrale mouchetée respectant l’interligne, et l’IRM montre un œdème épiphysaire volontiers migratoire qui précède puis s’efface avant les signes radiographiques.",
+      "explication": "Dans le SDRC 1, la radiographie montre (après 4 à 8 semaines) une hypertransparence osseuse hétérogène mouchetée prédominant en sous-chondral, avec un interligne articulaire toujours respecté. En IRM, l’œdème médullaire précède puis disparaît avant les signes radiographiques, et son caractère migratoire est un argument diagnostique majeur.",
       "correction_figures": [],
       "source": {
-        "page": 758,
-        "element": "Pages 758, 759 et 765 à 767",
+        "page": 765,
+        "element": "Pages 765 à 767",
         "refs": ""
       }
     },
     {
       "id": "c27-q09",
-      "type": "QCU",
-      "difficulty": 3,
-      "theme": "Ostéochondrite disséquante et variante d’ossification",
-      "enonce": "Vous réalisez l’IRM du genou de deux jeunes garçons pour explorer une anomalie du contour osseux d’un condyle fémoral découverte en radiographie. Le premier est un garçon de 7 ans totalement asymptomatique chez qui l’anomalie siège à la région inférocentrale du tiers postérieur du condyle fémoral latéral : le cartilage hyalin en regard est parfaitement continu, l’aspect est finement spiculé avec de petits noyaux accessoires, l’angle de la lésion est < 105° en frontal et il n’y a strictement aucun œdème médullaire périphérique. Le second est un adolescent sportif de 14 ans souffrant de douleurs mécaniques : la lésion siège sur le versant latéral du tiers moyen du condyle fémoral médial (près de l’échancrure), mesure plus de 105° en frontal, s’accompagne d’un œdème médullaire périlésionnel, d’une ligne de démarcation profonde de signal liquidien en T2 > 5 mm de long, d’un kyste sous-chondral de 6 mm en bordure de la niche et d’une fissure du cartilage articulaire en regard. Quelle est votre conclusion diagnostique et thérapeutique pour ces deux enfants ?",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Variante d’ossification condylienne vs ostéochondrite disséquante",
+      "enonce": "Chez l’enfant, quels critères IRM permettent d’affirmer une simple variante normale d’ossification fémorale plutôt qu’une ostéochondrite disséquante (OCD) ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Les deux enfants présentent une ostéochondrite disséquante (OCD) instable nécessitant un vissage chirurgical immédiat",
-          "correct": false
+          "texte": "Une localisation exclusive au tiers postérieur inférocentral du condyle chez un enfant jeune (pic 7–10 ans)",
+          "correct": true
         },
         {
           "id": "B",
-          "texte": "L’enfant de 7 ans présente une variante physiologique de l’ossification enchondrale (ne nécessitant aucun traitement ni restriction), tandis que l’adolescent de 14 ans présente une ostéochondrite disséquante (OCD) dans sa localisation classique mais réunissant les critères IRM d’instabilité du fragment, relevant d’une prise en charge chirurgicale",
+          "texte": "L’absence totale d’œdème médullaire périlésionnel",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "L’enfant de 7 ans présente une OCD de mauvais pronostic (car sur le condyle latéral) et l’adolescent de 14 ans une simple variante d’ossification",
-          "correct": false
+          "texte": "Un cartilage hyalin en regard parfaitement continu et un aspect osseux finement spiculé",
+          "correct": true
         },
         {
           "id": "D",
-          "texte": "L’absence d’œdème médullaire chez l’enfant de 7 ans signe une nécrose avasculaire complète du condyle latéral",
+          "texte": "Une ligne de démarcation profonde en hypersignal T2 liquidien > 5 mm",
           "correct": false
         }
       ],
-      "explication": "Il est fondamental de ne pas confondre une variante normale d’ossification des condyles fémoraux avec une OCD (voir Tableau 27.2) : la variante d’ossification s’observe plus tôt (2-10 ans chez la fille, 3-13 ans chez le garçon, pic à 7-10 ans), touche autant le condyle médial que latéral, siège exclusivement au tiers postérieur (région inférocentrale), possède un cartilage et un centre d’ossification secondaire continus, un aspect parfois spiculé avec noyaux multiples, un angle lésionnel < 105° en frontal et surtout une absence totale d’œdème médullaire périphérique. À l’inverse, l’OCD survient plus tard (8-16 ans, pic 11-14 ans, ratio H/F de 4/1), siège dans 63,6 % des cas sur le versant latéral du condyle fémoral médial (tiers moyen ou postérieur) et présente un œdème médullaire dans 90 % des cas. De plus, chez le second patient, les 4 critères IRM d’instabilité de De Smet sont présents : ligne de démarcation en hypersignal T2 liquidien > 5 mm, kystes périlésionnels multiples ou > 5 mm, fissure du cartilage articulaire en regard (et au stade ultime : niche vide).",
+      "explication": "La variante normale d’ossification enchondrale s’observe chez l’enfant jeune (pic 7–10 ans), siège exclusivement au tiers postérieur du condyle, possède un cartilage continu, un contour spiculé avec petits noyaux accessoires, un angle < 105° en frontal et surtout une absence totale d’œdème médullaire. L’OCD touche plus souvent le versant latéral du condyle médial (11–14 ans) avec œdème médullaire dans 90 % des cas.",
       "correction_figures": [],
       "source": {
         "page": 767,
@@ -341,35 +452,72 @@
       }
     },
     {
-      "id": "c27-q10",
+      "id": "c27-q19",
       "type": "QRM",
-      "difficulty": 2,
-      "theme": "Maladie de Blount (tibia vara)",
-      "enonce": "Concernant la maladie de Blount (tibia vara) et son diagnostic différentiel avec le genu varum physiologique du petit enfant, quelles sont les propositions exactes ?",
+      "difficulty": 3,
+      "theme": "Ostéochondrite disséquante (OCD) : critères IRM d’instabilité",
+      "enonce": "En IRM, quels critères de De Smet signent l’instabilité d’une ostéochondrite disséquante (OCD) ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "La maladie de Blount résulte d’une surcharge mécanique sur le versant postéromédial du cartilage de croissance tibial proximal (favorisée par la marche précoce, le surpoids, la carence en vitamine D et l’origine africaine), entraînant une déformation tridimensionnelle associant varus, procurvatum (convexité antérieure) et torsion tibiale médiale",
+          "texte": "Une ligne de démarcation profonde de signal liquidien en T2 > 5 mm de long",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Le genu varum physiologique du nourrisson (de 0 à 18 mois) présente un angle métaphysodiaphysaire tibial proximal normal de 5 ± 2,8° et se corrige spontanément à la marche pour laisser place à un valgus vers 2-3 ans ; à l’inverse, dans la maladie de Blount, l’angle métaphysodiaphysaire tibial dépasse 11° (suspect entre 8 et 11°), le ratio des angles métaphysodiaphysaires fémoral/tibial est < 1, et le varus s’aggrave après 2-3 ans",
+          "texte": "Des kystes sous-chondraux périlésionnels multiples ou mesurant > 5 mm",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "La forme infantile (début ≤ 3 ans) est la plus fréquente, volontiers bilatérale (50 %) et indolore mais sévère (évoluant en 6 stades de Langenskiöld jusqu’à l’épiphysiodèse médiale par pont osseux au stade VI), tandis que la forme tardive (> 4 ans, chez l’enfant/adolescent obèse) est plus souvent unilatérale, douloureuse et comporte dans 30 % de la déformation un varus fémoral distal associé",
+          "texte": "Une fissure transfixiante du cartilage articulaire en regard (ou un corps étranger libre avec niche vide)",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "En IRM d’une maladie de Blount infantile, le ménisque médial est toujours hypoplasique et atrophié",
+          "texte": "Un discret œdème médullaire isolé sans liseré liquidien ni atteinte cartilagineuse",
           "correct": false
         }
       ],
-      "explication": "La maladie de Blount associe varus, procurvatum et rotation tibiale interne par défaut d’ossification enchondrale postéromédiale du tibia proximal (avec déformation en « bec » de la métaphyse médiale et aplatissement/bascule de l’épiphyse médiale). Un angle métaphysodiaphysaire tibial (de Levine et Drennan) > 11° et un ratio fémoral/tibial < 1 permettent de la distinguer du varus physiologique du nourrisson qui régresse dès 2 ans. La distinction entre forme infantile (≤ 3 ans, indolore, bilatérale dans 50 % des cas, fémur normal, stades I à IV de bas grade et V-VI de haut grade selon Langenskiöld, chirurgicale dès le stade III après 3 ans) et forme tardive (> 4 ans, enfant obèse, douloureuse, unilatérale, participation fémorale distale fréquente) est essentielle. En revanche, en IRM, on observe une hypertrophie compensatrice du ménisque médial et du cartilage hyalin épiphysaire médial (chondroépiphyse) qui cherchent à combler l’affaissement osseux médial.",
+      "explication": "Les 4 critères IRM d’instabilité d’une OCD (justifiant un traitement chirurgical) sont : 1) une ligne de démarcation en hypersignal T2 liquidien > 5 mm de long ; 2) un ou plusieurs kystes profonds > 5 mm en bordure de la niche ; 3) une fissure du cartilage articulaire en regard ; 4) une niche vide avec fragment ostéochondral libre.",
+      "correction_figures": [],
+      "source": {
+        "page": 769,
+        "element": "Pages 768 à 771",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c27-q10",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "Maladie de Blount (tibia vara)",
+      "enonce": "Quelles propositions sont exactes concernant la maladie de Blount (tibia vara) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Elle résulte d’un défaut de croissance postéromédial du tibia proximal associant varus, procurvatum et rotation tibiale médiale",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Un angle métaphysodiaphysaire tibial > 11° permet de la différencier du genu varum physiologique du nourrisson",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "En IRM, on observe une hypertrophie compensatrice du ménisque médial et du cartilage épiphysaire médial",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Elle guérit toujours spontanément à l’âge de 2 ans sans jamais former de pont d’épiphysiodèse",
+          "correct": false
+        }
+      ],
+      "explication": "La maladie de Blount est secondaire à une surcharge mécanique sur le versant postéromédial du cartilage de croissance tibial proximal (favorisée par la marche précoce et le surpoids). Contrairement au genu varum physiologique du nourrisson (qui régresse vers 2 ans avec un angle métaphysodiaphysaire tibial ~5°), l’angle métaphysodiaphysaire tibial dépasse 11° et l’IRM montre une hypertrophie compensatrice du ménisque médial.",
       "correction_figures": [],
       "source": {
         "page": 771,
@@ -381,32 +529,32 @@
       "id": "c27-q11",
       "type": "QRM",
       "difficulty": 1,
-      "theme": "Prothèses du genou : types et principes",
-      "enonce": "Concernant les différents types de prothèses du genou (unicompartimentales, totales à glissement, charnières) et leurs indications ou complications générales, quelles sont les propositions exactes ?",
+      "theme": "Prothèses du genou : principes et types",
+      "enonce": "Quelles propositions sont exactes concernant les prothèses unicompartimentales (PUC) et totales (PTG) du genou ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Les prothèses unicompartimentales (PUC) nécessitent l’intégrité des ligaments croisés (pivot central) et sont contre-indiquées en cas d’arthrite inflammatoire, d’ostéoporose sévère, d’obésité importante ou de raideur marquée",
+          "texte": "La pose d’une PUC exige l’intégrité des deux ligaments croisés (pivot central)",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "La complication spécifique la plus fréquente des PUC à plateau fixe est le descellement, tandis que celle des PUC à plateau (ménisque) mobile est la luxation de l’insert en polyéthylène (PE) ; à 10 ans, le taux de révision des PUC est environ deux fois supérieur à celui des prothèses totales (qui est de 6 à 12 %)",
+          "texte": "La complication spécifique d’une PUC à plateau mobile est la luxation de l’insert en polyéthylène",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Lors de la pose d’une prothèse totale de genou (PTG) tricompartimentale à glissement, le ligament croisé antérieur (LCA) est presque toujours conservé alors que les ligaments collatéraux sont systématiquement réséqués",
+          "texte": "Dans une PTG à glissement, le LCA est presque toujours conservé et les ligaments collatéraux sont réséqués",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Dans une PTG où le ligament croisé postérieur (LCP) est sacrifié, on utilise le plus souvent un mécanisme de « postérostabilisation » par came centrale (ou un 3e condyle / plateau ultracongruent) pour empêcher le recul du tibia sous le fémur en flexion",
+          "texte": "Dans une PTG sacrifiant le LCP, une came de postérostabilisation empêche le recul tibial en flexion",
           "correct": true
         }
       ],
-      "explication": "Les PUC préservent le stock osseux et les ligaments et permettent une rééducation plus rapide chez le sujet relativement jeune, mais exigent un pivot central intact et l’absence de rhumatisme inflammatoire ou d’obésité majeure. Leur taux de révision à 10 ans est double de celui des PTG (notamment par arthrose des autres compartiments, descellement sur plateau fixe ou luxation du PE sur plateau mobile). Dans une PTG à glissement, les ligaments collatéraux doivent être intacts et équilibrés, tandis que le LCA est presque constamment sacrifié ; le LCP peut être soit conservé, soit sacrifié (auquel cas une came de postérostabilisation prend le relais en flexion). Les prothèses à charnières (contraintes, < 5 % des cas) sont réservées aux destructions ligamentaires majeures ou reprises complexes.",
+      "explication": "Une PUC nécessite un pivot central intact et l’absence de rhumatisme inflammatoire. Dans une PTG tricompartimentale à glissement, les ligaments collatéraux sont conservés et équilibrés tandis que le LCA est presque toujours sacrifié ; si le LCP est également réséqué, un mécanisme de postérostabilisation (came centrale ou plateau ultracongruent) stabilise le genou en flexion.",
       "correction_figures": [],
       "source": {
         "page": 776,
@@ -418,32 +566,32 @@
       "id": "c27-q12",
       "type": "QCU",
       "difficulty": 2,
-      "theme": "Syndrome d’accrochage synovial (Patellar clunk syndrome)",
-      "enonce": "Huit mois après la pose d’une prothèse totale de genou (PTG) postérostabilisée, un patient consulte pour des épisodes de blocage du genou survenant en flexion (vers 30°), qui cèdent brutalement lors du passage en extension active avec un ressaut douloureux et un claquement audible (« patellar clunk syndrome »). Quelle est la cause anatomique exacte de cette complication et comment se traduit-elle en échographie et en IRM ?",
+      "theme": "Syndrome d’accrochage synovial (« patellar clunk syndrome »)",
+      "enonce": "Après une prothèse totale de genou postérostabilisée, quelle est la cause du « patellar clunk syndrome » (blocage à 30° de flexion cédant avec un claquement lors de l’extension) ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Il s’agit d’une rupture complète du tendon patellaire avec patella alta ; en échographie, le tendon patellaire est discontinu",
+          "texte": "Une rupture complète du tendon patellaire",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Il s’agit du développement d’un nodule fibreux d’hyperplasie synoviale à la face profonde du tendon du muscle quadriceps fémoral, juste au-dessus du pôle supérieur de la patella, qui s’incarcère dans l’échancrure intercondylaire du composant fémoral en flexion et en ressort brutalement en extension ; il est visible sous la forme d’une masse hyperéchogène hyperhémiée en échographie dynamique et d’un nodule intra-articulaire bien limité (en hypo/isosignal DP) suprapatellaire en IRM",
+          "texte": "Un nodule fibreux à la face profonde du tendon quadricipital (au pôle supérieur de la patella) s’accrochant dans l’échancrure prothétique",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Il s’agit d’une fracture de fatigue de la tige métallique tibiale ; visible uniquement au scanner",
+          "texte": "Une fracture de fatigue de la quille tibiale métallique",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Il s’agit d’un conflit entre le débord médial du plateau tibial et les tendons de la patte d’oie",
+          "texte": "Un conflit médial avec les tendons de la patte d’oie",
           "correct": false
         }
       ],
-      "explication": "Le syndrome d’accrochage synovial (« patellar clunk syndrome ») complique environ 3,5 % des PTG postérostabilisées quelques mois après la chirurgie. Il est dû à un nodule fibreux cicatriciel développé à la face postérieure (profonde) du tendon quadricipital juste au-dessus de la patella, qui s’accroche dans la cage/échancrure intercondylaire prothétique à 30° de flexion et se désincarcère avec un claquement lors de l’extension active. L’échographie (masse hyperéchogène vascularisée en Doppler avec ressaut dynamique) et l’IRM avec séquences de réduction d’artefacts (masse suprapatellaire transverse bien limitée, en moyenne de 33 mm, en hypo/isosignal DP) confirment le diagnostic avant résection arthroscopique du nodule. Un ressaut audible en extension peut plus rarement être mimé par une fracture de l’insert en PE.",
+      "explication": "Le syndrome d’accrochage synovial (« patellar clunk syndrome ») est dû à un nodule fibreux cicatriciel développé à la face postérieure (profonde) du tendon quadricipital juste au-dessus de la patella. Il s’incarcère dans la cage intercondylaire prothétique en flexion et en ressort brutalement lors de l’extension active. Il est bien visible en échographie dynamique et en IRM.",
       "correction_figures": [],
       "source": {
         "page": 779,
@@ -454,74 +602,148 @@
     {
       "id": "c27-q13",
       "type": "QRM",
-      "difficulty": 3,
-      "theme": "Positionnement et rotation des prothèses totales de genou",
-      "enonce": "Vous contrôlez sur des radiographies standards (goniométrie de face et profil strict) et sur un scanner le positionnement d’une prothèse totale de genou (PTG) douloureuse avec instabilité patellaire latérale. Quels sont les critères normaux d’alignement d’une PTG et quelle anomalie de rotation au scanner explique typiquement cette instabilité fémoropatellaire ?",
+      "difficulty": 2,
+      "theme": "Prothèse totale de genou : critères radiographiques d’alignement",
+      "enonce": "Quels sont les critères radiographiques normaux d’implantation d’une prothèse totale de genou (PTG) ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "De face sur la goniométrie en charge, l’axe mécanique global du genou (HKA) doit être de 180 ± 3° (entre 3° de varus et 3° de valgus), les tangentes aux condyles fémoraux et à l’embase tibiale doivent être perpendiculaires aux axes mécaniques respectifs (angles α mécanique et β de 90-92°), et l’embase tibiale doit couvrir au moins 85 % de la surface tibiale sans déborder médialement",
+          "texte": "De face, un axe mécanique global (HKA) de 180 ± 3°",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "De profil, il ne doit pas exister d’encoche (« notch ») corticale fémorale antérieure au-dessus du bouclier trochléen, la pente tibiale postérieure doit être comprise entre 0 et 7°, et l’index de hauteur patellaire de Blackburne-Peel doit être de 0,8 ± 0,2 (patella baja si < 0,8 ; patella alta si > 1)",
+          "texte": "Une embase tibiale couvrant au moins 85 % de la surface tibiale sans débord médial",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Au scanner en coupes axiales, l’implant fémoral présente normalement une rotation latérale (externe) d’environ 3° (entre 0 et 5°) par rapport à la ligne biépicondylienne chirurgicale (ou 6° par rapport à la ligne biépicondylienne anatomique), et l’implant tibial une rotation médiale d’environ 18° par rapport à la tubérosité tibiale antérieure (TTA)",
+          "texte": "De profil, l’absence d’encoche (« notch ») corticale fémorale antérieure et une pente tibiale postérieure de 0 à 7°",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Une rotation latérale (externe) de 3° de l’implant fémoral est la cause majeure de luxation latérale de la patella, qu’il faut corriger en positionnant l’implant fémoral en rotation médiale (interne) de 5 à 10°",
+          "texte": "Un index de hauteur patellaire de Blackburne-Peel supérieur à 1,5",
           "correct": false
         }
       ],
-      "explication": "Tous les repères radiographiques frontaux, sagittaux et tomodensitométriques axiaux décrits (HKA à 180 ± 3°, couverture tibiale ≥ 85 %, pente tibiale 0 à 7°, index de Blackburne-Peel à 0,8 ± 0,2, rotation latérale fémorale de 3° par rapport à l’axe biépicondylien chirurgical et rotation médiale tibiale de 18° par rapport à la TTA) correspondent aux normes d’implantation d’une PTG. En revanche, c’est un excès de rotation médiale (interne) de l’implant fémoral (dès 1 à 4° de rotation médiale) ou tibial qui oriente la trochlée prothétique en dedans et augmente le valgus de l’appareil extenseur, entraînant une bascule et une subluxation/instabilité latérale de la patella.",
+      "explication": "Sur le bilan radiographique d’une PTG : de face, l’axe HKA doit être de 180 ± 3° et l’embase tibiale doit couvrir ≥ 85 % de la surface osseuse sans débord médial (source de conflit avec le LCM). De profil, il ne doit pas y avoir d’encoche fémorale antérieure (risque de fracture supracondylienne), la pente tibiale est de 0 à 7° et l’index de Blackburne-Peel normal est de 0,8 ± 0,2.",
       "correction_figures": [],
       "source": {
-        "page": 779,
-        "element": "Pages 779, 782, 783 et 786 à 789",
+        "page": 782,
+        "element": "Pages 782 et 783",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c27-q20",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "PTG : anomalie de rotation au scanner et instabilité patellaire",
+      "enonce": "Au scanner d’une prothèse totale de genou douloureuse, quelle anomalie de rotation des implants est la cause classique d’une instabilité ou subluxation latérale de la patella ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une rotation latérale (externe) de 3° de l’implant fémoral par rapport à la ligne biépicondylienne chirurgicale",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Un excès de rotation médiale (interne) de l’implant fémoral et/ou tibial",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Une rotation médiale normale de 18° de l’embase tibiale par rapport à la TTA",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une pente tibiale postérieure de 3°",
+          "correct": false
+        }
+      ],
+      "explication": "Normalement, l’implant fémoral est posé avec environ 3° de rotation latérale (externe) par rapport à la ligne biépicondylienne chirurgicale. Un positionnement en rotation médiale (interne) de l’implant fémoral (ou tibial) oriente la trochlée prothétique en dedans et augmente le valgus de l’appareil extenseur, provoquant une bascule ou une subluxation latérale de la patella.",
+      "correction_figures": [],
+      "source": {
+        "page": 786,
+        "element": "Pages 779 et 786 à 789",
         "refs": ""
       }
     },
     {
       "id": "c27-q14",
-      "type": "QCU",
-      "difficulty": 3,
-      "theme": "Complications des PTG : descellement, infection et arthrofibrose",
-      "enonce": "Un patient porteur d’une prothèse totale de genou depuis 6 ans consulte pour des douleurs mécaniques et un gonflement articulaire. Comment interprétez-vous les liserés radiotransparents périprothétiques en radiographie, et quels signes spécifiques en échographie et en IRM (avec séquences de réduction d’artefacts métalliques MAVRIC/SEMAC) permettent de distinguer l’usure du polyéthylène (PE) avec ostéolyse granulomateuse, l’arthrofibrose et l’infection profonde ?",
+      "type": "QRM",
+      "difficulty": 2,
+      "theme": "PTG : liserés radiotransparents et descellement",
+      "enonce": "En radiographie d’une prothèse totale de genou, quels critères concernant les liserés radiotransparents périprothétiques sont exacts ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Tout liseré radiotransparent < 1 mm apparu dans les 6 premiers mois autour d’une PTG cimentée signe formellement un descellement septique aigu",
-          "correct": false
+          "texte": "Un fin liseré (< 1 mm) non évolutif apparu dans les 6 premiers mois (prothèse cimentée) est physiologique",
+          "correct": true
         },
         {
           "id": "B",
-          "texte": "Un fin liseré (< 1 mm) non évolutif apparu dans les 6 premiers mois (PTG cimentée) ou les 2 premières années (PTG non cimentée) est physiologique, tandis qu’un liseré > 2 mm, tardif, évolutif ou accompagné d’une mobilisation de l’implant fait suspecter un descellement ; en IRM, l’infection se caractérise par une synovite d’aspect « plurilamellaire » en hypersignal DP, l’arthrofibrose par un épaississement synovial (≥ 3 mm en échographie) en franc hyposignal DP en IRM, et le granulome sur débris de PE par des plages d’ostéolyse géographique contenant des débris en iso/hyposignal",
+          "texte": "Un liseré > 2 mm, d’apparition tardive ou d’épaisseur évolutive fait suspecter un descellement",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "En échographie, l’insert en polyéthylène génère des artefacts de répétition métalliques postérieurs tandis que l’embase métallique tibiale génère un cône d’ombre acoustique pur",
+          "texte": "Sous une embase à longue tige centromédullaire, une raréfaction osseuse proximale peut être due au « stress shielding »",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Tout liseré < 1 mm signe formellement une infection aiguë",
+          "correct": false
+        }
+      ],
+      "explication": "Un liseré < 1 mm stable apparu dans les 6 premiers mois (PTG cimentée) ou les 2 premières années (sans ciment) est toléré. En revanche, un liseré > 2 mm, tardif, évolutif ou associé à un déplacement de l’implant évoque un descellement. Sur prothèse à longue quille, la dérivation distale des contraintes peut induire une ostéopénie proximale sous le plateau (« stress shielding »).",
+      "correction_figures": [],
+      "source": {
+        "page": 784,
+        "element": "Pages 780 et 784 à 786",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c27-q21",
+      "type": "QCU",
+      "difficulty": 3,
+      "theme": "IRM sur prothèse totale de genou : aspect de la synovite",
+      "enonce": "En IRM avec réduction d’artefacts métalliques (MAVRIC/SEMAC) sur prothèse totale de genou, quel aspect de la synovite oriente respectivement vers une infection profonde versus une arthrofibrose ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Synovite « plurilamellaire » en hypersignal DP pour l’infection ; épaississement synovial fibreux en franc hyposignal DP pour l’arthrofibrose",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Synovite en hyposignal DP pour l’infection ; synovite plurilamellaire hyperintense pour l’arthrofibrose",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Absence totale d’épanchement et de synovite dans les deux cas",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Une clarté osseuse sous l’embase tibiale d’une prothèse à longue tige centromédullaire fixée en distalité ne peut jamais s’expliquer par un phénomène mécanique de « stress shielding » (décharge osseuse proximale)",
+          "texte": "Présence exclusive de gaz intra-articulaire dans l’arthrofibrose",
           "correct": false
         }
       ],
-      "explication": "Un liseré radiotransparent < 1 mm stable apparu dans les 6 mois (cimentée) ou 2 ans (sans ciment) est toléré ; le descellement (1re cause de reprise à ~ 7 ans) se traduit par un liseré > 2 mm, évolutif, tardif ou une migration angulaire de l’implant (sans confondre avec la raréfaction osseuse sous le plateau par « stress shielding » lorsque les contraintes sont dérivées en distalité par une longue quille tibiale). En IRM optimisée (MARS, SEMAC, MAVRIC), le profil de la synovite oriente fortement le diagnostic étiologique : 1) Synovite « plurilamellaire » en hypersignal DP = très sensible et spécifique d’infection profonde (confirmée par la ponction articulaire > 2500 leucocytes/mL dont > 60 % de PNN) ; 2) Épaississement synovial fibreux ≥ 3 mm en hyposignal DP = arthrofibrose ; 3) Ostéolyse géographique remplie de débris en isosignal avec amincissement du PE = réaction granulomateuse à l’usure du PE. Enfin, en échographie, c’est le PE qui donne une ligne hyperéchogène avec cône d’ombre postérieur, et le métal qui donne un artefact de réverbération/répétition en queue de comète.",
+      "explication": "Sur les séquences IRM optimisées (MAVRIC/SEMAC) :\n- Une synovite d’aspect « plurilamellaire » en hypersignal DP est très sensible et spécifique d’une infection profonde.\n- Un épaississement synovial fibreux (≥ 3 mm) en franc hyposignal DP caractérise l’arthrofibrose.\n- Des plages d’ostéolyse géographique remplies de débris en isosignal évoquent un granulome sur usure du polyéthylène.",
       "correction_figures": [],
       "source": {
-        "page": 780,
-        "element": "Pages 780, 784 à 786 et 790 à 792",
+        "page": 791,
+        "element": "Pages 790 à 792",
         "refs": ""
       }
     },
@@ -529,32 +751,32 @@
       "id": "c27-q15",
       "type": "QCU",
       "difficulty": 2,
-      "theme": "Hémarthrose récidivante sur prothèse de genou",
-      "enonce": "Un patient porteur d’une prothèse totale de genou présente des épisodes d’hémarthrose récidivante survenant plusieurs années après l’arthroplastie. Quelle est l’étiologie la plus fréquemment retrouvée lors de ces hémarthroses tardives (comparativement à celles des 6 premiers mois), quel examen d’imagerie permet de cartographier l’anomalie vasculaire, et quel traitement ciblé peut alors être proposé ?",
+      "theme": "Hémarthrose récidivante tardive sur prothèse de genou",
+      "enonce": "Quelle est la cause la plus fréquente d’hémarthrose récidivante survenant plusieurs années après la pose d’une prothèse totale de genou ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Il s’agit le plus souvent d’une prolifération synoviale hypervascularisée soumise à un conflit mécanique avec les implants prothétiques (tandis qu’un pseudo-anévrisme ou une fistule artérioveineuse iatrogène se révèle généralement dans les 6 premiers mois) ; une angio-IRM (ARM) dynamique 3D T1 permet d’identifier une ou plusieurs artères géniculées dominantes alimentant ce blush synovial, qui peuvent alors faire l’objet d’une embolisation artérielle sélective (ou d’une synovectomie)",
+          "texte": "Un conflit mécanique des implants avec une prolifération synoviale hypervascularisée (explorable par angio-IRM et traitable par embolisation)",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Il s’agit toujours d’une fracture isolée de la fabella nécessitant une patellectomie totale",
+          "texte": "Une fracture isolée de la fabella",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Il s’agit d’un syndrome de l’artère poplitée piégée de type III apparu après la prothèse",
+          "texte": "Un syndrome de l’artère poplitée piégée de type III",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "L’angio-IRM est formellement contre-indiquée sur toute prothèse de genou et seule l’abstention thérapeutique est possible",
+          "texte": "Un kyste adventiciel de l’artère poplitée",
           "correct": false
         }
       ],
-      "explication": "L’hémarthrose récidivante sur PTG est rare (0,1 à 1,6 %). Lorsqu’elle survient précocement (dans les 6 premiers mois postopératoires), elle fait rechercher une lésion vasculaire iatrogène (faux anévrisme, fistule artérioveineuse). Lorsqu’elle survient tardivement (parfois plusieurs années après la pose), elle est le plus souvent due à un conflit mécanique de la prothèse contre une prolifération synoviale hypervascularisée (plus rarement une synovite villonodulaire, un descellement ou une infection). L’ARM dynamique en écho de gradient 3D T1 permet de visualiser les artères géniculées (supérieures et inférieures, médiales et latérales) et de repérer l’artère nourricière dominante alimentant le foyer d’hypervascularisation synoviale, permettant un traitement efficace par embolisation sélective (ou par synovectomie chirurgicale si aucune artère dominante n’est individualisée).",
+      "explication": "Alors qu’une hémarthrose précoce (< 6 mois) fait rechercher un faux anévrisme ou une fistule artérioveineuse iatrogène, une hémarthrose tardive sur PTG est le plus souvent due à un conflit mécanique avec une synoviale hypervascularisée. L’angio-IRM dynamique 3D T1 permet d’identifier l’artère géniculée nourricière dominante en vue d’une embolisation sélective.",
       "correction_figures": [],
       "source": {
         "page": 781,
