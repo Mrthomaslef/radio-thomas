@@ -53,7 +53,7 @@
       "items": [
         {
           "id": "A",
-          "texte": "La maladie de Kienböck affecte classiquement l’adulte jeune de sexe masculin, souvent travailleur manuel",
+          "texte": "La maladie de Kienböck touche surtout l’homme jeune travailleur manuel",
           "correct": true
         },
         {
@@ -63,12 +63,12 @@
         },
         {
           "id": "C",
-          "texte": "La maladie de Kienböck est très fréquemment bilatérale (présente chez plus de 50 % des patients)",
+          "texte": "La maladie de Kienböck est bilatérale dans plus de 50 % des cas",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Dans la maladie de Kienböck, le développement de l’instabilité intracarpienne (stade III) sert de frontière pour les interventions chirurgicales non conservatrices",
+          "texte": "L’apparition d’une instabilité intracarpienne (stade III de Lichtman) oriente vers une chirurgie non conservatrice",
           "correct": true
         }
       ],
@@ -85,17 +85,17 @@
       "id": "c10-q03",
       "type": "QCU",
       "theme": "Conflits ulnaires : conflit styloïdo-triquétral",
-      "enonce": "Un patient présente des douleurs chroniques du versant ulnaire du poignet exacerbées par la déviation ulnaire. L’IRM montre un œdème osseux strictement localisé sur le processus styloïde ulnaire et le versant ulnaire du triquétrum. Le disque articulaire radio-ulnaire distal (TFCC) et le lunatum sont parfaitement intacts. Quel est le diagnostic le plus probable ?",
+      "enonce": "Devant des douleurs ulnaires du poignet, l’IRM montre un œdème osseux localisé à la styloïde ulnaire et au triquétrum, avec un TFCC et un lunatum intacts. Quel est le diagnostic ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Un conflit ulnocarpien lié à une variance ulnaire positive",
+          "texte": "Un conflit ulnocarpien sur variance ulnaire positive",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Un conflit styloïdo-triquétral lié à un processus styloïde ulnaire trop long",
+          "texte": "Un conflit styloïdo-triquétral sur styloïde ulnaire longue",
           "correct": true
         },
         {
@@ -196,7 +196,7 @@
       "id": "c10-q06",
       "type": "QRM",
       "theme": "Maladie de Kienböck : classification de Lichtman",
-      "enonce": "Vous évaluez les radiographies d’un patient suspect de maladie de Kienböck. Vous observez un aplatissement de la totalité du lunatum. La hauteur du carpe est diminuée. Sur le profil, vous mesurez l’angle radio-scaphoïdien et trouvez une valeur de 75°. Selon la classification de Lichtman, quelle est votre interprétation ?",
+      "enonce": "Dans une maladie de Kienböck, la radiographie montre un collapsus du lunatum avec diminution de hauteur du carpe et un angle radioscaphoïdien de 75° sur le profil. Quelles propositions sont exactes ?",
       "enonce_image": null,
       "items": [
         {
@@ -216,7 +216,7 @@
         },
         {
           "id": "D",
-          "texte": "Cette mesure d’angle témoigne d’une flexion fixée du scaphoïde",
+          "texte": "Cet angle (> 60°) témoigne d’une flexion palmaire fixée du scaphoïde",
           "correct": true
         }
       ],
@@ -344,7 +344,7 @@
       "id": "c10-q10",
       "type": "QCU",
       "theme": "Rhizarthrose : anatomie ligamentaire",
-      "enonce": "Lors de la physiopathologie de la rhizarthrose, la subluxation de l’articulation trapézo-métacarpienne est une étape majeure favorisée par l’anatomie locale. Parmi les structures ligamentaires suivantes, laquelle est considérée actuellement par les études IRM et biomécaniques comme le principal stabilisateur s’opposant à cette subluxation ?",
+      "enonce": "Quel ligament est considéré par les études IRM et biomécaniques comme le principal stabilisateur s’opposant à la subluxation postérolatérale de l’articulation trapézo-métacarpienne ?",
       "enonce_image": null,
       "items": [
         {

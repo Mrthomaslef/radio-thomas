@@ -85,27 +85,27 @@
       "id": "c17-q03",
       "type": "QCU",
       "theme": "Fracture par insuffisance osseuse du sacrum",
-      "enonce": "Une patiente de 75 ans, aux antécédents d’ostéoporose, se présente pour des lombo-fessalgies intenses de survenue brutale après un effort mineur. Le scanner pelvien révèle une fracture par insuffisance osseuse du sacrum. Quelle est l’apparence classique de cette fracture sur des reconstructions frontales (et en scintigraphie) lorsqu’elle est bilatérale et complète ?",
+      "enonce": "Quelle est l’apparence classique d’une fracture par insuffisance osseuse du sacrum bilatérale et complète sur les reconstructions TDM frontales et en scintigraphie osseuse ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Une image en « Y » inversé.",
+          "texte": "Une image en « Y » inversé",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Une image typique en « H ».",
+          "texte": "Une image typique en « H »",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Une fracture transversale isolée passant par les foramens sacrés S1 et S2.",
+          "texte": "Un trait transversal isolé passant par S1 et S2",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Une fracture stellaire (en étoile) centrée sur le promontoire sacré.",
+          "texte": "Une fracture stellaire centrée sur le promontoire sacré",
           "correct": false
         }
       ],
@@ -122,27 +122,27 @@
       "id": "c17-q04",
       "type": "QRM",
       "theme": "Fractures vertébrales : ostéoporose vs métastase (IRM)",
-      "enonce": "L’IRM permet de différencier les fractures vertébrales ostéoporotiques des fractures métastatiques en analysant le signal osseux. Quels signes IRM sont en faveur d’une origine ostéoporotique (bénigne) en cas de fracture vertébrale aiguë/subaiguë ?",
+      "enonce": "Quels signes IRM orientent vers une origine ostéoporotique (bénigne) plutôt que métastatique devant une fracture vertébrale récente ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Des anomalies de signal en bande sous le plateau vertébral fracturé, respectant le reste du corps vertébral.",
+          "texte": "Une anomalie de signal en bande sous le plateau fracturé, respectant le reste du corps vertébral",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "La persistance d’un signal hétérogène (hyper- et hypo-intense en T1 et T2) de l’ensemble du corps vertébral après plus de 6 mois.",
+          "texte": "La persistance d’un signal hétérogène de tout le corps vertébral après 6 mois",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "La présence d’une « fente liquidienne » (hypersignal T2 intense, hyposignal T1) au sein du corps vertébral.",
+          "texte": "La présence d’une « fente liquidienne » (hypersignal T2 franc) intrasomatique",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "L’absence de chute de signal de la vertèbre sur les séquences en opposition de phase (SIR > 0,8).",
+          "texte": "L’absence de chute de signal sur les séquences en opposition de phase (SIR > 0,8)",
           "correct": false
         }
       ],
@@ -196,27 +196,27 @@
       "id": "c17-q06",
       "type": "QRM",
       "theme": "Équilibre sagittal : paramètres pelviens",
-      "enonce": "Lors de l’évaluation du rachis de profil en charge, quels sont les paramètres qui composent l’équilibre sagittal du bassin et quelles sont leurs relations ?",
+      "enonce": "Lors de l’évaluation du rachis de profil en charge, quelles relations définissent les paramètres pelviens de l’équilibre sagittal ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "L’incidence pelvienne = Pente sacrée + Version pelvienne.",
+          "texte": "Incidence pelvienne = Pente sacrée + Version pelvienne",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "La version pelvienne augmente lorsque le bassin se rétroverse (se penche vers l’arrière).",
+          "texte": "La version pelvienne augmente lorsque le bassin se rétroverse",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "La pente sacrée est l’angle entre la tangente au bord postérosupérieur du sacrum et la verticale.",
+          "texte": "La pente sacrée est l’angle entre le bord postérosupérieur du sacrum et la verticale",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Une incidence pelvienne élevée est généralement associée à des courbures sagittales rachidiennes (lordose lombaire, cyphose thoracique) faibles.",
+          "texte": "Une incidence pelvienne élevée s’associe généralement à une faible lordose lombaire",
           "correct": false
         }
       ],
@@ -233,27 +233,27 @@
       "id": "c17-q07",
       "type": "QCU",
       "theme": "Scoliose : maturité osseuse et test de Risser",
-      "enonce": "Dans le suivi des scolioses idiopathiques de l’adolescent, l’évaluation de la maturité osseuse est cruciale pour déterminer le potentiel évolutif. Le « test de Risser » est couramment utilisé à cette fin. Que permet d’évaluer le test de Risser sur les radiographies ?",
+      "enonce": "Dans le suivi d’une scoliose idiopathique de l’adolescent, que permet d’évaluer le test de Risser sur les radiographies ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "L’ossification des épiphyses des corps vertébraux thoraciques.",
+          "texte": "L’ossification des épiphyses des corps vertébraux thoraciques",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "L’ossification des points d’ossification accessoires des crêtes iliaques.",
+          "texte": "L’ossification des points d’ossification secondaires des crêtes iliaques",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "La fusion des cartilages de croissance du radius et de l’ulna au poignet.",
+          "texte": "La fusion des cartilages de croissance du radius et de l’ulna au poignet",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Le développement des noyaux d’ossification du coude (méthode de Sauvegrain et Nahum).",
+          "texte": "Le développement des noyaux d’ossification du coude",
           "correct": false
         }
       ],

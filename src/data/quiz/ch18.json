@@ -122,27 +122,27 @@
       "id": "c18-q04",
       "type": "QRM",
       "theme": "Fracture sous-chondrale par insuffisance osseuse",
-      "enonce": "Une patiente de 65 ans sous traitement pour ostéoporose consulte pour une douleur aiguë de la hanche droite apparue sans traumatisme majeur. La radiographie initiale est normale. L’IRM montre un trait sous-chondral serpigineux en hyposignal T1 entouré d’un important œdème médullaire hyperintense en T2. Le diagnostic de fracture sous-chondrale par insuffisance osseuse est évoqué. Quelles affirmations concernant cette pathologie sont justes ?",
+      "enonce": "Quelles affirmations sont exactes concernant la fracture sous-chondrale par insuffisance osseuse de la tête fémorale ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Elle survient typiquement chez la femme ostéoporotique de plus de 60 ans.",
+          "texte": "Elle survient typiquement chez la femme ostéoporotique de plus de 60 ans",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Contrairement à l’ONTF, l’œdème médullaire périphérique (hyperhémie) est absent.",
+          "texte": "L’œdème médullaire périphérique en hypersignal T2 est habituellement absent",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Elle se traduit en IRM par un trait sous-chondral irrégulier, discontinu, parallèle à la surface articulaire.",
+          "texte": "Elle se traduit en IRM par un trait sous-chondral irrégulier, discontinu et parallèle à la surface articulaire",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "L’évolution est systématiquement favorable, sans risque de nécrose mécanique.",
+          "texte": "Son évolution est toujours favorable, sans risque d’effondrement ni de nécrose mécanique",
           "correct": false
         }
       ],
@@ -196,27 +196,27 @@
       "id": "c18-q06",
       "type": "QRM",
       "theme": "Maladie de Legg-Perthes-Calvé",
-      "enonce": "La maladie de Legg-Perthes-Calvé (ostéochondrite primitive de hanche) est une nécrose ischémique du noyau épiphysaire. Laquelle ou lesquelles de ces propositions sont exactes concernant cette maladie ?",
+      "enonce": "Quelles propositions sont exactes concernant la maladie de Legg-Perthes-Calvé (ostéochondrite primitive de hanche) ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Elle affecte préférentiellement les garçons de 4 à 8 ans.",
+          "texte": "Elle affecte préférentiellement les garçons de 4 à 8 ans",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "La radiographie de profil est moins sensible que la radiographie de face pour détecter le signe de la « coquille d’œuf » (dissection sous-chondrale).",
+          "texte": "Le cliché de profil est moins sensible que la face pour détecter la dissection sous-chondrale (« coquille d’œuf »)",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Le stade initial de fragmentation se caractérise par une densification homogène du noyau d’ossification.",
+          "texte": "Le stade de fragmentation se caractérise par une densification homogène du noyau épiphysaire",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "La coxa magna (augmentation du volume de la tête fémorale) est un signe séquellaire classique.",
+          "texte": "La coxa magna (augmentation de volume de la tête fémorale) est une séquelle classique",
           "correct": true
         }
       ],
@@ -233,7 +233,7 @@
       "id": "c18-q07",
       "type": "QCU",
       "theme": "Maladie de Legg-Perthes-Calvé : score de Herring",
-      "enonce": "Chez un enfant suivi pour une maladie de Legg-Perthes-Calvé, on s’inquiète du risque d’inégalité de longueur des membres inférieurs et d’une déformation importante de la tête fémorale (coxa plana). Quel facteur radiographique (score de Herring) est le meilleur déterminant pour prédire cette évolution ?",
+      "enonce": "Dans la maladie de Legg-Perthes-Calvé, sur quel critère radiographique repose la classification pronostique de Herring ?",
       "enonce_image": null,
       "items": [
         {
@@ -270,7 +270,7 @@
       "id": "c18-q08",
       "type": "QRM",
       "theme": "Épiphysiolyse fémorale supérieure",
-      "enonce": "L’épiphysiolyse fémorale correspond au glissement de la métaphyse par rapport à l’épiphyse (ou inversement selon la convention). Quels sont les signes radiographiques caractéristiques, souvent discrets, qu’il faut rechercher de face avant un glissement important ?",
+      "enonce": "Quels sont les signes radiographiques précoces d’une épiphysiolyse fémorale supérieure sur un cliché de hanche de face ?",
       "enonce_image": null,
       "items": [
         {
@@ -280,7 +280,7 @@
         },
         {
           "id": "B",
-          "texte": "Une ligne de Klein coupant le centre de l’épiphyse de façon plus importante que du côté sain",
+          "texte": "Une ligne de Klein coupant une portion d’épiphyse plus large que du côté sain",
           "correct": false
         },
         {
@@ -344,27 +344,27 @@
       "id": "c18-q10",
       "type": "QRM",
       "theme": "Ostéonécrose de la tête fémorale : œdème périlésionnel",
-      "enonce": "Lors de l’évaluation IRM d’une nécrose systémique de la tête fémorale (ONTF) sans effondrement de la tête (stade I ou II), l’apparition d’un important œdème périlésionnel (œdème de la moelle osseuse saine adjacente) est une observation clé. Quelles implications cliniques et pronostiques a cet œdème selon la littérature récente ?",
+      "enonce": "Dans une ostéonécrose de la tête fémorale (ONTF) non effondrée (stade I ou II), quelle est la signification clinique et pronostique d’un œdème médullaire périlésionnel en IRM ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Il traduit généralement un processus de revascularisation efficace et de guérison (bon pronostic)",
+          "texte": "Il traduit une revascularisation efficace et un bon pronostic",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Il est étroitement corrélé à l’apparition de douleurs intenses chez le patient",
+          "texte": "Il est étroitement corrélé à l’apparition de douleurs intenses",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Il pourrait traduire l’apparition de microfractures sous-chondrales non encore visibles et donc un risque accru d’effondrement",
+          "texte": "Il suggère des microfractures sous-chondrales débutantes et un risque accru d’effondrement",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Sa disparition après traitement chirurgical (forage ou greffe) est un signe de bonne évolution",
+          "texte": "Sa régression après forage chirurgical est un signe de bonne évolution",
           "correct": true
         }
       ],

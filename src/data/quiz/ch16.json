@@ -85,22 +85,22 @@
       "id": "c16-q03",
       "type": "QCU",
       "theme": "Hernie discale : évolution et régression spontanée",
-      "enonce": "Un patient de 45 ans se présente pour une lombosciatique S1 droite évoluant depuis 6 semaines, avec déficit moteur récent et franc du triceps sural. L’IRM met en évidence une hernie discale L5-S1. Quel type d’hernie présente la plus forte probabilité de régression spontanée à moyen terme, justifiant souvent un traitement conservateur initial si le déficit n’était pas sévère ?",
+      "enonce": "En IRM lombaire, quel type de hernie discale présente la plus forte probabilité de régression spontanée à moyen terme ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Une protrusion discale à large base d’implantation, en hyposignal T2",
+          "texte": "Une protrusion discale à large base, en hyposignal T2",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Une extrusion discale foraminale associée à d’importants ostéophytes (hernie ostéocartilagineuse)",
+          "texte": "Une extrusion foraminale ostéocartilagineuse",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Une hernie exclue (fragment libre), volumineuse, en hypersignal T2 et migrée dans l’espace épidural postérieur",
+          "texte": "Une hernie exclue volumineuse, en hypersignal T2, migrée dans l’espace épidural",
           "correct": true
         },
         {
@@ -122,7 +122,7 @@
       "id": "c16-q04",
       "type": "QRM",
       "theme": "Spondylolisthésis par lyse isthmique",
-      "enonce": "L’évaluation d’un spondylolisthésis par lyse isthmique (antélisthésis de L5 sur S1) nécessite d’identifier les facteurs pronostiques péjoratifs associés à un risque élevé d’évolutivité. Parmi les éléments suivants, lesquels sont considérés comme des facteurs péjoratifs ?",
+      "enonce": "Dans un spondylolisthésis par lyse isthmique L5-S1, quels éléments radiologiques sont des facteurs pronostiques péjoratifs d’évolutivité du glissement ?",
       "enonce_image": null,
       "items": [
         {
@@ -132,17 +132,17 @@
         },
         {
           "id": "B",
-          "texte": "L’absence de cyphose entre L5 et S1 (angle lombosacré > 90°)",
+          "texte": "L’absence de cyphose lombosacrée (angle L5-S1 > 90°)",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Une dysplasie de S1 caractérisée par un dôme sacré arrondi et résorbé en avant",
+          "texte": "Une dysplasie de S1 avec dôme sacré arrondi et résorbé en avant",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Un glissement initial modéré évalué à 5 % selon l’indice de Taillard",
+          "texte": "Un glissement initial minime (5 % selon l’indice de Taillard)",
           "correct": false
         }
       ],
@@ -196,7 +196,7 @@
       "id": "c16-q06",
       "type": "QRM",
       "theme": "Canal lombaire rétréci : gradation IRM",
-      "enonce": "L’IRM lombaire d’un patient de 70 ans se plaignant d’une claudication radiculaire intermittente montre un canal lombaire rétréci sévère. Quels critères IRM morphologiques (en coupes axiales) définissent une sténose canalaire centrale de degré « sévère » selon la classification actuelle ?",
+      "enonce": "Quels critères IRM morphologiques en coupes axiales définissent une sténose canalaire lombaire centrale de degré « sévère » ?",
       "enonce_image": null,
       "items": [
         {
@@ -206,7 +206,7 @@
         },
         {
           "id": "B",
-          "texte": "Une agglutination des racines qui ne peuvent plus être individualisées (signal gris)",
+          "texte": "Une agglutination des racines non individualisables (signal gris)",
           "correct": true
         },
         {
@@ -216,7 +216,7 @@
         },
         {
           "id": "D",
-          "texte": "Un diamètre antéropostérieur du sac dural mesuré strictement à 11 mm",
+          "texte": "Un diamètre antéropostérieur du sac dural mesuré à 11 mm",
           "correct": false
         }
       ],
@@ -233,7 +233,7 @@
       "id": "c16-q07",
       "type": "QCU",
       "theme": "Conflit interépineux : maladie de Baastrup",
-      "enonce": "Un patient consulte pour des lombalgies intenses déclenchées par l’hyperextension. Les radiographies de profil montrent un contact répété entre les processus épineux de L4 et L5 avec une ostéocondensation de leurs bords en regard. Quel est le nom de cette affection spécifique lorsqu’elle est symptomatique ?",
+      "enonce": "Comment appelle-t-on le conflit interépineux lombaire symptomatique, caractérisé par un contact répété et une ostéocondensation des processus épineux en hyperextension ?",
       "enonce_image": null,
       "items": [
         {
@@ -344,27 +344,27 @@
       "id": "c16-q10",
       "type": "QCU",
       "theme": "Rachis post-opératoire : récidive herniaire vs fibrose",
-      "enonce": "Un an après une discectomie L4-L5, un patient présente une récidive de sa sciatique. L’IRM met en évidence une masse tissulaire épidurale antérolatérale au niveau opéré. Quel signe IRM permet de différencier avec la plus grande fiabilité une véritable récidive herniaire d’une cicatrice péridurale fibreuse (fibrose post-opératoire) ?",
+      "enonce": "Un an après une discectomie lombaire, quel signe IRM permet de différencier une récidive herniaire d’une fibrose épidurale post-opératoire ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "La masse est en franc hypersignal T2 par rapport au disque adjacent.",
+          "texte": "Un franc hypersignal T2 par rapport au disque adjacent",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "La masse exerce un effet de masse évident sur le sac dural et la racine émergente.",
+          "texte": "Un effet de masse sur le sac dural et la racine émergente",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "La masse est mal limitée, de contours flous et irréguliers, et se rehausse intensément et de façon homogène après injection précoce de gadolinium.",
+          "texte": "Des contours flous avec rehaussement précoce, intense et homogène après gadolinium",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "La masse présente des contours bien limités, une forme polylobée, et ne se rehausse qu’en périphérie (rehaussement annulaire) après injection de gadolinium.",
+          "texte": "Des contours bien limités avec un rehaussement uniquement périphérique (annulaire) après gadolinium",
           "correct": true
         }
       ],

@@ -85,7 +85,7 @@
       "id": "c21-q03",
       "type": "QCU",
       "theme": "Nerf obturateur : signe d’Howship-Romberg",
-      "enonce": "Une patiente âgée, très dénutrie, consulte pour une douleur inguinale irradiant à la face médiale de la cuisse et à la partie postéromédiale du genou. L’examen clinique révèle que la douleur est majorée par l’extension et l’abduction de la hanche, mais soulagée de façon caractéristique par sa flexion (signe d’Howship-Romberg). Quel nerf est le plus probablement comprimé ?",
+      "enonce": "Chez une patiente âgée dénutrie, quel nerf est comprimé devant une douleur inguinale irradiant à la face médiale de la cuisse, majorée en extension-abduction et soulagée en flexion de hanche (signe d’Howship-Romberg) ?",
       "enonce_image": null,
       "items": [
         {
@@ -164,22 +164,22 @@
       "items": [
         {
           "id": "A",
-          "texte": "Il sort par le foramen suprapiriforme, au-dessus du muscle piriforme.",
+          "texte": "Sortie par le foramen suprapiriforme, au-dessus du muscle piriforme",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Il traverse la lacune vasculaire, sous le ligament inguinal.",
+          "texte": "Passage dans la lacune vasculaire, sous le ligament inguinal",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Il sort par le foramen infrapiriforme, passe au-dessus du ligament sacro-épineux, puis regagne le bassin par la petite incisure ischiatique.",
+          "texte": "Sortie par le foramen infrapiriforme, passage dans la pince sacro-épineuse/sacro-tubérale, puis petite incisure ischiatique",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Il traverse directement le muscle obturateur externe pour rejoindre le canal d’Alcock.",
+          "texte": "Traversée directe du muscle obturateur externe vers le canal d’Alcock",
           "correct": false
         }
       ],
@@ -233,27 +233,27 @@
       "id": "c21-q07",
       "type": "QCU",
       "theme": "Syndrome du muscle piriforme : IRM",
-      "enonce": "Le syndrome du muscle piriforme est lié à une souffrance du nerf sciatique dans l’espace infrapiriforme. En IRM, quelle association de signes possède une excellente spécificité (bien qu’une faible sensibilité) pour ce diagnostic ?",
+      "enonce": "Dans le syndrome du muscle piriforme, quelle association de signes IRM possède une excellente spécificité (bien qu’une faible sensibilité) ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Une atrophie graisseuse bilatérale et asymétrique du muscle piriforme.",
+          "texte": "Une atrophie graisseuse bilatérale du muscle piriforme",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Un hypersignal T2 et/ou une tuméfaction du nerf sciatique dans la grande incisure ischiatique, associés à une hypertrophie du muscle piriforme.",
+          "texte": "Un hypersignal T2 et/ou une tuméfaction du nerf sciatique associés à une hypertrophie du piriforme",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Un œdème de dénervation exclusif du muscle grand glutéal.",
+          "texte": "Un œdème de dénervation isolé du muscle grand glutéal",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Une lésion kystique centimétrique au sein du nerf sciatique (kyste intraneural).",
+          "texte": "Un kyste intraneural centimétrique du nerf sciatique",
           "correct": false
         }
       ],
@@ -270,27 +270,27 @@
       "id": "c21-q08",
       "type": "QRM",
       "theme": "Nerf fémoral : anatomie et sémiologie",
-      "enonce": "Un patient développe dans les suites d’une chirurgie pelvienne une paralysie de l’extension de la jambe et une abolition du réflexe patellaire. L’atteinte iatrogène du nerf fémoral est confirmée. Quelles sont les caractéristiques anatomiques de ce nerf ?",
+      "enonce": "Quelles sont les caractéristiques anatomiques du nerf fémoral ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Il est issu des rameaux ventraux de L2, L3 et L4.",
+          "texte": "Il est issu des rameaux ventraux de L2, L3 et L4",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Il descend entre les deux chefs du muscle grand psoas puis chemine à la face antérieure du muscle iliaque.",
+          "texte": "Il descend entre les deux chefs du grand psoas puis chemine devant le muscle iliaque",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Il quitte le bassin en passant sous le ligament inguinal par la lacune vasculaire, en dedans de l’artère fémorale.",
+          "texte": "Il quitte le bassin par la lacune vasculaire, en dedans de l’artère fémorale",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Il donne naissance au nerf saphène, qui innerve la face médiale de la jambe.",
+          "texte": "Il donne naissance au nerf saphène, sensitif pour la face médiale de la jambe",
           "correct": true
         }
       ],
@@ -307,27 +307,27 @@
       "id": "c21-q09",
       "type": "QCU",
       "theme": "Extension périneurale des cancers pelviens",
-      "enonce": "Comment se propage typiquement l’extension périneurale d’un cancer pelvien (comme le cancer de la prostate ou du rectum) en direction du plexus lombosacré ?",
+      "enonce": "Par quelle voie anatomique se propage typiquement l’extension périneurale d’un cancer pelvien (prostate, rectum) vers le plexus lombosacré ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Exclusivement par voie hématogène via l’artère iliaque interne vers les vaisseaux intraneuraux.",
+          "texte": "Par voie hématogène via l’artère iliaque interne",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Directement par le liquide cérébro-spinal à la suite d’une infiltration méningée.",
+          "texte": "Par dissémination leptoméningée via le liquide cérébro-spinal",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Via les nerfs splanchniques du système nerveux autonome innervant les viscères, pour atteindre ensuite le plexus lombosacré.",
+          "texte": "Via les nerfs splanchniques pelviens du système nerveux autonome",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "En remontant le long du nerf cutané latéral de la cuisse à travers la lacune musculaire.",
+          "texte": "En remontant le long du nerf cutané latéral de la cuisse",
           "correct": false
         }
       ],

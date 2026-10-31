@@ -48,27 +48,27 @@
       "id": "c20-q02",
       "type": "QRM",
       "theme": "Muscle droit fémoral : lésion en battant de cloche",
-      "enonce": "Concernant les lésions du muscle droit fémoral, une entité spécifique appelée « lésion en battant de cloche » (ou « en doigt de gant ») peut être observée. Quelles sont les caractéristiques de cette lésion en IRM ?",
+      "enonce": "Quelles sont les caractéristiques IRM d’une « lésion en battant de cloche » (ou « en doigt de gant ») du muscle droit fémoral ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Elle siège à la jonction entre le tendon direct et l’épine iliaque antéro-inférieure.",
+          "texte": "Elle siège à l’enthèse du tendon direct sur l’épine iliaque antéro-inférieure",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Elle se traduit par une rétraction proximale de la partie centrale du droit fémoral au sein du muscle.",
+          "texte": "Elle se traduit par une rétraction proximale de la partie centrale du droit fémoral",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "L’atteinte siège entre la partie centrale bipennée (issue du tendon indirect) et la portion périphérique unipennée (issue du tendon direct).",
+          "texte": "Elle dissocie la portion centrale bipennée (tendon indirect) de la portion périphérique unipennée (tendon direct)",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Elle se présente toujours comme une calcification massive (ostéome) au sein du muscle.",
+          "texte": "Elle se présente toujours comme un ostéome intramusculaire calcifié",
           "correct": false
         }
       ],
@@ -85,7 +85,7 @@
       "id": "c20-q03",
       "type": "QCU",
       "theme": "Pubalgie et adducteurs : signe de la seconde fente",
-      "enonce": "Un homme de 55 ans, joueur amateur de tennis, consulte pour des douleurs inguinales à l’effort. L’échographie révèle une tendinopathie avec épaississement hypoéchogène et calcifications au niveau de l’insertion proximale d’un muscle sur le pubis. L’IRM montre également un « signe de la seconde fente » (image liquidienne prolongeant la fente symphysaire vers le bas et le dehors). Quel tendon est le plus probablement lésé ?",
+      "enonce": "Devant une douleur inguinale d’effort, l’IRM montre un « signe de la seconde fente » (fente liquidienne prolongeant la symphyse pubienne en bas et en dehors). Quelle insertion tendineuse est atteinte ?",
       "enonce_image": null,
       "items": [
         {
@@ -122,27 +122,27 @@
       "id": "c20-q04",
       "type": "QRM",
       "theme": "Ressaut du tendon du muscle grand psoas",
-      "enonce": "Le « ressaut du tendon du muscle grand psoas » est une cause de douleur et de claquement antérieur de la hanche, fréquent chez les danseurs. Quelles sont les explications physiopathologiques documentées pour ce ressaut extra-articulaire ?",
+      "enonce": "Quels mécanismes physiopathologiques expliquent le « ressaut antérieur » extra-articulaire du tendon du muscle grand psoas ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Un enroulement des fibres médiales du muscle iliaque autour du tendon du muscle grand psoas, qui se relâchent brutalement lors du retour à l’extension.",
+          "texte": "Un conflit entre le tendon du grand psoas et les fibres médiales du muscle iliaque lors du retour en extension",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Une friction systématique du ligament iliofémoral sur la tête fémorale.",
+          "texte": "Une friction du ligament iliofémoral sur la tête fémorale",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Une bifidité tendineuse, où un tendon médial se déplace autour d’un tendon latéral.",
+          "texte": "Une bifidité tendineuse avec ressaut d’un hémi-tendon médial sur le latéral",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Une avulsion de l’apophyse du petit trochanter.",
+          "texte": "Une avulsion aiguë du petit trochanter",
           "correct": false
         }
       ],
@@ -196,27 +196,27 @@
       "id": "c20-q06",
       "type": "QRM",
       "theme": "Tendons ischiojambiers proximaux",
-      "enonce": "Un footballeur professionnel se présente après avoir ressenti un claquement brutal à la face postérieure de la fesse gauche lors d’un grand écart (« tackle »). À l’IRM, on suspecte une désinsertion proximale de l’enthèse des muscles ischiojambiers. L’identification précise des tendons avulsés est cruciale pour le chirurgien. Parmi les propositions suivantes concernant l’anatomie et les lésions de cette région, lesquelles sont vraies ?",
+      "enonce": "Quelles propositions sont exactes concernant l’anatomie et les lésions proximales des tendons ischiojambiers sur la tubérosité ischiatique ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Le muscle semi-membraneux s’insère par un tendon isolé, situé un peu plus en avant et en dehors que le tendon conjoint (biceps fémoral et semi-tendineux).",
+          "texte": "Le tendon du semi-membraneux s’insère isolément en avant et en dehors du tendon conjoint (biceps fémoral et semi-tendineux)",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "L’insertion proximale des ischiojambiers se fait sur le versant latéral de la tubérosité ischiatique.",
+          "texte": "L’insertion proximale des ischiojambiers se fait sur le versant latéral de la tubérosité ischiatique",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "L’insertion du tendon du chef postérieur du grand adducteur sur l’ischion peut parfois être prise à tort pour le tendon du semi-membraneux, simulant une rupture incomplète.",
+          "texte": "Le tendon ischiatique du grand adducteur peut simuler un tendon du semi-membraneux continu",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "En échographie, le « triangle de Cohen » à la racine de la cuisse est formé par le muscle sartorius, le tenseur du fascia lata et le droit fémoral.",
+          "texte": "Le « triangle de Cohen » est formé par le sartorius, le tenseur du fascia lata et le droit fémoral",
           "correct": false
         }
       ],
@@ -233,12 +233,12 @@
       "id": "c20-q07",
       "type": "QCU",
       "theme": "Décollement de Morel-Lavallée",
-      "enonce": "Quel diagnostic évoquer devant une masse sous-cutanée de la face latérale de la hanche, d’apparition progressive, contenant une collection séro-hématique à l’interface entre le fascia profond et la graisse hypodermique, survenant classiquement après un traumatisme tangentiel (cisaillement) lors d’un accident de la voie publique ?",
+      "enonce": "Comment appelle-t-on l’épanchement séro-hématique post-traumatique par cisaillement situé entre le fascia profond et l’hypoderme à la face latérale de la hanche ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Une bursopathie trochantérienne (bursite du grand glutéal)",
+          "texte": "Une bursite trochantérienne du grand glutéal",
           "correct": false
         },
         {
@@ -270,27 +270,27 @@
       "id": "c20-q08",
       "type": "QRM",
       "theme": "Para-ostéoarthropathies neurogènes (POA)",
-      "enonce": "Les para-ostéoarthropathies neurogènes (POA) sont des ossifications hétérotopiques. Quelles affirmations sont correctes concernant cette pathologie ?",
+      "enonce": "Quelles affirmations sont exactes concernant les para-ostéoarthropathies neurogènes (POA) de la hanche ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Elles surviennent fréquemment chez les patients victimes d’un traumatisme crânien ou médullaire grave avec immobilisation prolongée.",
+          "texte": "Elles surviennent fréquemment après un traumatisme crânien ou médullaire grave",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Elles se développent au sein même de la cavité articulaire de la hanche, détruisant rapidement le cartilage (ankylose intra-articulaire).",
+          "texte": "Elles sont strictement intra-articulaires et détruisent rapidement le cartilage",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Au stade de maturation (IRM), l’œdème musculaire et le rehaussement post-gadolinium ont tendance à diminuer, témoignant d’une « stabilisation » de la lésion.",
+          "texte": "En IRM, l’œdème et le rehaussement diminuent avec la maturation de l’ossification",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "L’exérèse chirurgicale est recommandée très précocement (dès le 1er mois) pour éviter l’ankylose.",
+          "texte": "L’exérèse chirurgicale est recommandée dès le 1er mois d’évolution",
           "correct": false
         }
       ],
@@ -344,7 +344,7 @@
       "id": "c20-q10",
       "type": "QRM",
       "theme": "Tendinobursopathies trochantériennes : moyen et petit glutéaux",
-      "enonce": "Une patiente de 65 ans consulte pour des douleurs de la face latérale de la hanche droite irradiant vers la face latérale de la cuisse, déclenchées par le décubitus latéral droit et la montée des escaliers. Le diagnostic de tendinobursopathie trochantérienne (syndrome du grand trochanter) est suspecté. À l’IRM, on cherche à évaluer les muscles abducteurs. Quels muscles s’insèrent sur le grand trochanter et peuvent présenter une tendinopathie dans ce contexte ?",
+      "enonce": "Dans un syndrome douloureux du grand trochanter (tendinobursopathie trochantérienne), quels tendons s’insérant sur le grand trochanter sont directement impliqués ?",
       "enonce_image": null,
       "items": [
         {

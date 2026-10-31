@@ -85,22 +85,22 @@
       "id": "c13-q03",
       "type": "QCU",
       "theme": "Syndrome du canal de Guyon : zones de compression",
-      "enonce": "Un cycliste de haut niveau se plaint d’une perte de force et d’une maladresse des doigts de la main droite sans aucun trouble sensitif associé. La sensibilité de l’éminence hypothénar, de la face palmaire et dorsale des 4e et 5e doigts est parfaitement normale. L’EMG montre une atteinte motrice des muscles interosseux. Quel est le site de compression le plus probable du nerf ulnaire ?",
+      "enonce": "Un cycliste présente un déficit moteur pur des muscles interosseux de la main, sans aucun trouble sensitif. Quel est le site de compression le plus probable du nerf ulnaire au canal de Guyon ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Zone 1 (compression proximale avant la division du nerf ulnaire)",
+          "texte": "Zone 1 (en amont de la division du nerf ulnaire)",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Zone 2 (compression distale du rameau profond dans la loge profonde du canal de Guyon)",
+          "texte": "Zone 2 (rameau profond moteur dans la loge profonde)",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Zone 3 (compression distale du rameau superficiel dans la loge superficielle du canal de Guyon)",
+          "texte": "Zone 3 (rameau superficiel sensitif dans la loge superficielle)",
           "correct": false
         },
         {
@@ -233,12 +233,12 @@
       "id": "c13-q07",
       "type": "QCU",
       "theme": "Canal carpien opéré : échec par libération insuffisante",
-      "enonce": "Un homme de 55 ans est opéré pour un syndrome du canal carpien récalcitrant. Malgré l’intervention, la symptomatologie persiste sans aucun intervalle libre. L’échographie de contrôle à 6 semaines postopératoires montre que le nerf médian et les tendons fléchisseurs n’ont pas translaté en direction palmaire et restent situés en profondeur de la ligne reliant l’hamulus de l’hamatum au trapèze. Quel est le diagnostic le plus probable expliquant cet échec ?",
+      "enonce": "Après chirurgie d’un canal carpien, les symptômes persistent sans intervalle libre. À l’échographie, le nerf médian et les tendons restent en profondeur de la ligne hamulus-trapèze sans translation palmaire. Quelle est la cause de cet échec ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "La formation d’un névrome du nerf médian secondaire à une section partielle",
+          "texte": "Un névrome du nerf médian sur section partielle",
           "correct": false
         },
         {
@@ -248,12 +248,12 @@
         },
         {
           "id": "C",
-          "texte": "Une fibrose cicatricielle périneurale postopératoire massive",
+          "texte": "Une fibrose cicatricielle périneurale postopératoire",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Un hématome du canal carpien non résorbé",
+          "texte": "Un hématome intracanalaire non résorbé",
           "correct": false
         }
       ],
@@ -344,7 +344,7 @@
       "id": "c13-q10",
       "type": "QCU",
       "theme": "Canal de Guyon : muscle abducteur accessoire du 5e doigt",
-      "enonce": "L’échographie du poignet d’un patient suspecté d’un syndrome du canal de Guyon révèle la présence bilatérale d’un muscle surnuméraire formant le toit du canal à sa partie proximale, en superficie de l’artère et du nerf ulnaires, s’insérant sur le pisiforme. Quelle est cette variante musculaire (la plus fréquemment impliquée) qui peut, lorsqu’elle est hypertrophiée, causer un syndrome compressif ?",
+      "enonce": "Quelle est la variante musculaire surnuméraire la plus fréquemment impliquée dans un syndrome compressif du canal de Guyon (formant le toit proximal du canal et s’insérant sur le pisiforme) ?",
       "enonce_image": null,
       "items": [
         {

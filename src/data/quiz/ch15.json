@@ -85,7 +85,7 @@
       "id": "c15-q03",
       "type": "QCU",
       "theme": "Névralgie cervicobrachiale : topographie radiculaire",
-      "enonce": "Une patiente présente une névralgie cervicobrachiale caractérisée par une douleur à la face latérale du bras et de l’avant-bras, irradiant vers le pouce et l’index, avec une abolition du réflexe styloradial. Quelle racine nerveuse cervicale est vraisemblablement atteinte ?",
+      "enonce": "Quelle racine nerveuse cervicale est atteinte devant une névralgie cervicobrachiale irradiant à la face latérale de l’avant-bras, au pouce et à l’index, avec abolition du réflexe styloradial ?",
       "enonce_image": null,
       "items": [
         {
@@ -122,12 +122,12 @@
       "id": "c15-q04",
       "type": "QRM",
       "theme": "Hyperostose vertébrale (maladie de Forestier)",
-      "enonce": "L’hyperostose vertébrale (ou maladie de Forestier/DISH) au niveau cervical est caractérisée par une ossification du ligament longitudinal antérieur. Quelles sont les caractéristiques radiologiques et les complications potentielles de cette affection ?",
+      "enonce": "Quelles sont les caractéristiques radiologiques et les complications potentielles de l’hyperostose vertébrale (maladie de Forestier / DISH) au rachis cervical ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Une coulée osseuse antérieure qui s’accompagne systématiquement d’un pincement discal sévère",
+          "texte": "Une coulée osseuse antérieure avec pincement discal sévère systématique",
           "correct": false
         },
         {
@@ -137,12 +137,12 @@
         },
         {
           "id": "C",
-          "texte": "Un risque majoré de fracture transversale spontanée ou après un traumatisme mineur",
+          "texte": "Un risque majoré de fracture transversale après un traumatisme mineur",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "L’association fréquente à une ossification du ligament longitudinal postérieur",
+          "texte": "Une association fréquente à une ossification du ligament longitudinal postérieur (OPLL)",
           "correct": true
         }
       ],
@@ -233,12 +233,12 @@
       "id": "c15-q07",
       "type": "QCU",
       "theme": "Ossification du ligament longitudinal postérieur (OPLL)",
-      "enonce": "L’ossification du ligament longitudinal postérieur (OPLL) est une pathologie dégénérative pouvant causer une myélopathie. En scanner axial, quel aspect morphologique de l’ossification évoque une adhérence ou une ossification de la dure-mère, augmentant le risque chirurgical ?",
+      "enonce": "Dans l’ossification du ligament longitudinal postérieur (OPLL), quel aspect TDM axial évoque une adhérence ou une ossification de la dure-mère, majorant le risque de brèche durale chirurgicale ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Une ossification de type continu s’étendant sur plus de trois segments vertébraux",
+          "texte": "Une ossification continue sur plus de trois segments vertébraux",
           "correct": false
         },
         {
@@ -307,7 +307,7 @@
       "id": "c15-q09",
       "type": "QCU",
       "theme": "Canal cervical étroit",
-      "enonce": "Parmi ces signes radiographiques classiques de canal cervical étroit (sur un cliché de profil), lequel correspond à l’impossibilité de placer visuellement un corps vertébral dans le canal cervical, ou à une ligne spinolamaire se projetant sur le bord postérieur des massifs articulaires ?",
+      "enonce": "Sur un cliché cervical de profil, comment appelle-t-on le signe de canal cervical étroit défini par la projection de la ligne spinolamaire sur le bord postérieur des massifs articulaires ?",
       "enonce_image": null,
       "items": [
         {
@@ -344,27 +344,27 @@
       "id": "c15-q10",
       "type": "QRM",
       "theme": "Diagnostic différentiel : spondylolyse et pédicule absent",
-      "enonce": "Un diagnostic différentiel à évoquer devant une fente osseuse bilatérale des massifs articulaires en C6 est le syndrome du pédicule absent. Quels éléments radiographiques permettent de distinguer une vraie spondylolyse d’un syndrome du pédicule absent ?",
+      "enonce": "Quels éléments radiographiques permettent de distinguer une spondylolyse cervicale d’un syndrome du pédicule absent ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Dans la spondylolyse, le pédicule est toujours absent, alors qu’il est hypoplasique dans le syndrome du pédicule absent.",
+          "texte": "Le pédicule est absent dans la spondylolyse, mais hypoplasique dans le syndrome du pédicule absent",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Dans le syndrome du pédicule absent, la facette articulaire supérieure est hypoplasique ou absente.",
+          "texte": "Dans le syndrome du pédicule absent, la facette articulaire supérieure est hypoplasique ou absente",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Dans la spondylolyse, la fente des massifs articulaires est bien visible.",
+          "texte": "Dans la spondylolyse, la fente des massifs articulaires est bien visible",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Dans la spondylolyse, il y a souvent une non-fermeture du processus épineux, contrairement au syndrome du pédicule absent.",
+          "texte": "Dans la spondylolyse, le processus épineux présente souvent un défaut de fermeture",
           "correct": true
         }
       ],

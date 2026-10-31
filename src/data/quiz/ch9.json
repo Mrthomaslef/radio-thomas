@@ -270,7 +270,7 @@
       "id": "c9-q03",
       "type": "QCU",
       "theme": "Ostéonécrose de la trochlée : déformation en « queue de poisson »",
-      "enonce": "Un adolescent de 14 ans consulte pour des douleurs et une perte d’amplitude de son coude. Il a pour antécédent une fracture supracondylienne de l’humérus survenue à l’âge de 6 ans. La radiographie de face montre une déformation caractéristique de l’extrémité distale de l’humérus, avec une concavité centrale en « V inversé ». Quel diagnostic devez-vous évoquer en priorité ?",
+      "enonce": "Un adolescent ayant un antécédent de fracture supracondylienne dans l’enfance présente sur la radiographie de face une concavité centrale en « V inversé » de l’humérus distal. Quel est ce signe ?",
       "enonce_image": null,
       "items": [
         {
@@ -280,17 +280,17 @@
         },
         {
           "id": "B",
-          "texte": "Une séquelle d’ostéonécrose de la trochlée (déformation en « queue de poisson » ou fishtail)",
+          "texte": "Une séquelle d’ostéonécrose de la trochlée (déformation en « queue de poisson »)",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Une arthrose post-traumatique avec ostéophytose massive",
+          "texte": "Une arthrose primitive débutante",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Une pseudarthrose extra-articulaire",
+          "texte": "Une pseudarthrose supracondylienne",
           "correct": false
         }
       ],
@@ -418,27 +418,27 @@
       "id": "c9-q07",
       "type": "QCU",
       "theme": "Prothèse de tête radiale : surdimensionnement",
-      "enonce": "Une patiente est suivie pour une fracture complexe de la tête radiale traitée par arthroplastie de resurfaçage. Lors du suivi radiographique de face, vous observez une asymétrie nette avec un bâillement de l’interligne huméro-ulnaire du côté médial. Sachant que son complexe ligamentaire médial est parfaitement intègre, quelle complication mécanique spécifique de cette prothèse devez-vous suspecter ?",
+      "enonce": "Après pose d’une prothèse de tête radiale, la radiographie de face montre un bâillement asymétrique médial de l’interligne huméro-ulnaire malgré un LCU intact. Quelle complication suspectez-vous ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Un descellement aseptique précoce de la tige ulnaire",
+          "texte": "Un descellement septique de la tige radiale",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Un surdimensionnement (overlengthening) de la prothèse de tête radiale",
+          "texte": "Un surdimensionnement en hauteur (overlengthening) de la prothèse",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Une usure asymétrique du composant en polyéthylène",
+          "texte": "Une usure du polyéthylène",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Une fracture périprothétique de type 3 selon la Mayo Clinic",
+          "texte": "Une ossification hétérotopique périprothétique",
           "correct": false
         }
       ],
@@ -529,7 +529,7 @@
       "id": "c9-q10",
       "type": "QRM",
       "theme": "Ostéonécrose du coude de l’adulte",
-      "enonce": "Contrairement à l’enfant où elle est presque toujours post-traumatique, l’ostéonécrose du coude chez l’adulte (affectant le capitulum, la trochlée ou la tête radiale) survient souvent dans des contextes médicaux bien définis. Quels sont les facteurs de risque classiquement pourvoyeurs d’ostéonécrose de l’adulte ?",
+      "enonce": "Quels sont les facteurs de risque médicaux classiquement associés à l’ostéonécrose aseptique du coude chez l’adulte ?",
       "enonce_image": null,
       "items": [
         {

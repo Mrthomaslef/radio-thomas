@@ -270,27 +270,27 @@
       "id": "c5-q03",
       "type": "QCU",
       "theme": "Pathologie ostéochondrale : maladie de Panner",
-      "enonce": "Un garçon de 9 ans consulte pour des douleurs modérées de la face latérale du coude. La radiographie montre une raréfaction et une fragmentation touchant la totalité du noyau d’ossification du capitulum, sans aucun fragment intra-articulaire libre. Quel est le diagnostic le plus probable et son évolution attendue ?",
+      "enonce": "Un garçon de 9 ans présente une fragmentation de la totalité du noyau d’ossification du capitulum sans corps étranger libre. Quel est le diagnostic le plus probable ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Ostéochondrite disséquante (OCD), de mauvais pronostic avec forte probabilité d’évolution arthrosique",
+          "texte": "Une ostéochondrite disséquante (OCD) instable",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Maladie de Panner, avec restitution ad integrum spontanée et guérison en environ 2 ans",
+          "texte": "Une maladie de Panner (ostéochondrose bénigne spontanément résolutive)",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Fracture ostéochondrale traumatique du capitulum nécessitant un brochage",
+          "texte": "Une fracture ostéochondrale aiguë du capitulum",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Pseudo-défect physiologique du capitulum, asymptomatique",
+          "texte": "Un pseudo-défect physiologique du capitulum",
           "correct": false
         }
       ],
@@ -344,31 +344,31 @@
       "id": "c5-q05",
       "type": "QCU",
       "theme": "Syndromes canalaires : nerf interosseux postérieur",
-      "enonce": "Un peintre en bâtiment de 42 ans se plaint d’une faiblesse d’apparition progressive l’empêchant d’étendre complètement ses doigts (notamment le médius). L’extension de son poignet reste cependant conservée et il n’a pas de perte de sensibilité cutanée. Quel syndrome canalaire présente-t-il et quel est le site de compression le plus probable ?",
+      "enonce": "Un patient présente un déficit moteur de l’extension des doigts avec extension du poignet conservée et sans trouble sensitif. Quel syndrome canalaire évoquez-vous ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Syndrome du tunnel radial avec compression du rameau superficiel sensitif",
+          "texte": "Une atteinte isolée du rameau superficiel sensitif du nerf radial",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Syndrome du nerf interosseux postérieur avec compression au niveau de l’arcade de Fröhse",
+          "texte": "Un syndrome du nerf interosseux postérieur (compression à l’arcade de Fröhse)",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Syndrome du nerf interosseux postérieur avec compression dans le sillon rétro-huméral",
+          "texte": "Une paralysie haute du tronc du nerf radial dans le sillon du nerf radial",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Atteinte du nerf cutané latéral de l’avant-bras par le lacertus fibrosus",
+          "texte": "Une compression du nerf cutané latéral de l’avant-bras",
           "correct": false
         }
       ],
-      "explication": "Le tableau clinique (déficit moteur de l’extension des doigts avec extension du poignet préservée et absence de déficit sensitif) est le signe d’une atteinte du rameau profond moteur du nerf radial, appelé syndrome du nerf interosseux postérieur. Le site de compression de loin le plus fréquent pour ce rameau est l’arcade de Fröhse (bord proximal du chef superficiel du muscle supinateur).",
+      "explication": "Le tableau clinique (déficit moteur de l’extension des doigts avec extension du poignet préservée grâce au LERC innervé en amont, et absence de déficit sensitif) signe une atteinte du rameau profond moteur du nerf radial (syndrome du nerf interosseux postérieur), le plus souvent comprimé sous l’arcade de Fröhse.",
       "correction_figures": [],
       "source": {
         "page": 171,
@@ -455,27 +455,27 @@
       "id": "c5-q08",
       "type": "QCU",
       "theme": "Variantes anatomiques : pseudo-défect du capitulum",
-      "enonce": "En IRM, vous visualisez un décroché abrupt et irrégulier au niveau de l’os sous-chondral à la jonction entre le capitulum et l’épicondyle latéral, localisé strictement à la partie postérieure et latérale. L’os spongieux adjacent est d’aspect normal, sans aucun œdème. Le patient n’a pas d’antécédent traumatique. Quelle est l’interprétation la plus juste ?",
+      "enonce": "En IRM, on observe une encoche sous-chondrale abrupte strictement postérolatérale du capitulum, sans œdème osseux adjacent, chez un sujet asymptomatique. Quelle est votre interprétation ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Il s’agit d’une impaction ostéochondrale séquellaire d’une luxation passée inaperçue",
+          "texte": "Une impaction ostéochondrale post-luxation",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Il s’agit d’une ostéochondrite disséquante (OCD) au stade précoce",
+          "texte": "Une ostéochondrite disséquante (OCD) débutante",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Il s’agit d’un pseudo-défect physiologique du capitulum ne nécessitant pas de prise en charge",
+          "texte": "Un pseudo-défect physiologique du capitulum",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Il s’agit d’un arrachement chronique de l’enthèse du tendon commun des extenseurs",
+          "texte": "Une avulsion de l’enthèse du tendon commun des extenseurs",
           "correct": false
         }
       ],

@@ -11,7 +11,7 @@
       "id": "c19-q01",
       "type": "QCU",
       "theme": "Luxation congénitale de hanche : échographie de dépistage",
-      "enonce": "Lors de l’échographie de dépistage de la luxation congénitale de la hanche (réalisée selon la méthode de la « monocoupe dynamique latérale » de Couture-Tréguier), quel paramètre quantitatif est considéré comme le critère principal pour définir le décentrage de la tête fémorale ?",
+      "enonce": "Lors de l’échographie de dépistage de la luxation congénitale de hanche (méthode de Couture-Tréguier), quel est le critère quantitatif principal définissant le décentrage de la tête fémorale ?",
       "enonce_image": null,
       "items": [
         {
@@ -84,39 +84,39 @@
     {
       "id": "c19-q03",
       "type": "QCU",
-      "theme": "Conflit fémoro-acétabulaire : effet came et contrecoup",
-      "enonce": "Un homme de 35 ans, joueur de hockey sur glace, consulte pour des douleurs inguinales déclenchées par la position assise basse et les flexions profondes. L’examen clinique montre une limitation douloureuse de la rotation médiale à 90° de flexion de la hanche. Les radiographies révèlent une perte de concavité antérosupérieure du col fémoral (« bump »). Quel diagnostic principal et quelle anomalie (par effet de levier) suspectez-vous à un stade tardif ?",
+      "theme": "Conflit fémoro-acétabulaire : effet came",
+      "enonce": "Un sportif de 35 ans présente une douleur inguinale en flexion-rotation médiale de hanche et une bosse (« bump ») antérosupérieure de la jonction cervico-céphalique fémorale. Quel est le diagnostic ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Conflit par effet tenaille avec lésions isolées du labrum postéro-inférieur",
+          "texte": "Un conflit fémoro-acétabulaire par effet tenaille (pincer)",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Conflit par effet came avec développement tardif d’un conflit postéro-inférieur (lésion par contrecoup)",
+          "texte": "Un conflit fémoro-acétabulaire par effet came (cam)",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Protrusion acétabulaire globale",
+          "texte": "Une protrusion acétabulaire globale",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Dysplasie de hanche avec insuffisance de couverture (angle VCE < 22°)",
+          "texte": "Une dysplasie de hanche par insuffisance de couverture",
           "correct": false
         }
       ],
-      "explication": "La présentation clinique (homme jeune sportif, douleur en flexion/rotation médiale) et radiologique (bump, perte de concavité) est typique du conflit par effet came. Dans les conflits antérieurs (came ou tenaille), le mécanisme de pince antérieure force le col contre l’acétabulum en flexion, ce qui, par un effet de levier, décoapte la tête en arrière et crée des lésions par contrecoup à la partie postéro-inférieure de l’acétabulum et de la tête.",
+      "explication": "La présentation clinique (homme jeune sportif, douleur en flexion/rotation médiale) et radiologique (bump, perte de concavité antérosupérieure de la jonction tête-col) est typique du conflit fémoro-acétabulaire par effet came.",
       "correction_figures": [],
       "source": {
         "page": 510,
         "element": "Texte",
         "refs": "p. 510, 512, 514"
       },
-      "difficulty": 3
+      "difficulty": 2
     },
     {
       "id": "c19-q04",
@@ -233,7 +233,7 @@
       "id": "c19-q07",
       "type": "QCU",
       "theme": "Prothèse totale de hanche : conflit iliopsoas / cupule",
-      "enonce": "Un patient porteur d’une prothèse totale de hanche droite consulte pour des douleurs inguinales mécaniques lors de la flexion active de la cuisse (montée d’escaliers), mais sans douleur à la marche sur terrain plat. Le scanner révèle un débord de la cupule acétabulaire de 10 mm en avant de l’os. Quelle est l’origine la plus probable de ses douleurs ?",
+      "enonce": "Sur prothèse totale de hanche, une douleur inguinale à la flexion active de cuisse associée en TDM à un débord antérieur de la cupule de 10 mm évoque en premier lieu :",
       "enonce_image": null,
       "items": [
         {
@@ -253,7 +253,7 @@
         },
         {
           "id": "D",
-          "texte": "Une métallose due au couple de frottement",
+          "texte": "Une métallose du couple de frottement",
           "correct": false
         }
       ],
@@ -275,22 +275,22 @@
       "items": [
         {
           "id": "A",
-          "texte": "Ils sont le plus souvent situés à la partie antérosupérieure de l’articulation.",
+          "texte": "Ils siègent le plus souvent à la partie antérosupérieure de l’articulation",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Ils se forment toujours suite à l’effondrement d’une géode osseuse sous-chondrale.",
+          "texte": "Ils résultent toujours de l’effondrement d’une géode osseuse sous-chondrale",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "En IRM, ils sont classiquement de signal liquidien, mais peuvent présenter un hyposignal T2 s’ils contiennent des débris.",
+          "texte": "De signal habituellement liquidien, ils peuvent apparaître en hyposignal T2 s’ils contiennent des débris",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Ils sont considérés comme une lésion sentinelle, car ils sont très souvent associés à une fissure du labrum sous-jacent.",
+          "texte": "Ils constituent une lésion sentinelle très souvent associée à une fissure du labrum sous-jacent",
           "correct": true
         }
       ],
@@ -344,7 +344,7 @@
       "id": "c19-q10",
       "type": "QRM",
       "theme": "Prothèse totale de hanche : descellement septique vs aseptique",
-      "enonce": "Une ostéolyse péri-prothétique est identifiée chez un patient porteur d’une prothèse totale de hanche depuis 8 ans. Quels éléments orientent vers une origine infectieuse (ostéite/descellement septique) plutôt qu’un descellement mécanique « aseptique » par réaction aux débris d’usure ?",
+      "enonce": "Devant une ostéolyse péri-prothétique de hanche, quels éléments orientent vers une origine infectieuse (descellement septique) plutôt que mécanique aseptique ?",
       "enonce_image": null,
       "items": [
         {
@@ -364,7 +364,7 @@
         },
         {
           "id": "D",
-          "texte": "La présence de réactions périostées (appositions plurilamellaires)",
+          "texte": "La présence de réactions périostées plurilamellaires",
           "correct": true
         }
       ],
@@ -374,6 +374,43 @@
         "page": 533,
         "element": "Encadré 19.11",
         "refs": "p. 533-534, 539"
+      },
+      "difficulty": 3
+    },
+    {
+      "id": "c19-q11",
+      "type": "QCU",
+      "theme": "Conflit fémoro-acétabulaire : lésion de contrecoup",
+      "enonce": "Dans un conflit fémoro-acétabulaire antérieur évolué, dans quel secteur articulaire apparaissent les lésions cartilagineuses secondaires par « contrecoup » (effet de levier) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Au toit supérieur de l’acétabulum uniquement",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "À la partie postéro-inférieure de l’acétabulum et de la tête fémorale",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Au fond de la fosse acétabulaire (arrière-fond)",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "À la partie inféromédiale du col fémoral",
+          "correct": false
+        }
+      ],
+      "explication": "Dans les conflits antérieurs (came ou tenaille), le contact prématuré antérieur entre le col et l’acétabulum en flexion agit comme un levier qui décoapte la tête en arrière et crée des lésions par contrecoup à la partie postéro-inférieure de l’acétabulum et de la tête fémorale.",
+      "correction_figures": [],
+      "source": {
+        "page": 510,
+        "element": "Texte",
+        "refs": "p. 510, 512, 514"
       },
       "difficulty": 3
     }

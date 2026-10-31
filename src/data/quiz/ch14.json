@@ -85,7 +85,7 @@
       "id": "c14-q03",
       "type": "QCU",
       "theme": "Arthrose érosive des doigts",
-      "enonce": "Une patiente de 55 ans présente des douleurs inflammatoires intenses avec poussées congestives au niveau des articulations interphalangiennes distales (IPD), principalement à l’index et à l’auriculaire, de façon bilatérale et symétrique. Les radiographies révèlent des érosions de la partie centrale des têtes phalangiennes. Quel est le diagnostic le plus probable ?",
+      "enonce": "Une patiente de 55 ans présente des poussées inflammatoires bilatérales et symétriques des IPD avec érosions centrales des têtes phalangiennes en radiographie. Quel est le diagnostic le plus probable ?",
       "enonce_image": null,
       "items": [
         {
@@ -196,7 +196,7 @@
       "id": "c14-q06",
       "type": "QCU",
       "theme": "Déformation en « col de cygne » et doigt en maillet",
-      "enonce": "Un patient présente une déformation en « col de cygne » d’un doigt long, caractérisée par une hyperextension de l’articulation interphalangienne proximale (IPP) et une flexion de l’articulation interphalangienne distale (IPD). Parmi les propositions suivantes, quel mécanisme peut être à l’origine de cette déformation ?",
+      "enonce": "Quel mécanisme tendineux peut être à l’origine d’une déformation en « col de cygne » d’un doigt long (hyperextension de l’IPP et flexion de l’IPD) ?",
       "enonce_image": null,
       "items": [
         {
@@ -206,12 +206,12 @@
         },
         {
           "id": "B",
-          "texte": "Une rupture isolée des bandelettes sagittales en regard de la métacarpophalangienne",
+          "texte": "Une rupture isolée des bandelettes sagittales en regard de la MCP",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "L’absence de traitement adéquat d’un « doigt en maillet » (mallet finger)",
+          "texte": "Un « doigt en maillet » (mallet finger) non ou mal traité",
           "correct": true
         },
         {
@@ -344,12 +344,12 @@
       "id": "c14-q10",
       "type": "QCU",
       "theme": "Rupture de la poulie A2 chez le grimpeur",
-      "enonce": "Un grimpeur ressent un « clac » douloureux à la face palmaire de l’annulaire lors d’une prise en escalade. À l’échographie, on observe en coupe longitudinale, lors d’une manœuvre de flexion contrariée, un écartement anormal de 5 mm entre les tendons fléchisseurs et la corticale palmaire de la phalange proximale (P1). Quel diagnostic doit être évoqué selon la gradation lésionnelle ?",
+      "enonce": "Chez un grimpeur, l’échographie en flexion contrariée montre un écartement anormal de 5 mm entre les tendons fléchisseurs et la corticale palmaire de la phalange proximale (P1). Quel diagnostic évoquez-vous ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Une entorse de poulie (Grade I)",
+          "texte": "Une entorse simple de poulie (Grade I)",
           "correct": false
         },
         {

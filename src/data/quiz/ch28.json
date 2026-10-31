@@ -17,26 +17,26 @@
       "items": [
         {
           "id": "A",
-          "texte": "Elles affectent le plus fréquemment le tiers moyen du muscle tibial antérieur",
+          "texte": "Elles touchent le plus souvent le tiers moyen du muscle tibial antérieur",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "Bien qu’elles puissent être d’origine traumatique, la plupart surviennent sans contexte traumatique, suggérant une anomalie constitutionnelle du fascia crural souvent aux points de faiblesse créés par la traversée de vaisseaux et nerfs",
+          "texte": "Elles surviennent souvent aux points de faiblesse du fascia traversés par les nerfs perforants",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Les patients consultent principalement pour des douleurs aiguës et un syndrome de loge",
+          "texte": "Elles se révèlent habituellement par un syndrome de loge aigu spontané",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "En échographie, la hernie est généralement hyperéchogène par rapport au muscle normal et son volume diminue lors de la contraction musculaire",
+          "texte": "En échographie, la hernie est hyperéchogène et diminue lors de la contraction",
           "correct": false
         }
       ],
-      "explication": "Les hernies musculaires de jambe touchent surtout le tiers moyen du tibial antérieur (loge antérolatérale). Souvent spontanées et parfois bilatérales, elles traduisent une fragilité constitutionnelle du fascia aux zones de traversée des vaisseaux et nerfs (notamment le nerf fibulaire superficiel). Cliniquement, elles sont le plus souvent asymptomatiques (tuméfaction inesthétique ou crainte d’une tumeur) et ne provoquent un syndrome de loge que de manière exceptionnelle en cas de réparation chirurgicale inadaptée. En échographie (l’examen de choix), la hernie est moins échogène (hypoéchogène) que le muscle normal en raison de l’anisotropie, et elle se majore (devient plus apparente) lors de la contraction musculaire (flexion dorsale pour le tibial antérieur).",
+      "explication": "Les hernies musculaires de jambe touchent surtout le tiers moyen du tibial antérieur (loge antérolatérale). Souvent spontanées, elles traduisent une faiblesse constitutionnelle du fascia aux zones de traversée des vaisseaux et nerfs (notamment le nerf fibulaire superficiel). Elles sont le plus souvent peu ou pas douloureuses. En échographie, la hernie est hypoéchogène par anisotropie et augmente de volume lors de la contraction musculaire (flexion dorsale).",
       "correction_figures": [],
       "source": {
         "page": 797,
@@ -47,33 +47,33 @@
     {
       "id": "c28-q02",
       "type": "QCU",
-      "difficulty": 2,
-      "theme": "Syndrome de loge chronique de la jambe",
-      "enonce": "Un sportif se plaint de douleurs intenses à type de crampes et de brûlures de la face antérolatérale de la jambe, survenant systématiquement après 20 minutes de course à pied. Ces douleurs l’obligent à s’arrêter et persistent plusieurs heures après l’effort. L’examen clinique au repos est strictement normal. Quel diagnostic devez-vous évoquer en priorité, et quel test clinique permet de le confirmer formellement ?",
+      "difficulty": 1,
+      "theme": "Syndrome de loge chronique de la jambe : clinique",
+      "enonce": "Un coureur présente des crampes antérolatérales de jambe survenant systématiquement après 20 minutes de course, imposant l’arrêt, avec un examen au repos normal. Quel est le diagnostic le plus probable ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Un syndrome de loge aigu ; confirmé par un dosage des CPK sanguins",
+          "texte": "Un syndrome de loge aigu",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Un syndrome de loge chronique (loge antérieure ou latérale) ; confirmé par la mesure des pressions intramusculaires au décours immédiat d’un effort standardisé (élévation > 30 mmHg de la pression de repos à 1 minute)",
+          "texte": "Un syndrome de loge chronique d’effort",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Un tennis leg ; confirmé par l’échographie du mollet",
+          "texte": "Un tennis leg",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Une myonécrose calcifiée ; confirmée par la radiographie standard",
+          "texte": "Une myonécrose calcifiée",
           "correct": false
         }
       ],
-      "explication": "Ce tableau clinique (douleur d’effort systématique à un même seuil, imposant l’arrêt et persistant longtemps après, avec examen au repos normal) est pathognomonique du syndrome de loge chronique. Touchant surtout l’adulte jeune sportif (course de fond) à la loge antérieure (51 %), ce syndrome résulte d’une inadéquation entre l’hypertrophie/hyperémie musculaire d’effort et l’inextensibilité du fascia. Le diagnostic clinique est conforté par la mesure des pressions intramusculaires après effort (pression > 30 mmHg au-dessus de la pression de repos à 1 minute). Un syndrome de loge aigu donne une douleur aiguë croissante persistante souvent post-traumatique, tandis qu’un tennis leg se manifeste par un claquement brutal postérieur.",
+      "explication": "Une douleur d’effort reproductible à un seuil constant, imposant l’arrêt de la course et disparaissant au repos avec un examen clinique intercritique normal, est caractéristique du syndrome de loge chronique d’effort (qui affecte la loge antérieure dans plus de 50 % des cas).",
       "correction_figures": [],
       "source": {
         "page": 800,
@@ -83,75 +83,75 @@
     },
     {
       "id": "c28-q03",
-      "type": "QRM",
-      "difficulty": 3,
-      "theme": "Syndrome tibial médial d’effort et fractures de fatigue tibiales",
-      "enonce": "Concernant le syndrome tibial médial d’effort (STME, anciennement « périostite tibiale ») et les fractures de fatigue tibiales, quelles sont les affirmations exactes ?",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Syndrome de loge chronique : confirmation diagnostique",
+      "enonce": "Quel examen permet de confirmer formellement un syndrome de loge chronique de la jambe ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Les fractures de fatigue de la corticale postéromédiale (en compression) sont les plus fréquentes, touchent le tiers moyen ou distal et consolident bien sous traitement conservateur",
-          "correct": true
+          "texte": "Le dosage des CPK sériques au repos",
+          "correct": false
         },
         {
           "id": "B",
-          "texte": "Les fractures de la corticale antérieure (en tension) sont rares, touchent le tiers moyen de la diaphyse, sont instables et consolident mal en raison des forces de distraction et de la faible vascularisation, nécessitant parfois un traitement chirurgical",
+          "texte": "La mesure des pressions intramusculaires au décours immédiat d’un effort standardisé",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Dans le STME, la douleur siège typiquement à la face antéro ou postéromédiale du tibia et disparaît systématiquement et immédiatement dès l’arrêt de la course",
+          "texte": "L’échographie-Doppler artériel de repos",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "L’IRM est plus précoce, plus sensible (86-100 %) et plus spécifique (100 %) que la scintigraphie (74 %) pour détecter les lésions de contrainte tibiale ; le signe IRM le plus précoce et sensible est l’œdème médullaire endosté, bien qu’il ne soit pas spécifique (il s’observe parfois chez les coureurs réguliers asymptomatiques)",
-          "correct": true
+          "texte": "La radiographie standard de la jambe",
+          "correct": false
         }
       ],
-      "explication": "Les fractures de fatigue tibiales se divisent en deux types au pronostic très différent : celles de la corticale postéromédiale concave (stables, en compression, consolident en 2 mois de repos) et celles de la corticale antérieure convexe (rares 4,6 %, instables, en tension, de consolidation difficile en 7 mois avec un risque de retard/pseudarthrose pouvant requérir une chirurgie). Dans le STME (lésions de surmenage microtraumatique), la douleur antéro/postéromédiale survient à la course mais, de manière caractéristique, elle peut persister plusieurs heures après l’arrêt du sport et être exquise à la simple palpation. L’IRM a supplanté la scintigraphie pour le dépistage précoce des contraintes osseuses, l’œdème médullaire endosté étant très sensible mais moins spécifique que la présence d’une fine strie fracturaire hypo-intense.",
+      "explication": "Le diagnostic de syndrome de loge chronique repose sur la mesure des pressions intramusculaires avant et après un effort standardisé sur tapis roulant : une élévation supérieure à 30 mmHg au-dessus de la pression de repos à 1 minute après l’arrêt de l’effort confirme le diagnostic.",
       "correction_figures": [],
       "source": {
-        "page": 801,
-        "element": "Pages 801, 803, 804 et 806",
+        "page": 800,
+        "element": "Page 800",
         "refs": ""
       }
     },
     {
       "id": "c28-q04",
-      "type": "QCU",
+      "type": "QRM",
       "difficulty": 2,
-      "theme": "Tennis leg et lésions du muscle gastrocnémien médial",
-      "enonce": "Un homme de 45 ans, jouant au tennis de façon hebdomadaire, ressent brutalement un claquement douloureux (« coup de fouet ») à la face postérieure du mollet, l’obligeant à s’arrêter de jouer. L’examen révèle un mollet tendu et un point exquis antéromédial. L’échographie (en coupe longitudinale) objective un décollement interaponévrotique avec collection hématique entre les muscles gastrocnémien médial et soléaire. Quel est le diagnostic le plus fréquent correspondant à ce tableau clinique (« tennis leg ») et quelle lésion doit systématiquement être recherchée car associée dans 10 % des cas ?",
+      "theme": "Fractures de fatigue tibiales",
+      "enonce": "Concernant les fractures de fatigue de la diaphyse tibiale, quelles sont les affirmations exactes ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Une rupture du tendon d’Achille (calcanéen) ; rechercher une ostéomyélite du calcanéus",
-          "correct": false
+          "texte": "Les fractures de la corticale postéromédiale (en compression) sont les plus fréquentes",
+          "correct": true
         },
         {
           "id": "B",
-          "texte": "Une rupture du muscle plantaire ; rechercher une atteinte du nerf tibial",
-          "correct": false
+          "texte": "Les fractures postéromédiales consolident habituellement bien sous traitement conservateur",
+          "correct": true
         },
         {
           "id": "C",
-          "texte": "Une désinsertion myoaponévrotique périphérique distale du chef médial du muscle gastrocnémien ; rechercher une thrombose veineuse profonde (thrombophlébite) surale ou poplitée",
+          "texte": "Les fractures de la corticale antérieure (en distraction) exposent au risque de pseudarthrose",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Une rupture du chef latéral du gastrocnémien ; rechercher une lésion du nerf fibulaire commun",
+          "texte": "Les fractures de la corticale antérieure sont les plus bénignes et consolident en 3 semaines",
           "correct": false
         }
       ],
-      "explication": "Le « tennis leg » (claquement brutal du mollet à l’effort chez l’adulte d’âge moyen) correspondait historiquement à la rupture du muscle plantaire, mais les études ont démontré qu’il s’agit le plus souvent d’une lésion distale du chef médial du muscle gastrocnémien (désinsertion myoaponévrotique ou décollement de l’espace interaponévrotique entre le gastrocnémien médial et le soléaire). L’échographie est l’examen de référence pour graduer le décollement et guider une éventuelle ponction de la collection hématique. Par ailleurs, il faut systématiquement rechercher une thrombose veineuse profonde associée (thrombophlébite surale ou poplitée, présente dans environ 10 % des cas par compression ou étirement).",
+      "explication": "Les fractures de fatigue tibiales touchent le plus souvent la corticale postéromédiale concave (en compression), qui est stable et consolide en environ 2 mois de repos. À l’inverse, les fractures de la corticale antérieure convexe (en tension/distraction, sports de saut) sont rares (4,6 %), instables et consolident très lentement avec un risque élevé de pseudarthrose ou de fracture complète.",
       "correction_figures": [],
       "source": {
-        "page": 812,
-        "element": "Pages 812, 813 et 815",
+        "page": 801,
+        "element": "Pages 801, 803 et 804",
         "refs": ""
       }
     },
@@ -159,32 +159,143 @@
       "id": "c28-q05",
       "type": "QRM",
       "difficulty": 3,
-      "theme": "Anatomie et lésions du tendon du muscle plantaire",
-      "enonce": "Concernant l’anatomie et les lésions du tendon du muscle plantaire, quelles sont les affirmations exactes ?",
+      "theme": "Syndrome tibial médial d’effort (STME) et IRM",
+      "enonce": "Concernant le syndrome tibial médial d’effort (STME, ancienne « périostite ») et son imagerie, quelles sont les affirmations exactes ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Le muscle plantaire (présent dans 80 à 100 % des cas) est biarticulaire ; il s’insère sur le condyle fémoral latéral et son long tendon plat chemine entre l’aponévrose profonde du gastrocnémien médial et l’aponévrose superficielle du soléaire, pour se diriger vers le bord médial du tendon calcanéen",
+          "texte": "La douleur siège au bord médial du tibia et peut persister plusieurs heures après l’effort",
           "correct": true
         },
         {
           "id": "B",
-          "texte": "La rupture du tendon plantaire mime parfaitement un tennis leg (désinsertion du gastrocnémien médial) mais les deux lésions sont presque toujours associées (dans 90 % des cas)",
-          "correct": false
+          "texte": "L’IRM est plus sensible et plus spécifique que la scintigraphie pour bilanter les lésions de contrainte",
+          "correct": true
         },
         {
           "id": "C",
-          "texte": "En cas de rupture complète du tendon calcanéen, le tendon plantaire (intact) peut venir s’incarcérer dans l’espace interfragmentaire de ce dernier et être source de douleurs résiduelles",
+          "texte": "L’œdème médullaire endosté isolé peut s’observer chez des coureurs asymptomatiques",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "L’échographie d’une rupture du tendon plantaire à la phase aiguë (qui siège souvent à 4-6 cm de l’insertion distale) montre une interruption des fibres tendineuses avec des moignons hypoéchogènes élargis, sans lésion décelable des muscles gastrocnémien médial et soléaire",
+          "texte": "La radiographie standard est toujours anormale dès la première semaine de douleur",
+          "correct": false
+        }
+      ],
+      "explication": "Dans le STME, la douleur antéro- ou postéromédiale survient à la course et persiste souvent plusieurs heures après l’arrêt. L’IRM a supplanté la scintigraphie (sensibilité 86–100 %, spécificité 100 %). L’œdème médullaire endosté est le signe IRM le plus précoce mais manque de spécificité lorsqu’il est isolé (parfois présent chez le coureur asymptomatique).",
+      "correction_figures": [],
+      "source": {
+        "page": 803,
+        "element": "Pages 803, 804 et 806",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c28-q06",
+      "type": "QCU",
+      "difficulty": 1,
+      "theme": "Tennis leg : substrat anatomique",
+      "enonce": "À quelle lésion anatomique correspond le plus souvent le tableau clinique de « tennis leg » (douleur brutale en coup de fouet du mollet chez un sportif d’âge moyen) ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une rupture complète du tendon calcanéen",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "Une rupture isolée du tendon du muscle plantaire",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une désinsertion myoaponévrotique distale du chef médial du muscle gastrocnémien",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Une déchirure proximale du chef latéral du muscle gastrocnémien",
+          "correct": false
+        }
+      ],
+      "explication": "Le « tennis leg » correspond dans la grande majorité des cas à une désinsertion myoaponévrotique distale du chef médial du muscle gastrocnémien, souvent associée à une collection hématique interaponévrotique entre le gastrocnémien médial et le soléaire.",
+      "correction_figures": [],
+      "source": {
+        "page": 812,
+        "element": "Pages 812 et 813",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c28-q07",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Tennis leg : complication à rechercher",
+      "enonce": "Lors de l’échographie d’un « tennis leg », quelle complication associée (présente dans environ 10 % des cas) doit être systématiquement recherchée ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une thrombose veineuse profonde surale ou poplitée",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une section du nerf tibial",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une fracture de fatigue de la fibula",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un anévrisme de l’artère tibiale postérieure",
+          "correct": false
+        }
+      ],
+      "explication": "Une thrombose veineuse profonde (thrombophlébite surale ou poplitée) est associée au tennis leg dans environ 10 % des cas (par compression par l’hématome et stase veineuse) et doit être systématiquement recherchée en échographie-Doppler.",
+      "correction_figures": [],
+      "source": {
+        "page": 815,
+        "element": "Page 815",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c28-q08",
+      "type": "QRM",
+      "difficulty": 3,
+      "theme": "Tendon du muscle plantaire",
+      "enonce": "Concernant l’anatomie et les lésions du muscle plantaire, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Son long tendon chemine entre le gastrocnémien médial et le soléaire vers le bord médial du tendon calcanéen",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Sa rupture est associée à une désinsertion du gastrocnémien médial dans 90 % des cas",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Il reste souvent intact lors d’une rupture complète du tendon calcanéen",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "En échographie, sa rupture montre deux moignons tendineux rétractés sans lésion musculaire adjacente",
           "correct": true
         }
       ],
-      "explication": "Le plantaire est un petit muscle inconstant (80-100 %) biarticulaire inséré sur le condyle latéral fémoral, dont le long tendon aplati chemine entre les aponévroses du gastrocnémien médial et du soléaire pour s’accoler au bord médial du tendon d’Achille. Si sa rupture mime un tennis leg cliniquement (sensation de coup de fouet), ces deux lésions ne sont en fait que très rarement associées (1,4 % des cas). Lors d’une rupture du tendon d’Achille (à 4-6 cm de son insertion), le plantaire est souvent épargné mais peut s’incarcérer dans la cicatrice achilléenne et gêner. L’échographie confirme le diagnostic de rupture du plantaire devant une disparition du tendon, un décollement hématique localisé interaponévrotique et l’intégrité des autres muscles du mollet.",
+      "explication": "Le muscle plantaire (présent dans 80 à 100 % des cas) possède un long tendon cheminant entre le gastrocnémien médial et le soléaire pour longer le bord médial du tendon calcanéen. Sa rupture mime cliniquement un tennis leg mais n’y est associée que dans 1,4 % des cas. Lors d’une rupture du tendon calcanéen, il reste souvent intact et peut s’incarcérer dans le foyer de rupture.",
       "correction_figures": [],
       "source": {
         "page": 816,
@@ -193,35 +304,35 @@
       }
     },
     {
-      "id": "c28-q06",
+      "id": "c28-q09",
       "type": "QCU",
       "difficulty": 1,
-      "theme": "Nerf fibulaire commun et nerf fibulaire superficiel",
-      "enonce": "Quelle est l’innervation sensitive principale du nerf fibulaire superficiel (branche du nerf fibulaire commun descendant dans la loge latérale) et quelle est la conséquence clinique classique d’une lésion du tronc du nerf fibulaire commun au niveau du col de la fibula ?",
+      "theme": "Lésion du nerf fibulaire commun",
+      "enonce": "Quelle est la conséquence clinique motrice classique d’une lésion du nerf fibulaire commun au col de la fibula ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Le nerf fibulaire superficiel innerve la face plantaire du pied ; une atteinte du nerf fibulaire commun entraîne une anesthésie plantaire totale",
+          "texte": "Une impossibilité de flexion plantaire du pied",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Le nerf fibulaire superficiel innerve la face antérolatérale de la jambe et la face dorsale du pied ; une atteinte du nerf fibulaire commun entraîne un pied tombant avec steppage à la marche et une perte de l’abduction du pied",
+          "texte": "Un pied tombant avec steppage (déficit des releveurs et des éverseurs du pied)",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Le nerf fibulaire superficiel innerve uniquement le premier espace interdigital dorsal du pied ; une lésion du nerf fibulaire commun empêche la flexion plantaire",
+          "texte": "Une paralysie isolée de l’adduction du pied",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Le nerf fibulaire superficiel innerve la face postérieure du mollet ; une atteinte du nerf fibulaire commun entraîne un flexum irréductible du genou",
+          "texte": "Un flexum irréductible du genou",
           "correct": false
         }
       ],
-      "explication": "Le nerf fibulaire commun se divise au col de la fibula en nerf fibulaire profond et superficiel. Le nerf fibulaire superficiel descend dans la loge latérale (innervant les muscles fibulaires) et assure la sensibilité de la face antérolatérale de la jambe et du dos du pied (le premier espace interdigital dorsal est innervé par le nerf fibulaire profond). L’atteinte du nerf fibulaire commun paralyse tous les muscles des loges antérieure et latérale, entraînant un déficit moteur de la flexion dorsale du pied (pied tombant avec steppage) et une impossibilité d’abduction, associés à l’anesthésie de la face antérolatérale de la jambe et du dos du pied. La flexion plantaire et la sensibilité plantaire sont assurées par le nerf tibial.",
+      "explication": "Le nerf fibulaire commun se divise au col de la fibula en nerfs fibulaires superficiel (loge latérale : éverseurs/abducteurs) et profond (loge antérieure : releveurs/extenseurs). Son atteinte entraîne un déficit de la flexion dorsale et de l’éversion du pied, responsable d’un pied tombant avec steppage à la marche.",
       "correction_figures": [],
       "source": {
         "page": 807,
@@ -230,11 +341,48 @@
       }
     },
     {
-      "id": "c28-q07",
+      "id": "c28-q10",
+      "type": "QCU",
+      "difficulty": 2,
+      "theme": "Territoire sensitif des nerfs fibulaires",
+      "enonce": "Quel est le territoire sensitif propre du nerf fibulaire superficiel ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "La face plantaire du pied",
+          "correct": false
+        },
+        {
+          "id": "B",
+          "texte": "La face antérolatérale de la jambe et la majeure partie du dos du pied",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "Exclusivement la première commissure interdigitale dorsale",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "La face postérieure du mollet",
+          "correct": false
+        }
+      ],
+      "explication": "Le nerf fibulaire superficiel assure la sensibilité de la face antérolatérale de la jambe et de la face dorsale du pied, à l’exception de la première commissure interdigitale dorsale qui dépend du nerf fibulaire profond.",
+      "correction_figures": [],
+      "source": {
+        "page": 807,
+        "element": "Pages 807 et 808",
+        "refs": ""
+      }
+    },
+    {
+      "id": "c28-q11",
       "type": "QRM",
       "difficulty": 2,
       "theme": "Compression du nerf tibial à la jambe",
-      "enonce": "Parmi les entités suivantes, lesquelles peuvent provoquer une compression ou une souffrance du nerf tibial à la jambe (le nerf tibial descendant dans la loge postérieure profonde puis sous le fascia crural avant de passer derrière la malléole médiale) ?",
+      "enonce": "Parmi les entités suivantes, lesquelles peuvent comprimer le nerf tibial à la partie proximale de la jambe ?",
       "enonce_image": null,
       "items": [
         {
@@ -244,21 +392,21 @@
         },
         {
           "id": "B",
-          "texte": "Un kyste mucoïde poplité (de Baker)",
+          "texte": "Un kyste poplité (de Baker) volumineux ou rompu",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Un kyste intraneural issu de la branche articulaire postérieure de l’articulation tibiofibulaire proximale",
+          "texte": "Un kyste intraneural issu de la branche postérieure de l’articulation tibiofibulaire proximale",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Un ostéochondrome de l’apex de la fibula",
+          "texte": "Un conflit sous le rétinaculum supérieur des muscles extenseurs",
           "correct": false
         }
       ],
-      "explication": "Le nerf tibial chemine dans la loge postérieure (sous les gastrocnémiens, puis sous l’arcade du soléaire). Il peut être comprimé ou étiré par un kyste poplité (de Baker) ou un kyste mucoïde compressif, un épaississement fibreux de l’arcade tendineuse du soléaire, ou encore un kyste intraneural disséquant sa branche articulaire postérieure originaire de l’articulation tibiofibulaire proximale. D’autres causes incluent tumeurs et traumatismes. En revanche, l’apex de la fibula est latéral et son ostéochondrome ou sa compression menacerait le nerf fibulaire commun.",
+      "explication": "Le nerf tibial descend dans la loge postérieure sous l’arcade du soléaire. Il peut être comprimé par un kyste poplité, une arcade fibreuse du soléaire, ou un kyste intraneural disséquant sa branche articulaire postérieure issue de l’articulation tibiofibulaire proximale.",
       "correction_figures": [],
       "source": {
         "page": 820,

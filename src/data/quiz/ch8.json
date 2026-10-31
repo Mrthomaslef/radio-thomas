@@ -270,27 +270,27 @@
       "id": "c8-q03",
       "type": "QCU",
       "theme": "Rupture distale du triceps brachial",
-      "enonce": "Un haltérophile de 35 ans consulte aux urgences pour une douleur brutale supra-olécrânienne droite survenue lors d’un effort violent. À l’examen clinique, malgré une tuméfaction locale évidente et la suspicion d’une rupture complète du tendon distal du triceps brachial, le patient parvient toujours à réaliser une extension active (bien que faible) de son coude. Sur le plan purement anatomique, comment expliquer ce phénomène clinique qui peut faussement rassurer le clinicien ?",
+      "enonce": "Lors d’une rupture complète du tendon distal du triceps brachial sur l’olécrâne, pourquoi le patient conserve-t-il parfois une faible extension active du coude ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "L’extension active est compensée par la contraction synergique du muscle biceps brachial",
+          "texte": "Par compensation synergique du muscle biceps brachial",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "L’extension reste possible grâce aux expansions tricipitales sur la crête de l’ulna, le fascia de l’extenseur ulnaire du carpe et l’insertion du muscle anconé",
+          "texte": "Grâce aux expansions aponévrotiques tricipitales latérales et à l’insertion du muscle anconé",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "La rupture du triceps n’affecte que les fibres superficielles latérales, laissant toujours le chef médial profond intact lors d’un traumatisme",
+          "texte": "Parce que le chef médial profond du triceps ne se rompt jamais",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "L’extension du coude est principalement sous le contrôle du nerf médian, qui reste indemne",
+          "texte": "Grâce à la suppléance du muscle brachioradial",
           "correct": false
         }
       ],
@@ -418,27 +418,27 @@
       "id": "c8-q07",
       "type": "QCU",
       "theme": "Variante anatomique : os supratrochléaire dorsal",
-      "enonce": "Lors du bilan radiologique d’un patient consultant pour des douleurs postérieures chroniques du coude sans notion de traumatisme récent, vous remarquez une formation osseuse au sein de la fosse olécrânienne. Hésitant entre un fragment ostéochondral libre (corps étranger intra-articulaire) et une variante anatomique appelée « os supratrochléaire dorsal », quel élément radioclinique simple vous orienterait formellement vers la variante anatomique ?",
+      "enonce": "Devant une formation osseuse bien corticalisée dans la fosse olécrânienne sans traumatisme, quel argument oriente vers un « os supratrochléaire dorsal » (variante anatomique) plutôt qu’un corps étranger ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "L’aspect condensé et dense de la lésion",
+          "texte": "Son aspect très condensé",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "La constatation du même aspect osseux de manière bilatérale sur des radiographies comparatives",
+          "texte": "Son caractère bilatéral sur des clichés comparatifs",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "La présence d’une ostéochondrite associée du capitulum",
+          "texte": "La présence d’une ostéochondrite du capitulum",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "L’association à une fracture de contrainte de l’olécrâne",
+          "texte": "Une fracture de fatigue associée de l’olécrâne",
           "correct": false
         }
       ],
@@ -492,27 +492,27 @@
       "id": "c8-q09",
       "type": "QCU",
       "theme": "Bursopathie olécrânienne : IRM et origine septique",
-      "enonce": "Un menuisier de 55 ans présente une volumineuse tuméfaction inflammatoire, douloureuse et érythémateuse en regard de l’olécrâne. Vous demandez une IRM pour éliminer une ostéomyélite sous-jacente et statuer sur le caractère septique ou mécanique de cette bursite. Malgré le fort chevauchement des signes IRM entre bursites septiques et mécaniques, quel argument IRM (après injection) plaiderait de façon importante CONTRE une origine septique ?",
+      "enonce": "Devant une bursite olécrânienne aiguë explorée en IRM, quel signe après injection de gadolinium plaide fortement CONTRE une origine septique ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "La présence d’un œdème des tissus mous adjacents",
+          "texte": "Un œdème des tissus mous adjacents",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "L’absence totale de rehaussement de la paroi bursale et des tissus mous après injection de gadolinium",
+          "texte": "L’absence totale de rehaussement de la paroi bursale et des tissus mous",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "La présence de fins septums à l’intérieur de la bourse",
+          "texte": "La présence de fins septums intrabursaux",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "L’existence d’un épanchement intra-articulaire minime associé",
+          "texte": "Un épanchement intra-articulaire minime associé",
           "correct": false
         }
       ],

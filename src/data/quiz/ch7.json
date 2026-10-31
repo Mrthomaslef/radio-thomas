@@ -270,27 +270,27 @@
       "id": "c7-q03",
       "type": "QCU",
       "theme": "Rupture distale du biceps : examen clinique",
-      "enonce": "Un homme de 50 ans se présente aux urgences après avoir ressenti un claquage dans le pli du coude en soulevant un meuble lourd. À l’examen, vous observez une contraction en « boule » à la partie moyenne du bras. Afin de confirmer cliniquement la suspicion de rupture complète du tendon distal du biceps brachial, quel test spécifique allez-vous réaliser et quel en sera le résultat attendu ?",
+      "enonce": "Devant une suspicion de rupture complète du tendon distal du biceps brachial (signe de Popeye au bras), quel test clinique spécifique recherche l’absence de corde tendineuse au pli du coude ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Le test de Cozen, qui sera positif à l’extension du poignet",
+          "texte": "Le test de Cozen",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Le hook-test, qui révélera l’impossibilité de crocheter une structure en corde dans la fosse antébrachiale",
+          "texte": "Le hook-test (test du crochet)",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Le signe de Tinel, qui déclenchera des paresthésies en aval",
+          "texte": "Le signe de Tinel",
           "correct": false
         },
         {
           "id": "D",
-          "texte": "Le jerk test, qui montrera un ressaut articulaire médial",
+          "texte": "Le jerk test",
           "correct": false
         }
       ],
@@ -418,31 +418,31 @@
       "id": "c7-q07",
       "type": "QCU",
       "theme": "Syndrome du rond pronateur : diagnostic différentiel",
-      "enonce": "Une patiente développe des paresthésies de la face ventrale des 1er, 2e et 3e doigts de la main droite avec une douleur à l’avant-bras. Le clinicien hésite entre un syndrome du canal carpien distal et un syndrome du rond pronateur (compression proximale du nerf médian). Quel signe clinique permet d’orienter le diagnostic spécifiquement vers un syndrome du rond pronateur ?",
+      "enonce": "Devant des paresthésies dans le territoire du nerf médian, quel signe clinique oriente vers un syndrome du rond pronateur (compression au coude) plutôt qu’un syndrome du canal carpien ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Un signe de Tinel fortement positif au niveau du pli de flexion du poignet",
+          "texte": "Un signe de Tinel positif à la face palmaire du poignet",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Une aggravation des symptômes lors de la flexion passive et prolongée du poignet",
+          "texte": "Une aggravation lors de la flexion prolongée du poignet (manœuvre de Phalen)",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Une hypoesthésie isolée des téguments de l’éminence thénar associée à des douleurs irradiant à l’avant-bras sans recrudescence nocturne",
+          "texte": "Une hypoesthésie de l’éminence thénar avec douleurs d’avant-bras sans recrudescence nocturne",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "L’apparition de symptômes nocturnes intenses la réveillant",
+          "texte": "Des acroparesthésies nocturnes soulagées par le secouement de la main",
           "correct": false
         }
       ],
-      "explication": "Les similitudes cliniques avec le syndrome du canal carpien rendent le diagnostic parfois complexe. Cependant, une irradiation inhabituelle à l’avant-bras, une hypoesthésie des téguments de l’éminence thénar, l’absence de symptômes nocturnes ou lors de la flexion du poignet, ainsi qu’un signe de Tinel négatif au poignet permettent d’orienter vers une compression proximale de type syndrome du rond pronateur.",
+      "explication": "Le rameau palmaire cutané du nerf médian (innervant la peau de l’éminence thénar) naît en amont du canal carpien : son atteinte oriente donc vers une compression proximale du nerf médian (syndrome du rond pronateur), tout comme l’absence de recrudescence nocturne et la douleur antébrachiale.",
       "correction_figures": [],
       "source": {
         "page": 189,

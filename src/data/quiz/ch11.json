@@ -11,7 +11,7 @@
       "id": "c11-q01",
       "type": "QCU",
       "theme": "Anatomie du TFCC : ménisque homologue",
-      "enonce": "Parmi les structures formant le complexe fibrocartilagineux triangulaire du carpe (TFCC), laquelle est située sous le disque articulaire, est bien vascularisée, et s’insère typiquement sur l’apex du processus styloïde ulnaire et/ou le ligament radio-ulnaire dorsal pour descendre vers le triquétrum ?",
+      "enonce": "Quelle structure bien vascularisée du complexe fibrocartilagineux triangulaire (TFCC) est située sous le disque articulaire et relie l’apex de la styloïde ulnaire au triquétrum ?",
       "enonce_image": null,
       "items": [
         {
@@ -31,7 +31,7 @@
         },
         {
           "id": "D",
-          "texte": "La gaine du tendon du muscle extenseur ulnaire du carpe",
+          "texte": "La gaine de l’extenseur ulnaire du carpe",
           "correct": false
         }
       ],
@@ -85,38 +85,38 @@
       "id": "c11-q03",
       "type": "QCU",
       "theme": "Lésions du TFCC : avulsion radiale (Palmer ID)",
-      "enonce": "Lors de l’analyse d’une IRM du poignet d’un patient de 25 ans, vous observez un hypersignal T2 linéaire, net, traversant toute l’épaisseur du bord radial du disque articulaire. Il s’y associe un petit épanchement dans l’articulation radio-ulnaire distale. Selon la classification de Palmer, à quelle classe cette lésion appartient-elle et quel traitement arthroscopique est généralement préconisé ?",
+      "enonce": "En IRM du poignet d’un sujet jeune après traumatisme, une fente liquidienne transfixiante désinsère le bord radial du disque articulaire du TFCC. À quelle classe de Palmer correspond cette lésion ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Lésion IA (centrale) nécessitant une suture",
+          "texte": "Classe IA (perforation centrale)",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Lésion IB (ulnaire) nécessitant une réinsertion",
+          "texte": "Classe IB (avulsion ulnaire)",
           "correct": false
         },
         {
           "id": "C",
-          "texte": "Lésion ID (radiale) nécessitant un simple débridement",
+          "texte": "Classe ID (avulsion radiale)",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Lésion IIC (dégénérative) nécessitant un fraisage de la tête ulnaire (wafer procedure)",
+          "texte": "Classe IIC (perforation dégénérative)",
           "correct": false
         }
       ],
-      "explication": "L’hypersignal liquidien transfixiant au bord radial signe une avulsion radiale, soit une lésion traumatique de classe ID de Palmer. Étant donné que le versant radial du disque n’est pas vascularisé (contrairement au versant ulnaire), la lésion ne peut pas cicatriser. Elle relève donc d’un simple débridement arthroscopique et non d’une réparation ou suture.",
+      "explication": "Dans la classification de Palmer, les lésions traumatiques (classe I) comprennent : IA (perforation paracentale), IB (avulsion ulnaire), IC (avulsion distale des ligaments ulnocarpiens) et ID (avulsion radiale sur l’incisure ulnaire du radius).",
       "correction_figures": [],
       "source": {
         "page": 235,
-        "element": "Texte (p. 235, 239 et 240)",
+        "element": "Texte (p. 235, 239)",
         "refs": ""
       },
-      "difficulty": 3
+      "difficulty": 2
     },
     {
       "id": "c11-q04",
@@ -233,7 +233,7 @@
       "id": "c11-q07",
       "type": "QCU",
       "theme": "Instabilité scapholunaire : stadification radiographique",
-      "enonce": "Lors de l’évaluation radiographique statique (face et profil stricts) d’un poignet, vous observez un diastasis scapholunaire de 4 mm, une interruption du 1er arc de Gilula, un raccourcissement du scaphoïde (« signe de l’anneau ») et une bascule dorsale du lunatum avec un angle scapholunaire mesuré à 75°. Le patient se plaint de douleurs. Quel est le stade de cette instabilité scapholunaire selon la classification classique ?",
+      "enonce": "Sur des clichés standard statiques du poignet (sans manœuvre dynamique), on observe un diastasis scapholunaire de 4 mm, un signe de l’anneau et une DISI (angle scapholunaire à 75°), sans arthrose. Quel est le stade de cette instabilité ?",
       "enonce_image": null,
       "items": [
         {
@@ -253,11 +253,11 @@
         },
         {
           "id": "D",
-          "texte": "SLAC wrist (sans plus de précisions nécessaires)",
+          "texte": "SLAC wrist",
           "correct": false
         }
       ],
-      "explication": "Les radiographies statiques démontrent des anomalies patentes (diastasis, DISI avec angle scapholunaire > 70°), ce qui définit le stade « statique » de l’instabilité scapholunaire. Au stade « dynamique », les clichés statiques sont normaux et l’instabilité n’est visible que sur des clichés dynamiques. Bien que cette lésion évolue vers le SLAC wrist, l’énoncé ne décrit pas de signes d’arthrose.",
+      "explication": "Les radiographies statiques démontrent des anomalies patentes (diastasis, DISI avec angle scapholunaire > 70°), ce qui définit le stade « statique » de l’instabilité scapholunaire. Au stade « dynamique », les clichés statiques sont normaux et l’instabilité n’est visible que sur des clichés dynamiques.",
       "correction_figures": [],
       "source": {
         "page": 247,
@@ -270,22 +270,22 @@
       "id": "c11-q08",
       "type": "QRM",
       "theme": "SLAC wrist de stade 2 : options chirurgicales",
-      "enonce": "Le traitement de l’instabilité scapholunaire compliquée d’un SLAC wrist dépend du stade arthrosique. Un patient présente un SLAC wrist de stade 2 (arthrose radio-scaphoïdienne établie). L’interligne radiolunaire est intact et le cartilage de la tête du capitatum est en très bon état. Parmi les options chirurgicales suivantes, lesquelles sont classiquement indiquées et justifiées à ce stade ?",
+      "enonce": "Devant un SLAC wrist de stade 2 (arthrose radio-scaphoïdienne avec interligne radiolunaire et tête du capitatum intacts), quelles interventions chirurgicales palliatives sont classiquement indiquées ?",
       "enonce_image": null,
       "items": [
         {
           "id": "A",
-          "texte": "Une simple réparation anatomique du ligament scapholunaire avec capsulodèse",
+          "texte": "Une simple suture directe du ligament scapholunaire",
           "correct": false
         },
         {
           "id": "B",
-          "texte": "Une résection de la rangée proximale des os du carpe",
+          "texte": "Une résection de la première rangée des os du carpe",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Une scaphoïdectomie associée à une arthrodèse des « 4 coins »",
+          "texte": "Une scaphoïdectomie associée à une arthrodèse des « 4 os » (4 coins)",
           "correct": true
         },
         {
@@ -294,7 +294,7 @@
           "correct": false
         }
       ],
-      "explication": "Au stade 2 du SLAC wrist (arthrose radio-scaphoïdienne), les réparations ligamentaires seules (réservées aux lésions aiguës < 6 semaines) sont dépassées. Les interventions palliatives recommandées sont la résection de la rangée proximale du carpe (possible ici car la tête du capitatum et la surface lunarienne du radius sont saines) ou une arthrodèse partielle (scaphoïdectomie + arthrodèse des 4 coins). L’arthrodèse totale est excessive à ce stade et réservée au stade 4 ou en dernier recours.",
+      "explication": "Au stade 2 du SLAC wrist (arthrose radio-scaphoïdienne), les réparations ligamentaires seules sont dépassées. Les interventions palliatives recommandées sont la résection de la rangée proximale du carpe (possible ici car la tête du capitatum et la fossette lunarienne du radius sont saines) ou une scaphoïdectomie avec arthrodèse des 4 coins.",
       "correction_figures": [],
       "source": {
         "page": 256,
@@ -344,7 +344,7 @@
       "id": "c11-q10",
       "type": "QRM",
       "theme": "Instabilité médiocarpienne palmaire (CIND)",
-      "enonce": "Concernant l’instabilité médiocarpienne palmaire (CIND), qui affecte souvent des patients jeunes et hyperlaxes, quelles sont les constatations cliniques et radiographiques caractéristiques ?",
+      "enonce": "Concernant l’instabilité médiocarpienne palmaire non dissociative (CIND), quelles sont les constatations cliniques et radiographiques caractéristiques ?",
       "enonce_image": null,
       "items": [
         {
@@ -354,21 +354,21 @@
         },
         {
           "id": "B",
-          "texte": "Une bascule palmaire du lunatum (VISI) non dissociative (absence de diastasis lunotriquétral) sur les clichés statiques en cas d’instabilité fixée",
+          "texte": "Une bascule palmaire du lunatum (VISI) sans diastasis lunotriquétral",
           "correct": true
         },
         {
           "id": "C",
-          "texte": "Une augmentation de l’angle radiolunaire et lunocapital, avec un angle scapholunaire normal sur le cliché de profil",
+          "texte": "Une augmentation des angles radiolunaire et lunocapital avec angle scapholunaire normal",
           "correct": true
         },
         {
           "id": "D",
-          "texte": "Une lésion systématique et complète du segment intermédiaire du ligament scapholunaire",
+          "texte": "Une rupture complète systématique du ligament scapholunaire",
           "correct": false
         }
       ],
-      "explication": "L’instabilité médiocarpienne palmaire se manifeste cliniquement par un ressaut (clunk) lors de l’inclinaison ulnaire (bascule brutale de la rangée proximale de la flexion vers l’extension). Radiologiquement (stade statique), on observe une VISI (flexion de la rangée proximale) sans dissociation des os de la rangée proximale : il n’y a donc ni diastasis lunotriquétral, ni anomalie de l’angle scapholunaire. C’est une instabilité non dissociative (ligaments extrinsèques lésés ou laxité, et non les ligaments interosseux intrinsèques comme le scapholunaire).",
+      "explication": "L’instabilité médiocarpienne palmaire se manifeste cliniquement par un ressaut (clunk) lors de l’inclinaison ulnaire. Radiologiquement, on observe une VISI (flexion de toute la rangée proximale) non dissociative : il n’y a ni diastasis lunotriquétral ni anomalie de l’angle scapholunaire.",
       "correction_figures": [],
       "source": {
         "page": 262,
@@ -376,6 +376,43 @@
         "refs": ""
       },
       "difficulty": 2
+    },
+    {
+      "id": "c11-q11",
+      "type": "QCU",
+      "theme": "Traitement des lésions du TFCC selon leur vascularisation",
+      "enonce": "Pourquoi une désinsertion traumatique radiale du disque articulaire du TFCC (Palmer ID) relève-t-elle habituellement d’un simple débridement arthroscopique plutôt que d’une réinsertion ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Parce que le bord radial et le centre du disque sont avasculaires et cicatrisent mal",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Parce que le bord radial est hypervascularisé et cicatrise spontanément en 8 jours",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Parce que la suture radiale bloque définitivement la flexion des doigts",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Parce que le disque articulaire se régénère intégralement après résection",
+          "correct": false
+        }
+      ],
+      "explication": "Seule la périphérie ulnaire, palmaire et dorsale du TFCC (15 à 20 % du disque) est vascularisée et accessible à une suture/réinsertion (ex. lésion IB). La zone centrale (IA) et l’insertion radiale cartilagineuse (ID) sont avasculaires et ne peuvent pas cicatriser après simple suture.",
+      "correction_figures": [],
+      "source": {
+        "page": 240,
+        "element": "Texte (p. 234 et 240)",
+        "refs": ""
+      },
+      "difficulty": 3
     }
   ]
 }
