@@ -112,6 +112,8 @@ Error messages returned by the API are in French. Functions use the **publishabl
 
 Admin functions (`admin_list_attempts`, `admin_list_questions`, `admin_save_question`, `admin_delete_question`, `admin_import_questions`) are `SECURITY DEFINER`, check the password in Postgres (bcrypt) and lock everyone out for 10 min after 5 failed tries. Deleting a question is soft (`deleted_at`) and every change keeps the previous version in `private.quiz_question_versions`. The admin password is **never written in the repo or in chat**; it is rotated with SQL in the Supabase editor.
 
+Reviewer space (`#/correcteur`): the reviewer password is a bcrypt hash in `private.reviewer_secret` (checked case-insensitively by `private.check_reviewer`, same 5-tries/10-min lockout, own `private.reviewer_login_failures`). The browser sends it as `correcteur:<password>` and `api/admin-questions.js` routes it to the `reviewer_*` functions. The Gemini key for the AI generator lives in `private.ai_config` and is only returned by `get_ai_key()` to a valid admin/reviewer password (migration `20261104120000_secure_reviewer_and_ai_key.sql`). **Never hard-code a password, a hint of one, or a key in the code: the GitHub repo is public.**
+
 Rules:
 - Use the Supabase MCP when available. The live database is **production**: there is no staging copy.
 - Every new table needs **row-level security and a tested policy**. After schema changes, run the Supabase advisors and fix any warning.
