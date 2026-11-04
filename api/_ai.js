@@ -203,11 +203,12 @@ EXTRAIT DU CHAPITRE ${chapterNum} (${chapterTitle}) :
 ${bookExcerpt}`;
 
   const models = [
-    'gemini-2.5-flash',
-    'gemini-2.0-flash',
-    'gemini-2.5-flash-lite-preview-06-17',
-    'gemini-2.0-flash-lite',
-    'gemini-1.5-flash',
+    // Google retired the 1.5/2.x models for this key (Nov 2026). Tried in order; the next one is used
+    // when a model is overloaded (503) or unavailable.
+    'gemini-3.8-flash',
+    'gemini-flash-latest',
+    'gemini-3.1-flash-lite',
+    'gemini-flash-lite-latest',
   ];
   let lastError = 'Impossible de joindre le modèle Gemini.';
   let rawJsonText = null;
