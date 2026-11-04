@@ -177,11 +177,24 @@ export default function App() {
       }
     };
 
+    const handleDesktopWheel = (e) => {
+      if (e.ctrlKey || e.metaKey) return;
+      const dy = e.deltaY || 0;
+      const dx = e.deltaX || 0;
+      if (!dy && !dx) return;
+      const horiz = e.target && e.target.closest ? e.target.closest('.lesson-bar, .cq-chips') : null;
+      if (horiz && horiz.scrollWidth > horiz.clientWidth && Math.abs(dy) > Math.abs(dx)) {
+        horiz.scrollLeft += dy;
+        e.preventDefault();
+      }
+    };
+    window.addEventListener('wheel', handleDesktopWheel, { passive: false });
     window.addEventListener('touchstart', onTouchStart, { passive: true });
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchend', onTouchEnd, { passive: true });
     window.addEventListener('touchcancel', onTouchEnd, { passive: true });
     return () => {
+      window.removeEventListener('wheel', handleDesktopWheel);
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
