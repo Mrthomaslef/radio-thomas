@@ -1,11 +1,20 @@
 // POST /api/admin-questions {password, action, ...} — list / save / delete / import quiz questions.
 // The admin password is checked inside Postgres (private.check_admin), which also throttles wrong guesses.
-// Colleagues in the reviewer space (#/correcteur) authenticate with the reviewer password ('cocochin').
+// Colleagues in the reviewer space (#/correcteur) send their password prefixed with REVIEWER_PREFIX; it is
+// checked in Postgres (private.check_reviewer, bcrypt + lockout). No password is ever stored in this file.
 import { randomBytes, randomUUID } from 'node:crypto';
 import { validateChapter, validateId, validateQuestion } from './_validate.js';
-import { generateQuestionFromBook, resolveAdminPasswordForReviewer } from './_ai.js';
+import { generateQuestionFromBook } from './_ai.js';
 
-const REVIEWER_PASSWORD = 'cocochin';
+const REVIEWER_PREFIX = 'correcteur:';
+
+// Map a database status to an HTTP error (null when ok).
+function statusError(res, status) {
+  if (status === 'ok') return null;
+  if (status === 'locked') return res.status(429).json({ error: 'Trop de tentatives, réessayez plus tard' });
+  if (status === 'bad_password') return res.status(401).json({ error: 'Mot de passe incorrect' });
+  return res.status(400).json({ error: 'Requête refusée' });
+}
 
 // Server-side circuit breaker & short cache for 'list' to prevent any client tab from burning Fast Origin Transfer / Supabase Egress.
 let cachedReviewerQuestions = null;
@@ -76,7 +85,7 @@ async function hasConflict(id, baseUpdatedAt) {
   return Date.parse(row.updated_at) > base;
 }
 
-async function promoteInlineImagesToTable(questionId, rawQuestion, adminPw, isReviewer = false) {
+async function promoteInlineImagesToTable(questionId, rawQuestion, pw, isReviewer = false) {
   if (!rawQuestion || typeof rawQuestion !== 'object') return rawQuestion;
   const hasEnonceDataUrl = typeof rawQuestion.enonce_image?.dataUrl === 'string';
   const figs = Array.isArray(rawQuestion.correction_figures) ? rawQuestion.correction_figures : [];
@@ -93,14 +102,14 @@ async function promoteInlineImagesToTable(questionId, rawQuestion, adminPw, isRe
       const imgId = randomUUID().replace(/-/g, '');
       const out = isReviewer
         ? await rpc('reviewer_upload_image', {
-            p_password: REVIEWER_PASSWORD,
+            p_password: pw,
             p_id: imgId,
             p_mime: mime,
             p_b64: b64,
           })
-        : adminPw
+        : pw
         ? await rpc('admin_upload_image', {
-            p_password: adminPw,
+            p_password: pw,
             p_id: imgId,
             p_mime: mime,
             p_b64: b64,
@@ -185,18 +194,32 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Mot de passe incorrect' });
   }
 
-  const isReviewer = password === REVIEWER_PASSWORD;
+  const isReviewer = password.startsWith(REVIEWER_PREFIX);
+  const reviewerPw = isReviewer ? password.slice(REVIEWER_PREFIX.length) : '';
+  if (isReviewer && !reviewerPw) return res.status(401).json({ error: 'Mot de passe incorrect' });
+
+  // Reviewer login check (Espace correcteur): no data returned.
+  if (body.action === 'login') {
+    if (!isReviewer) return res.status(400).json({ error: 'Action inconnue' });
+    try {
+      const out = await rpc('reviewer_login', { p_password: reviewerPw });
+      return statusError(res, out.status) || res.status(200).json({ status: 'ok' });
+    } catch {
+      return res.status(502).json({ error: 'Base de données injoignable' });
+    }
+  }
 
   // Handle AI question generation from book chapters (available to both Admin and Reviewers)
   if (body.action === 'generate_ai') {
-    if (!isReviewer) {
-      try {
-        const check = await rpc('admin_list_questions', { p_password: password });
-        if (check.status === 'locked') return res.status(429).json({ error: 'Trop de tentatives, réessayez plus tard' });
-        if (check.status !== 'ok') return res.status(401).json({ error: 'Mot de passe incorrect' });
-      } catch {
-        return res.status(502).json({ error: 'Base de données injoignable' });
-      }
+    // The Gemini key lives in private.ai_config and is only returned for a valid admin/reviewer password.
+    let apiKey = '';
+    try {
+      const out = await rpc('get_ai_key', { p_password: isReviewer ? reviewerPw : password, p_reviewer: isReviewer });
+      const err = statusError(res, out.status);
+      if (err) return err;
+      apiKey = out.key || '';
+    } catch {
+      return res.status(502).json({ error: 'Base de données injoignable' });
     }
     try {
       const question = await generateQuestionFromBook({
@@ -205,6 +228,7 @@ export default async function handler(req, res) {
         difficulty: body.difficulty,
         topicHint: body.topicHint,
         existingQuestions: body.existingQuestions,
+        apiKey,
         env: process.env,
       });
       return res.status(200).json({ status: 'ok', question });
@@ -218,13 +242,14 @@ export default async function handler(req, res) {
     if (!validateChapter(body.chapter)) {
       return res.status(400).json({ error: 'Chapitre invalide' });
     }
-    if (!isReviewer) {
-      try {
-        const check = await rpc('admin_list_questions', { p_password: password });
-        if (check.status !== 'ok') return res.status(401).json({ error: 'Mot de passe incorrect' });
-      } catch {
-        return res.status(502).json({ error: 'Base de données injoignable' });
-      }
+    try {
+      const check = isReviewer
+        ? await rpc('reviewer_login', { p_password: reviewerPw })
+        : await rpc('admin_list_questions', { p_password: password });
+      const err = statusError(res, check.status);
+      if (err) return err;
+    } catch {
+      return res.status(502).json({ error: 'Base de données injoignable' });
     }
     const reviewer = typeof body.reviewer === 'string' ? body.reviewer.trim().slice(0, 80) : 'Correcteur';
     await recordAttemptChunks('report-revquiz', body.chapter, {
@@ -265,7 +290,7 @@ export default async function handler(req, res) {
       if (error) return res.status(400).json({ error });
       const out = isReviewer
         ? await rpc('reviewer_save_question', {
-            p_password: REVIEWER_PASSWORD,
+            p_password: reviewerPw,
             p_id: row.id,
             p_chapter: row.chapter,
             p_position: row.position,
@@ -288,12 +313,19 @@ export default async function handler(req, res) {
     }
   }
 
-  // Reviewer mode ('cocochin'): uses fast direct reviewer_* RPCs without extra round-trips or bcrypt lockouts
+  // Reviewer mode: reviewer_* RPCs check the reviewer password in Postgres (bcrypt + lockout).
   if (isReviewer) {
     switch (body.action) {
       case 'list': {
         if (!checkListRateLimit(req)) {
           return res.status(429).json({ error: 'Trop de requêtes rapprochées' });
+        }
+        try {
+          const check = await rpc('reviewer_login', { p_password: reviewerPw });
+          const err = statusError(res, check.status);
+          if (err) return err;
+        } catch {
+          return res.status(502).json({ error: 'Base de données injoignable' });
         }
         const now = Date.now();
         if (cachedReviewerQuestions && now - cachedReviewerAt < LIST_CACHE_TTL_MS) {
@@ -337,19 +369,20 @@ export default async function handler(req, res) {
           return res.status(502).json({ error: 'Base de données injoignable' });
         }
 
-        const promotedQuestion = await promoteInlineImagesToTable(body.id, body.question, null, true);
+        const promotedQuestion = await promoteInlineImagesToTable(body.id, body.question, reviewerPw, true);
         const { data, error } = validateQuestion(promotedQuestion);
         if (error) return res.status(400).json({ error });
 
         try {
           const out = await rpc('reviewer_save_question', {
-            p_password: REVIEWER_PASSWORD,
+            p_password: reviewerPw,
             p_id: body.id,
             p_chapter: body.chapter,
             p_position: position,
             p_data: data,
           });
-          if (out.status !== 'ok') return res.status(400).json({ error: 'Requête refusée' });
+          const err = statusError(res, out.status);
+          if (err) return err;
           const fresh = await readLiveRow(body.id);
           return res.status(200).json({ status: 'ok', question: data, updatedAt: fresh?.updated_at || null });
         } catch {
@@ -362,11 +395,12 @@ export default async function handler(req, res) {
         if (!validateId(body.id)) return res.status(400).json({ error: 'Identifiant invalide' });
         try {
           const out = await rpc('reviewer_delete_question', {
-            p_password: REVIEWER_PASSWORD,
+            p_password: reviewerPw,
             p_id: body.id,
           });
           if (out.status === 'not_found') return res.status(404).json({ error: 'Question introuvable' });
-          if (out.status !== 'ok') return res.status(400).json({ error: 'Requête refusée' });
+          const err = statusError(res, out.status);
+          if (err) return err;
           return res.status(200).json({ status: 'ok' });
         } catch {
           return res.status(502).json({ error: 'Base de données injoignable' });
@@ -390,7 +424,7 @@ export default async function handler(req, res) {
         try {
           const imgId = randomUUID().replace(/-/g, '');
           const out = await rpc('reviewer_upload_image', {
-            p_password: REVIEWER_PASSWORD,
+            p_password: reviewerPw,
             p_id: imgId,
             p_mime: mime,
             p_b64: b64,
@@ -398,6 +432,7 @@ export default async function handler(req, res) {
           if (out?.status === 'ok') {
             return res.status(200).json({ status: 'ok', id: out.id || imgId });
           }
+          if (out?.status === 'locked' || out?.status === 'bad_password') return statusError(res, out.status);
         } catch {
           // Fallback below
         }

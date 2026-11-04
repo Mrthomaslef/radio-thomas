@@ -2,7 +2,6 @@
 // Leading "_" so Vercel does not expose it as a separate serverless endpoint.
 import fs from 'node:fs';
 import path from 'node:path';
-import crypto from 'node:crypto';
 import { validateChapter, validateQuestion } from './_validate.js';
 
 const CHAPTER_TITLES = {
@@ -44,84 +43,11 @@ const CHAPTER_TITLES = {
   ch36: 'Déformations du pied du nourrisson',
 };
 
-let cachedApiKey = null;
-let cachedAdminPw = null;
-
-function decryptToken(token) {
-  try {
-    const parts = String(token || '').trim().split('.');
-    if (parts.length !== 3) return null;
-    const [ivB64, tagB64, encB64] = parts;
-    const secret = crypto.scryptSync('cocochin', 'quiz-cotten-ai-salt', 32);
-    const decipher = crypto.createDecipheriv('aes-256-gcm', secret, Buffer.from(ivB64, 'base64'));
-    decipher.setAuthTag(Buffer.from(tagB64, 'base64'));
-    const dec = Buffer.concat([decipher.update(Buffer.from(encB64, 'base64')), decipher.final()]);
-    return dec.toString('utf8').trim();
-  } catch {
-    return null;
-  }
-}
-
-export async function resolveAdminPasswordForReviewer(env = process.env) {
-  if (cachedAdminPw) return cachedAdminPw;
-  const { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } = env;
-  if (SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY) {
-    try {
-      const r = await fetch(
-        `${SUPABASE_URL}/rest/v1/quiz_questions?id=eq.cfg-ai-key&select=data&limit=1`,
-        {
-          headers: {
-            apikey: SUPABASE_PUBLISHABLE_KEY,
-            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-          },
-        }
-      );
-      if (r.ok) {
-        const rows = await r.json();
-        const pw = decryptToken(rows?.[0]?.data?.explication);
-        if (pw) {
-          cachedAdminPw = pw;
-          return pw;
-        }
-      }
-    } catch {
-      // Ignore fetch error
-    }
-  }
-  return null;
-}
-
-export async function resolveGeminiApiKey(env = process.env) {
-  if (env.GEMINI_API_KEY && env.GEMINI_API_KEY.trim()) {
-    return env.GEMINI_API_KEY.trim();
-  }
-  if (cachedApiKey) return cachedApiKey;
-
-  const { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } = env;
-  if (SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY) {
-    try {
-      const r = await fetch(
-        `${SUPABASE_URL}/rest/v1/quiz_questions?id=eq.cfg-ai-key&select=data&limit=1`,
-        {
-          headers: {
-            apikey: SUPABASE_PUBLISHABLE_KEY,
-            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-          },
-        }
-      );
-      if (r.ok) {
-        const rows = await r.json();
-        const token = rows?.[0]?.data?.enonce;
-        const key = decryptToken(token);
-        if (key) {
-          cachedApiKey = key;
-          return key;
-        }
-      }
-    } catch {
-      // Ignore fetch error
-    }
-  }
+// The Gemini key comes from the caller (api/admin-questions.js reads it from private.ai_config after
+// checking the password), or from the GEMINI_API_KEY env var (local dev).
+function resolveGeminiApiKey(apiKey, env = process.env) {
+  if (typeof apiKey === 'string' && apiKey.trim()) return apiKey.trim();
+  if (env.GEMINI_API_KEY && env.GEMINI_API_KEY.trim()) return env.GEMINI_API_KEY.trim();
   return null;
 }
 
@@ -182,6 +108,7 @@ export async function generateQuestionFromBook({
   difficulty = 2,
   topicHint = '',
   existingQuestions = [],
+  apiKey: geminiKey = '',
   env = process.env,
 }) {
   if (!validateChapter(chapter) || chapter === 'ch99') {
@@ -193,7 +120,7 @@ export async function generateQuestionFromBook({
     throw new Error(`Le contenu du livre pour le chapitre ${chapter} est introuvable.`);
   }
 
-  const apiKey = await resolveGeminiApiKey(env);
+  const apiKey = resolveGeminiApiKey(geminiKey, env);
   if (!apiKey) {
     throw new Error('Clé API Gemini manquante sur le serveur.');
   }

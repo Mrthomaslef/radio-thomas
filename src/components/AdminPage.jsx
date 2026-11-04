@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import QuestionsAdmin, { newId } from './QuestionsAdmin.jsx';
+import QuestionsAdmin, { REVIEWER_PREFIX, newId } from './QuestionsAdmin.jsx';
 import { bundledQuestions, imageSrc, resetQuestionsCache, useQuestions } from '../data/useQuestions.js';
 import { REVIEWERS, extractAttemptsAndReports, resolveQuestionReport, resolveQuestionProposal } from '../data/reports.js';
 import { syncUsersHistoryFromAttempts } from '../data/player.js';
@@ -108,22 +108,24 @@ export default function AdminPage({ reviewerMode = false }) {
     try {
       const cleanPass = password.trim();
 
-      // 1. Espace correcteur (#/correcteur): only accepts 'cocochin'
+      // 1. Espace correcteur (#/correcteur): the reviewer password is checked by the server (in Postgres).
+      // It travels prefixed with REVIEWER_PREFIX so the API knows to use the reviewer checks.
       if (reviewerMode) {
-        if (cleanPass.toLowerCase() === 'cocochin') {
-          setPassword('cocochin');
-          setRole('reviewer');
-          setAttempts([]);
-          setTab('questions');
+        const reviewerPass = REVIEWER_PREFIX + cleanPass;
+        const r = await fetch('/api/admin-questions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: reviewerPass, action: 'login' }),
+        });
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) {
+          setError(r.status === 401 ? 'Mot de passe correcteur incorrect.' : data.error || 'Erreur inattendue, réessayez.');
           return;
         }
-        setError('Mot de passe correcteur incorrect.');
-        return;
-      }
-
-      // 2. Espace admin (#/admin): reject 'cocochin' without calling /api/admin (so it never increments failures)
-      if (cleanPass.toLowerCase() === 'cocochin') {
-        setError('Ce mot de passe est réservé à l’Espace correcteur (lien en bas de page).');
+        setPassword(reviewerPass);
+        setRole('reviewer');
+        setAttempts([]);
+        setTab('questions');
         return;
       }
 
@@ -132,15 +134,10 @@ export default function AdminPage({ reviewerMode = false }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: cleanPass }),
       });
-      let data = await r.json().catch(() => ({}));
+      const data = await r.json().catch(() => ({}));
       if (!r.ok) {
-        // If Supabase is still in its 10-minute cooldown from earlier tests, allow the admin ('tata') in immediately
-        if (r.status === 429 && cleanPass.toLowerCase() === 'tata') {
-          data = { attempts: [], reports: [] };
-        } else {
-          setError(data.error || 'Erreur inattendue, réessayez.');
-          return;
-        }
+        setError(data.error || 'Erreur inattendue, réessayez.');
+        return;
       }
       setPassword(cleanPass);
       const parsed = extractAttemptsAndReports(data);

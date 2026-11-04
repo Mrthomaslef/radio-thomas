@@ -280,7 +280,10 @@ const chapterNumber = (k) => Number.parseInt(String(k || '').replace(/^ch/i, '')
 const chapterFullLabel = (k) => `Chapitre ${chapterNumber(k)} — ${CHAPTER_LABELS[k] || k}`;
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-const isReviewerPass = (pw) => String(pw || '').trim().toLowerCase() === 'cocochin';
+// Must match REVIEWER_PREFIX in api/admin-questions.js.
+export const REVIEWER_PREFIX = 'correcteur:';
+// Reviewer passwords are sent prefixed (see AdminPage login); the server checks them in Postgres.
+const isReviewerPass = (pw) => String(pw || '').startsWith(REVIEWER_PREFIX);
 
 // updated_at of each question as last seen from the server. Every save sends it back as `baseUpdatedAt`,
 // so the server refuses to overwrite a question that someone (or another device) changed in the meantime.
