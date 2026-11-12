@@ -24,7 +24,7 @@
   
 <!-- Global Mobile Pull-to-Refresh (Drag vers le bas) -->
 <style>
-  html, body { overscroll-behavior-y: contain; }
+  html.global-ptr-enabled { overscroll-behavior-y: contain; }
   #global-ptr-bar {
     position: fixed;
     top: env(safe-area-inset-top, 0px);
@@ -72,6 +72,16 @@
 (function() {
   if (window.__GLOBAL_PTR_INIT__) return;
   window.__GLOBAL_PTR_INIT__ = true;
+  // Mobile browser only: not on desktop (mouse), and not in the installed app,
+  // where App.jsx already handles pull-to-refresh (with progress sync).
+  function isStandalone() {
+    if (window.navigator.standalone === true) return true;
+    if (window.matchMedia && (window.matchMedia("(display-mode: standalone)").matches || window.matchMedia("(display-mode: fullscreen)").matches)) return true;
+    return document.referrer.indexOf("android-app://") !== -1;
+  }
+  var isTouchDevice = window.matchMedia ? window.matchMedia("(pointer: coarse)").matches : ("ontouchstart" in window);
+  if (!isTouchDevice || isStandalone()) return;
+  document.documentElement.classList.add("global-ptr-enabled");
   function setupPTR() {
     var bar = document.getElementById("global-ptr-bar");
     var icon = document.getElementById("global-ptr-icon");
@@ -130,11 +140,6 @@
     window.addEventListener("touchmove", function(e) { if (e.touches.length === 1) onMove(e.touches[0].clientY, e); }, { passive: false });
     window.addEventListener("touchend", onEnd, { passive: true });
     window.addEventListener("touchcancel", onEnd, { passive: true });
-    window.addEventListener("mousedown", function(e) {
-      if (e.button === 0 && !["INPUT", "BUTTON", "A", "SELECT", "TEXTAREA"].includes((e.target && e.target.tagName) || "")) onStart(e.clientY);
-    });
-    window.addEventListener("mousemove", function(e) { if (pulling) onMove(e.clientY, null); });
-    window.addEventListener("mouseup", onEnd);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", setupPTR);
   else setupPTR();
