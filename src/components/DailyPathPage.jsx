@@ -22,6 +22,7 @@ import {
 import { QuizPlayer } from './ChapterQuiz.jsx';
 import { fetchStarsLeaderboard, getCachedLeaderboard } from '../data/leaderboard.js';
 import Icon from './Icons.jsx';
+import { SemesterEntry } from './SemesterPage.jsx';
 
 const ONBOARDING_SLIDES = [
   {
@@ -1488,6 +1489,8 @@ export default function DailyPathPage() {
             </span>
           </div>
         </button>
+
+        <SemesterEntry className="sem-entry-hud" compact />
       </div>
 
       {showingCalendar && (

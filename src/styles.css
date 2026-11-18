@@ -1933,9 +1933,9 @@ a.cq-dot:hover { transform: scale(1.08); }
   width: 100%;
   max-width: 440px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   padding: 6px;
   border-radius: 999px;
   background: rgba(28, 30, 34, 0.72);
@@ -2078,7 +2078,7 @@ a.cq-dot:hover { transform: scale(1.08); }
 .daily-page {
   max-width: 500px;
   margin: 0 auto;
-  padding: calc(182px + env(safe-area-inset-top, 0px)) 12px 24px;
+  padding: calc(228px + env(safe-area-inset-top, 0px)) 12px 24px;
   position: relative;
 }
 
@@ -2094,7 +2094,7 @@ a.cq-dot:hover { transform: scale(1.08); }
     display: flex;
   }
   .daily-page {
-    padding-top: calc(214px + env(safe-area-inset-top, 0px));
+    padding-top: calc(260px + env(safe-area-inset-top, 0px));
   }
 }
 
@@ -2158,7 +2158,7 @@ a.cq-dot:hover { transform: scale(1.08); }
     display: none !important;
   }
   .daily-page {
-    padding-top: calc(182px + env(safe-area-inset-top, 0px));
+    padding-top: calc(228px + env(safe-area-inset-top, 0px));
   }
 }
 
@@ -4258,4 +4258,17 @@ body:has(.daily-slide-card) .bottom-nav-wrap {
 @media (max-width: 540px) {
   .sem-summary, .sem-week { padding: 14px 12px; }
   .sem-chapter .chapter-go { font-size: 0.8rem; }
+}
+
+.sem-entry-hud {
+  pointer-events: auto; min-width: 0; overflow: hidden; padding: 8px 14px; gap: 10px; border-radius: 16px;
+  background: linear-gradient(120deg, rgba(40, 46, 92, 0.92), rgba(12, 34, 48, 0.92));
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.sem-entry-hud .sem-entry-icon { font-size: 1.15rem; }
+.sem-entry-hud .sem-entry-text { display: flex; align-items: baseline; gap: 8px; min-width: 0; overflow: hidden; }
+.sem-entry-hud .sem-entry-text strong { font-size: 0.86rem; white-space: nowrap; }
+.sem-entry-hud .sem-entry-text span { font-size: 0.78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+@media (max-width: 400px) {
+  .bottom-nav-item { padding: 6px 4px; font-size: 0.66rem; }
 }
