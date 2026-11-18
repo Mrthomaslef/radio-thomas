@@ -7,10 +7,13 @@ const LOCAL_REVIEWER_EDITS_KEY = 'quiz-cotten:reviewer-edits:v2';
 const LOCAL_REVIEW_NOTIFS_KEY = 'quiz-cotten:review-notifications:v1';
 
 export const REVIEWERS = [
+  'Alice H.',
   'Hippolyte M.',
   'Macil H.',
   'Marie-Pauline T.',
+  'Maxime L.',
   'Stephano L.',
+  'Teodor G.',
   'Thomas L.',
   'Yazid A.',
 ];
