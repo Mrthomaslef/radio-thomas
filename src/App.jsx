@@ -10,6 +10,7 @@ import ProgressPage from './components/ProgressPage.jsx';
 import LeaderboardPage from './components/LeaderboardPage.jsx';
 import RandomQuiz from './components/RandomQuiz.jsx';
 import ProposeQuestionPage from './components/ProposeQuestionPage.jsx';
+import SemesterPage from './components/SemesterPage.jsx';
 import { CHAPTERS as chapters, resetQuestionsCache } from './data/useQuestions.js';
 import { syncProgressFromServer } from './data/player.js';
 
@@ -19,6 +20,7 @@ import { syncProgressFromServer } from './data/player.js';
 // - "#/quiz/<key>" (or "#/quiz/<key>?q=<1-based>") plays a chapter quiz
 // - "#/aleatoire" opens the random quiz builder & player
 // - "#/proposer" opens the user question proposal form
+// - "#/semestre" opens the Cochin–HEGP semester path (chapters open week by week)
 // - "#/progression" shows the player's progress page
 // - "#/classement" (or "#/leaderboard") shows the leaderboard
 // - "#/admin" opens the password-protected trainer page
@@ -33,6 +35,7 @@ const isLeaderboardRoute = () =>
 const isRandomRoute = () => window.location.hash === '#/aleatoire';
 const isProposeRoute = () => window.location.hash === '#/proposer';
 const isChaptersListRoute = () => window.location.hash === '#/chapitres';
+const isSemesterRoute = () => window.location.hash === '#/semestre';
 const parseTheme = () => {
   const m = window.location.hash.match(/^#\/([\w-]+)$/);
   if (
@@ -46,7 +49,8 @@ const parseTheme = () => {
     m[1] === 'contributeurs' ||
     m[1] === 'etoiles' ||
     m[1] === 'aleatoire' ||
-    m[1] === 'proposer'
+    m[1] === 'proposer' ||
+    m[1] === 'semestre'
   ) {
     return null;
   }
@@ -60,12 +64,14 @@ function parseRoute() {
   const qRaw = params.get('q');
   const rndRaw = params.get('random');
   const qNum = qRaw ? parseInt(qRaw, 10) : null;
+  const fromSemester = params.get('from') === 'semestre';
   const randomCount = rndRaw ? parseInt(rndRaw, 10) : null;
   return {
     key: m[1],
     data: chapters[m[1]],
     initialIdx: qNum && qNum >= 1 ? qNum - 1 : null,
     randomCount: randomCount && randomCount >= 1 ? randomCount : null,
+    fromSemester,
   };
 }
 
@@ -87,6 +93,7 @@ export default function App() {
   const [randomPage, setRandomPage] = useState(isRandomRoute);
   const [proposePage, setProposePage] = useState(isProposeRoute);
   const [chaptersListPage, setChaptersListPage] = useState(isChaptersListRoute);
+  const [semesterPage, setSemesterPage] = useState(isSemesterRoute);
   const [theme, setTheme] = useState(parseTheme);
   const [pullDist, setPullDist] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
@@ -103,6 +110,7 @@ export default function App() {
       setRandomPage(isRandomRoute());
       setProposePage(isProposeRoute());
       setChaptersListPage(isChaptersListRoute());
+      setSemesterPage(isSemesterRoute());
       setTheme(parseTheme());
     };
     window.addEventListener('hashchange', onHash);
@@ -206,7 +214,7 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage, isChaptersView]);
+  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage, semesterPage, isChaptersView]);
 
   return (
     <>
@@ -241,6 +249,8 @@ export default function App() {
           <RandomQuiz />
         ) : proposePage ? (
           <ProposeQuestionPage />
+        ) : semesterPage ? (
+          <SemesterPage />
         ) : course ? (
           <ChapterQuiz key={`${course.key}:${course.initialIdx ?? 'auto'}:${course.randomCount ?? 'all'}`} chapter={course} />
         ) : chaptersListPage || theme ? (

@@ -4196,3 +4196,66 @@ body:has(.daily-slide-card) .bottom-nav-wrap {
 }
 
 
+
+/* ===== Parcours du semestre Cochin–HEGP (#/semestre) ===== */
+.sem-entry {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: var(--radius);
+  border: 1px solid rgba(124, 140, 255, 0.45);
+  background: linear-gradient(120deg, rgba(124, 140, 255, 0.14), rgba(56, 225, 255, 0.08));
+  color: var(--text); touch-action: manipulation; transition: border-color 0.2s, transform 0.15s;
+}
+.sem-entry:hover { border-color: var(--cyan); transform: translateY(-1px); }
+.sem-entry-icon { font-size: 1.6rem; flex: none; }
+.sem-entry-text { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.sem-entry-text strong { font-family: var(--display); font-size: 1.05rem; }
+.sem-entry-text span { color: var(--muted); font-size: 0.86rem; line-height: 1.3; }
+.sem-entry > svg { flex: none; color: var(--cyan); }
+
+.sem-page h1 { margin-bottom: 28px; }
+.sem-summary {
+  padding: 18px 20px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--panel);
+  display: grid; gap: 12px;
+}
+.sem-kicker { color: var(--cyan); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.sem-now { font-size: 0.98rem; line-height: 1.45; }
+.sem-progress { display: grid; gap: 6px; }
+.sem-progress-bar { width: 100%; height: 8px; border-radius: 99px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+.sem-progress-bar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--cyan), var(--good)); }
+.sem-progress-label { color: var(--muted); font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
+.sem-rules { list-style: none; display: grid; gap: 4px; color: var(--muted); font-size: 0.87rem; }
+.sem-pseudo-hint { font-size: 0.86rem; color: #fcd34d; }
+.sem-pseudo-hint a { text-decoration: underline; }
+
+.sem-weeks { list-style: none; display: grid; gap: 12px; }
+.sem-week {
+  padding: 14px 16px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--panel);
+  display: grid; gap: 10px; scroll-margin-top: 90px;
+}
+.sem-week-current { border-color: var(--cyan); background: rgba(56, 225, 255, 0.07); box-shadow: 0 0 0 1px rgba(56, 225, 255, 0.25), 0 18px 40px -24px var(--cyan); }
+.sem-week-past { opacity: 0.85; }
+.sem-week-break { border-style: dashed; }
+.sem-week-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.sem-week-label { font-family: var(--display); font-weight: 600; font-size: 1.05rem; }
+.sem-pill { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; border: 1px solid var(--line); color: var(--muted); }
+.sem-pill-current { color: #05090f; background: var(--cyan); border-color: var(--cyan); }
+.sem-pill-past { color: var(--good); border-color: rgba(52, 211, 153, 0.5); }
+.sem-pill-side { color: var(--violet); border-color: rgba(124, 140, 255, 0.55); }
+.sem-topics { list-style: none; display: grid; gap: 3px; color: var(--muted); font-size: 0.86rem; line-height: 1.35; }
+.sem-topics li::before { content: '• '; color: var(--cyan); }
+.sem-chapters { display: grid; gap: 8px; }
+.sem-chapter { touch-action: manipulation; }
+.sem-chapter .sem-lock { flex: none; font-size: 1.1rem; width: 24px; text-align: center; }
+.sem-chapter-text { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.sem-chapter-hint { color: var(--muted); font-size: 0.78rem; line-height: 1.3; }
+.sem-locked { opacity: 0.72; cursor: not-allowed; border-style: dashed; }
+.sem-exam {
+  display: inline-flex; align-items: center; gap: 8px; justify-self: start;
+  padding: 6px 12px; border-radius: 99px; font-size: 0.82rem; font-weight: 700;
+  color: #fcd34d; background: rgba(252, 211, 77, 0.1); border: 1px solid rgba(252, 211, 77, 0.4);
+}
+.sem-side { border-color: rgba(124, 140, 255, 0.45); }
+.sem-side-note { color: var(--muted); font-size: 0.86rem; }
+@media (max-width: 540px) {
+  .sem-summary, .sem-week { padding: 14px 12px; }
+  .sem-chapter .chapter-go { font-size: 0.8rem; }
+}

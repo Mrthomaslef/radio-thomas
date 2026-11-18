@@ -54,13 +54,18 @@ const shuffleList = (list) => {
 
 // Loads the live questions (editable from the admin page), then plays them.
 export default function ChapterQuiz({ chapter }) {
-  const { key, data, initialIdx, randomCount } = chapter;
+  const { key, data, initialIdx, randomCount, fromSemester } = chapter;
   const { byChapter, loading } = useQuestions();
   const [pseudo, setPseudo] = useState(readName);
   const [draft, setDraft] = useState('');
   const [drawSeed, setDrawSeed] = useState(0);
   const questions = byChapter[key] || [];
-  const backHref = `#/${data.chapitre.theme || 'epaule'}`;
+  const backHref = fromSemester ? '#/semestre' : `#/${data.chapitre.theme || 'epaule'}`;
+  const backLabel = fromSemester ? '← Parcours semestre' : '← Chapitres';
+  const playerMeta = useMemo(
+    () => (fromSemester ? { ...data.chapitre, backHref } : data.chapitre),
+    [data, fromSemester, backHref]
+  );
 
   useEffect(() => {
     syncProgressFromServer();
@@ -90,7 +95,7 @@ export default function ChapterQuiz({ chapter }) {
     };
     return (
       <div className="cq">
-        <a href={backHref} className="cq-back">← Chapitres</a>
+        <a href={backHref} className="cq-back">{backLabel}</a>
         <form className="cq-card name-step" onSubmit={onSubmit} style={{ marginTop: 14 }}>
           <label htmlFor="quiz-pseudo">Choisis un pseudo pour enregistrer ta progression</label>
           <input
@@ -119,7 +124,7 @@ export default function ChapterQuiz({ chapter }) {
   if (questions.length === 0) {
     return (
       <div className="cq">
-        <a href={backHref} className="cq-back">← Chapitres</a>
+        <a href={backHref} className="cq-back">{backLabel}</a>
         <p className="cq-loading">Ce chapitre ne contient pas encore de questions pour le moment.</p>
       </div>
     );
@@ -128,7 +133,8 @@ export default function ChapterQuiz({ chapter }) {
     <QuizPlayer
       key={`${pseudo}:${key}:${randomCount || 'all'}:${drawSeed}`}
       chapterKey={key}
-      meta={data.chapitre}
+      meta={playerMeta}
+      backLabel={backLabel}
       questions={activeQuestions}
       initialIdx={initialIdx}
       randomMode={Boolean(randomCount)}
@@ -710,7 +716,11 @@ export function QuizPlayer({
                 )}
                 {!dailyMode && (
                   <a className="btn btn-ghost" href={backHref}>
-                    {randomMode && key === 'quiz-aleatoire' ? 'Configurer un autre quiz' : 'Autres chapitres'}
+                    {randomMode && key === 'quiz-aleatoire'
+                      ? 'Configurer un autre quiz'
+                      : backHref === '#/semestre'
+                        ? 'Retour au parcours'
+                        : 'Autres chapitres'}
                   </a>
                 )}
               </div>

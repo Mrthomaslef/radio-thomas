@@ -12,6 +12,9 @@ import {
 } from '../data/player.js';
 import Icon from './Icons.jsx';
 import { AppModeTopPill } from './DailyPathPage.jsx';
+import { SEMESTER, weekStatus } from '../data/semester.js';
+
+const currentSemesterWeek = () => SEMESTER.weeks.find((w) => weekStatus(w) === 'current') || null;
 
 function isStandaloneMode() {
   if (typeof window === 'undefined') return false;
@@ -187,6 +190,19 @@ export default function Home({ openTheme }) {
               </a>
             </div>
           </div>
+
+          <a href="#/semestre" className="sem-entry">
+            <span className="sem-entry-icon" aria-hidden="true">📅</span>
+            <span className="sem-entry-text">
+              <strong>Parcours du semestre Cochin–HEGP</strong>
+              <span>
+                {currentSemesterWeek()
+                  ? `Cette semaine : ${currentSemesterWeek().topics[0]}`
+                  : 'Les chapitres s’ouvrent semaine après semaine'}
+              </span>
+            </span>
+            <Icon name="arrow" size={18} />
+          </a>
 
           <p className="home-reviewed-legend">
             <span className="chapter-reviewed-badge" aria-hidden="true">
