@@ -235,7 +235,7 @@ export default function LeaderboardPage() {
               <p className="lb-empty-sub">
                 Validez votre première étape sur le parcours quotidien pour gagner vos premières étoiles&nbsp;!
               </p>
-              <a href="#/" className="btn btn-small">Aller au parcours</a>
+              <a href="#/chemin" className="btn btn-small">Aller au chemin</a>
             </>
           ) : (
             <>

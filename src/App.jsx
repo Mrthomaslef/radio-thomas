@@ -15,12 +15,12 @@ import { CHAPTERS as chapters, resetQuestionsCache } from './data/useQuestions.j
 import { syncProgressFromServer } from './data/player.js';
 
 // Tiny hash router:
-// - "#/" opens the daily progression path (Accueil)
+// - "#/" (and "#/semestre") opens the Cochin–HEGP semester path (Accueil)
+// - "#/chemin" opens the daily progression path
 // - "#/chapitres" or "#/<theme>" opens the chapter/theme list (Quiz tab)
 // - "#/quiz/<key>" (or "#/quiz/<key>?q=<1-based>") plays a chapter quiz
 // - "#/aleatoire" opens the random quiz builder & player
 // - "#/proposer" opens the user question proposal form
-// - "#/semestre" opens the Cochin–HEGP semester path (chapters open week by week)
 // - "#/progression" shows the player's progress page
 // - "#/classement" (or "#/leaderboard") shows the leaderboard
 // - "#/admin" opens the password-protected trainer page
@@ -36,6 +36,7 @@ const isRandomRoute = () => window.location.hash === '#/aleatoire';
 const isProposeRoute = () => window.location.hash === '#/proposer';
 const isChaptersListRoute = () => window.location.hash === '#/chapitres';
 const isSemesterRoute = () => window.location.hash === '#/semestre';
+const isDailyRoute = () => window.location.hash === '#/chemin';
 const parseTheme = () => {
   const m = window.location.hash.match(/^#\/([\w-]+)$/);
   if (
@@ -50,7 +51,8 @@ const parseTheme = () => {
     m[1] === 'etoiles' ||
     m[1] === 'aleatoire' ||
     m[1] === 'proposer' ||
-    m[1] === 'semestre'
+    m[1] === 'semestre' ||
+    m[1] === 'chemin'
   ) {
     return null;
   }
@@ -94,6 +96,7 @@ export default function App() {
   const [proposePage, setProposePage] = useState(isProposeRoute);
   const [chaptersListPage, setChaptersListPage] = useState(isChaptersListRoute);
   const [semesterPage, setSemesterPage] = useState(isSemesterRoute);
+  const [dailyPage, setDailyPage] = useState(isDailyRoute);
   const [theme, setTheme] = useState(parseTheme);
   const [pullDist, setPullDist] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
@@ -111,6 +114,7 @@ export default function App() {
       setProposePage(isProposeRoute());
       setChaptersListPage(isChaptersListRoute());
       setSemesterPage(isSemesterRoute());
+      setDailyPage(isDailyRoute());
       setTheme(parseTheme());
     };
     window.addEventListener('hashchange', onHash);
@@ -214,7 +218,7 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage, semesterPage, isChaptersView]);
+  }, [course, admin, reviewer, progressPage, leaderboardPage, randomPage, proposePage, semesterPage, dailyPage, isChaptersView]);
 
   return (
     <>
@@ -249,14 +253,14 @@ export default function App() {
           <RandomQuiz />
         ) : proposePage ? (
           <ProposeQuestionPage />
-        ) : semesterPage ? (
-          <SemesterPage />
+        ) : dailyPage ? (
+          <DailyPathPage />
         ) : course ? (
           <ChapterQuiz key={`${course.key}:${course.initialIdx ?? 'auto'}:${course.randomCount ?? 'all'}`} chapter={course} />
         ) : chaptersListPage || theme ? (
           <Home openTheme={theme} />
         ) : (
-          <DailyPathPage />
+          <SemesterPage />
         )}
       </main>
       <Footer />

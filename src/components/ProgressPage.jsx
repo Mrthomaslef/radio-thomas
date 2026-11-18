@@ -366,7 +366,7 @@ export default function ProgressPage() {
                     </div>
                   </div>
 
-                  <a href="#/" className="btn btn-small prog-daily-cta">
+                  <a href="#/chemin" className="btn btn-small prog-daily-cta">
                     Continuer <Icon name="arrow" size={15} />
                   </a>
                 </div>

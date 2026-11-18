@@ -1641,14 +1641,16 @@ export default function QuestionsAdmin({
           </span>
         </div>
         <div className="qa-bar-actions">
-          <button
-            type="button"
-            className="btn btn-small qa-ai-btn"
-            onClick={openAiGenerator}
-            disabled={busy}
-          >
-            ✨ Générer une question par IA
-          </button>
+          {!reviewerMode && (
+            <button
+              type="button"
+              className="btn btn-small qa-ai-btn"
+              onClick={openAiGenerator}
+              disabled={busy}
+            >
+              ✨ Générer une question par IA
+            </button>
+          )}
           <button className="btn btn-small" onClick={create}>+ Nouvelle question</button>
         </div>
       </div>

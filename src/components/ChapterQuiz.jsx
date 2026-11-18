@@ -60,7 +60,7 @@ export default function ChapterQuiz({ chapter }) {
   const [draft, setDraft] = useState('');
   const [drawSeed, setDrawSeed] = useState(0);
   const questions = byChapter[key] || [];
-  const backHref = fromSemester ? '#/semestre' : `#/${data.chapitre.theme || 'epaule'}`;
+  const backHref = fromSemester ? '#/' : `#/${data.chapitre.theme || 'epaule'}`;
   const backLabel = fromSemester ? '← Parcours semestre' : '← Chapitres';
   const playerMeta = useMemo(
     () => (fromSemester ? { ...data.chapitre, backHref } : data.chapitre),
@@ -718,7 +718,7 @@ export function QuizPlayer({
                   <a className="btn btn-ghost" href={backHref}>
                     {randomMode && key === 'quiz-aleatoire'
                       ? 'Configurer un autre quiz'
-                      : backHref === '#/semestre'
+                      : backLabel === '← Parcours semestre'
                         ? 'Retour au parcours'
                         : 'Autres chapitres'}
                   </a>

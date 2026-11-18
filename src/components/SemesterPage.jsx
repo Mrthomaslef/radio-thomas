@@ -23,21 +23,6 @@ const CHAPTER_INFO = (() => {
   return map;
 })();
 
-// Small card linking to the semester path (shown on the Accueil page).
-export function SemesterEntry({ className = '', compact = false }) {
-  const week = SEMESTER.weeks.find((w) => weekStatus(w) === 'current');
-  return (
-    <a href="#/semestre" className={`sem-entry ${className}`.trim()}>
-      <span className="sem-entry-icon" aria-hidden="true">📅</span>
-      <span className="sem-entry-text">
-        <strong>{compact ? 'Semestre Cochin–HEGP' : 'Parcours du semestre Cochin–HEGP'}</strong>
-        <span>{week ? `${compact ? '' : 'Cette semaine : '}${week.topics[0]}` : 'Les chapitres s’ouvrent semaine après semaine'}</span>
-      </span>
-      <Icon name="arrow" size={18} />
-    </a>
-  );
-}
-
 const SHORT_DATE = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short' });
 function shortDate(iso) {
   const [y, m, d] = iso.split('-').map(Number);

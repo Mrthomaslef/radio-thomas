@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 function getActiveTab(hash) {
   const h = hash || '#/';
   if (h === '#/progression') return 'progression';
-  if (h === '#/semestre' || (h.startsWith('#/quiz/') && h.includes('from=semestre'))) return 'semestre';
+  if (h === '#/' || h === '' || h === '#/semestre' || (h.startsWith('#/quiz/') && h.includes('from=semestre'))) return 'accueil';
+  if (h === '#/chemin') return 'chemin';
   if (
     h === '#/chapitres' ||
     h.startsWith('#/quiz/') ||
@@ -19,7 +20,6 @@ function getActiveTab(hash) {
   ) {
     return 'quiz';
   }
-  if (h === '#/' || h === '') return 'accueil';
   return '';
 }
 
@@ -67,9 +67,9 @@ export default function BottomNav() {
         </a>
 
         <a
-          href="#/semestre"
-          className={`bottom-nav-item ${active === 'semestre' ? 'is-active' : ''}`}
-          aria-current={active === 'semestre' ? 'page' : undefined}
+          href="#/chemin"
+          className={`bottom-nav-item ${active === 'chemin' ? 'is-active' : ''}`}
+          aria-current={active === 'chemin' ? 'page' : undefined}
         >
           <svg
             className="bottom-nav-icon"
@@ -83,11 +83,11 @@ export default function BottomNav() {
             strokeLinejoin="round"
             aria-hidden="true"
           >
-            <rect x="3" y="4.5" width="18" height="16.5" rx="2.5" />
-            <path d="M8 2.5v4M16 2.5v4M3 9.5h18" />
-            <path d="M8.5 14.5l2.3 2.3 4.7-4.6" />
+            <circle cx="6" cy="18" r="2.2" />
+            <circle cx="18" cy="6" r="2.2" />
+            <path d="M8.2 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.8" />
           </svg>
-          <span className="bottom-nav-label">Semestre</span>
+          <span className="bottom-nav-label">Chemin</span>
         </a>
 
         <a
