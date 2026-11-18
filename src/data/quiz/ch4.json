@@ -470,7 +470,7 @@
       "difficulty": 2
     },
     {
-      "id": "c4-q11",
+      "id": "c4-q91",
       "type": "QRM",
       "theme": "Ostéochondrite disséquante",
       "enonce": "À propos de l’ostéochondrite disséquante de l’épaule, quelles sont les affirmations exactes ?",
@@ -517,7 +517,7 @@
       "difficulty": 2
     },
     {
-      "id": "c4-q12",
+      "id": "c4-q92",
       "type": "QCU",
       "theme": "Articulation sternoclaviculaire",
       "enonce": "Femme de 45 ans, douleurs modérées de la région sternoclaviculaire gauche reproduites par l’élévation du bras, sans anomalie biologique. Le scanner montre une sclérose compacte de l’extrémité médiale de la clavicule, prédominant à sa partie inférieure, avec un interligne sternoclaviculaire normal. Quel est le diagnostic le plus probable ?",
@@ -564,7 +564,7 @@
       "difficulty": 2
     },
     {
-      "id": "c4-q13",
+      "id": "c4-q93",
       "type": "QRM",
       "theme": "Articulation sternoclaviculaire",
       "enonce": "À propos de l’arthrite septique sternoclaviculaire, quelles sont les affirmations exactes ?",
@@ -611,7 +611,7 @@
       "difficulty": 2
     },
     {
-      "id": "c4-q14",
+      "id": "c4-q94",
       "type": "QRM",
       "theme": "Articulation sternoclaviculaire",
       "enonce": "À propos de l’atteinte sternocostoclaviculaire du syndrome SAPHO (synovite, acné, pustulose palmoplantaire, hyperostose, ostéite), quelles sont les affirmations exactes ?",
@@ -658,7 +658,7 @@
       "difficulty": 2
     },
     {
-      "id": "c4-q15",
+      "id": "c4-q95",
       "type": "QRM",
       "theme": "Muscles pectoraux et deltoïde",
       "enonce": "À propos des lésions traumatiques du muscle grand pectoral, quelles sont les affirmations exactes ?",
