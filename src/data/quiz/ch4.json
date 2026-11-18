@@ -468,6 +468,245 @@
         "refs": "[32, 86, 205]"
       },
       "difficulty": 2
+    },
+    {
+      "id": "c4-q11",
+      "type": "QRM",
+      "theme": "Ostéochondrite disséquante",
+      "enonce": "À propos de l’ostéochondrite disséquante de l’épaule, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Elle prédomine chez l’homme et touche le plus souvent l’épaule dominante.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Sur la tête humérale, le défect épiphysaire siège le plus souvent à sa partie antérosupérieure.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "En radiographie, le défect sous-chondral est généralement bordé d’un liseré de sclérose périphérique.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "L’origine ischémique est aujourd’hui l’hypothèse physiopathologique la plus probable.",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Le traitement est chirurgical d’emblée, y compris chez l’enfant dont le cartilage de croissance persiste.",
+          "correct": false
+        }
+      ],
+      "explication": "L’ostéochondrite disséquante de l’épaule est rare et touche presque toujours la tête humérale, exceptionnellement la glène. Elle prédomine nettement chez l’homme, sur l’épaule dominante, avec des douleurs mécaniques parfois associées à des craquements ou des blocages (corps étranger).\n\nL’hypothèse la plus probable est microtraumatique (observations surtout chez des enfants ou adolescents sportifs), et non ischémique.\n\nEn radiographie : défect épiphysaire sous-chondral bordé d’un liseré de sclérose, le plus souvent antérosupérieur (parfois postérosupérieur), contenant un fragment ostéochondral parfois déplacé, voire libre. En cas de « cicatrisation », il ne persiste qu’un léger méplat du contour articulaire. L’IRM et l’arthroscanner recherchent des signes d’instabilité du fragment.\n\nTraitement : conservateur chez le sujet jeune (cartilage de croissance persistant) avec arrêt temporaire du sport ; sinon chirurgie selon la taille du fragment (forage ± allogreffe ostéochondrale). L’ablation des corps étrangers est indispensable.",
+      "correction_figures": [
+        {
+          "file": "04. Autres pathologies scapulaires_p134_2.png",
+          "caption": "Fig. 4.17 Ostéochondrite disséquante de la glène à un stade séquellaire (nageuse de compétition). Plage de résorption osseuse sous-chondrale de la partie centrale de la glène (flèche) : arthroscanner axial (a) et IRM (b, c). Localisation glénoïdale rare : la sémiologie est la même que sur la tête humérale."
+        }
+      ],
+      "source": {
+        "page": 134,
+        "element": "Texte",
+        "refs": "[94, 123, 165, 182]"
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c4-q12",
+      "type": "QCU",
+      "theme": "Articulation sternoclaviculaire",
+      "enonce": "Femme de 45 ans, douleurs modérées de la région sternoclaviculaire gauche reproduites par l’élévation du bras, sans anomalie biologique. Le scanner montre une sclérose compacte de l’extrémité médiale de la clavicule, prédominant à sa partie inférieure, avec un interligne sternoclaviculaire normal. Quel est le diagnostic le plus probable ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Une ostéose claviculaire condensante",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Une arthrose sternoclaviculaire",
+          "correct": false
+        },
+        {
+          "id": "C",
+          "texte": "Une maladie de Friedrich",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Un syndrome SAPHO",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Une arthrite septique sternoclaviculaire",
+          "correct": false
+        }
+      ],
+      "explication": "L’ostéose claviculaire condensante touche quasi exclusivement la femme d’âge moyen, de façon habituellement unilatérale, sans anomalie biologique. Comme l’ostéose iliaque condensante, elle serait d’origine mécanique (hypersollicitation de la région costoclaviculaire). Image clé : sclérose compacte de l’extrémité médiale de la clavicule prédominant en bas, avec un interligne sternoclaviculaire NORMAL (± discrète subluxation antérieure et ostéophytose inférolatérale). En IRM : hyposignal T1 de l’extrémité inféromédiale de la clavicule. La sclérose s’atténue avec l’âge ; le traitement est conservateur.\n\nDiagnostics différentiels :\n• arthrose sternoclaviculaire : pincement de l’interligne, ostéophytose marginale et condensation sous-chondrale des deux berges, prédominant en bas, avec subluxation antérieure de la clavicule ;\n• maladie de Friedrich : ostéochondrose de l’adolescent avec fragmentation du noyau d’ossification médial de la clavicule ;\n• SAPHO : hyperostose et sclérose étendues du manubrium et/ou de la clavicule, érosions articulaires, évolution vers l’ankylose ;\n• arthrite septique : ostéolyse sous-chondrale et collection des parties molles.",
+      "correction_figures": [
+        {
+          "file": "04. Autres pathologies scapulaires_p143_1.png",
+          "caption": "Fig. 4.34 Ostéose claviculaire condensante gauche (scanner, coupe frontale). Sclérose compacte de l’extrémité médiale de la clavicule gauche (à droite de l’image), prédominant à sa partie inférieure ; l’interligne sternoclaviculaire est respecté. Comparer avec la clavicule droite, normale."
+        }
+      ],
+      "source": {
+        "page": 142,
+        "element": "Texte",
+        "refs": "[73, 96, 149, 189]"
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c4-q13",
+      "type": "QRM",
+      "theme": "Articulation sternoclaviculaire",
+      "enonce": "À propos de l’arthrite septique sternoclaviculaire, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Le germe le plus souvent en cause est Staphylococcus aureus.",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "Sa gravité tient notamment au risque de médiastinite associée.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La toxicomanie intraveineuse et les infections sur voie veineuse centrale sont des facteurs de risque.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Elle prédomine chez la femme et touche plus souvent le côté gauche.",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "La présentation clinique est toujours bruyante en cas d’arthrite à pyogènes.",
+          "correct": false
+        }
+      ],
+      "explication": "L’arthrite septique sternoclaviculaire est assez rare mais potentiellement grave en raison du risque de médiastinite. Elle prédomine nettement chez l’homme et touche plus souvent le côté DROIT.\n\nFacteurs de risque : toxicomanie intraveineuse (situation particulièrement fréquente), infection à distance, diabète de type 2, traumatisme local, infection sur voie veineuse centrale.\n\nGermes : Staphylococcus aureus en premier (souches résistantes à la méticilline de plus en plus fréquentes), puis bacilles Gram négatif, surtout Pseudomonas aeruginosa.\n\nLa présentation est volontiers insidieuse, même avec un pyogène. L’échographie montre un épanchement et une hyperhémie synoviale non spécifiques et sert surtout à guider la ponction ; le scanner et l’IRM évaluent l’extension (ostéolyse sous-chondrale, abcès des parties molles). Traitement : antibiothérapie adaptée, parfois chirurgie.",
+      "correction_figures": [
+        {
+          "file": "04. Autres pathologies scapulaires_p144_1.png",
+          "caption": "Fig. 4.35 Arthrite sternoclaviculaire gauche septique (Staphylococcus aureus). a : scanner en coupe frontale, ostéolyse sous-chondrale des berges claviculaire et sternale. b : scanner axial après injection, volumineux abcès des tissus mous antérieurs adjacents (flèches)."
+        }
+      ],
+      "source": {
+        "page": 143,
+        "element": "Texte",
+        "refs": "[44, 64, 172]"
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c4-q14",
+      "type": "QRM",
+      "theme": "Articulation sternoclaviculaire",
+      "enonce": "À propos de l’atteinte sternocostoclaviculaire du syndrome SAPHO (synovite, acné, pustulose palmoplantaire, hyperostose, ostéite), quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Chez l’adulte, la région sternocostoclaviculaire est le site le plus fréquent de l’affection (plus de 80 % des cas).",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’atteinte osseuse prédomine sur l’atteinte articulaire : sclérose étendue du manubrium et/ou de la clavicule, hyperostose.",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "L’évolution vers l’ankylose est classique.",
+          "correct": true
+        },
+        {
+          "id": "D",
+          "texte": "Chez l’enfant, l’atteinte porte aussi préférentiellement sur le manubrium sternal.",
+          "correct": false
+        },
+        {
+          "id": "E",
+          "texte": "Des irrégularités ou érosions de l’articulation manubriosternale sont toujours pathologiques.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez l’adulte, la région sternocostoclaviculaire est le site le plus fréquent du SAPHO (> 80 % des cas). Les érosions sous-chondrales sont généralement bien limitées, mais c’est l’atteinte OSSEUSE qui domine : sclérose étendue du manubrium et/ou de la clavicule, hyperostose aux contours irréguliers, pouvant s’étendre à l’articulation manubriosternale, aux synchondroses sternocostales, aux ligaments et aux cartilages costaux. L’évolution vers l’ankylose est classique. Au stade précoce : ostéolyse perméative avec hyperostose réactionnelle et appositions périostées. Une infiltration parfois massive des tissus mous peut comprimer la veine subclavière.\n\nChez l’enfant (ostéomyélite chronique récurrente multifocale), l’atteinte porte préférentiellement sur la CLAVICULE, 2e localisation après l’ostéite métaphysaire des membres inférieurs.\n\nPiège : les irrégularités ou érosions de l’articulation manubriosternale sont fréquentes et souvent sans valeur pathologique.",
+      "correction_figures": [
+        {
+          "file": "04. Autres pathologies scapulaires_p144_2.png",
+          "caption": "Fig. 4.36 Syndrome SAPHO débutant (a) et évolué (b) chez deux patients différents (scanner, coupes frontales). a : sclérose de la partie haute du manubrium et érosions des berges sternoclaviculaires. b : hyperostose et sclérose étendues du manubrium et des extrémités médiales des clavicules. Notez la prédominance de l’atteinte osseuse par rapport à l’atteinte articulaire."
+        }
+      ],
+      "source": {
+        "page": 144,
+        "element": "Texte",
+        "refs": "[40, 96, 115]"
+      },
+      "difficulty": 2
+    },
+    {
+      "id": "c4-q15",
+      "type": "QRM",
+      "theme": "Muscles pectoraux et deltoïde",
+      "enonce": "À propos des lésions traumatiques du muscle grand pectoral, quelles sont les affirmations exactes ?",
+      "enonce_image": null,
+      "items": [
+        {
+          "id": "A",
+          "texte": "Elles surviennent presque exclusivement chez l’homme jeune sportif, typiquement lors d’un développé couché (contraction excentrique brutale).",
+          "correct": true
+        },
+        {
+          "id": "B",
+          "texte": "L’atteinte débute typiquement aux segments sternaux inférieurs (lame tendineuse profonde).",
+          "correct": true
+        },
+        {
+          "id": "C",
+          "texte": "La lésion isolée du faisceau claviculaire est la forme la plus fréquente.",
+          "correct": false
+        },
+        {
+          "id": "D",
+          "texte": "Une désinsertion humérale nécessite une réinsertion chirurgicale.",
+          "correct": true
+        },
+        {
+          "id": "E",
+          "texte": "En IRM, les séquences pondérées T1 sont les plus sensibles pour détecter une lésion aiguë.",
+          "correct": false
+        }
+      ],
+      "explication": "La rupture du grand pectoral touche presque exclusivement l’homme de 20 à 40 ans, sportif, par mécanisme indirect (contraction brutale, surtout au développé couché) ; le mécanisme direct est rare.\n\nLe tendon est formé de deux lames en « U » : lame superficielle (faisceau claviculaire + segments sternaux proximaux) et lame profonde (segments sternaux distaux). L’atteinte débute typiquement aux segments sternaux inférieurs (lame profonde), s’étend ensuite vers le haut et rarement au faisceau claviculaire ; l’atteinte claviculaire isolée est très rare (lutteurs). Il faut préciser l’extension en épaisseur (une ou deux lames) et en hauteur (incomplète ou complète).\n\nIRM = examen de choix : les séquences T2 avec suppression de graisse sont les plus sensibles pour une lésion aiguë ou subaiguë ; le T1 sert à l’anatomie et à l’involution graisseuse tardive. La position ABER dégage mieux l’enthèse humérale. Une désinsertion humérale s’accompagne souvent d’une rétraction (tendon ondulé) et d’un décollement du chef long du biceps.\n\nTraitement : médical pour les lésions intramusculaires et les ruptures partielles de la jonction myotendineuse ; chirurgie précoce à discuter pour les ruptures complètes ; réinsertion chirurgicale obligatoire en cas de désinsertion humérale.",
+      "correction_figures": [
+        {
+          "file": "04. Autres pathologies scapulaires_p152_2.png",
+          "caption": "Fig. 4.47 Schéma des lésions des lames tendineuses du muscle grand pectoral (en rouge). a : rupture incomplète de la lame profonde. b : rupture complète de la lame profonde. c : rupture incomplète des deux lames. d : rupture complète des deux lames. D’après [56]."
+        },
+        {
+          "file": "04. Autres pathologies scapulaires_p154_1.png",
+          "caption": "Fig. 4.51 Muscle grand pectoral, coupe axiale IRM pondérée en T2. Désinsertion complète de l’enthèse humérale (tête de flèche) avec rétraction du tendon (flèche), hypersignal en regard de l’enthèse et décollement du tendon du chef long du biceps brachial (B)."
+        }
+      ],
+      "source": {
+        "page": 151,
+        "element": "Texte",
+        "refs": "[7, 28, 31, 56, 215, 225]"
+      },
+      "difficulty": 2
     }
   ]
 }
