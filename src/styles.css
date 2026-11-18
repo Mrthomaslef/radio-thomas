@@ -4211,53 +4211,80 @@ body:has(.daily-slide-card) .bottom-nav-wrap {
 .sem-entry-text span { color: var(--muted); font-size: 0.86rem; line-height: 1.3; }
 .sem-entry > svg { flex: none; color: var(--cyan); }
 
-.sem-page h1 { margin-bottom: 28px; }
-.sem-summary {
-  padding: 18px 20px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--panel);
-  display: grid; gap: 12px;
+.sem-page h1 { margin-bottom: 22px; }
+.sem-page .home-panel { display: grid; gap: 18px; }
+.sem-hero {
+  display: flex; align-items: center; gap: 16px; padding: 16px 18px; border-radius: var(--radius);
+  border: 1px solid rgba(124, 140, 255, 0.4);
+  background: radial-gradient(circle at 0% 0%, rgba(56, 225, 255, 0.16), transparent 60%), linear-gradient(120deg, rgba(124, 140, 255, 0.14), rgba(52, 211, 153, 0.06));
 }
-.sem-kicker { color: var(--cyan); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-.sem-now { font-size: 0.98rem; line-height: 1.45; }
-.sem-progress { display: grid; gap: 6px; }
-.sem-progress-bar { width: 100%; height: 8px; border-radius: 99px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
-.sem-progress-bar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--cyan), var(--good)); }
-.sem-progress-label { color: var(--muted); font-size: 0.85rem; font-weight: 600; white-space: nowrap; }
-.sem-rules { list-style: none; display: grid; gap: 4px; color: var(--muted); font-size: 0.87rem; }
+.sem-ring { width: 76px; height: 76px; flex: none; }
+.sem-ring-bg { fill: none; stroke: rgba(255, 255, 255, 0.08); stroke-width: 7; }
+.sem-ring-fg { fill: none; stroke: url(#semRingGrad); stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
+.sem-ring-num { fill: var(--text); font-family: var(--display); font-size: 20px; font-weight: 700; }
+.sem-ring-total { fill: var(--muted); font-size: 10px; font-weight: 600; }
+.sem-hero-text { display: grid; gap: 4px; min-width: 0; }
+.sem-kicker { color: var(--cyan); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.sem-hero-main { font-family: var(--display); font-size: 1.12rem; font-weight: 600; line-height: 1.25; }
+.sem-hero-rule { color: var(--muted); font-size: 0.8rem; line-height: 1.35; }
 .sem-pseudo-hint { font-size: 0.86rem; color: #fcd34d; }
 .sem-pseudo-hint a { text-decoration: underline; }
 
-.sem-weeks { list-style: none; display: grid; gap: 12px; }
-.sem-week {
-  padding: 14px 16px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--panel);
-  display: grid; gap: 10px; scroll-margin-top: 90px;
+.sem-group { display: grid; gap: 8px; }
+.sem-group-head { display: flex; align-items: center; gap: 10px; padding: 0 2px; }
+.sem-group-logo { width: 34px; height: 34px; border-radius: 10px; object-fit: cover; flex: none; background: rgba(255, 255, 255, 0.05); }
+.sem-group-title { flex: 1; min-width: 0; font-family: var(--display); font-weight: 700; font-size: 1.08rem; }
+.sem-group-count { font-size: 0.8rem; font-weight: 700; color: var(--cyan); padding: 3px 10px; border-radius: 99px; background: rgba(56, 225, 255, 0.1); }
+.sem-group-count.is-done { color: var(--good); background: rgba(52, 211, 153, 0.12); }
+.sem-group-free { font-size: 0.74rem; font-weight: 700; color: var(--violet); padding: 3px 10px; border-radius: 99px; border: 1px solid rgba(124, 140, 255, 0.5); }
+
+.sem-line { list-style: none; display: grid; gap: 6px; position: relative; }
+.sem-line::before {
+  content: ''; position: absolute; left: 63px; top: 10px; bottom: 10px; width: 2px; border-radius: 2px;
+  background: linear-gradient(180deg, rgba(56, 225, 255, 0.35), rgba(124, 140, 255, 0.2));
 }
-.sem-week-current { border-color: var(--cyan); background: rgba(56, 225, 255, 0.07); box-shadow: 0 0 0 1px rgba(56, 225, 255, 0.25), 0 18px 40px -24px var(--cyan); }
-.sem-week-past { opacity: 0.85; }
-.sem-week-break { border-style: dashed; }
-.sem-week-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.sem-week-label { font-family: var(--display); font-weight: 600; font-size: 1.05rem; }
-.sem-pill { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; border: 1px solid var(--line); color: var(--muted); }
-.sem-pill-current { color: #05090f; background: var(--cyan); border-color: var(--cyan); }
-.sem-pill-past { color: var(--good); border-color: rgba(52, 211, 153, 0.5); }
-.sem-pill-side { color: var(--violet); border-color: rgba(124, 140, 255, 0.55); }
-.sem-topics { list-style: none; display: grid; gap: 3px; color: var(--muted); font-size: 0.86rem; line-height: 1.35; }
-.sem-topics li::before { content: '• '; color: var(--cyan); }
-.sem-chapters { display: grid; gap: 8px; }
-.sem-chapter { touch-action: manipulation; }
-.sem-chapter .sem-lock { flex: none; font-size: 1.1rem; width: 24px; text-align: center; }
-.sem-chapter-text { flex: 1; min-width: 0; display: grid; gap: 2px; }
-.sem-chapter-hint { color: var(--muted); font-size: 0.78rem; line-height: 1.3; }
-.sem-locked { opacity: 0.72; cursor: not-allowed; border-style: dashed; }
-.sem-exam {
-  display: inline-flex; align-items: center; gap: 8px; justify-self: start;
-  padding: 6px 12px; border-radius: 99px; font-size: 0.82rem; font-weight: 700;
-  color: #fcd34d; background: rgba(252, 211, 77, 0.1); border: 1px solid rgba(252, 211, 77, 0.4);
+.sem-row { display: grid; grid-template-columns: 54px 20px minmax(0, 1fr); align-items: center; gap: 0; scroll-margin: 100px; }
+.sem-row-date { font-size: 0.76rem; font-weight: 700; color: var(--muted); text-align: right; padding-right: 2px; line-height: 1.1; }
+.sem-row-dot { justify-self: center; width: 10px; height: 10px; border-radius: 50%; background: #0b1520; border: 2px solid rgba(124, 140, 255, 0.6); position: relative; z-index: 1; }
+.sem-row-past .sem-row-dot { background: var(--cyan); border-color: var(--cyan); }
+.sem-row-now .sem-row-dot { width: 14px; height: 14px; background: var(--cyan); border-color: #fff; box-shadow: 0 0 0 4px rgba(56, 225, 255, 0.25), 0 0 14px var(--cyan); }
+.sem-now-tag { display: inline-block; color: #05090f; background: var(--cyan); border-radius: 8px; padding: 3px 5px; font-size: 0.64rem; line-height: 1.15; text-align: center; }
+
+.sem-card {
+  display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 10px 12px; border-radius: 14px;
+  border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); color: var(--text);
+  touch-action: manipulation; transition: border-color 0.2s, background 0.2s, transform 0.15s;
 }
-.sem-side { border-color: rgba(124, 140, 255, 0.45); }
-.sem-side-note { color: var(--muted); font-size: 0.86rem; }
-@media (max-width: 540px) {
-  .sem-summary, .sem-week { padding: 14px 12px; }
-  .sem-chapter .chapter-go { font-size: 0.8rem; }
+a.sem-card:hover { border-color: var(--cyan); background: rgba(56, 225, 255, 0.07); transform: translateX(2px); }
+.sem-card-icon { flex: none; font-size: 1.05rem; width: 22px; text-align: center; }
+.sem-card-text { flex: 1; min-width: 0; display: grid; gap: 5px; }
+.sem-card-title { font-weight: 600; font-size: 0.92rem; line-height: 1.3; }
+.sem-card-hint { color: #fcd34d; font-size: 0.74rem; font-weight: 600; }
+.sem-card-bar { display: block; height: 4px; border-radius: 99px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+.sem-card-bar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--cyan), var(--violet)); }
+.sem-card-score { flex: none; display: inline-flex; align-items: center; color: var(--cyan); font-size: 0.82rem; font-weight: 700; }
+.sem-card-passed { border-color: rgba(52, 211, 153, 0.55); background: rgba(52, 211, 153, 0.07); }
+.sem-card-passed .sem-card-score { color: var(--good); }
+.sem-card-failed { border-color: rgba(251, 113, 133, 0.55); background: rgba(251, 113, 133, 0.06); }
+.sem-card-failed .sem-card-score { color: var(--bad); }
+.sem-card-locked { opacity: 0.55; border-style: dashed; cursor: not-allowed; }
+.sem-card-locked .sem-card-title { font-weight: 500; }
+.sem-row-now .sem-card { border-color: var(--cyan); background: rgba(56, 225, 255, 0.09); box-shadow: 0 14px 34px -22px var(--cyan); }
+
+.sem-row-milestone { min-height: 30px; }
+.sem-exam, .sem-break {
+  justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 99px;
+  font-size: 0.78rem; font-weight: 700;
+}
+.sem-exam { color: #fcd34d; background: rgba(252, 211, 77, 0.1); border: 1px solid rgba(252, 211, 77, 0.4); }
+.sem-row-milestone .sem-row-dot { border-color: rgba(252, 211, 77, 0.7); }
+.sem-break { color: var(--muted); border: 1px dashed var(--line); }
+.sem-side-cards { display: grid; gap: 6px; }
+@media (max-width: 400px) {
+  .sem-hero { padding: 14px 12px; gap: 12px; }
+  .sem-ring { width: 64px; height: 64px; }
+  .sem-row { grid-template-columns: 48px 18px minmax(0, 1fr); }
+  .sem-line::before { left: 56px; }
 }
 
 .sem-entry-hud {
